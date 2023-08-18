@@ -76,16 +76,7 @@ export const login_action =
         user_type: user_type,
         default_plant: user_type === 'Plant Operator' ? plant : '',
       });
-      console.log(
-        {
-          // email: data?.email,
-          // access_token: data?.access_token,
-          user_type: user_type,
-          default_plant: user_type === 'Plant Operator' ? plant : '',
-        },
-        'Data stored',
-        stringified_user_data
-      );
+      
       console.log({ user_type, plant }, 'Entered data');
       const encrypted_data = AES.encrypt(stringified_user_data, 'ultratech');
       // console.log(AES.encrypt("", "qc_scheduler"));

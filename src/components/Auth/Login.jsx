@@ -19,6 +19,7 @@ import { useContext } from 'react';
 const Login = () => {
   
   const dispatch = useDispatch();
+  const { setLogin } = useContext(NavContext)
   const { isAuth, default_plant } = useSelector(get_auth_status);
   const { auth_process_loading, auth_process_failure, auth_error_message } =
     useSelector(get_auth_process_states);
@@ -42,7 +43,10 @@ const Login = () => {
     setSendingOTP(false);
     let user_type = userType;
     // let email = emailRef?.current?.value;
+    localStorage.setItem('logged_in',true)
+    setLogin(true)
     dispatch(login_action({ email, password, user_type, plant }));
+
     console.log(
       'Error',
       auth_error_message,

@@ -14,9 +14,21 @@ import Sidebar from './components/Sidebar/Sidebar';
 import IntelliVerse from './components/CXO Dashboard/IntelliVerse';
 import AiAdvisor from './components/CXO Dashboard/AIAdvisor';
 import NavContext from './components/NavContext';
+import { useState } from 'react';
 
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
+  const [login, setLogin] = useState(false)
+
+  useEffect(() => {
+    if (localStorage.getItem("logged_in")) {
+      setLogin(true)
+    } else {
+      setLogin(false)
+    }
+  }, [])
+
+
   // const navigate = useNavigate();
   // useEffect(() => {
   //   console.log('navigated');
@@ -27,39 +39,40 @@ function App() {
 
   return (
     <>
-    
-    <Box
-      maxW="100vw"
-      boxSizing="border-box"
-     
-      bgColor="#FAFAFA"
-      color="#000000"
-      overflowX="hidden"
-    >
-      {isAuth ? (
-        <>
-          <Navbar />
-          <Sidebar />
-          <div className="overall_container" style={{ display: 'flex' }}>
-            <div
-              className="routes_container"
-              style={{ width: '100%', marginTop: '70px' }}
-            >
-              <Routes>
-                {default_plant?.length > 0 ? (
-                  <Route
-                    path="/"
-                    element={
-                      <Navigate to={`/intelliverse`} />
-                    }
-                  />
-                ) : (
-                  <Route path="/" element={<Navigate to="/intelliverse" />} />
-                )}
-                <Route path="/home" element={<CombReal />} />
-                <Route path="/intelliverse" element={<IntelliVerse />} />
-                <Route path="/advisor" element={<AiAdvisor />} />
-                {/* <Route path="/home/report" element={<HeadDash />} />
+      <NavContext.Provider value={{ setLogin}}>
+        <Box
+          maxW="100vw"
+          boxSizing="border-box"
+
+          bgColor="#FAFAFA"
+          color="#000000"
+          overflowX="hidden"
+        >
+          {login ? (
+            <>
+
+              <Navbar />
+              <Sidebar />
+              <div className="overall_container" style={{ display: 'flex' }}>
+                <div
+                  className="routes_container"
+                  style={{ width: '100%', marginTop: '70px' }}
+                >
+                  <Routes>
+                    {default_plant?.length > 0 ? (
+                      <Route
+                        path="/"
+                        element={
+                          <Navigate to={`/intelliverse`} />
+                        }
+                      />
+                    ) : (
+                      <Route path="/" element={<Navigate to="/intelliverse" />} />
+                    )}
+                    <Route path="/home" element={<CombReal />} />
+                    <Route path="/intelliverse" element={<IntelliVerse />} />
+                    <Route path="/advisor" element={<AiAdvisor />} />
+                    {/* <Route path="/home/report" element={<HeadDash />} />
                 <Route path="/dhar/report" element={<ReportDash />} />
                 <Route path="/dhar" element={<RealDash />} />
                 <Route path="/jaffrabad/report" element={<ReportDash />} />
@@ -70,14 +83,15 @@ function App() {
                 <Route path="/bela" element={<RealDash />} />
                 <Route path="/tadipatri/report" element={<ReportDash />} />
                 <Route path="/tadipatri" element={<RealDash />} /> */}
-              </Routes>
-            </div>
-          </div>
-        </>
-      ) : (
-        <Login />
-      )}
-    </Box>
+                  </Routes>
+                </div>
+              </div>
+            </>
+          ) : (
+            <Login />
+          )}
+        </Box>
+      </NavContext.Provider>
     </>
   );
 }
