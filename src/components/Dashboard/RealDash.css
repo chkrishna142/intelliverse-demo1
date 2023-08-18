@@ -1,0 +1,24 @@
+/* .select-wrapper select {
+  font-size: "16px";
+  line-height: "24px";
+  letter-spacing: "0.5px";
+}
+
+.select-wrapper select option {
+  font-size: "16px";
+  line-height: "24px";
+  letter-spacing: "0.5px";
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
+} */
+/* .angularplot_box > div {
+  opacity: 0.5;
+}
+.angularplot_box > pointer {
+  opacity: 0;
+} */
+.apexcharts-grid-row {
+  /* border: 200px solid #ffffff; */
+  stroke-width: 1; /* Increase the border thickness */
+  stroke: #ffffff;
+}

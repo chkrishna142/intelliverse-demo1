@@ -1,0 +1,4 @@
+.realtime_route:hover,
+.reporting_route:hover {
+  background-color: "rgba(59,130,246,.5)" !important;
+}
