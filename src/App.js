@@ -18,7 +18,6 @@ import NavContext from './components/NavContext';
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
   // const navigate = useNavigate();
-
   // useEffect(() => {
   //   console.log('navigated');
   //   if (isAuth) {
