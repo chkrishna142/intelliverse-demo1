@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
@@ -21,14 +22,16 @@ const Home = () => {
                     </div>
                     <div className=' w-full h-full ml-2'>
                         <div className='mt-8 flex flex-wrap gap-8 text-sm items-center'>
-                            <div>
-                                <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
-                                    <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">2</div></div>
-                                    <div className='w-full flex justify-center '><img className='mt-1 h-20 w-20 p-3' src="/sizing1.svg" /></div>
-                                    <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div>
+                            <Link to="/intelliverse/Sizing" style={{ textDecoration: 'none' }}>
+                                <div>
+                                    <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
+                                        <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">2</div></div>
+                                        <div className='w-full flex justify-center '><img className='mt-1 h-20 w-20 p-3' src="/sizing1.svg" /></div>
+                                        <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div>
+                                    </div>
+                                    <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87]'>Sizing Tool</p></div>
                                 </div>
-                                <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87]'>Sizing Tool</p></div>
-                            </div>
+                            </Link>
                             <div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/counting.svg" /></div>
