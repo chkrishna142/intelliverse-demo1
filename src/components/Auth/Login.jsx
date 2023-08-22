@@ -12,7 +12,7 @@ import { Input, Dropdown, Button, Loader } from 'rsuite';
 import OTPInput from 'react-otp-input';
 import { baseURL } from '../../index';
 import { EditIcon } from '@chakra-ui/icons';
-import FloatingInput from '../Dashboard/FloatingInput';
+import FloatingInput from './FloatingInput';
 import NavContext from '../NavContext';
 import { useContext } from 'react';
 

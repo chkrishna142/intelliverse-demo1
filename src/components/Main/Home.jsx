@@ -1,15 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import CombRealCard from './CombRealCard';
-import { Dropdown } from 'rsuite';
-import Pagination from '../Pagination/Pagination';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
-import { baseURL } from '../../index';
-import { useSelector } from 'react-redux';
-import { get_auth_status } from '../../redux/Auth/auth.selectors';
 
-const IntelliVerse = () => {
+
+const Home = () => {
 
     const [alert, setAlert] = useState(true)
 
@@ -17,7 +9,7 @@ const IntelliVerse = () => {
         <div className='h-screen'>
             <div className='ml-32 mr-10'>
                 {alert ? <div className='w-full h-10 bg-red-100 rounded-md flex justify-between items-center mt-5'>
-                    <div className='w-full text-[#DC362E] flex justify-center'>JSPL Steel Subscription expires on Aug 12, 2023. Renew now for uninterrupted service.</div>
+                    <div className='w-full text-[#DC362E] flex justify-center text-sm'>JSPL Steel Subscription expires on Aug 12, 2023. Renew now for uninterrupted service.</div>
                     <div className='mr-2'><img onClick={() => setAlert(false)} className='cursor-pointer' src="/cross.svg" /></div>
                 </div> : null}
             </div>
@@ -28,10 +20,6 @@ const IntelliVerse = () => {
                         <div className='flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div>Add Use Case</div>
                     </div>
                     <div className=' w-full h-full ml-2'>
-                        {/* <div className='w-full flex mt-10'>
-        <div className='flex justify-center w-full'><img src="/vision.svg" /></div>
-        <div className='flex justify-center w-full'><img src="/optimus.svg" /></div>
-      </div> */}
                         <div className='mt-8 flex flex-wrap gap-8  items-center'>
                             <div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
@@ -251,4 +239,4 @@ const IntelliVerse = () => {
     );
 };
 
-export default IntelliVerse;
+export default Home;

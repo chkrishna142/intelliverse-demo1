@@ -1,13 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import CombRealCard from './CombRealCard';
-import { Dropdown } from 'rsuite';
-import Pagination from '../Pagination/Pagination';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Box } from '@chakra-ui/react';
-import { baseURL } from '../../index';
-import { useSelector } from 'react-redux';
-import { get_auth_status } from '../../redux/Auth/auth.selectors';
+
 
 const AiAdvisor = () => {
 
@@ -34,7 +26,6 @@ const AiAdvisor = () => {
                     <div style={{ width: '85.5vw' }} className='flex gap-4' >
                         <div className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
                             What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?
-
                         </div>
                         <div className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
                             Ask me to generate test plans for the manufacturing of automobile axels including test cases, and acceptance criteria.

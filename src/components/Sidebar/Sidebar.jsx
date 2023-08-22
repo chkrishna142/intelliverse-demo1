@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "./Ripik-Logo.png";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import OnlinePredictionIcon from "@mui/icons-material/OnlinePrediction";
 // import AlignVerticalBottomIcon from "@mui/icons-material/AlignVerticalBottom";
 import ReportingIcon from "./Vector.svg";
-import RipikVision from "./Ripik-Vision.png.png";
 import { Avatar } from "@chakra-ui/react";
 import "./Sidebar.css";
 

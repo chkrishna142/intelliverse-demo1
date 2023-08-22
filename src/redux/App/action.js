@@ -745,9 +745,6 @@ import { useSelector } from 'react-redux';
 
 export const getDataAPI = (plant_name, access_token) => (dispatch) => {
   let url = baseURL + `list/?plant_name=${plant_name}`;
-  // "http://3.110.218.249/images/list/?plant_name=dhar";
-  // let url = "https://65.1.109.164.sslip.io/kilnIndex";
-  // let url = "http://localhost:7000/kilnIndex";
   axios
     .get(url, {
       headers: {
@@ -756,7 +753,7 @@ export const getDataAPI = (plant_name, access_token) => (dispatch) => {
     })
     .then((res) => {
       // only return the first 500 data
-      console.log('dattttttt0', res.data);
+      console.log('data', res.data);
       dispatch({
         type: types.GETDATA_SUCCESS,
         payload: res.data.map((item) => getElementData(item)),
