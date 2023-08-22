@@ -42,7 +42,7 @@ function App() {
               <div className="overall_container" style={{ display: 'flex' }}>
                 <div
                   className="routes_container"
-                  style={{ width: '100%', marginTop: '70px' }}
+                  style={{ width: '100%', marginTop: '70px', marginLeft:'130px', marginRight:'40px' }}
                 >
                   <Routes>
                     {default_plant?.length > 0 ? (
