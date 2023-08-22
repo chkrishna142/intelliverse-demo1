@@ -28,29 +28,19 @@ function App() {
     }
   }, [])
 
-
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   console.log('navigated');
-  //   if (isAuth) {
-  //     navigate('/' + (default_plant ? default_plant?.toLowerCase() : ''));
-  //   }
-  // });
-
+ 
   return (
     <>
       <NavContext.Provider value={{ setLogin}}>
         <Box
           maxW="100vw"
           boxSizing="border-box"
-
           bgColor="#FAFAFA"
           color="#000000"
           overflowX="hidden"
         >
           {login ? (
             <>
-
               <Navbar />
               <Sidebar />
               <div className="overall_container" style={{ display: 'flex' }}>
@@ -72,17 +62,7 @@ function App() {
                     <Route path="/home" element={<CombReal />} />
                     <Route path="/intelliverse" element={<IntelliVerse />} />
                     <Route path="/advisor" element={<AiAdvisor />} />
-                    {/* <Route path="/home/report" element={<HeadDash />} />
-                <Route path="/dhar/report" element={<ReportDash />} />
-                <Route path="/dhar" element={<RealDash />} />
-                <Route path="/jaffrabad/report" element={<ReportDash />} />
-                <Route path="/jaffrabad" element={<RealDash />} />
-                <Route path="/reddypalyam/report" element={<ReportDash />} />
-                <Route path="/reddypalyam" element={<RealDash />} />
-                <Route path="/bela/report" element={<ReportDash />} />
-                <Route path="/bela" element={<RealDash />} />
-                <Route path="/tadipatri/report" element={<ReportDash />} />
-                <Route path="/tadipatri" element={<RealDash />} /> */}
+                   
                   </Routes>
                 </div>
               </div>

@@ -77,17 +77,12 @@ const Login = () => {
           }
         )
       })
-      // await data
-      //   const form = new FormData();
-      //   form.append('email', emailRef?.current?.value);
-
-      //   // const response = { status: 200 };
-      //   const response = await axios.post(baseURL + 'login', form);
+  
       if (data.status === 202) {
         setSentOTP(true);
         setEmail(emailRef.current?.value);
         setErrorOTP('');
-        // alert('New user created');
+        
       }
     } catch (e) {
       setSendingOTP(false);
@@ -105,15 +100,7 @@ const Login = () => {
     setSendingOTP(true);
     sendOTPCall();
   };
-  // const handleEmailChange = (e) => {
-  //   if (e && e.target && e.target.value) setEmail(e.target.value);
-  // };
-
-  const handleUserChange = (e) => {
-    setUserType(e.target.value);
-    console.log('User changed', userType);
-  };
-
+ 
   return (
     <div className="bg-gradient-to-tl w-screen h-screen from-[#0B295E] to-[#3C8FD4]">
       <Box className="absolute top-0 bottom-0 left-0 right-0 h-[70%] m-auto w-[80%] md:h-[65%] md:w-[50%] bg-white rounded-xl flex flex-row normal-case">
@@ -139,7 +126,7 @@ const Login = () => {
                 <div className="mb-6 w-[200px]">
                   <FloatingInput text={'Email'} inputRef={emailRef} />
                 </div>
-                <div className="flex flex-col gap-6 w-[200px] mb-6">
+                {/* <div className="flex flex-col gap-6 w-[200px] mb-6">
                   <Select
                     className="!w-[100%] !text-start !text-base"
                     value={userType}
@@ -174,12 +161,14 @@ const Login = () => {
                       <option value="Bela">Bela</option>
                     </Select>
                   )}
-                </div>
+                </div> */}
 
                 <Button
-                  className="w-[200px] !rounded-full !justify-center !text-center"
+                  className="w-[200px] !rounded-full !justify-center !text-center "
                   onClick={handleSubmitForm}
                   style={{ textAlign: 'center' }}
+                  appearance="primary"
+                 
                 >
                   {sendingOTP ? <Loader /> : 'Get OTP'}
                 </Button>
@@ -227,6 +216,7 @@ const Login = () => {
                 <Button
                   className="w-[200px] mt-2 !rounded-full !justify-self-center !text-center !justify-center"
                   onClick={handleSubmitOTP}
+                  appearance='primary'
                 >
                   {sendingOTP ? 'Login' : <Loader />}
                 </Button>
@@ -234,11 +224,7 @@ const Login = () => {
               </>
             )}
           </Box>
-          {/* <div className="flex">
-            {' '}
-            <div className="h-[5px] bg-blue-950 w-[33%]"></div>
-            {sentOTP && <div className="h-[5px] bg-blue-950 w-[33%]"></div>}
-          </div> */}
+          
         </Box>
         <Box className="bg-[#0b295e] flex flex-col w-0 lg:w-[40%] rounded-r-xl">
           <img

@@ -20,7 +20,7 @@ const Sidebar = () => {
       className="sidebar"
       style={{
         position: "fixed",
-        width: "95px",
+        width: "90px",
         height: "calc(100vh - 120px)",
         backgroundColor: "#024D87",
         boxShadow:
@@ -39,24 +39,24 @@ const Sidebar = () => {
       <div className="grid grid-row-3 h-40 gap-5 text-white text-center text-xs">
         <Link to="/intelliverse" style={{ textDecoration: 'none' }}>
           <div className="w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200">
-            <div className="w-full flex justify-center"><img className="w-7" src="/home.svg" alt="home logo" /></div>
+            <div className="w-full flex justify-center"><img className="w-6" src="/home.svg" alt="home logo" /></div>
             <p className="font-light text-white">Home</p>
           </div>
         </Link>
         <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
-          <div className="w-full flex justify-center"><img className="w-7" src="/mail.svg" alt="mail logo" /></div>
+          <div className="w-full flex justify-center"><img className="w-6" src="/mail.svg" alt="mail logo" /></div>
           <p className="font-light">Notifications</p>
         </div>
         <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
-          <div className="w-full flex justify-center"><img className="w-7" src="/person.svg" alt="home logo" /></div>
+          <div className="w-full flex justify-center"><img className="w-6" src="/person.svg" alt="home logo" /></div>
           <p className="font-light">User Profile</p>
         </div>
         <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
-          <div className="w-full flex justify-center"><img className="w-7" src="/report.svg" alt="home logo" /></div>
+          <div className="w-full flex justify-center"><img className="w-6" src="/report.svg" alt="home logo" /></div>
           <p className="font-light">Report</p>
         </div>
         <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
-          <div className="w-full flex justify-center"><img className="w-7" src="/comm.svg" alt="home logo" /></div>
+          <div className="w-full flex justify-center"><img className="w-6" src="/comm.svg" alt="home logo" /></div>
           <p className="font-light">Help</p>
         </div>
         {/* <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">

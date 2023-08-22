@@ -3,7 +3,6 @@ import CombRealCard from './CombRealCard';
 import { Dropdown } from 'rsuite';
 import Pagination from '../Pagination/Pagination';
 import axios from 'axios';
-import './CombReal.css';
 import { Link } from 'react-router-dom';
 import { Box } from '@chakra-ui/react';
 import { baseURL } from '../../index';

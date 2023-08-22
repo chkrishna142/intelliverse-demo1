@@ -8,7 +8,7 @@ const Navbar = () => {
   const plant_name = query.get("plant_name");
   return (
     <Flex
-      p="5px"
+      p="4px"
       justify="space-between"
       w="100vw"
       m="auto"
@@ -19,7 +19,7 @@ const Navbar = () => {
       zIndex="1000000000"
       align="center"
       left="0"
-      borderRadius="0px 0px 20px 20px"
+      borderRadius="0px 0px 12px 12px"
     >
       <Flex alignItems="center" marginLeft="10px"
         style={{
@@ -32,13 +32,10 @@ const Navbar = () => {
           // src="https://www.ultratechcement.com/content/dam/ultratechcementwebsite/new-header-design/desk.png"
           src={"/logo.svg"}
         />
+       
       </Flex>
       <Flex alignItems="center" marginRight="30px">
-        <Image
-          h={['25px', '50px']}
-          // src="https://www.ultratechcement.com/content/dam/ultratechcementwebsite/new-header-design/desk.png"
-          src=""
-        />
+        <div className="px-2 py-2 italic text-xl font-blue-">Steel Co.</div>
       </Flex>
       {/* <Heading
 				fontSize={["md", "2xl"]}

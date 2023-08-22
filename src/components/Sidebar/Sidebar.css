@@ -2,3 +2,9 @@
 .reporting_route:hover {
   background-color: "rgba(59,130,246,.5)" !important;
 }
+
+@media (min-width: 640px) {
+  .hide {
+    display: none;
+  }
+}
