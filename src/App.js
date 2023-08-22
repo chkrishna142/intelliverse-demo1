@@ -11,6 +11,7 @@ import Sidebar from './components/Sidebar/Sidebar';
 import AiAdvisor from './components/Main/AIAdvisor';
 import NavContext from './components/NavContext';
 import { useState } from 'react';
+import BF_Dashboard from './components/BlastFurnace/BF_Components/BF_Dashboard';
 
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
@@ -56,7 +57,8 @@ function App() {
                       <Route path="/" element={<Navigate to="/intelliverse" />} />
                     )}       
                     <Route path="/intelliverse" element={<Home />} />
-                    <Route path="/advisor" element={<AiAdvisor />} />     
+                    <Route path="/advisor" element={<AiAdvisor />} />    
+                    <Route path="/blastfurnace" element={<BF_Dashboard />} />  
                   </Routes>
                 </div>
               </div>
