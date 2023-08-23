@@ -72,7 +72,7 @@ const Sidebar = () => {
               <Link to="/home"><AccordionButton _hover={false} className="flex justify-center items-center hover:bg-none">
 
               <div className={location.pathname.includes("/home")? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]":"w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                  <div className="w-full flex justify-center"><img className={location.pathname.includes("/home")?"w-5 h-6":"w-6"} src={location.pathname.includes("/home")?"/homenew.svg":"/home.svg"} alt="home logo" /></div>
+                  <div className="w-full flex justify-center"><img className={location.pathname.includes("/home")?"w-6":"w-5"} src={location.pathname.includes("/home")?"/home_curved_selected.svg":"/home_curved.svg"} alt="home logo" /></div>
                   <p className={location.pathname.includes("/home")?"font-bold text-xs text-[#024D87]":"font-light text-xs"}>Home</p>
                 </div>
 
@@ -87,7 +87,7 @@ const Sidebar = () => {
               <Link to="/vision"><AccordionButton _hover={false} className="flex justify-center">
 
                 <div className={location.pathname.includes("/vision")? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]":"w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                  <div className="w-full flex justify-center"><img className={location.pathname.includes("/vision")?"w-10 pb-2":"w-7 pb-2"} src={location.pathname.includes("/vision")?"/vision_updated.svg":"/new1.svg"} alt="home logo" /></div>
+                  <div className="w-full flex justify-center"><img className={location.pathname.includes("/vision")?"w-11 pb-2":"w-7 pb-2"} src={location.pathname.includes("/vision")?"/vision_updated.svg":"/new1.svg"} alt="home logo" /></div>
                   <p className={location.pathname.includes("/vision")?"font-bold text-xs text-[#024D87]":"font-light text-xs"}>Vision</p>
                 </div>
               
@@ -112,7 +112,7 @@ const Sidebar = () => {
             <Link to="/optimus"><AccordionButton _hover={false} className="flex justify-center">
 
                 <div className={location.pathname.includes("/optimus")? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]":"w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                  <div className="w-full flex justify-center"><img className={location.pathname.includes("/optimus")?"w-6 pb-2":"w-9 pb-2"} src={location.pathname.includes("/optimus")?"/optimus_new.svg":"/new2.svg"} alt="home logo" /></div>
+                  <div className="w-full flex justify-center"><img className={location.pathname.includes("/optimus")?"w-7 pb-2":"w-9 pb-2"} src={location.pathname.includes("/optimus")?"/optimus_new.svg":"/new2.svg"} alt="home logo" /></div>
                   <p className={location.pathname.includes("/optimus")?"font-bold text-xs text-[#024D87]":"font-light text-xs"}>Optimus</p>
                 </div>
               
