@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './components/Main/Home';
+import Sizing from "./components/Sizing/Sizing"
 import Login from './components/Auth/Login';
 import { get_auth_status } from './redux/Auth/auth.selectors';
 import { useSelector } from 'react-redux';
@@ -57,8 +58,10 @@ function App() {
                       <Route path="/" element={<Navigate to="/intelliverse" />} />
                     )}       
                     <Route path="/intelliverse" element={<Home />} />
-                    <Route path="/advisor" element={<AiAdvisor />} />    
+                    <Route path="/advisor" element={<AiAdvisor />} /> 
                     <Route path="/blastfurnace" element={<BF_Dashboard />} />  
+                    <Route path="/intelliverse/Sizing" element={<Sizing/>} />
+
                   </Routes>
                 </div>
               </div>
