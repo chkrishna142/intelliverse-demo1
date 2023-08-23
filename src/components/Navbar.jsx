@@ -35,6 +35,9 @@ const Navbar = () => {
        
       </Flex>
       <Flex alignItems="center" marginRight="30px">
+        <img className='w-40 h-12' src="/verse.jpg" alt="heading"/>
+      </Flex>
+      <Flex alignItems="center" marginRight="30px">
         <div className="px-2 py-2 italic text-xl font-blue-">Steel Co.</div>
       </Flex>
       {/* <Heading

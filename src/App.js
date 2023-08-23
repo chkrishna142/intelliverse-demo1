@@ -51,16 +51,21 @@ function App() {
                       <Route
                         path="/"
                         element={
-                          <Navigate to={`/intelliverse`} />
+                          <Navigate to={`/home`} />
                         }
                       />
                     ) : (
-                      <Route path="/" element={<Navigate to="/intelliverse" />} />
+                      <Route path="/" element={<Navigate to="/home" />} />
                     )}       
-                    <Route path="/intelliverse" element={<Home />} />
+                    <Route path="/home" element={<Home state={"home"} />} />
+                    <Route path="/vision" element={<Home state={"vision"}/>} />
+                    <Route path="/optimus" element={<Home state={"optimus"}/>} />
                     <Route path="/advisor" element={<AiAdvisor />} /> 
-                    <Route path="/intelliverse/blastfurnace" element={<BF_Dashboard />} />  
-                    <Route path="/intelliverse/Sizing" element={<Sizing/>} />
+
+
+                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />  
+                    <Route path="/vision/Sizing" element={<Sizing/>} />
+
 
                   </Routes>
                 </div>
