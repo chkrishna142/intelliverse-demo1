@@ -59,7 +59,7 @@ function App() {
                     )}       
                     <Route path="/intelliverse" element={<Home />} />
                     <Route path="/advisor" element={<AiAdvisor />} /> 
-                    <Route path="/blastfurnace" element={<BF_Dashboard />} />  
+                    <Route path="/intelliverse/blastfurnace" element={<BF_Dashboard />} />  
                     <Route path="/intelliverse/Sizing" element={<Sizing/>} />
 
                   </Routes>

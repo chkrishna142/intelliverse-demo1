@@ -221,7 +221,6 @@ const Fuelrate = () => {
             <p
               style={{
                 color: "var(--primary-p-99, #6CA6FC)",
-                fontFamily: "Roboto",
                 fontSize: "18px",
                 fontStyle: "normal",
                 fontWeight: "500",
@@ -250,7 +249,6 @@ const Fuelrate = () => {
             <p
               style={{
                 color: "#FFF",
-                fontFamily: "Roboto",
                 fontSize: "18px",
                 fontStyle: "normal",
                 fontWeight: "400",
@@ -278,7 +276,6 @@ const Fuelrate = () => {
           <p
             style={{
               color: " var(--neutral-n-50, #79767D)",
-              fontFamily: "Roboto",
 
               fontStyle: "normal",
               fontWeight: 500,
@@ -297,7 +294,6 @@ const Fuelrate = () => {
                 width: "50%",
                 color: "var(--neutral-n-70, #AEA9B1)",
                 textAlign: "right",
-                fontFamily: "Poppins",
 
                 fontStyle: "normal",
                 fontWeight: 400,
@@ -312,7 +308,6 @@ const Fuelrate = () => {
                 width: "50%",
                 color: "var(--neutral-n-70, #AEA9B1)",
                 textAlign: "right",
-                fontFamily: "Poppins",
 
                 fontStyle: "normal",
                 fontWeight: 400,
