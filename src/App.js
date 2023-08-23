@@ -61,8 +61,11 @@ function App() {
                     <Route path="/vision" element={<Home state={"vision"}/>} />
                     <Route path="/optimus" element={<Home state={"optimus"}/>} />
                     <Route path="/advisor" element={<AiAdvisor />} /> 
+
+
                     <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />  
                     <Route path="/vision/Sizing" element={<Sizing/>} />
+
 
                   </Routes>
                 </div>

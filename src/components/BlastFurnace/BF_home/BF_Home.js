@@ -3,16 +3,15 @@ import { Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import Fuelrate from "./Fuelrate";
 import Production from "./Production";
+import Modelaccuracy from "../BF_Components/Modelaccuracy";
 
 const BF_Home = () => {
-
   return (
-    <div className="w-full h-full flex flex-col   ">
+    <div className="w-full h-[75vh] flex flex-col   overflow-y-auto">
       <div class="w-full h-full ">
         <p
           style={{
             color: "#024D87",
-            
 
             fontStyle: "normal",
             fontWeight: "600",
@@ -35,11 +34,11 @@ const BF_Home = () => {
           className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2 gap-[33px] sm:gap-[44px]   w-full h-auto justify-center "
         >
           <Fuelrate />
-         
+
           <Production />
         </div>
         <div className="flex w-full justify-end  h-[20%] ">
-          {/* <Modelaccuracy /> */}
+          <Modelaccuracy />
         </div>
       </div>
     </div>
