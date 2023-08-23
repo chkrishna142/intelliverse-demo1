@@ -14,6 +14,8 @@ import {
   FormLabel,
   VStack,
   Select,
+  Box,
+  Img,
 } from "@chakra-ui/react";
 const ConatctUs = () => {
   // handling button submit
@@ -30,12 +32,12 @@ const ConatctUs = () => {
       >
         {/* left container */}
         <VStack
-          height={"100vh"}
+          height={"80vh"}
           color={"white"}
           justifyContent={"flex-start"}
           width={"35%"}
           backgroundColor={"#034D87"}
-          gap={"130px"}
+          gap={"100px"}
           alignItems={"flex-start"}
           borderRadius={"5px"}
           px={"25px"}
@@ -59,7 +61,15 @@ const ConatctUs = () => {
               <Text>Greater Delhi Region, India</Text>
             </HStack>
           </Flex>
+
+          <Box position={"relative"} top={"-10"} left={"250"}>
+            <Img src="contactusellipse.svg" />
+          </Box>
+          <Box position={"absolute"} boxSize={"100px"} top={"71%"} left={"28%"}>
+            <Img src="contactusellipse.svg" />
+          </Box>
         </VStack>
+
         {/* right conatiner */}
         <Flex
           width={"65%"}
