@@ -5,8 +5,8 @@ const AiAdvisor = () => {
 
     return (
         <div className='h-screen'>
-            <div className='ml-36 mr-10 mt-6'>
-                <div className='rounded-md border border-[#3A74CA] h-40 bg-white w-full'>
+            <div className='mt-6'>
+                <div className='rounded-md border border-[#3A74CA] pb-5 bg-white w-full'>
                     <div className='grid grid-cols-8'>
                         <div className='col-span-1 m-10'>
                             <img src="/doc.svg" />

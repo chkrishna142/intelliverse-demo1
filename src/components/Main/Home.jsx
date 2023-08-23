@@ -1,10 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 
 
-const Home = () => {
+const Home = ({state}) => {
 
-    const [alert, setAlert] = useState(true)
+    const [alert, setAlert] = useState(false)
 
     return (
         <div className='h-screen'>
@@ -15,14 +15,14 @@ const Home = () => {
                 </div> : null}
             </div>
             <div>
-                <div className='border shadow-md mt-5 px-4 py-4 pb-10 pl-5 rounded-md'>
-                    <div className='mt-0 mr-3 -ml-2 flex justify-between  '>
-                        <img className='h-10' src="/vision.svg" />
+                {state === "vision" || state === "home" ? <div className='border shadow-md mt-5 px-4 py-4 pb-10 pl-5 rounded-md'>
+                    <div className='mt-2 mr-3 flex justify-between  '>
+                        <img className='h-6' src="/vision.svg" />
                         <div className='flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div>Add Use Case</div>
                     </div>
                     <div className=' w-full h-full ml-2'>
-                        <div className='mt-8 flex flex-wrap gap-8 text-sm items-center'>
-                            <Link to="/intelliverse/Sizing" style={{ textDecoration: 'none' }}>
+                        <div className='mt-5 flex flex-wrap gap-8 text-sm items-center'>
+                            <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>
                                 <div>
                                     <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                         <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">2</div></div>
@@ -90,13 +90,13 @@ const Home = () => {
                         </div> */}
                         </div>
                     </div>
-                </div>
+                </div>: null}
                 {/* <div className='mt-8 mb-8'>
                     <div style={{ height: '2px' }} className='w-full bg-gray-200 rounded-md'></div>
                 </div> */}
-                <div className='border shadow-md mt-4 px-4 py-4 pb-10 pl-5 rounded-md text-sm'>
+                {state === "optimus" ||state === "home" ? <div className='border shadow-md mt-4 px-4 py-4 pb-10 pl-5 rounded-md text-sm'>
                     <div className='mt-0 mr-3 -ml-2 flex justify-between '>
-                        <img className='h-7' src="/optimus.svg" />
+                        <img className='h-8' src="/optimus.svg" />
                         <div className='flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div>Add Use Case</div>
                     </div>
                     <div className='grid grid-cols-2 gap-2'>
@@ -155,7 +155,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>: null}
                 {/* <div className='w-full text-lg font-semibold mt-5 flex justify-center bg-[#CCEAFF] rounded-md shadow-md text-[#024D87]'>Scheduling</div> */}
                 {/* <div className='w-full text-lg font-bold'>Process Optimization</div> */}
                 {/* <div className=' w-full h-full mt-8 '>
