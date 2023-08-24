@@ -26,12 +26,15 @@ const NavBox = () => {
             marginLeft="127px"
 
         >
-            <input style={{width:'75vw'}} className="bg-white px-3 h-10 py-2 rounded-md shadow-md border  " placeholder="Search Intelliverse"/> 
+            <div style={{width:'75vw'}} className="bg-white px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
+            <img className="h-5" src="/search.svg" /> 
+            <input className="w-full focus:outline-none " placeholder="Search Intelliverse" />
+            </div>
             <div className="flex gap-5 items-center ml-5">
-                <img src="/bar.svg" />
-                <img src="/setting.svg" />
-                <img src="/notification.svg" />
-                <img src="/profile.svg" />
+                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/bar.svg" />
+                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/setting.svg" />
+                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/notification.svg" />
+                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/profile.svg" />
 
             </div>
             {/* <form style={{width:'70vw'}}>

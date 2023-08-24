@@ -18,8 +18,8 @@ const Sizing = () => {
   const [page, setPage] = useState("feed");
 
   return (
-    <div className="pl-5 pr-5 font-poppins flex flex-col rounded-lg">
-      <div className="flex justify-between mb-3 mt-3">
+    <div className="pl-5 pr-5  font-poppins flex flex-col rounded-lg">
+      <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
         </p>
