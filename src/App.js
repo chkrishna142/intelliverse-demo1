@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './components/Main/Home';
 import Sizing from "./components/Sizing/Sizing"
+import MaterialSelect from './components/Sizing/MaterialSelect';
 import Login from './components/Auth/Login';
 import { get_auth_status } from './redux/Auth/auth.selectors';
 import { useSelector } from 'react-redux';
@@ -63,8 +64,10 @@ function App() {
                     <Route path="/advisor" element={<AiAdvisor />} /> 
 
 
-                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />  
-                    <Route path="/vision/Sizing" element={<Sizing/>} />
+                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
+
+                    <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
+                    <Route path="/vision/Sizing/:material" element={<Sizing/>} />
 
 
                   </Routes>

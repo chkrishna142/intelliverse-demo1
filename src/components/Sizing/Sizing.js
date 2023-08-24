@@ -3,15 +3,25 @@ import { useState } from "react";
 import Feed from "./Tabs/Feed";
 import FeedLibrary from "./Tabs/FeedLibrary";
 import Alerts from "./Tabs/Alerts";
+import Report from "./Tabs/Report";
+
+const Capitalize = (str) => {
+  const arr = str.split(" ");
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  }
+  const str2 = arr.join(" ");
+  return str2;
+};
 
 const Sizing = () => {
   const [page, setPage] = useState("feed");
 
   return (
-    <div className="mt-[20px] pl-5 pr-5 font-poppins flex flex-col rounded-lg">
+    <div className="pl-5 pr-5 font-poppins flex flex-col rounded-lg">
       <div className="flex justify-between mb-3">
         <h1 className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-          {page.toUpperCase()}
+          {Capitalize(page)}
         </h1>
       </div>
       <Tabs>
@@ -20,7 +30,7 @@ const Sizing = () => {
             <Tab
               className={
                 page === "feed"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
               }
               onClick={() => setPage("feed")}
@@ -30,7 +40,7 @@ const Sizing = () => {
             <Tab
               className={
                 page === "alerts"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
               }
               onClick={() => setPage("alerts")}
@@ -40,7 +50,7 @@ const Sizing = () => {
             <Tab
               className={
                 page === "feed library"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
               }
               onClick={() => setPage("feed library")}
@@ -50,7 +60,7 @@ const Sizing = () => {
             <Tab
               className={
                 page === "analytics"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
               }
               onClick={() => setPage("analytics")}
@@ -60,7 +70,7 @@ const Sizing = () => {
             <Tab
               className={
                 page === "report"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
               }
               onClick={() => setPage("report")}
@@ -75,16 +85,16 @@ const Sizing = () => {
             <Feed />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts/>
+            <Alerts />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary/>
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-            <p>Hello</p>
+            <FeedLibrary />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <p>Hello</p>
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            <Report />
           </TabPanel>
         </TabPanels>
       </Tabs>
