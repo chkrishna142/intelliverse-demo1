@@ -125,24 +125,8 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
       });
       
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const flexDirection = windowWidth < 1200 ? "flex-col" : "flex-row";
-
   return (
-    <div className="flex flex-col w-[85vw] h-full bg-white p-4 rounded-xl border-2 shadow-md "> 
+    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md "> 
       {/* top */}
       <div class="flex justify-between w-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -162,8 +146,8 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
       </div>
       {/* bottom */}
       {isExpanded4 && (
-        <div className={`flex gap-[18px] ${flexDirection} h-auto w-full  `}>
-          <div className={`flex gap-[18px] ${flexDirection} h-auto  w-full`}>
+        <div className={`flex gap-[18px] h-auto w-full  `}>
+          <div className={`flex gap-[18px]  h-auto  w-full`}>
             {/* RAFT/Tuyere Velocity Trend*/}
             <div class="flex flex-col w-[35%] h-full p-4  gap-3 items-center  bg-white  rounded-xl  ">
               {/* top*/}
@@ -181,9 +165,7 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
                     </div>
                   </div>
                   <div
-                    className={`flex items-start gap-[2%] w-[80%] ${
-                      windowWidth < 577 ? "flex-col" : ""
-                    }  `}
+                    className={`flex items-start gap-[2%] w-[80%]  `}
                   >
                     {/* svg legends */}
                     <div className="flex gap-[2px] items-center justify-center">

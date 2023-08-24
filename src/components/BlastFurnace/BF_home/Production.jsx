@@ -84,11 +84,11 @@ const Production = () => {
   const [chart, setChart] = useState({
     series: [
       {
-        name: "Series 1",
+        name: "Current",
         data: [9500, 11000, 11500, 10500, 10000,9500],
       },
       {
-        name: "Series 2",
+        name: "Optimal",
         data: [10500,10500,10500,10500,10500,10500],
       },
     ],
@@ -192,7 +192,7 @@ const Production = () => {
 
         paddingBottom: "0px",
       }}
-      className="flex h-auto  pb-0 text-left flex-col items-end gap-4 w-[31vw]"
+      className="flex h-auto  pb-0 text-left flex-col items-end gap-4 w-[30vw]"
     >
       <div
         className="flex flex-col bg-blue-300 w-full h-auto items-center"

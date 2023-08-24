@@ -5,24 +5,12 @@ import RcawaterfallChart from "../../Charts/BF_Charts/RcawaterfallChart";
 
 
 function Rca({ isExpanded2, handleToggle2 }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
 
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const flexDirection = windowWidth < 1200 ? "flex-col" : "flex-row";
+  
 
   return (
-    <div className="flex flex-col w-[85vw] h-full bg-white p-4 rounded-xl border-2 shadow-md ">
+    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
       <div class="flex justify-between w-full">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -36,9 +24,7 @@ function Rca({ isExpanded2, handleToggle2 }) {
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
           </div>
           <div
-            className={`flex items-start gap-[2%] w-[80%] ${
-              windowWidth < 577 ? "flex-col" : ""
-            }  `}
+            className={`flex items-start gap-[2%] w-[80%]  `}
           >
             <div className="flex gap-[2px] items-center justify-center">
               <div className="flex gap-[2px] ">
@@ -65,7 +51,7 @@ function Rca({ isExpanded2, handleToggle2 }) {
       </div>
       {/* bottom */}
       {isExpanded2 && (
-        <div className={`flex gap-[18px] ${flexDirection} h-auto w-full`}>
+        <div className={`flex gap-[18px]  h-auto w-full`}>
             <RcawaterfallChart/>
             
          </div>

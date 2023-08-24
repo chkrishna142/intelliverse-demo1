@@ -39,11 +39,11 @@ const Fuelrate = () => {
   const [chart, setChart] = useState({
     series: [
       {
-        name: "Series 1",
+        name: "Current",
         data: [550, 540, 545, 565, 560, 540],
       },
       {
-        name: "Series 2",
+        name: "optimal",
         data: [548, 548, 548, 548, 548, 548],
       },
     ],
@@ -180,7 +180,7 @@ const Fuelrate = () => {
 
         marginTop: "10px",
       }}
-      class="flex w-[29vw]
+      class="flex w-[30vw]
    
        text-left pb-0 flex-col items-end   "
     >

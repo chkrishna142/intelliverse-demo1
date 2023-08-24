@@ -79,7 +79,7 @@ const StabilityandThermal = () => {
           </div>
         </TabList>
 
-        <TabPanels className="h-[65vh] ">
+        <TabPanels  >
           <TabPanel className="!pl-0 !pr-0">
           <StabilityInd isExpanded1={isExpanded1} handleToggle1={handleToggle1}/> 
           </TabPanel>
@@ -94,9 +94,9 @@ const StabilityandThermal = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <div class="flex justify-end ">
+      {/* <div class="flex justify-end ">
           <Modelaccuracy />
-        </div> 
+        </div>  */}
 
      
     </div>
