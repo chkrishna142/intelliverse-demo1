@@ -157,7 +157,7 @@ const Alerts = () => {
             <Tbody>
               {alerts.map((item, index) => {
                 return (
-                  <Tr key={index} className="!text-sm !text-[#3E3C42] !font-medium">
+                  <Tr key={index} className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white">
                     <Td className="cursor-pointer">{String(index + 1).padStart(2,'0')}</Td>
                     <Td className="cursor-pointer">{item.Plant}</Td>
                     <Td className="cursor-pointer">{item.Camera}</Td>

@@ -2,11 +2,11 @@ import { Select, Input } from "@chakra-ui/react";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import { useState } from "react";
 
-const VideoInputForm = () => {
+const VideoInputForm = ({setIsVideo}) => {
   const [selectedCam, setSelectedCam] = useState("");
   const cams = [1, 2, 3];
   return (
-    <div className="flex flex-col gap-8 w-[22vw]">
+    <div className="flex flex-col gap-8 w-[24vw] h-full">
       <div className="flex flex-col gap-6 items-center">
         <div className="flex flex-col gap-3 items-start w-full">
           <p className="text-[#938F96] text-sm font-medium">Select a plant</p>
@@ -60,7 +60,7 @@ const VideoInputForm = () => {
         </div>
       </div>
       <div className="flex justify-end">
-        <button className="p-[10px] pl-4 pr-4 text-base font-medium text-white bg-[#084298] rounded-[100px]">
+        <button className="p-[10px] pl-4 pr-4 text-base font-medium text-white bg-[#084298] rounded-[100px]" onClick={()=>setIsVideo(true)}>
           Generate Video
         </button>
       </div>
