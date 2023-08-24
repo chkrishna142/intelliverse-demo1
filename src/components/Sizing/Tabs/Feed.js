@@ -1,6 +1,6 @@
 import FeedCard from "../SizingComponents/FeedCard";
 import axios from "axios";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 const Feed = () => {
   const [plantData, setPlantData] = useState("");
@@ -25,7 +25,17 @@ const Feed = () => {
         console.log(error);
       });
   };
-  apiCall();
+
+  useEffect(() => {
+    apiCall()
+    const intervalId = setInterval(() => {
+      apiCall();
+    }, 30000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <div className="grid grid-cols-1 gap-4">
       {Object.keys(plantData).map(plant => {return (<FeedCard PlantName={plant} CamData={plantData[plant]['sinter']}/>)})}
