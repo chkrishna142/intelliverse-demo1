@@ -114,24 +114,11 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
     // ... and so on
   ];
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const flexDirection = windowWidth < 1200 ? "flex-col" : "flex-row";
 
   return (
-    <div className="flex flex-col w-[85vw] h-full bg-white p-4 rounded-xl border-2 shadow-md ">
+    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
       <div class="flex justify-between w-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">

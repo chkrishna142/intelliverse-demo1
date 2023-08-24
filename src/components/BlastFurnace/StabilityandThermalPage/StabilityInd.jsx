@@ -8,11 +8,7 @@ import RangeTable from "../../Charts/BF_Charts/RangeTable";
 // import LineAreaChart from "../Charts/LineAreaChart";
 
 function StabilityInd({ isExpanded1, handleToggle1 }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
+  
 
   const [Lineareachart, setLineareachart] = useState({
     series: [
@@ -41,6 +37,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
           
          
         ],
+
       },
       {
         type: "line",
@@ -74,8 +71,9 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         // height: 350,
         type: "rangeArea",
         animations: {
-          speed: 100,
+          speed: 400,
         },
+       
       },
       colors: ["rgba(105, 176, 75, 0.28)", "#3A74CA"],
       dataLabels: {
@@ -90,7 +88,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
       },
       stroke: {
         show: true,
-        curve: "smooth",
+        curve: "straight",
         lineCap: "butt",
         width: [0, 2], // Width for the rangeArea and line series
       },
@@ -105,23 +103,19 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
           sizeOffset: 5,
         },
       },
+      
+     
+     
     },
   });
 
 
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const flexDirection = windowWidth < 1200 ? "flex-col" : "flex-row";
 
   return (
-    <div class="flex flex-col w-[85vw] h-full bg-white p-4 rounded-xl border-2 shadow-md ">
+    
+    <div class="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top part */}
       <div class="flex justify-between items-start w-[100%]">
         {/* stability ind top */}
@@ -135,11 +129,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
             </div>
           </div>
           <div
-            className={`flex items-start gap-[2%] w-[80%]  ${
-              windowWidth < 465
-                ? "flex-col w-full mt-[10px]"
-                : "w-full mt-[10px]"
-            }  `}
+            className={`flex items-start gap-[2%] w-[80%]   `}
           >
            
           </div>
@@ -150,7 +140,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
       </div>
       {/* bottom part */}
       {isExpanded1 && (
-        <div className={`flex w-full gap-[18px] ${flexDirection} h-auto  transition-all duration-300 ${isExpanded1 ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0'}`}>
+        <div className={`flex w-full gap-[18px] h-auto  transition-all duration-300 ${isExpanded1 ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0'}`}>
           {/* guagechart component */}
           <div class="flex flex-col w-[20%] h-full p-2  gap-3 items-center  bg-white  rounded-xl shadow-md">
             <p class="text-[18px] font-semibold text-[#3E3C42]">
@@ -182,9 +172,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
                   <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">Bar</div>
                 </div>
                 <div
-                  className={`flex items-start gap-[2%] w-[80%] ${
-                    windowWidth < 577 ? "flex-col" : ""
-                  }  `}
+                  className={`flex items-start gap-[2%] w-[80%]  `}
                 >
                   <div className="flex gap-[2px] items-center justify-center">
                     <div className="flex gap-[2px] ">
