@@ -18,7 +18,7 @@ const Home = ({ state }) => {
                 {state === "vision" || state === "home" ? <div className='border shadow-md mt-5 px-4 py-4 pl-5 rounded-md'>
                     <div className='mt-2 mr-3 ml-3 flex justify-between  '>
                         <img className='h-6' src="/vision.svg" />
-                        <div className='flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div>Add Use Case</div>
+                        <div className='flex items-center gap-3 font-bold  text-white bg-[#3182CE] mt-3 px-2 py-2  border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
                     </div>
                     <div className=' w-full h-full ml-3 mb-5'>
                         <div className='mt-5 flex flex-wrap gap-8 text-sm items-center'>
@@ -94,7 +94,7 @@ const Home = ({ state }) => {
                     <div className='border shadow-md mt-4 px-4 py-4 pb-10 pl-5 rounded-md text-sm'>
                         <div className='mt-0 mr-3 -ml-0 flex justify-between '>
                             <img className='h-8' src="/optimus.svg" />
-                            <div className='flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div>Add Use Case</div>
+                            <div className='flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
                         </div>
                         <div className='grid grid-cols-2 gap-2'>
                             <div className='mt-2 border-r'>
