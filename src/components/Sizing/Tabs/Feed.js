@@ -10,33 +10,25 @@ const Feed = () => {
       clientId: "jspl",
       material: "sinter",
     });
-    const response = await fetch(
-      " https://intelliverse.backend-ripik.com/vision/v1/sizing/fetchOverviewAnalysis/",
+    const response = await axios.post(
+      " https://intelliverse.backend-ripik.com/vision/v1/sizing/fetchOverviewAnalysis/",requestData,
       {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
         },
-        method: "POST",
-        body: JSON.stringify({
-          clientId: "jspl",
-          material: "sinter",
-        }),
       }
-    )
-      .then((response) => {
-        console.log(response?.plants, "plants data");
+    ).then((response) => {
+        setPlantData(response.data.plants);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  // apiCall();
+  apiCall();
   return (
     <div className="grid grid-cols-1 gap-4">
-      <FeedCard />
-      <FeedCard />
-      <FeedCard />
+      {Object.keys(plantData).map(plant => {return (<FeedCard PlantName={plant} CamData={plantData[plant]['sinter']}/>)})}
     </div>
   );
 };
