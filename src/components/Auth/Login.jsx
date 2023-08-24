@@ -7,8 +7,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { login_action } from '../../redux/Auth/auth.actions';
 import axios from 'axios';
-import { Box, Select, background } from '@chakra-ui/react';
-import { Input, Dropdown, Button, Loader } from 'rsuite';
+import { Box, Select, background, Button,Spinner } from '@chakra-ui/react';
+import { Input, Dropdown, Loader } from 'rsuite';
 import OTPInput from 'react-otp-input';
 import { baseURL } from '../../index';
 import { EditIcon } from '@chakra-ui/icons';
@@ -17,7 +17,7 @@ import NavContext from '../NavContext';
 import { useContext } from 'react';
 
 const Login = () => {
-  
+
   const dispatch = useDispatch();
   const { setLogin } = useContext(NavContext)
   const { isAuth, default_plant } = useSelector(get_auth_status);
@@ -43,7 +43,7 @@ const Login = () => {
     setSendingOTP(false);
     let user_type = userType;
     // let email = emailRef?.current?.value;
-    localStorage.setItem('logged_in',true)
+    localStorage.setItem('logged_in', true)
     setLogin(true)
     dispatch(login_action({ email, password, user_type, plant }));
 
@@ -77,12 +77,12 @@ const Login = () => {
           }
         )
       })
-  
+
       if (data.status === 202) {
         setSentOTP(true);
         setEmail(emailRef.current?.value);
         setErrorOTP('');
-        
+
       }
     } catch (e) {
       setSendingOTP(false);
@@ -100,17 +100,17 @@ const Login = () => {
     setSendingOTP(true);
     sendOTPCall();
   };
- 
+
   return (
     <div className="bg-gradient-to-tl w-screen h-screen from-[#0B295E] to-[#3C8FD4]">
-      <Box className="absolute top-0 bottom-0 left-0 right-0 h-[70%] m-auto w-[80%] md:h-[65%] md:w-[50%] bg-white rounded-xl flex flex-row normal-case">
-        <Box className="lg:w-[60%] w-[100%] p-4 pb-0 flex flex-col justify-center gap-20 lg:gap-[25%]">
+      <div className="absolute top-0 bottom-0 left-0 right-0 h-[70%] m-auto w-[80%] md:h-[65%] md:w-[50%] bg-white rounded-xl flex flex-row normal-case">
+        <div className="lg:w-[60%] w-[100%] p-4 pb-0 flex flex-col justify-center gap-20 lg:gap-[25%]">
           <img
             src="ripik.svg"
             alt="Ripik Logo"
             className="h-[30px] lg:h-[40px] absolute top-[2%] justify-self-center self-center lg:top-4 lg:left-4 lg:justify-self-start lg:self-start "
           />
-          <Box className="self-center grid">
+          <div className="self-center grid">
             {sentOTP === false ? (
               <>
                 <p className="text-xl mb-6 text-center justify-self-center">
@@ -163,15 +163,15 @@ const Login = () => {
                   )}
                 </div> */}
 
-                <Button
-                  className="w-[200px] !rounded-full !justify-center !text-center "
+                <button
+                  className="w-[200px] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
                   onClick={handleSubmitForm}
                   style={{ textAlign: 'center' }}
-                  appearance="primary"
-                 
+                  
+
                 >
-                  {sendingOTP ? <Loader /> : 'Get OTP'}
-                </Button>
+                  {sendingOTP ? <Spinner /> : 'Get OTP'}
+                </button>
                 <p className="text-red-500">{errorOTP}</p>
               </>
             ) : (
@@ -207,43 +207,48 @@ const Login = () => {
                     // backgroundColor: '#f5f5f5',
                   }}
                   containerStyle={{
-                    width: '200px',
+                    width: '220px',
                     gap: '5px',
                     marginBottom: '32px',
                     justifySelf: 'center',
                   }}
                 />
-                <Button
-                  className="w-[200px] mt-2 !rounded-full !justify-self-center !text-center !justify-center"
+                <button
+                  className="w-[200px] ml-3 !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
                   onClick={handleSubmitOTP}
                   appearance='primary'
                 >
-                  {sendingOTP ? 'Login' : <Loader />}
-                </Button>
+                  {sendingOTP ? 'Login' : <Spinner />}
+                </button>
                 <p className="text-red-500">{errorOTP}</p>
               </>
             )}
-          </Box>
-          
-        </Box>
-        <Box className="bg-[#0b295e] flex flex-col w-0 lg:w-[40%] rounded-r-xl">
-          <img
-            src="loginT.svg"
-            className="top-1 left-[55%] right-0 absolute w-0 lg:w-[10%]"
+          </div>
+
+        </div>
+        <div className=' bg-[#0B295E] rounded-r-xl grid grid-rows-3'>
+          <div className='-ml-10'><img
+            src="/loginT.svg"
+            className=''
+
+            alt="login top svg"
+          /></div>
+          <div className='-mt-12'><img
+            src="/loginR.svg"
+            className='pl-10'
+
             alt="login top svg"
           />
-          <img
-            src="loginR.svg"
-            className="lg:w-[30%] right-0 top-[30%] w-0 absolute"
-            alt="Login right svg"
-          />
-          <img
-            src="loginB.svg"
-            className="lg:w-[10%] left-[60%] bottom-0 w-0 absolute"
-            alt="login bottom svg"
-          />
-        </Box>
-      </Box>
+          </div>
+          <div className='mt-24 pt-1'><img
+            src="/loginB.svg"
+            className=''
+
+            alt="login top svg"
+          /></div>
+
+        </div>
+      </div>
     </div>
   );
 };
