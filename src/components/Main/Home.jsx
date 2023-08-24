@@ -130,9 +130,9 @@ const Home = ({ state }) => {
                                     <div className='w-full flex justify-center text-gray-500 font-bold'>Process Optimization</div>
                                     <Link to="/optimus/blastfurnace" style={{ textDecoration: 'none' }}>
                                         <div>
-                                            <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer bg-gray-200  '>
+                                            <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer  '>
                                                 <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/furnace.svg" /></div>
-                                                <div className='w-full flex justify-center text-white  text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
+                                                <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div>
                                             </div>
                                             <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Blast Furnace </p></div>
                                         </div>
