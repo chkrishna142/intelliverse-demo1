@@ -95,7 +95,7 @@ const Sidebar = () => {
               </Link>
             </h2>
             <AccordionPanel className="-mt-2" pb={0}>
-              <Link to="/vision/Sizing"><div className={location.pathname==="/vision/Sizing"?"text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md":"text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"}>
+              <Link to="/vision/Sizing"><div className={location.pathname.includes("/vision/Sizing")?"text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md":"text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"}>
                 Sizing Tool
               </div>
               </Link>
