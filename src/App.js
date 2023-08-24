@@ -14,23 +14,24 @@ import AiAdvisor from './components/Main/AIAdvisor';
 import NavContext from './components/NavContext';
 import { useState } from 'react';
 import BF_Dashboard from './components/BlastFurnace/BF_Components/BF_Dashboard';
+import ConatctUs from "./components/ContactUs/ConatctUs";
+import NavBox from "./components/NavBox";
 
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
-  const [login, setLogin] = useState(false)
+  const [login, setLogin] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("logged_in")) {
-      setLogin(true)
+      setLogin(true);
     } else {
-      setLogin(false)
+      setLogin(false);
     }
-  }, [])
+  }, []);
 
- 
   return (
     <>
-      <NavContext.Provider value={{ setLogin}}>
+      <NavContext.Provider value={{ setLogin }}>
         <Box
           maxW="100vw"
           boxSizing="border-box"
@@ -41,11 +42,17 @@ function App() {
           {login ? (
             <>
               <Navbar />
+              <NavBox />
               <Sidebar />
-              <div className="overall_container" style={{ display: 'flex' }}>
+              <div className="overall_container" style={{ display: "flex" }}>
                 <div
                   className="routes_container"
-                  style={{ width: '100%', marginTop: '70px', marginLeft:'130px', marginRight:'40px' }}
+                  style={{
+                    width: "100%",
+                    marginTop: "105px",
+                    marginLeft: "130px",
+                    marginRight: "40px",
+                  }}
                 >
                   <Routes>
                     {default_plant?.length > 0 ? (
@@ -69,7 +76,7 @@ function App() {
                     <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
                     <Route path="/vision/Sizing/:material" element={<Sizing/>} />
 
-
+                    <Route path="/contactus" element={<ConatctUs />} />
                   </Routes>
                 </div>
               </div>

@@ -19,10 +19,10 @@ const Sizing = () => {
 
   return (
     <div className="pl-5 pr-5 font-poppins flex flex-col rounded-lg">
-      <div className="flex justify-between mb-3">
-        <h1 className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
+      <div className="flex justify-between mb-3 mt-3">
+        <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
-        </h1>
+        </p>
       </div>
       <Tabs>
         <TabList className="!flex !border-0">
