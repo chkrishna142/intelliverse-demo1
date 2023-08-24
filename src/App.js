@@ -14,6 +14,7 @@ import NavContext from "./components/NavContext";
 import { useState } from "react";
 import BF_Dashboard from "./components/BlastFurnace/BF_Components/BF_Dashboard";
 import ConatctUs from "./components/ContactUs/ConatctUs";
+import NavBox from "./components/NavBox";
 
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
@@ -40,13 +41,14 @@ function App() {
           {login ? (
             <>
               <Navbar />
+              <NavBox />
               <Sidebar />
               <div className="overall_container" style={{ display: "flex" }}>
                 <div
                   className="routes_container"
                   style={{
                     width: "100%",
-                    marginTop: "70px",
+                    marginTop: "105px",
                     marginLeft: "130px",
                     marginRight: "40px",
                   }}

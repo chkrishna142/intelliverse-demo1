@@ -12,14 +12,15 @@ const Navbar = () => {
       justify="space-between"
       w="100vw"
       m="auto"
-      shadow="md"
+    
       bgColor="white"
       position="fixed"
       top="0"
       zIndex="1000000000"
+      className="border-b"
       align="center"
       left="0"
-      borderRadius="0px 0px 12px 12px"
+     
     >
       <Flex alignItems="center" marginLeft="10px"
         style={{
@@ -37,7 +38,7 @@ const Navbar = () => {
       <Flex alignItems="center" marginRight="30px">
         <img className='w-40 h-12' src="/verse.jpg" alt="heading"/>
       </Flex>
-      <Flex alignItems="center" marginRight="30px">
+      <Flex alignItems="center" marginRight="30 px">
         <div className="px-2 py-2 italic text-xl font-blue-">Steel Co.</div>
       </Flex>
       {/* <Heading
