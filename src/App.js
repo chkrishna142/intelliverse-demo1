@@ -55,18 +55,19 @@ function App() {
                     {default_plant?.length > 0 ? (
                       <Route
                         path="/"
-                        element={<Navigate to={`/intelliverse`} />}
+                        element={
+                          <Navigate to={`/home`} />
+                        }
                       />
                     ) : (
-                      <Route
-                        path="/"
-                        element={<Navigate to="/intelliverse" />}
-                      />
-                    )}
-                    <Route path="/intelliverse" element={<Home />} />
-                    <Route path="/advisor" element={<AiAdvisor />} />
-                    <Route path="/blastfurnace" element={<BF_Dashboard />} />
-                    <Route path="/intelliverse/Sizing" element={<Sizing />} />
+                      <Route path="/" element={<Navigate to="/home" />} />
+                    )}       
+                    <Route path="/home" element={<Home state={"home"} />} />
+                    <Route path="/vision" element={<Home state={"vision"}/>} />
+                    <Route path="/optimus" element={<Home state={"optimus"}/>} />
+                    <Route path="/advisor" element={<AiAdvisor />} /> 
+                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />  
+                    <Route path="/vision/Sizing" element={<Sizing/>} />
                     <Route path="/contactus" element={<ConatctUs />} />
                   </Routes>
                 </div>

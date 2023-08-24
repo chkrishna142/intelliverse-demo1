@@ -231,7 +231,7 @@ const Production = () => {
             <p
               style={{
                 color: "var(--primary-p-99, #6CA6FC)",
-                fontFamily: "Roboto",
+               
                 fontSize: "18px",
                 fontStyle: "normal",
                 fontWeight: "500",
@@ -291,7 +291,7 @@ const Production = () => {
                 style={{
                   fontSize: "18px",
                   width: "58px",
-                  fontFamily: "Roboto",
+                  
                   // marginLeft: "8px",
                 }}
               >
@@ -315,7 +315,7 @@ const Production = () => {
           <p
             style={{
               color: " var(--neutral-n-50, #79767D)",
-              fontFamily: "Roboto",
+              
 
               fontStyle: "normal",
               fontWeight: 500,
@@ -334,7 +334,7 @@ const Production = () => {
                 width: "50%",
                 color: "var(--neutral-n-70, #AEA9B1)",
                 textAlign: "right",
-                fontFamily: "Poppins",
+                
 
                 fontStyle: "normal",
                 fontWeight: 400,
@@ -349,7 +349,7 @@ const Production = () => {
                 width: "50%",
                 color: "var(--neutral-n-70, #AEA9B1)",
                 textAlign: "right",
-                fontFamily: "Poppins",
+                
 
                 fontStyle: "normal",
                 fontWeight: 400,

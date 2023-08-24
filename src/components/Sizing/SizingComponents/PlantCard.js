@@ -10,8 +10,8 @@ const PlantCard = () => {
         <p className="p-1 pl-2 pr-2 text-sm text-[#DC362E]">1 alert</p>
       </div>
       <div className="flex justify-between items-center">
-        <div className="w-[18vw] object-cover text-center">
-          <img className="rounded-lg" src="https://media.istockphoto.com/id/1166589188/photo/mine-supervisor-walking-beside-raw-coal-ore-being-moved-and-transported-on-a-conveyor-belt.jpg?s=612x612&w=0&k=20&c=3XcI1vG0M3C8p018r0jrlCDCdLJiT3iYUmrcjZIqW9o=" />
+        <div className="text-center">
+          <img className="h-[26vh] rounded-lg" src="https://media.istockphoto.com/id/1166589188/photo/mine-supervisor-walking-beside-raw-coal-ore-being-moved-and-transported-on-a-conveyor-belt.jpg?s=612x612&w=0&k=20&c=3XcI1vG0M3C8p018r0jrlCDCdLJiT3iYUmrcjZIqW9o=" alt="no Support"/>
         </div>
         <CustomSizingBar />
       </div>

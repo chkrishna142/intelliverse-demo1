@@ -2,6 +2,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
 import Feed from "./Tabs/Feed";
 import FeedLibrary from "./Tabs/FeedLibrary";
+import Alerts from "./Tabs/Alerts";
 
 const Sizing = () => {
   const [page, setPage] = useState("feed");
@@ -74,7 +75,7 @@ const Sizing = () => {
             <Feed />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <p>Hello</p>
+            <Alerts/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <FeedLibrary/>
