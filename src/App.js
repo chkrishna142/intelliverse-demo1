@@ -16,6 +16,7 @@ import { useState } from 'react';
 import BF_Dashboard from './components/BlastFurnace/BF_Components/BF_Dashboard';
 import ConatctUs from "./components/ContactUs/ConatctUs";
 import NavBox from "./components/NavBox";
+import Demo from './components/Main/Demo';
 
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
@@ -69,14 +70,11 @@ function App() {
                     <Route path="/vision" element={<Home state={"vision"}/>} />
                     <Route path="/optimus" element={<Home state={"optimus"}/>} />
                     <Route path="/advisor" element={<AiAdvisor />} /> 
-
-
                     <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
-
                     <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
                     <Route path="/vision/Sizing/:material" element={<Sizing/>} />
-
                     <Route path="/contactus" element={<ConatctUs />} />
+                    <Route path="/bookdemo" element={<Demo />} />
                   </Routes>
                 </div>
               </div>
