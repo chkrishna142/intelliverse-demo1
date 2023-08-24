@@ -5,9 +5,7 @@ import FuelrateTable from "../../Charts/BF_Charts/DashboardTable";
 import DashboardTable from "../../Charts/BF_Charts/DashboardTable";
 import { type } from "@testing-library/user-event/dist/type";
 
-
-
-const Fuelrate = ({data}) => {
+const Fuelrate = ({ data }) => {
   const current = new Date();
 
   // Format the date
@@ -26,8 +24,6 @@ const Fuelrate = ({data}) => {
   const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
 
- 
-
   const lineStyle = {
     width: "35%",
     height: "1px",
@@ -36,17 +32,31 @@ const Fuelrate = ({data}) => {
 
   // line chart data
 
-  console.log("table====>", data.chart)
+  const [alertS, setAlertState] = useState(0);
+  let alertState = 0;
+
+  const handleAlert = () => {
+    alertState = alertState + 1;
+    console.log("alert increased", alertState);
+  };
+
+  useEffect(() => {
+    setAlertState(alertState);
+  }, [alertState]);
+
+  const optimalValue = data.chart.optimal_value;
+  const current_values = data.chart.values;
+  const timeArray = data.chart.times;
 
   const [chart, setChart] = useState({
     series: [
       {
         name: "Current",
-        data: [550, 540, 545, 565, 560, 540],
+        data: current_values,
       },
       {
         name: "optimal",
-        data: [548, 548, 548, 548, 548, 548],
+        data: Array(data.chart.values.length).fill(optimalValue),
       },
     ],
 
@@ -88,14 +98,32 @@ const Fuelrate = ({data}) => {
         size: 1,
       },
       xaxis: {
-        categories: [
-          "11 pm",
-          "11:10 pm",
-          "11:20 pm",
-          "11:30 pm",
-          "11:40 pm",
-          "11:50 pm",
-        ],
+        categories: timeArray,
+        // [
+        //   "11 pm",
+        //   "11:10 pm",
+        //   "11:20 pm",
+        //   "11:30 pm",
+        //   "11:40 pm",
+        //   "11:50 pm",
+        // ]
+        labels: {
+          show: true,
+          rotate: -60,
+          rotateAlways: false,
+          hideOverlappingLabels: true,
+          showDuplicates: false,
+          trim: false,
+          minHeight: undefined,
+
+          style: {
+            colors: [],
+            fontSize: "9px",
+            // fontFamily: 'Helvetica, Arial, sans-serif',
+            fontWeight: 300,
+            cssClass: "apexcharts-xaxis-label",
+          },
+        },
 
         // title: {
         //   text: "Month",
@@ -141,7 +169,7 @@ const Fuelrate = ({data}) => {
 
   // tabel
   const [fuelTabel, setFuelTabel] = useState([]);
- 
+
   //  console.log("table",fuelTabel)
 
   // const [fuelTabel, setFuelTabel] = useState([
@@ -180,7 +208,6 @@ const Fuelrate = ({data}) => {
   return (
     <div
       style={{
-       
         borderRadius: "12px",
 
         marginTop: "10px",
@@ -237,40 +264,89 @@ const Fuelrate = ({data}) => {
               545 kg/tHM
             </p>
           </div>
+          {/* condition for numbers of alert or optimal  */}
 
-          <div
-            style={{
-              width: "133px",
-              height: "44px",
-              borderRadius: "8px",
-              background: "#69B04B",
-              alignItem: "center",
-              justifyContent: "center",
-            }}
-            class=" flex p-6 px-8 items-center gap-12 "
-          >
-            <CheckCircleOutlineIcon
-              style={{ width: "38px", height: "38px", color: "#FFF" }}
-            />
-            <p
+          {alertS === 0 ? (
+            // show optimal
+            <div
               style={{
-                color: "#FFF",
-                fontSize: "18px",
-                fontStyle: "normal",
-                fontWeight: "400",
-                lineHeight: "normal",
-
-                width: "120%",
-                marginLeft: "-35px",
+                width: "133px",
+                height: "44px",
+                borderRadius: "8px",
+                background: "#69B04B",
+                alignItem: "center",
+                justifyContent: "center",
               }}
+              class=" flex p-6 px-8 items-center gap-12 "
             >
-              Optimal
-            </p>
-          </div>
+              <CheckCircleOutlineIcon
+                style={{ width: "38px", height: "38px", color: "#FFF" }}
+              />
+              <p
+                style={{
+                  color: "#FFF",
+                  fontSize: "18px",
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  lineHeight: "normal",
+
+                  width: "120%",
+                  marginLeft: "-35px",
+                }}
+              >
+                Optimal
+              </p>
+            </div>
+          ) : (
+            //  alert
+            <div
+              style={{
+                width: "121px",
+                height: "44px",
+                borderRadius: "8px",
+                background: "var(--error-e-50, #DC362E)",
+                alignItem: "center",
+                justifyContent: "center",
+              }}
+              className=" flex p-6 px-8 items-center gap-2  "
+            >
+              <svg
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  flexShrink: "0",
+                  // marginLeft: "-20px",
+                }}
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewdiv="0 0 32 32"
+                fill="none"
+              >
+                <path
+                  d="M15.9997 8.65334L26.0397 26H5.95967L15.9997 8.65334ZM15.9997 3.33334L1.33301 28.6667H30.6663L15.9997 3.33334ZM17.333 22H14.6663V24.6667H17.333V22ZM17.333 14H14.6663V19.3333H17.333V14Z"
+                  fill="white"
+                />
+              </svg>
+              <div>
+                <p
+                  className="flex items-center text-white font-roboto text-base font-normal "
+                  style={{
+                    fontSize: "18px",
+                    width: "58px",
+
+                    // marginLeft: "8px",
+                  }}
+                >
+                  {alertS} Alert
+                </p>
+              </div>
+            </div>
+          )}
         </div>
         {/* chart part */}
         <div class="w-[95%] h-[200px] ">
-          <Linechart  chart={chart}/>
+          <Linechart chart={chart} />
         </div>
 
         {/* mid part of div */}
@@ -327,7 +403,11 @@ const Fuelrate = ({data}) => {
         </div>
         {/* Tabel */}
         <div class="w-full  p-2 ">
-          <DashboardTable rowArray={data.data}  tabelname={"fuelrate"} />
+          <DashboardTable
+            rowArray={data.data}
+            handleAlert={handleAlert}
+            tabelname={"fuelrate"}
+          />
         </div>
         {/* forward button */}
         <div

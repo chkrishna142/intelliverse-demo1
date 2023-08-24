@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Fuelrate from "./Fuelrate";
 import Production from "./Production";
 import Modelaccuracy from "../BF_Components/Modelaccuracy";
+import Averagepar from "./Averagepar";
 
 const BF_Home = () => {
   const [fetcheddata, setFetcheddata] = useState();
@@ -51,7 +52,7 @@ const BF_Home = () => {
   
              <Production data={fetcheddata?.tools.burden_production}/>
   
-           {/* <Production /> */}
+            <Averagepar/>
           </div>
           <div className="flex w-full justify-end  h-[20%]">
             <Modelaccuracy />
