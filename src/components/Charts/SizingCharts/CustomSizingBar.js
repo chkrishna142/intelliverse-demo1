@@ -9,7 +9,7 @@ const CustomSizingBar = () => {
   return (
     <div className="flex flex-col gap-4 min-w-[13vw]">
       <p className="text-base text-black">Size Distribution</p>
-      <div className="flex flex-col h-[20vh]">
+      <div className="flex flex-col h-[30vh]">
         <div style={{ height: `${a}%` }} className="flex gap-3">
           <div className="w-[50%] lg:w-[6vw] bg-[#ef6f12] rounded-tr-md rounded-tl-md text-white flex justify-center text-xs items-center">
             {isSmall ? `${a}%` : ""}

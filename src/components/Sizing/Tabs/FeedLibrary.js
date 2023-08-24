@@ -9,7 +9,7 @@ const FeedLibrary = () => {
       <div className="flex gap-0 w-full">
         <div
           className={`flex items-center justify-center w-full p-2 cursor-pointer ${
-            page === "photo gallery" && "bg-[#e1e9f6]"
+            page === "photo gallery" && "bg-white rounded-tl-xl"
           }`}
           onClick={() => setPage("photo gallery")}
         >
@@ -25,7 +25,7 @@ const FeedLibrary = () => {
         </div>
         <div
           className={`flex items-center justify-center w-full p-2 cursor-pointer ${
-            page === "video gallery" && "bg-[#e1e9f6]"
+            page === "video gallery" && "bg-white rounded-tr-xl"
           }`}
           onClick={() => setPage("video gallery")}
         >

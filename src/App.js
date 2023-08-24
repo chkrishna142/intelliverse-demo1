@@ -1,18 +1,19 @@
-import { Box } from "@chakra-ui/layout";
-import "./App.css";
-import Navbar from "./components/Navbar";
-import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./components/Main/Home";
-import Sizing from "./components/Sizing/Sizing";
-import Login from "./components/Auth/Login";
-import { get_auth_status } from "./redux/Auth/auth.selectors";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import Sidebar from "./components/Sidebar/Sidebar";
-import AiAdvisor from "./components/Main/AIAdvisor";
-import NavContext from "./components/NavContext";
-import { useState } from "react";
-import BF_Dashboard from "./components/BlastFurnace/BF_Components/BF_Dashboard";
+import { Box } from '@chakra-ui/layout';
+import './App.css';
+import Navbar from './components/Navbar';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Home from './components/Main/Home';
+import Sizing from "./components/Sizing/Sizing"
+import MaterialSelect from './components/Sizing/MaterialSelect';
+import Login from './components/Auth/Login';
+import { get_auth_status } from './redux/Auth/auth.selectors';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import Sidebar from './components/Sidebar/Sidebar';
+import AiAdvisor from './components/Main/AIAdvisor';
+import NavContext from './components/NavContext';
+import { useState } from 'react';
+import BF_Dashboard from './components/BlastFurnace/BF_Components/BF_Dashboard';
 import ConatctUs from "./components/ContactUs/ConatctUs";
 import NavBox from "./components/NavBox";
 
@@ -68,8 +69,13 @@ function App() {
                     <Route path="/vision" element={<Home state={"vision"}/>} />
                     <Route path="/optimus" element={<Home state={"optimus"}/>} />
                     <Route path="/advisor" element={<AiAdvisor />} /> 
-                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />  
-                    <Route path="/vision/Sizing" element={<Sizing/>} />
+
+
+                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
+
+                    <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
+                    <Route path="/vision/Sizing/:material" element={<Sizing/>} />
+
                     <Route path="/contactus" element={<ConatctUs />} />
                   </Routes>
                 </div>
