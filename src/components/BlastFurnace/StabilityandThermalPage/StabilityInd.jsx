@@ -37,6 +37,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
           
          
         ],
+
       },
       {
         type: "line",
@@ -70,8 +71,9 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         // height: 350,
         type: "rangeArea",
         animations: {
-          speed: 100,
+          speed: 400,
         },
+       
       },
       colors: ["rgba(105, 176, 75, 0.28)", "#3A74CA"],
       dataLabels: {
@@ -86,7 +88,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
       },
       stroke: {
         show: true,
-        curve: "smooth",
+        curve: "straight",
         lineCap: "butt",
         width: [0, 2], // Width for the rangeArea and line series
       },
@@ -101,6 +103,9 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
           sizeOffset: 5,
         },
       },
+      
+     
+     
     },
   });
 
@@ -109,6 +114,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
 
 
   return (
+    
     <div class="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top part */}
       <div class="flex justify-between items-start w-[100%]">

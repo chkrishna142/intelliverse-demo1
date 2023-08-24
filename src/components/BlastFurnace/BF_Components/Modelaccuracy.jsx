@@ -23,7 +23,7 @@ function Modelaccuracy() {
     // background: "#EDEFF5",
   };
   return (
-    <div>
+    <div className="mt-[20px] mb-[30px] ">
     <div style={componentStyle} class="bg-transparent ">
       <div
         style={{
@@ -38,7 +38,7 @@ function Modelaccuracy() {
         <p
           style={{
             color: "var(--neutral-n-60, #938F96)",
-            fontFamily: "Poppins",
+           
             fontSize: "14px",
             fontStyle: "normal",
             fontWeight: 400,
@@ -139,7 +139,7 @@ function Modelaccuracy() {
             <p
               style={{
                 color: "var(--neutral-n-99, #FAFAFA)",
-                fontFamily: "Poppins",
+              
                 fontSize: "12px",
                 fontStyle: "normal",
                 fontWeight: 500,
@@ -166,7 +166,7 @@ function Modelaccuracy() {
           style={{
             color: "var(--m-3-sys-light-on-primary, #FFF)",
             textAlign: "center",
-            fontFamily: "Poppins",
+           
             fontSize: "16px",
             fontStyle: "normal",
             fontWeight: 500,

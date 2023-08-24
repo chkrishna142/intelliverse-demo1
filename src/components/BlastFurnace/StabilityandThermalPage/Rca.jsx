@@ -4,9 +4,9 @@ import RcawaterfallChart from "../../Charts/BF_Charts/RcawaterfallChart";
 
 
 
-function Rca({ isExpanded2, handleToggle2 }) {
+function Rca({ isExpanded2, handleToggle2 ,series,options}) {
   
-
+ 
   
 
   return (
@@ -52,7 +52,7 @@ function Rca({ isExpanded2, handleToggle2 }) {
       {/* bottom */}
       {isExpanded2 && (
         <div className={`flex gap-[18px]  h-auto w-full`}>
-            <RcawaterfallChart/>
+            <RcawaterfallChart series={series} options={options}/>
             
          </div>
       )}

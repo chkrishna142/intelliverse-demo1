@@ -118,7 +118,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
 
 
   return (
-    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl shadow-md ">
+    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
       <div class="flex justify-between w-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">

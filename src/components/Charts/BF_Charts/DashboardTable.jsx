@@ -50,34 +50,29 @@ export default function DashboardTable({
   setAlertstate,
 }) {
   function isLessRange(currentValue, optimalRange) {
-    const [min, max] = optimalRange
-      .split("-")
-      .map((value) => parseFloat(value));
-
+    const [min, max] = optimalRange.map(value => parseFloat(value));
     return currentValue < min;
   }
+  
 
   function isHighRange(currentValue, optimalRange) {
-    const [min, max] = optimalRange
-      .split("-")
-      .map((value) => parseFloat(value));
-
+    const [min, max] = optimalRange.map(value => parseFloat(value));
     return currentValue > max;
   }
+  
 
   function isOutOfRange(currentValue, optimalRange) {
-    const [min, max] = optimalRange
-      .split("-")
-      .map((value) => parseFloat(value));
-    if (currentValue < min || currentValue > max) {
-    }
-
+    const [min, max] = optimalRange.map(value => parseFloat(value));
+    
     return currentValue < min || currentValue > max;
   }
 
-  console.log(alerts);
+ 
+
+  
 
   return (
+   
     <div width="100%" className="w-full ">
       <table
         style={{
@@ -93,83 +88,96 @@ export default function DashboardTable({
         }}
         size="sm"
       >
-        <tr style={{ }}>
+        <tr style={{}}>
           <th className="w-[100px]"></th>
-          <th style={{textAlign:"center",width:"80px",  }} className=" ">
+          <th style={{ textAlign: "center", width: "80px" }} className=" ">
             <p className="text-xs md:text-xs lg:text-xs xl:text-[10px]  ">
               Current
             </p>
           </th>
-          <th style={{textAlign:"right", width:"100px" }} className=" ">
+          <th style={{ textAlign: "right", width: "100px" }} className=" ">
             <p className="text-[#084298] text-xs md:text-xs lg:text-xs xl:text-[10px]   ">
               Optimal Range
             </p>
           </th>
-          <th style={{textAlign:"right", width:"80px" }} className=" ">
+          <th style={{ textAlign: "right", width: "80px" }} className=" ">
             <p className="text-[#084298] text-xs md:text-xs lg:text-xs xl:text-[10px] ">
               Impact &nbsp;{tabelname === "fuelrate" ? "(Kg)" : "(TPD)"}
             </p>
           </th>
         </tr>
-
+        
         {rowArray.map((row, index) => (
           <>
             <tr
               key={row.name}
               // height={"100px"}
-              
-            
             >
               <td
-               
                 style={{
-                  border: isOutOfRange(row.current, row.optimalRange)
+                  position: "relative",
+                  border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
 
-                  borderRight: isOutOfRange(row.current, row.optimalRange)
+                  borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
-                  borderRight: isOutOfRange(row.current, row.optimalRange)
+                  borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
-                  borderRadius: isOutOfRange(row.current, row.optimalRange)
+                  borderRadius: isOutOfRange(row.current, row.optimal_range)
                     ? "10px 0 0 0 "
                     : "",
-                  padding:"7px",
+
+                  padding: "7px",
                   borderBottom: "none",
                   whiteSpace: "normal", // Allow the text to wrap
                   overflowWrap: "break-word", // Break words if needed
                 }}
               >
+                {isOutOfRange(row.current, row.optimal_range) && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: 7,
+                      left: -2,
+                      height: "calc(100% + 10px)", // Extend height by 10px
+                      width: "2px", // Width of the left border
+                      backgroundColor: "#E46962", // Border color
+                      content: '""',
+                    }}
+                  />
+                )}
                 <p className="text-[#938F96] w-[82px] text-[13px] font-medium text-xs md:text-xs lg:text-xs xl:text-[10px]">
                   {" "}
                   {row.name}
                 </p>
               </td>
               <td
-               
                 style={{
                   // backgroundColor: "#E46962",
                   // color: "#FAFAFA",
-                  border: isOutOfRange(row.current, row.optimalRange)
+                  border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                    textAlign:"right",
+                  textAlign: "right",
                   // borderRadius: ' 0 0 10px 10px',
-                  borderRight: isOutOfRange(row.current, row.optimalRange)
+                  borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
-                  borderLeft: isOutOfRange(row.current, row.optimalRange)
+                  borderLeft: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
                   borderBottom: "none",
-                 
+                  whiteSpace: "normal", // Allow the text to wrap
+                  overflowWrap: "break-word", // Break words if needed
                 }}
+               
               >
                 <p
                   className={`font-semibold w-[40px] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  ${
-                    isOutOfRange(row.current, row.optimalRange)
+                    isOutOfRange(row.current, row.optimal_range)
                       ? "text-red-500"
                       : ""
                   }`}
@@ -178,81 +186,92 @@ export default function DashboardTable({
                 </p>
               </td>
               <td
-              
                 style={{
                   // backgroundColor: "#E46962",
                   // color: "#FAFAFA",
-                  border: isOutOfRange(row.current, row.optimalRange)
+                  border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                    textAlign:"right",
+                  textAlign: "right",
                   // borderRadius: ' 0 0 10px 10px',
-                  borderRight: isOutOfRange(row.current, row.optimalRange)
+                  borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
-                  borderLeft: isOutOfRange(row.current, row.optimalRange)
+                  borderLeft: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
                   borderBottom: "none",
-                  width:"100px"
+                  width: "100px",
                 }}
               >
                 <p className=" text-[#69B04B]  w-[80px] text-xs md:text-xs lg:text-xs xl:text-[12px]">
-                  {row.optimalRange}
+                  {row.optimal_range[0]}-{row.optimal_range[1]}
                 </p>{" "}
               </td>
               <td
-               
                 style={{
-                  border: isOutOfRange(row.current, row.optimalRange)
+                  position: "relative",
+                  border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                    textAlign:"right",
+                  textAlign: "right",
 
-                  borderRight: isOutOfRange(row.current, row.optimalRange)
+                  borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                  borderLeft: isOutOfRange(row.current, row.optimalRange)
+                  borderLeft: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
                     : "none",
-                  borderRadius: isOutOfRange(row.current, row.optimalRange)
+                  borderRadius: isOutOfRange(row.current, row.optimal_range)
                     ? " 0 10px 0 0 "
                     : "",
                   borderBottom: "none",
-                  width:"80px",
-                  padding:"7px",
+                  width: "80px",
+                  padding: "7px",
                 }}
               >
-                 <p
+                {isOutOfRange(row.current, row.optimal_range) && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: 6,
+                      left: "100%", // Position at the right edge
+                      height: "calc(100% + 10px)", // Extend height by 10px
+                      width: "2px", // Width of the right border
+                      backgroundColor: "#E46962", // Border color
+                      content: '""',
+                    }}
+                  />
+                )}
+                <p
                   className={`font-semibold w-[40px] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  `}
                 >
                   {row.impact}
                 </p>
-                
               </td>
             </tr>
 
-            {isOutOfRange(row.current, row.optimalRange) && (
-              <tr style={{ height: "80px", }}>
+            {isOutOfRange(row.current, row.optimal_range) && (
+              <tr style={{ height: "80px" }}>
                 <td
                   colSpan={4}
                   style={{
                     backgroundColor: "#E46962",
                     color: "#FAFAFA",
-                    padding:"20px",
+                    padding: "20px",
                     borderRadius: " 0 0 10px 10px",
                   }}
                 >
                   Recommendation
-                  {isLessRange(row.current, row.optimalRange) && (
+                  {isLessRange(row.current, row.optimal_range) && (
                     <p className="text-sm">
-                      Increase {row.name} to {row.optimalRange}
+                      Increase {row.name} to {row.optimal_range[0]}- {row.optimal_range[1]}
                     </p>
                   )}
-                  {isHighRange(row.current, row.optimalRange) && (
+                  {isHighRange(row.current, row.optimal_range) && (
                     <p>
-                      {/* Decrease {row.name} to {row.optimalRange} */}
-                      Decrease {row.name} to {row.optimalRange}
+                      {/* Decrease {row.name} to {row.optimal_range} */}
+                      Decrease {row.name} to {row.optimal_range[0]}- {row.optimal_range[1]}
                     </p>
                   )}
                 </td>
@@ -260,6 +279,12 @@ export default function DashboardTable({
             )}
           </>
         ))}
+
+
+       
+
+
+       
       </table>
     </div>
   );

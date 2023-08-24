@@ -3,10 +3,11 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import FuelrateTable from "../../Charts/BF_Charts/DashboardTable";
 import DashboardTable from "../../Charts/BF_Charts/DashboardTable";
+import { type } from "@testing-library/user-event/dist/type";
 
 
 
-const Fuelrate = () => {
+const Fuelrate = ({data}) => {
   const current = new Date();
 
   // Format the date
@@ -25,8 +26,7 @@ const Fuelrate = () => {
   const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
 
-  console.log("date===", formattedDate); // Output: 17 AUG 23
-  console.log("time", formattedTime); // Output: 11:06 am
+ 
 
   const lineStyle = {
     width: "35%",
@@ -35,6 +35,8 @@ const Fuelrate = () => {
   };
 
   // line chart data
+
+  console.log("table====>", data.data)
 
   const [chart, setChart] = useState({
     series: [
@@ -138,39 +140,42 @@ const Fuelrate = () => {
   });
 
   // tabel
+  const [fuelTabel, setFuelTabel] = useState([]);
+ 
+  //  console.log("table",fuelTabel)
 
-  const [fuelTabel, setFuelTabel] = useState([
-    {
-      name: "Solution Loss Carbon",
-      current: 60,
-      optimalRange: "50-80",
-      impact: "-",
-    },
-    {
-      name: "Reduction Indirect",
-      current: 66,
-      optimalRange: "65-70",
-      impact: "-",
-    },
-    {
-      name: "Flame Temperature ",
-      current: 2290,
-      optimalRange: "2280-2375",
-      impact: "-",
-    },
-    {
-      name: "etaCO",
-      current: 0.47,
-      optimalRange: "0.46-0.48",
-      impact: "-",
-    },
-    {
-      name: "Reduction Direct",
-      current: 34,
-      optimalRange: "30-35",
-      impact: "-",
-    },
-  ]);
+  // const [fuelTabel, setFuelTabel] = useState([
+  //   {
+  //     name: "Solution Loss Carbon",
+  //     current: 60,
+  //     optimalRange: "50-80",
+  //     impact: "-",
+  //   },
+  //   {
+  //     name: "Reduction Indirect",
+  //     current: 66,
+  //     optimalRange: "65-70",
+  //     impact: "-",
+  //   },
+  //   {
+  //     name: "Flame Temperature ",
+  //     current: 2290,
+  //     optimalRange: "2280-2375",
+  //     impact: "-",
+  //   },
+  //   {
+  //     name: "etaCO",
+  //     current: 0.47,
+  //     optimalRange: "0.46-0.48",
+  //     impact: "-",
+  //   },
+  //   {
+  //     name: "Reduction Direct",
+  //     current: 34,
+  //     optimalRange: "30-35",
+  //     impact: "-",
+  //   },
+  // ]);
 
   return (
     <div
@@ -180,12 +185,13 @@ const Fuelrate = () => {
 
         marginTop: "10px",
       }}
-      class="flex w-[30vw]
+      class="flex 
+    w-[100%]
    
-       text-left pb-0 flex-col items-end   "
+       text-left pb-0 flex-col items-end "
     >
       <div
-        class="flex flex-col w-full h-auto gap-[5px]  items-center "
+        class="flex flex-col w-full h-auto gap-[5px]  items-center  border-2 "
         style={{
           // width: "331px",
           borderRadius: "12px",
@@ -263,7 +269,7 @@ const Fuelrate = () => {
           </div>
         </div>
         {/* chart part */}
-        <div class="w-[95%] h-[180px] ">
+        <div class="w-[95%] h-[200px] ">
           <Linechart  chart={chart}/>
         </div>
 
@@ -321,7 +327,7 @@ const Fuelrate = () => {
         </div>
         {/* Tabel */}
         <div class="w-full  p-2 ">
-          <DashboardTable rowArray={fuelTabel}  tabelname={"fuelrate"} />
+          <DashboardTable rowArray={data.data}  tabelname={"fuelrate"} />
         </div>
         {/* forward button */}
         <div
