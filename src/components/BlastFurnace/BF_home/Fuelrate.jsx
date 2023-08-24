@@ -36,7 +36,7 @@ const Fuelrate = ({data}) => {
 
   // line chart data
 
-  console.log("table====>", data.data)
+  console.log("table====>", data.chart)
 
   const [chart, setChart] = useState({
     series: [

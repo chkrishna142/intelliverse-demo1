@@ -26,7 +26,7 @@ const BF_Home = () => {
   }, []);
   
 
-  // console.log(fetcheddata);
+ 
   if(fetcheddata){
     return (
       <div className="w-full h-full flex flex-col  ">
@@ -47,7 +47,7 @@ const BF_Home = () => {
             //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"
             className="grid grid-cols-3 gap-7 justify-center w-full"
           >
-            <Fuelrate data={fetcheddata?.tools.fuel_rate}/>
+            <Fuelrate data={fetcheddata?.tools.fuel_rate} />
   
              <Production data={fetcheddata?.tools.burden_production}/>
   
