@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import Modelaccuracy from "../BF_Components/Modelaccuracy";
-import StabilityInd from "../StabilityandThermalPage/StabilityInd";
-import ThermalIndicator from "../StabilityandThermalPage/ThermalIndicator";
-import Recommendations from "../StabilityandThermalPage/Recommendations";
+
 import Rca from "../StabilityandThermalPage/Rca";
 import Overviewfuelrate from "./Overviewfuelrate";
 import Overviewcokerate from "./Overviewcokerate";
 import Overviewpci from "./Overviewpci";
+import Overviewetaco from "./Overviewetaco";
+import Overviewheatflux from "./Overviewheatflux";
+import Overviewrecommendation from "./Overviewrecommendation";
 // import StabilityInd from "./StabilityInd";
 // import Rca from "./Rca";
 // import ThermalIndicator from "./ThermalIndicator";
@@ -29,6 +29,10 @@ const Fueloptimizercomp = () => {
   const [isExpanded4, setIsExpanded4] = useState(true);
   const handleToggle4 = () => {
     setIsExpanded4((prevExpanded) => !prevExpanded);
+  };
+  const [isExpanded5, setIsExpanded5] = useState(true);
+  const handleToggle5 = () => {
+    setIsExpanded5((prevExpanded) => !prevExpanded);
   };
 
   const [page, setPage] = useState("Overview");
@@ -198,31 +202,41 @@ const Fueloptimizercomp = () => {
                 handleToggle2={handleToggle2}
               />
             </div>
+            <div className="flex w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+              <Overviewetaco
+                isExpanded3={isExpanded3}
+                handleToggle3={handleToggle3}
+              />
+              <Overviewheatflux
+                isExpanded3={isExpanded3}
+                handleToggle3={handleToggle3}
+              />
+            </div>
             <Rca
-              isExpanded2={isExpanded3}
-              handleToggle2={handleToggle3}
+              isExpanded2={isExpanded4}
+              handleToggle2={handleToggle4}
               series={series}
               options={options}
             />
+            <Overviewrecommendation isExpanded2={isExpanded5}
+              handleToggle2={handleToggle5}/>
+
           </TabPanel>
 
           <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
-            <ThermalIndicator
-              isExpanded3={isExpanded3}
-              handleToggle3={handleToggle3}
-            />
-            <Rca
-              isExpanded2={isExpanded3}
-              handleToggle2={handleToggle3}
-              series={series}
-              options={options}
-            />
+           <p>solution loss carbon</p>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Recommendations
-              isExpanded4={isExpanded4}
-              handleToggle4={handleToggle4}
-            />
+           <p>reduction indirect</p> 
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+           <p>Flame temp</p> 
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+           <p>Eta co</p> 
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+           <p>Reduction direct</p> 
           </TabPanel>
         </TabPanels>
       </Tabs>
