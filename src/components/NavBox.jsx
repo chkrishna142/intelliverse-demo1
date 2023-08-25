@@ -1,12 +1,35 @@
 import { Flex, Heading, Image } from "@chakra-ui/react";
-import React from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useQuery } from "../util/util";
 import Vision from "./Navbar.svg";
 import { Link, useLocation } from "react-router-dom";
+import NavContext from "./NavContext";
 
 const NavBox = () => {
     let query = useQuery();
+    const [nav, setNav] = useState(false)
+    const navRef = useRef(null)
     const plant_name = query.get("plant_name");
+    const { setLogin } = useContext(NavContext)
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleOutsideClicks);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClicks);
+        };
+    }, [nav]);
+
+    const handleOutsideClicks = (event) => {
+        if (nav && navRef.current && !navRef.current.contains(event.target)) {
+            setNav(false);
+        };
+    };
+
+    const handleLogout = async () => {
+        localStorage.removeItem("logged_in")
+        setLogin(false)
+    }
+
     return (
         <Flex
             p="4px"
@@ -27,15 +50,27 @@ const NavBox = () => {
             marginLeft="127px"
 
         >
-            <div style={{width:'75vw'}} className="bg-white px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
-            <img className="h-5" src="/search.svg" /> 
-            <input className="w-full focus:outline-none " placeholder="Search Intelliverse" />
+            <div style={{ width: '75vw' }} className="bg-white px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
+                <img className="h-5" src="/search.svg" />
+                <input className="w-full focus:outline-none " placeholder="Search Intelliverse" />
             </div>
             <div className="flex gap-5 items-center ml-5">
                 <img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/bar.svg" />
-                <Link to="/settings"><img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/setting.svg" /></Link>
-                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/notification.svg" />
-                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/profile.svg" />
+                <Link to="/settings"><img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/setting.svg" /></Link>
+                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/notification.svg" />
+                <img onClick={() => setNav(!nav)} className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/profile.svg" />
+                {nav === true ? <div ref={navRef} className="absolute right-44 -mr-2 top-12 z-10 mt-2 w-40  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div className="py-1" role="none">
+                        <Link to="/profile" onClick={() => setNav(false)} class="text-gray-700 block px-4 py-2 text-sm flex items-center hover:bg-gray-100 gap-3 hover:transition duration-200" role="menuitem" tabindex="-1" id="menu-item-0">
+                            <img src="profile_dropdown.svg" />
+                            <p style={{ marginLeft: '1px' }}>Profile</p></Link>
+                        <form method="POST" action="#" role="none">
+                            <button onClick={handleLogout} type="submit" class="text-gray-700 block w-full px-4 py-2 text-left text-sm flex items-center hover:bg-gray-100 gap-2 hover:transition duration-200" role="menuitem" tabindex="-1" id="menu-item-3">
+                                <img src="logout.svg" />
+                                Logout</button>
+                        </form>
+                    </div>
+                </div> : null}
 
             </div>
             {/* <form style={{width:'70vw'}}>
