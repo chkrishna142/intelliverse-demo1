@@ -8,12 +8,16 @@ function Overviewetaco({ isExpanded3, handleToggle3 }) {
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
-            name: "Series 1",
-            data: [311,308 ,310, 320, 310, 310, 310 ],
+            name: "Actual ETA CO",
+            data: [411,380 ,410, 425, 410, 380, 410 ],
           },
           {
-            name: "Series 2",
-            data: [320,320,320,320,320,320,320,],
+            name: "Target ETA CO",
+            data: [455,455,455,455,455,455,455,],
+          },
+          {
+            name: " Predictive ETA CO",
+            data: [431,410 ,440, 455, 440, 410, 440 ],
           },
         ],
     
@@ -36,7 +40,7 @@ function Overviewetaco({ isExpanded3, handleToggle3 }) {
               enabled: false,
             },
           },
-          colors: ["#77B6EA", "#545454"],
+          colors: ["#77B6EA", "#545454","#16FCD2"],
           dataLabels: {
             enabled: false,
           },
@@ -78,7 +82,7 @@ function Overviewetaco({ isExpanded3, handleToggle3 }) {
             // min: 500,
             // max: 550,
           },
-          colors: ["#6CA6FC", "#2660B6"], // Set the colors for the first and second series
+          colors: ["#6CA6FC", "#2660B6","#16FCD2"], // Set the colors for the first and second series
           
           dataLabels: {
             enabled: [true, false], // Enable for Series 1, disable for Series 2

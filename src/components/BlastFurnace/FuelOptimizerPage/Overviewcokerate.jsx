@@ -9,11 +9,11 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
-            name: "Series 1",
+            name: "Actual coke rate",
             data: [311,308 ,310, 320, 310, 310, 310 ],
           },
           {
-            name: "Series 2",
+            name: "Baseline coke rate",
             data: [320,320,320,320,320,320,320,],
           },
         ],
@@ -135,7 +135,7 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
               </div>
               <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
                 {" "}
-               Actual fuel rate
+               Actual coke rate
               </div>
             </div>
             <div className="flex gap-[2px] ">
@@ -143,7 +143,7 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
                 <img src="/Bficons/darkblue.svg" alt="" />
               </div>
               <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                Baseline fuel rate
+                Baseline coke rate
               </div>
             </div>
           </div>

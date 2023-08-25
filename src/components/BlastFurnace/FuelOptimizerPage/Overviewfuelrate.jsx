@@ -9,11 +9,11 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
-            name: "Series 1",
+            name: "Actual fuel rate",
             data: [510, 505, 519, 525, 520, 520, 530, 519, 541, 512, 518, 530, 535],
           },
           {
-            name: "Series 2",
+            name: "Baseline fuel rate",
             data: [538, 538, 538, 538, 538, 538, 538, 538, 538, 538, 538, 538, 538],
           },
         ],
