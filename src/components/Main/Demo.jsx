@@ -9,7 +9,7 @@ const Demo = () => {
     return (
         <div className='w-full bg-white rounded-xl pb-10 border mt-4'>
             <div className='text-[#024D87] text-lg m-5 font-bold'>
-                Particle Size Demo
+                Sizing Tool Demo
             </div>
             <div className='mt-2 grid grid-cols-2 w-full gap-4'>
                 <div className='ml-5 mr-2'><div className='w-full h-80 '>
