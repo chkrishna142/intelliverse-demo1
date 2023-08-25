@@ -8,12 +8,16 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
-            name: "Series 1",
-            data: [311,308 ,310, 320, 310, 310, 310 ],
+            name: "Actual heat flux",
+            data: [311,308 ,310, 315, 310, 308, 310 ],
           },
           {
-            name: "Series 2",
+            name: "Target heat flux",
             data: [320,320,320,320,320,320,320,],
+          },
+          {
+            name: "Predictive heat flux",
+            data: [321,320 ,320, 325, 315, 310, 312 ],
           },
         ],
     
@@ -78,7 +82,7 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
             // min: 500,
             // max: 550,
           },
-          colors: ["#6CA6FC", "#2660B6"], // Set the colors for the first and second series
+          colors: ["#F77F00", "#2660B6","#FFC107"], // Set the colors for the first and second series
           
           dataLabels: {
             enabled: [true, false], // Enable for Series 1, disable for Series 2

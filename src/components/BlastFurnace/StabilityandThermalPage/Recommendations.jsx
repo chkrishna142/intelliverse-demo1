@@ -12,7 +12,7 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
     const [raftLineChart, setraftLineChart] = useState({
         series: [
           {
-            name: "Series 1",
+            name: "Actual Ratio",
             data: [10.8, 10.6, 10.4, 10.2, 10, 9.2, 9.8],
           },
         ],

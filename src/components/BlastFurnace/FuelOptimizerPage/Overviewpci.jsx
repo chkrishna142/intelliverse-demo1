@@ -9,11 +9,11 @@ function Overviewpci({ isExpanded2, handleToggle2 }) {
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
-            name: "Series 1",
+            name: "Actual pci",
             data: [182,176,181,189,183,181],
           },
           {
-            name: "Series 2",
+            name: "Baseline pci",
             data: [190,190,190, 190,190,190,],
           },
         ],
@@ -135,7 +135,7 @@ function Overviewpci({ isExpanded2, handleToggle2 }) {
               </div>
               <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
                 {" "}
-               Actual fuel rate
+               Actual pci
               </div>
             </div>
             <div className="flex gap-[2px] ">
@@ -143,7 +143,7 @@ function Overviewpci({ isExpanded2, handleToggle2 }) {
                 <img src="/Bficons/darkblue.svg" alt="" />
               </div>
               <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                Baseline fuel rate
+                Baseline pci
               </div>
             </div>
           </div>
