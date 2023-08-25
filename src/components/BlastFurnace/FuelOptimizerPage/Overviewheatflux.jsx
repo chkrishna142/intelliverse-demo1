@@ -1,20 +1,23 @@
-
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 
 
 
-function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
+function Overviewheatflux({  isExpanded3, handleToggle3}) {
 
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
-            name: "Actual fuel rate",
-            data: [510, 505, 519, 525, 520, 520, 530, 519, 541, 512, 518, 530, 535],
+            name: "Actual heat flux",
+            data: [311,308 ,310, 315, 310, 308, 310 ],
           },
           {
-            name: "Baseline fuel rate",
-            data: [538, 538, 538, 538, 538, 538, 538, 538, 538, 538, 538, 538, 538],
+            name: "Target heat flux",
+            data: [320,320,320,320,320,320,320,],
+          },
+          {
+            name: "Predictive heat flux",
+            data: [321,320 ,320, 325, 315, 310, 312 ],
           },
         ],
     
@@ -60,19 +63,13 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
           },
           xaxis: {
             categories: [
-              "12 pm",
-              "1 pm",
-              "2 pm",
-              "3 pm",
-              "4 pm",
-              "5 pm",
-              "6 pm",
-              "7 pm",
-              "8 pm",
-              "9 pm",
-              "10 pm",
               "11 pm",
-              "12 am",
+              "11:10 pm",
+              "11:20 pm",
+              "11:30 pm",
+              "11:40 pm",
+              "11:50 pm",
+              "12 pm",
             ],
             // title: {
             //   text: "Month",
@@ -85,7 +82,7 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
             // min: 500,
             // max: 550,
           },
-          colors: ["#69B04B", "#525056"], // Set the colors for the first and second series
+          colors: ["#F77F00", "#2660B6","#FFC107"], // Set the colors for the first and second series
           
           dataLabels: {
             enabled: [true, false], // Enable for Series 1, disable for Series 2
@@ -119,7 +116,7 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
   
 
   return (
-    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl ">
       {/* top */}
       <div class="flex justify-between w-full">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -127,71 +124,52 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
             {" "}
             <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
               <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
-              Fuel Rate
+              Heat Flux
               </p>
             </div>
-            <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">kg/tHM</div>
+            <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">W/m2</div>
           </div>
           <div
             className={`flex items-start gap-[2%] w-[80%]  `}
           >
             <div className="flex gap-[2px] items-center justify-center">
               <div className="flex gap-[2px] ">
-                <img src="/Bficons/darkgreendot.svg" alt="" />
+                <img src="/Bficons/orangedot.svg" alt="" />
               </div>
               <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
                 {" "}
-               Actual fuel rate
+                Actual heat flux
               </div>
             </div>
             <div className="flex gap-[2px] ">
               <div>
-                <img src="/Bficons/blackdot.svg" alt="" />
+                <img src="/Bficons/brightyellowdot.svg" alt="" />
               </div>
               <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                Baseline fuel rate
+              Predictive heat flux
+              </div>
+            </div>
+            <div className="flex gap-[2px] ">
+              <div>
+                <img src="/Bficons/darkblue.svg" alt="" />
+              </div>
+              <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+              Target heat flux
               </div>
             </div>
           </div>
         </div>
-        <div onClick={handleToggle1}>
+        <div onClick={handleToggle3}>
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>
       {/* bottom */}
-      {isExpanded1 && (
+      {isExpanded3 && (
          
             <div className={`flex gap-[12px] w-full  h-full`}>
-              <div
-                class={`w-[25%] flex flex-col items-start h-[300px]  p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] bg-blue-100`}
-              >
-                {/* current fuel rate */}
-
-                <div class="flex flex-col items-start gap-[8px]">
-                  <p class="text-primary-p-10 text-[#084298] text-center font-roboto text-[18px] font-medium leading-normal">
-                    540 kg/tHM
-                  </p>
-                  <p
-                    class="text-neutral-n-70 font-roboto text-[14px] font-normal leading-normal"
-                    style={{ color: "#938F96" }}
-                  >
-                    Current Fuel Rate{" "}
-                  </p>
-                </div>
-                <div class="flex flex-col items-start gap-[8px]">
-                  <p class="text-neutral-n-10 text-[#3E3C42] text-center font-roboto text-[18px] font-medium leading-normal">
-                    540 kg/tHM
-                  </p>
-                  <p
-                    class="text-neutral-n-70 font-roboto text-[14px] font-normal leading-normal"
-                    style={{ color: "#938F96" }}
-                  >
-                    Baseline Fuel Rate{" "}
-                  </p>
-                </div>
-              </div>
+             
               {/* charts */}
-              <div class={` w-[75%] flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              <div class={` w-[100%] flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
                 
                 <div id="chart" className="h-[100%] w-full">
                 <Linechart  chart={fuelchart}/>
@@ -204,4 +182,4 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
   );
 }
 
-export default Overviewfuelrate;
+export default Overviewheatflux;

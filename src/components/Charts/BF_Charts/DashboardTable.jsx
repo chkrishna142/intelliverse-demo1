@@ -44,10 +44,11 @@ const rows = [
 ];
 
 export default function DashboardTable({
+  handleAlert,
   rowArray,
-  alerts,
+
   tabelname,
-  setAlertstate,
+ 
 }) {
   function isLessRange(currentValue, optimalRange) {
     const [min, max] = optimalRange.map(value => parseFloat(value));
@@ -91,7 +92,7 @@ export default function DashboardTable({
         <tr style={{}}>
           <th className="w-[100px]"></th>
           <th style={{ textAlign: "center", width: "80px" }} className=" ">
-            <p className="text-xs md:text-xs lg:text-xs xl:text-[10px]  ">
+            <p className="text-xs md:text-xs lg:text-xs xl:text-[10px]  " >
               Current
             </p>
           </th>
@@ -274,9 +275,13 @@ export default function DashboardTable({
                       Decrease {row.name} to {row.optimal_range[0]}- {row.optimal_range[1]}
                     </p>
                   )}
+                  {handleAlert()}
                 </td>
               </tr>
             )}
+
+
+
           </>
         ))}
 
