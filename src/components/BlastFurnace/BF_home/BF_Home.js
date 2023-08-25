@@ -9,11 +9,11 @@ import Averagepar from "./Averagepar";
 const BF_Home = () => {
   const [fetcheddata, setFetcheddata] = useState();
 
-  const client = "sesa";
+  const client = "jspl";
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=sesa");
+        const response = await fetch(`https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`);
         const json = await response.json();
         // console.log("fetched data=====>>>",json);
         setFetcheddata(json)
