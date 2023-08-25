@@ -1,15 +1,18 @@
-const CustomSizingBar = ({size}) => {
+const CustomSizingBar = ({ size }) => {
   let binData = Object.values(size);
   let sum = binData.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
   }, 0);
   let vals = [];
-  binData.map(item => {
-    let x = ((item/sum)*100);
-    if(x!==0)vals.push(x.toFixed(2))
+  let binSizes = Object.keys(size);
+  let labels = [];
+  binData.map((item,idx) => {
+    let x = (item / sum) * 100;
+    if (x !== 0) {
+      vals.push(x.toFixed(2));
+      labels.push(binSizes[idx])
+    }
   });
-  console.log(vals,'types')
-  const labels = Object.keys(size);
   const colors = [
     "#ef6f12",
     "#5193f6",
@@ -24,8 +27,8 @@ const CustomSizingBar = ({size}) => {
     else isSmall = true;
   }
   return (
-    <div className="flex flex-col gap-4 min-w-[13vw]">
-      <p className="text-base text-black">Size Distribution</p>
+    <div className="flex flex-col gap-4 min-w-[15vw]">
+      {/* <p className="text-base text-black">Size Distribution</p> */}
       <div className="flex flex-col h-[30vh]">
         {vals.map((x, idx) => {
           return (
@@ -42,7 +45,9 @@ const CustomSizingBar = ({size}) => {
               </div>
               {!isSmall && (
                 <div className="flex gap-2 items-center">
-                  <p className='font-medium ' style={{ color: colors[idx] }}>{x}%</p>
+                  <p className="font-medium " style={{ color: colors[idx] }}>
+                    {x}%
+                  </p>
                   <div className="flex gap-1 items-center">
                     <p className="text-black font-medium text-xs">
                       {labels[idx]}
