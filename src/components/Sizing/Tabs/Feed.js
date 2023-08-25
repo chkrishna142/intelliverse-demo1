@@ -1,8 +1,8 @@
-import FeedCard from "../SizingComponents/FeedCard";
+import PlantCard from "../SizingComponents/PlantCard";
 import axios from "axios";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Feed = () => {
+const Feed = ({ material }) => {
   const [plantData, setPlantData] = useState("");
 
   const apiCall = async () => {
@@ -10,15 +10,18 @@ const Feed = () => {
       clientId: "jspl",
       material: "sinter",
     });
-    const response = await axios.post(
-      " https://intelliverse.backend-ripik.com/vision/v1/sizing/fetchOverviewAnalysis/",requestData,
-      {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    ).then((response) => {
+    const response = await axios
+      .post(
+        " https://intelliverse.backend-ripik.com/vision/v1/sizing/fetchOverviewAnalysis/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
         setPlantData(response.data.plants);
       })
       .catch((error) => {
@@ -27,7 +30,7 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    apiCall()
+    apiCall();
     const intervalId = setInterval(() => {
       apiCall();
     }, 30000);
@@ -38,7 +41,12 @@ const Feed = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4">
-      {Object.keys(plantData).map(plant => {return (<FeedCard PlantName={plant} CamData={plantData[plant]['sinter']}/>)})}
+      {plantData &&
+        Object.keys(plantData).map((plant) => {
+          return (
+            <PlantCard PlantName={plant} CamData={plantData[plant]["sinter"]} />
+          );
+        })}
     </div>
   );
 };

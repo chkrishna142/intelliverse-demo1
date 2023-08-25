@@ -1,10 +1,11 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
-import {useParams} from "react-router-dom";
-import Feed from "./Tabs/Feed";
-import FeedLibrary from "./Tabs/FeedLibrary";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import Alerts from "./Tabs/Alerts";
+import FeedLibrary from "./Tabs/FeedLibrary";
 import Report from "./Tabs/Report";
+import CamFeed from "./Tabs/CamFeed";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -15,15 +16,22 @@ const Capitalize = (str) => {
   return str2;
 };
 
-const Sizing = () => {
-  const [page, setPage] = useState("feed");
+const SingleCam = () => {
   const param = useParams();
+  const [page, setPage] = useState("feed");
+  let material = param.material.toLowerCase();
+  let cameraId = param.cameraId;
   return (
-    <div className="pl-5 pr-5  font-poppins flex flex-col rounded-lg">
+    <div className="pl-5 pr-5 flex flex-col rounded-lg">
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
         </p>
+        <Link to={`/vision/Sizing/${param.material}`} style={{ textDecoration: "none" }}>
+          <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
+            All View
+          </p>
+        </Link>
       </div>
       <Tabs>
         <TabList className="!flex !border-0">
@@ -82,8 +90,8 @@ const Sizing = () => {
         </TabList>
 
         <TabPanels>
-          <TabPanel className="!pl-0 !pr-0">
-            <Feed material={param.material.toLowerCase()}/>
+          <TabPanel className="!pl-0 !pr-0 ">
+            <CamFeed material={material} cameraId={cameraId} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Alerts />
@@ -103,4 +111,4 @@ const Sizing = () => {
   );
 };
 
-export default Sizing;
+export default SingleCam;
