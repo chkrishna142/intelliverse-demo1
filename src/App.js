@@ -17,6 +17,8 @@ import BF_Dashboard from './components/BlastFurnace/BF_Components/BF_Dashboard';
 import ConatctUs from "./components/ContactUs/ConatctUs";
 import NavBox from "./components/NavBox";
 import Demo from './components/Main/Demo';
+import Setting from './components/ContactUs/Setting';
+import UserProfile from './components/ContactUs/UserProfile';
 
 function App() {
   const { isAuth, default_plant } = useSelector(get_auth_status);
@@ -74,6 +76,8 @@ function App() {
                     <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
                     <Route path="/vision/Sizing/:material" element={<Sizing/>} />
                     <Route path="/contactus" element={<ConatctUs />} />
+                    <Route path="/settings" element={<Setting />} />
+                    <Route path="/profile" element={<UserProfile />} />
                     <Route path="/bookdemo" element={<Demo />} />
                   </Routes>
                 </div>

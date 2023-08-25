@@ -16,6 +16,7 @@ import {
   Select,
   Box,
   Img,
+  Textarea,
 } from "@chakra-ui/react";
 const ConatctUs = () => {
   // handling button submit
@@ -116,7 +117,7 @@ const ConatctUs = () => {
               <FormLabel fontSize={"12px"}>
                 Additional Remarks (Optional)
               </FormLabel>
-              <Input
+              <Textarea
                 type="text"
                 border={"1px solid #6CA6FC"}
                 placeholder="Your Response"
@@ -129,7 +130,7 @@ const ConatctUs = () => {
               _hover={{ bg: "#034D87" }}
               onClick={handleSubmit}
               color={"white"}
-              borderRadius={"3xl"}
+              borderRadius={"md"}
             >
               Submit
             </Button>

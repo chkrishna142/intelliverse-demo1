@@ -2,6 +2,7 @@ import { Flex, Heading, Image } from "@chakra-ui/react";
 import React from "react";
 import { useQuery } from "../util/util";
 import Vision from "./Navbar.svg";
+import { Link, useLocation } from "react-router-dom";
 
 const NavBox = () => {
     let query = useQuery();
@@ -32,7 +33,7 @@ const NavBox = () => {
             </div>
             <div className="flex gap-5 items-center ml-5">
                 <img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/bar.svg" />
-                <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/setting.svg" />
+                <Link to="/settings"><img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/setting.svg" /></Link>
                 <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/notification.svg" />
                 <img className="hover:scale-110 hover:transition duration-200 cursor-pointer"  src="/profile.svg" />
 
