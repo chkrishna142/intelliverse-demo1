@@ -10,21 +10,13 @@ const MaterialSelect = () => {
   const alerts = [5, 2, 0, 1];
   const deployments = [5, 5, 5, 5];
   return (
-    <div className="flex justify-center items-center h-screen">
-      <div className="bg-white rounded-xl p-[120px]">
-        <div className="flex flex-col gap-[80px]">
-          <div className="flex flex-col">
-            <p className="text-[#3E3C42] text-4xl font-medium">
-              Welcome to{" "}
-              <span className="text-[#3A74CA] text-4xl font-medium">
-                IntelliVision
-              </span>
-            </p>
-            <p className="text-[#79767D] text-lg">
-              Select the ... to get updates
-            </p>
+    <div className="h-screen">
+      <div className="bg-white rounded-xl shadow-md p-4 mt-5 border">
+        <div className="flex flex-col gap-5">
+          <div className="flex justify-start mt-2 ml-3 mr-3 mb-3">
+            <img className="h-6" src="/vision.svg" />
           </div>
-          <div className="flex flex-auto gap-[56px] items-center">
+          <div className="flex flex-auto gap-8 items-center ml-3 mb-5">
             {alerts.map((x, idx) => {
               return (
                 <MaterialCard

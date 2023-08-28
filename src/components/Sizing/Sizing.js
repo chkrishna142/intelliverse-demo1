@@ -5,6 +5,7 @@ import Feed from "./Tabs/Feed";
 import FeedLibrary from "./Tabs/FeedLibrary";
 import Alerts from "./Tabs/Alerts";
 import Report from "./Tabs/Report";
+import Analytics from "./Tabs/Analytics";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -83,7 +84,7 @@ const Sizing = () => {
 
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
-            <Feed material={param.material.toLowerCase()}/>
+            <Feed material={param.material.toLowerCase()} clientId={param.clientId.toLowerCase()}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Alerts />
@@ -92,7 +93,7 @@ const Sizing = () => {
             <FeedLibrary />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <p>Hello</p>
+            <Analytics />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Report />

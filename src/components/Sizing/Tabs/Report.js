@@ -187,7 +187,7 @@ const Report = () => {
               <p>Hourly Basis</p>
             </div>
           </div>
-          <div className="flex items-baseline text-base text-white font-medium p-4 pt-[10px] pb-[10px] bg-[#6CA6FC] rounded-[51px]">
+          <div className="flex items-baseline text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
             <p className="cursor-pointer">Download</p>
             <select
               name="typeSheet"

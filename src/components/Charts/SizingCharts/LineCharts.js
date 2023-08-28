@@ -93,14 +93,13 @@ const LineChart = ({ data, timeStamps, labels }) => {
       labels: {
         show: true,
         formatter: function (value) {
-          return new Date(value).toLocaleString("en-GB", {
-            //   hour: "2-digit",
-            //   minute: "2-digit",
-            //   second: "2-digit",
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true,
-          });
+          const date = new Date(value);
+          const hours = date.getHours();
+          const minutes = date.getMinutes().toString().padStart(2, "0");
+          const ampm = hours >= 12 ? "PM" : "AM";
+          const formattedHours = hours === 0 || hours === 12 ? 12 : hours % 12;
+
+          return `${formattedHours}:${minutes} ${ampm}`;
         },
         style: {
           fontSize: "14px",
