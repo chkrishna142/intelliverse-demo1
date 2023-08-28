@@ -2,13 +2,13 @@ import PlantCard from "../SizingComponents/PlantCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const Feed = ({ material }) => {
-  const [plantData, setPlantData] = useState("");
+const Feed = ({ material, clientId }) => {
+  const [plantData, setPlantData] = useState("noPlant");
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
-      clientId: "jspl",
-      material: "sinter",
+      clientId: clientId,
+      material: material,
     });
     const response = await axios
       .post(
@@ -41,10 +41,10 @@ const Feed = ({ material }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4">
-      {plantData &&
+      {plantData && plantData !== "noPlant" &&
         Object.keys(plantData).map((plant) => {
           return (
-            <PlantCard PlantName={plant} CamData={plantData[plant]["sinter"]} />
+            <PlantCard PlantName={plant} CamData={plantData[plant][material]} />
           );
         })}
     </div>

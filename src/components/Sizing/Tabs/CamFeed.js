@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import LineChart from "../../Charts/SizingCharts/LineCharts";
 import DonutChart from "../../Charts/SizingCharts/DonutChart";
 
-const CamFeed = ({ material, cameraId }) => {
+const CamFeed = ({ material, cameraId, clientId }) => {
   const [camData, setCamData] = useState("");
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
-      clientId: "jspl",
+      clientId: clientId,
       material: material,
       cameraId: cameraId,
     });
@@ -84,7 +84,7 @@ const CamFeed = ({ material, cameraId }) => {
               <p>No {material} on Belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 ? (
+          {camData && camData.noCoal !== 1 && material!=="coal" ? (
             <div className="flex flex-col flex-1 gap-4 justify-center">
               <div className="flex justify-center">
                 <div className="rounded-xl bg-green-400 p-[50px] text-white font-semibold text-4xl text-center">
@@ -97,7 +97,7 @@ const CamFeed = ({ material, cameraId }) => {
               <p>No {material} on Belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 ? (
+          {camData && camData.noCoal !== 1 && material!=="coal" ? (
             <div className="flex flex-col flex-1 gap-4 justify-center">
               <div className="flex justify-center">
                 <div className="rounded-xl bg-green-400 p-[30px] text-white font-semibold text-4xl text-center">
@@ -113,47 +113,56 @@ const CamFeed = ({ material, cameraId }) => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <p className="text-black font-bold text-xl">Overall analysis</p>
-        <div className="rounded-xl bg-white flex gap-6 w-[85vw] h-[40vh] p-3">
+        <p className="text-black font-bold text-xl">Trend analysis</p>
+        <div className="rounded-xl bg-white flex gap-6 w-[85vw] p-3">
           {camData && camData.noCoal !== 1 ? (
-            <div className="flex flex-col flex-1">
-              <LineChart
-                data={Object.values(camData.size)}
-                timeStamps={new Date(
-                  camData?.timestamp.split(" ").join("T")
-                ).getTime()}
-                labels={Object.keys(camData.size)}
-              />
+            <div className="flex flex-col flex-1 gap-4">
+              <p className="font-bold text-sm">Size Bin Chart</p>
+              <div className="h-[40vh]">
+                <LineChart
+                  data={Object.values(camData.size)}
+                  timeStamps={new Date(
+                    camData?.timestamp.split(" ").join("T")
+                  ).getTime()}
+                  labels={Object.keys(camData.size)}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
               <p>No {material} on Belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 ? (
-            <div className="flex flex-col flex-1">
-              <LineChart
-                data={[camData.mps]}
-                timeStamps={new Date(
-                  camData?.timestamp.split(" ").join("T")
-                ).getTime()}
-                labels={["mps"]}
-              />
+          {camData && camData.noCoal !== 1 && material !== "coal"? (
+            <div className="flex flex-col flex-1 gap-4">
+              <p className="font-bold text-sm">MPS Chart</p>
+              <div className="h-[40vh]">
+                <LineChart
+                  data={[camData.mps]}
+                  timeStamps={new Date(
+                    camData?.timestamp.split(" ").join("T")
+                  ).getTime()}
+                  labels={["mps"]}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
               <p>No {material} on Belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 ? (
-            <div className="flex flex-col flex-1">
-              <LineChart
-                data={[camData.minuteAverage]}
-                timeStamps={new Date(
-                  camData?.timestamp.split(" ").join("T")
-                ).getTime()}
-                labels={["minuteAverage"]}
-              />
+          {camData && camData.noCoal !== 1 && material !== "coal"? (
+            <div className="flex flex-col flex-1 gap-4">
+              <p className="font-bold text-sm">Minute Average Chart</p>
+              <div className="h-[40vh]">
+                <LineChart
+                  data={[camData.minuteAverage]}
+                  timeStamps={new Date(
+                    camData?.timestamp.split(" ").join("T")
+                  ).getTime()}
+                  labels={["minuteAverage"]}
+                />
+              </div>
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">

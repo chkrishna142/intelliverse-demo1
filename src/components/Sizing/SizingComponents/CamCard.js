@@ -1,12 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import CustomSizingBar from "../../Charts/SizingCharts/CustomSizingBar";
 
 const CamCard = ({ cameraName, data, alert }) => {
+  let param = useParams();
+  let material = param.material.toLowerCase();
   return (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6">
-        {alert !== 0 && (
-          <p className="absolute top-0 right-8 p-1 pl-2 pr-2 text-sm text-[#DC362E]">{alert} alert</p>
-        )}
+      {alert !== 0 && (
+        <p className="absolute top-0 right-8 p-1 pl-2 pr-2 text-sm text-[#DC362E]">
+          {alert} alert
+        </p>
+      )}
       <div className="flex gap-6 items-center">
         <div className="flex flex-col h-full w-full items-center gap-4">
           <Link
@@ -33,7 +37,7 @@ const CamCard = ({ cameraName, data, alert }) => {
           </div>
         ) : (
           <div className="h-full flex items-center justify-center text-black font-bold text-center text-2xl min-w-[15vw]">
-            <p>No Sinter on Belt</p>
+            <p>No {material} on Belt</p>
           </div>
         )}
       </div>

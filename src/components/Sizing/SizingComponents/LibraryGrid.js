@@ -7,7 +7,7 @@ const LibraryGrid = () => {
     <div className="flex flex-col gap-3">
       <div className="flex justify-between">
         <p className="text-[#3E3C42] font-medium text-xl">Jaffrabad</p>
-        <button className="text-white text-sm font-medium bg-[#447ED4] p-1 pl-3 pr-3 rounded-full">
+        <button className="text-white text-sm font-medium bg-[#447ED4] p-3 pt-1 pb-1 rounded-full">
           Download all
         </button>
       </div>

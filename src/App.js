@@ -75,8 +75,8 @@ function App() {
                     <Route path="/advisor" element={<AiAdvisor />} /> 
                     <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
                     <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
-                    <Route path="/vision/Sizing/:material" element={<Sizing/>} />
-                    <Route path="/vision/Sizing/:material/:cameraId" element={<SingleCam/>} />
+                    <Route path="/vision/Sizing/:material/:clientId" element={<Sizing/>} />
+                    <Route path="/vision/Sizing/:material/:clientId/:cameraId" element={<SingleCam/>} />
                     <Route path="/contactus" element={<ConatctUs />} />
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/profile" element={<UserProfile />} />
