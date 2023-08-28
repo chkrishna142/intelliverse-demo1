@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import BurdenDistributionChart from "../../Charts/BF_Charts/BurdenDistributionChart";
 import BottomIndicator from "../BF_Components/BottomIndicator";
+import Mymodal from "../BF_Components/Mymodal";
 
 // import Linechart from "../Charts/Linechart";
 // import BurdenDistributionChart from "../Charts/BurdenDistributionChart";
@@ -137,7 +138,10 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
                 Recommendations
               </p>
             </div>
-            <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+            <div className="">
+           
+           <Mymodal imageone={"/Bficons/recomendationTop.svg"} imageTwo={"/Bficons/recomendationBottom.svg"}/>
+           </div>
           </div>
         </div>
         <div onClick={handleToggle4}>

@@ -21,7 +21,7 @@ const BF_Dashboard = () => {
 
   return (
     
-    <div className="mt-5">
+    <div className="mt-5   ">
      
      <div className=" h-[50px]">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87] ">
@@ -29,8 +29,8 @@ const BF_Dashboard = () => {
         </p>
         </div> 
 
-      <div className="  pl-3 pr-3 sm:pl-5 sm:pr-2 flex flex-col rounded-lg ">
-        <Tabs>
+      <div className=" flex flex-col rounded-lg  ">
+        <Tabs className=" w-full">
           <TabList className="!flex !border-0">
             <div className="flex items-center gap-4">
               <Tab
@@ -41,7 +41,7 @@ const BF_Dashboard = () => {
                 }
                 onClick={() => setPage("dashboard")}
               >
-                DASHBOARD
+                Dashboard
               </Tab>
               <Tab
                 className={
