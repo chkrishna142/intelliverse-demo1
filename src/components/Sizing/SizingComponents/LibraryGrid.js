@@ -11,10 +11,10 @@ const LibraryGrid = () => {
           Download all
         </button>
       </div>
-      <div className="grid grid-cols-4 gap-1">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-1 overflow-y-scroll h-[80vh]">
         {img.map((x,id) => {
           return (
-            <div key={id} className="relative w-[20vw] object-cover text-center">
+            <div key={id} className="relative w-full object-cover text-center">
               <div className="bg-black rounded-md opacity-70 p-[2px] absolute top-2 left-2">
                 <p className="text-white text-xs font-semibold">Camera 1</p>
               </div>

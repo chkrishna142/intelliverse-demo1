@@ -38,7 +38,7 @@ const CustomSizingBar = ({ size }) => {
                   idx === 0 && "rounded-tr-md rounded-tl-md"
                 } ${
                   idx === vals.length - 1 && "rounded-bl-md rounded-br-md"
-                } text-white flex justify-center text-xs items-center`}
+                } text-white flex justify-center text-[8px] sm:text-xs items-center`}
                 style={{ backgroundColor: colors[idx] }}
               >
                 {isSmall ? `${x}%` : ""}

@@ -52,7 +52,7 @@ const DonutChart = ({ data, labels }) => {
     },
   };
 
-  return <ReactApexChart options={options} series={series} type="donut" />;
+  return <ReactApexChart options={options} series={series} type="donut" height="100%" width="100%"/>;
 };
 
 export default DonutChart;
