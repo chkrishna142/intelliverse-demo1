@@ -233,6 +233,7 @@ const Sidebar = () => {
             marginBottom: "0px",
             borderRadius: '8px 8px 0px 0px',
             paddingBottom: "30px",
+            zIndex:1000
           }}
         >
           <div className="text-white text-center text-xs ">

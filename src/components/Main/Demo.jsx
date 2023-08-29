@@ -43,7 +43,7 @@ const Demo = () => {
 
             </div>
             <div className='mt-10 font-bold text-black text-base ml-5 mr-20'>
-                Our Particle Sizing tool has helped some of largest Manufacturers in the world observe particle size of Sinter, Coal, Coke, etc in real-time. Book a call with our team for an in-depth demo, customisation plans and to answer you questions.
+            Our Particle Sizing tool has helped some of the largest manufacturers in the world observe the particle size of Sinter, Coal, Coke, etc. in real time. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.
 
             </div>
             <div className='mt-12 w-full flex justify-center'>
