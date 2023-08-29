@@ -49,11 +49,12 @@ function ThermalIndThermo({temperature,maxTemperature}) {
     markHeight = "70px"; // Adjust for the specific temperature range
   }
 
+
   const lineStyle = {
     position: "absolute",
     bottom: "0",
-    left: `${temperaturePercentage}%`,
-    height: markHeight,
+    left: temperature > maxTemperature ? "100%" : `${temperaturePercentage}%`,
+    height:temperature > maxTemperature ? "90px" : `${markHeight}`, 
     width: "5px",
     background: "black",
   };
@@ -67,3 +68,4 @@ function ThermalIndThermo({temperature,maxTemperature}) {
 }
 
 export default ThermalIndThermo;
+
