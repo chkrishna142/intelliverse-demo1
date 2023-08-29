@@ -226,7 +226,7 @@ const Login = () => {
           </div>
 
         </div>
-        <div className=' bg-[#0B295E] rounded-r-xl grid grid-rows-3'>
+        <div className='lg:bg-[#0B295E] lg:rounded-r-xl lg:grid lg:grid-rows-3 hidden'>
           <div className='-ml-10'><img
             src="/loginT.svg"
             className=''

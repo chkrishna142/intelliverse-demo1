@@ -22,6 +22,7 @@ import Setting from './components/ContactUs/Setting';
 import UserProfile from './components/ContactUs/UserProfile';
 
 function App() {
+
   const { isAuth, default_plant } = useSelector(get_auth_status);
   const [login, setLogin] = useState(false);
 
@@ -48,16 +49,8 @@ function App() {
               <Navbar />
               <NavBox />
               <Sidebar />
-              <div className="overall_container" style={{ display: "flex" }}>
-                <div
-                  className="routes_container"
-                  style={{
-                    width: "100%",
-                    marginTop: "105px",
-                    marginLeft: "130px",
-                    marginRight: "40px",
-                  }}
-                >
+              <div className="" style={{ display: "flex" }}>
+                <div className="md:ml-32 md:mr-10 md:mt-24 w-full mr-2 ml-2 mt-28 mb-10 md:mb-0">
                   <Routes>
                     {default_plant?.length > 0 ? (
                       <Route
