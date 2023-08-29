@@ -54,7 +54,7 @@ const BF_Home = () => {
             <Averagepar/>
           </div>
           <div className="flex w-full justify-end  h-[20%]">
-            <Modelaccuracy />
+            {/* <Modelaccuracy /> */}
           </div>
         </div>
       </div>

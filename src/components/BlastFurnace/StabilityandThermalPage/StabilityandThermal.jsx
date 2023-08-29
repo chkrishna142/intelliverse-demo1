@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Modelaccuracy from "../BF_Components/Modelaccuracy";
 import StabilityInd from "./StabilityInd";
@@ -95,6 +95,7 @@ const StabilityandThermal = () => {
 
   const scrollToSection = (section) => {
     const element = document.getElementById(section);
+   
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
@@ -102,6 +103,34 @@ const StabilityandThermal = () => {
       });
     }
   };
+
+  // const handleContainerScroll = (e) => {
+  //   const container = e.target;
+  //   const scrollPosition = container.scrollTop;
+
+  //   const sections = ["StabilityIndicator", "ThermalIndicator", "Recommendations"];
+  //   const sectionPositions = sections.map((section) => {
+  //     const element = document.getElementById(section);
+  //     return element.offsetTop;
+  //   });
+  //   console.log("Scroll Position:", scrollPosition);
+  //   console.log("Section Positions:", sectionPositions);
+
+  //   let newActiveOption = "StabilityIndicator";
+  //   for (let i = sectionPositions.length - 1; i >= 0; i--) {
+  //     if (scrollPosition >= sectionPositions[i]) {
+  //       newActiveOption = sections[i];
+  //       break;
+  //     }
+  //   }
+
+  //   setActiveOption(newActiveOption);
+  // };
+
+
+
+
+  
 
 
 
@@ -127,7 +156,6 @@ const StabilityandThermal = () => {
     setIsExpanded4((prevExpanded) => !prevExpanded);
   };
 
-  const [page, setPage] = useState("StabilityIndicator");
 
   return (
     <div className="w-full h-full  flex flex-col     ">
@@ -197,7 +225,7 @@ const StabilityandThermal = () => {
         </div>
       
       {/* body */}
-      <div className=" flex flex-col w-full gap-5  h-[70vh] overflow-y-auto ">
+      <div className=" flex flex-col w-full gap-5  h-[62vh] overflow-y-auto " >
 
       <div id="StabilityIndicator" className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px ">
             <StabilityInd

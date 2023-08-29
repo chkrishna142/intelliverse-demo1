@@ -120,9 +120,9 @@ const BF_Dashboard = () => {
           </TabPanels>
         </Tabs>
       </div>
-      <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
+      {/* <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
      <Footdisplay/>
-     </div>
+     </div> */}
     </div>
   );
 };

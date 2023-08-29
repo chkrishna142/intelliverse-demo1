@@ -99,13 +99,7 @@ function Overviewpci({ isExpanded2, handleToggle2 }) {
             // width: [1, 3, 3, 1],
             dashArray: [0, 6],
           },
-          legend: {
-            position: "top",
-            horizontalAlign: "right",
-            floating: true,
-            offsetY: -25,
-            offsetX: -5,
-          },
+         
         },
       });
   
