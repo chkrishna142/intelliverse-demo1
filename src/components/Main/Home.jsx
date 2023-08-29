@@ -126,7 +126,7 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Manpower Scheduling</p></div>
                                     </div>
-                                </div>
+                                  </div>
                             </div>
                             <div>
                                 <div className='mt-2 flex flex-wrap gap-8 items-center ml-4'>
