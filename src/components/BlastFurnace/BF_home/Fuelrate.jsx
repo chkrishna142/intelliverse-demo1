@@ -218,7 +218,7 @@ const Fuelrate = ({ data }) => {
        text-left pb-0 flex-col items-end "
     >
       <div
-        class="flex flex-col w-full h-auto gap-[5px]  items-center  border-2 "
+        class="flex flex-col w-full h-auto gap-[5px]  items-center  "
         style={{
           // width: "331px",
           borderRadius: "12px",

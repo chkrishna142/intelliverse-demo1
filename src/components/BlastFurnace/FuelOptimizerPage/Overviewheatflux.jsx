@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
+import Mymodal from "../BF_Components/Mymodal";
 
 
 
@@ -128,6 +129,10 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
               </p>
             </div>
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">W/m2</div>
+            <div className="flex justify-center items-center  w-[50px]">
+          <Mymodal  imageone={"/Bficons/heatfluxTop.svg"} imageTwo={""} />
+
+          </div>
           </div>
           <div
             className={`flex items-start gap-[2%] w-[80%]  `}

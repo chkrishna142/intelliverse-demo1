@@ -8,6 +8,7 @@ import Overviewpci from "./Overviewpci";
 import Overviewetaco from "./Overviewetaco";
 import Overviewheatflux from "./Overviewheatflux";
 import Overviewrecommendation from "./Overviewrecommendation";
+import Flametemp from "./Flametemp";
 // import StabilityInd from "./StabilityInd";
 // import Rca from "./Rca";
 // import ThermalIndicator from "./ThermalIndicator";
@@ -225,18 +226,22 @@ const Fueloptimizercomp = () => {
 
           <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
            <p>solution loss carbon</p>
+           <Flametemp/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
            <p>reduction indirect</p> 
+           <Flametemp/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-           <p>Flame temp</p> 
+           <Flametemp/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
            <p>Eta co</p> 
+           <Flametemp/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
            <p>Reduction direct</p> 
+           <Flametemp/>
           </TabPanel>
         </TabPanels>
       </Tabs>

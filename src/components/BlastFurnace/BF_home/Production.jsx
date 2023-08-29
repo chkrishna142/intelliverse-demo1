@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { p } from "@mui/material";
-import FuelrateTable from "../../Charts/BF_Charts/DashboardTable";
+
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import DashboardTable from "../../Charts/BF_Charts/DashboardTable";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -9,7 +8,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const Production = ({data}) => {
 
-  const [alertstate,setAlertstate]=useState(0);
 
 
 
@@ -75,7 +73,6 @@ const Production = ({data}) => {
  
    const handleAlert = () => {
      alertState = alertState + 1;
-     console.log("alert increased", alertState);
    };
  
    useEffect(() => {
@@ -239,7 +236,7 @@ const Production = ({data}) => {
       className="flex h-auto  pb-0 text-left flex-col items-end gap-4 w-[100%]"
     >
       <div
-        className="flex flex-col bg-blue-300 w-full h-auto items-center border-2 "
+        className="flex flex-col bg-blue-300 w-full h-auto items-center  "
         style={{
           // width: "331px",
 

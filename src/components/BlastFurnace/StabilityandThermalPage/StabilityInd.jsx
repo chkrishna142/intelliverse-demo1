@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Guagecomp from "../../Charts/BF_Charts/Guagecomp";
 import LineAreaChart from "../../Charts/BF_Charts/LineAreaChart";
 import RangeTable from "../../Charts/BF_Charts/RangeTable";
+import { InfoOutlineIcon} from '@chakra-ui/icons'
+import Mymodal from "../BF_Components/Mymodal";
 // import Guagecomp from "../Charts/Guagecomp";
 // import StackpressureChart from "../Charts/LineAreaChart";
 // import RangeTable from "../Charts/Rangetable";
@@ -122,20 +124,31 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
           <div className="flex items-center gap-[8px]">
             {" "}
-            <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
+            <div class="  text-[22px] text-[#3E3C42] font-medium">
               <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                 Stability Indicator
               </p>
+            </div>
+            <div className="">
+           
+            <Mymodal imageone={"/Bficons/stabilityindicatorTop.svg"} imageTwo={"/Bficons/stabilityindicatorBottom.svg"}/>
             </div>
           </div>
           <div
             className={`flex items-start gap-[2%] w-[80%]   `}
           >
-           
+          
           </div>
         </div>
-        <div class="fill-white drop-shadow-md " onClick={handleToggle1}>
-          <img src="/dropicon.svg" alt="" />
+        <div class="flex w-[100px] justify-between fill-white drop-shadow-md  " >
+          <div className="flex justify-center items-center  w-[50px]">
+          <Mymodal  imageone={"/Bficons/stabilityindtopcard.svg"} imageTwo={""} />
+
+          </div>
+          <div >
+          <img src="/dropicon.svg" alt="" onClick={handleToggle1} style={{ cursor: 'pointer' }}  />
+
+          </div>
         </div>
       </div>
       {/* bottom part */}
@@ -164,12 +177,12 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
               <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
                 <div className="flex items-center gap-[8px]">
                   {" "}
-                  <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
+                  <div class="  text-[22px] text-[#3E3C42] font-medium">
                     <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                       Stack Pressure
                     </p>
                   </div>
-                  <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">Bar</div>
+                  <div class="text-neutral-n-80 text-[#CAC5CD]  text-[16px] font-normal leading-normal">Bar</div>
                 </div>
                 <div
                   className={`flex items-start gap-[2%] w-[80%]  `}
@@ -179,7 +192,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
                       <img src="/darkbluedot.svg" alt="" />
                       
                     </div>
-                    <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
+                    <div class="text-gray-600 mt-[-9px] text-center  text-xs font-normal leading-normal">
                       {" "}
                       Current Stack Pressure
                     </div>
@@ -188,7 +201,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
                     <div>
                       <img src="/lightgreendot.svg" alt="" />
                     </div>
-                    <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+                    <div class="text-gray-600 text-center  text-xs font-normal leading-normal">
                       Optimal Range
                     </div>
                   </div>
