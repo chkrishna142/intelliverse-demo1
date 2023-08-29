@@ -66,7 +66,7 @@ const Averagepar = () => {
           >
             <p
               style={{ fontSize: "20px" }}
-              className="text-white text-neutral-n-99 font-poppins text-20 font-normal leading-normal "
+              class="text-white text-neutral-n-99 font-roboto text-20 font-normal leading-normal "
             >
               Avg. Particle Size
             </p>
@@ -103,9 +103,9 @@ const Averagepar = () => {
             <p
               style={{
                 color: "#FFF",
-                fontFamily: "Poppins",
+               
                 fontSize: "18px",
-                fontStyle: "normal",
+               
                 fontWeight: "400",
                 lineHeight: "normal",
                 marginLeft: "8px",
@@ -201,70 +201,59 @@ const Averagepar = () => {
             </div>
           </div> */}
           {/* pci */}
-          <div style={{}} className="flex w-full justify-between items-center">
+          <div style={{}} className="flex w-full justify-between items-center mt-[20px] ">
             <div
-              style={{ width: "205px" }}
-              className="flex  text-left items-center gap-8"
+              style={{ width: "100%" }}
+              className="flex  text-left items-center gap-8  "
             >
               <p
                 style={{
-                  color: "var(--neutral-n-60, #938F96)",
-                 
-                  fontSize: "14px",
+                  color: " var(--neutral-n-50, #79767D)",
+    
                   fontStyle: "normal",
-                  fontWeight: 400,
-                  width: "100px",
+                  fontWeight: 500,
+                  width: "100%",
                   lineHeight: "normal",
-                  justifyContent: "left",
                 }}
                 // className="text-neutral-n-60 font-roboto  text-base font-normal"
-              >
+                class="text-xs md:text-xs lg:text-xs xl:text-xs">
                 Avg. Sinter size
               </p>
   
               <p
-                style={{
-                  color: "#3E3C42",
-                
-                 textAlign:"center",
-                  fontSize: "12px",
-                  fontStyle: "normal",
-                  fontWeight: 500,
-                  width: "150px",
-                  lineHeight: "normal",
-  
-                  marginLeft: "-10px",
-                }}
+                className={`font-semibold w-[100%] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  `}
               >
                 16 mm
               </p>
             </div>
   
-            <div className="flex  w-full justify-evenly">
+            <div className="flex  w-[60%] justify-evenly   ">
               {" "}
               <p
                 style={{
+                  width: "60%",
                   color: "var(--neutral-n-70, #AEA9B1)",
-                  textAlign: "right",
-                  
-                  fontSize: "11px",
+                  textAlign: "left",
+  
                   fontStyle: "normal",
                   fontWeight: 400,
                   lineHeight: "normal",
                 }}
+                class="text-xs md:text-xs lg:text-xs xl:text-xs"
               >
                 {formattedDate}
               </p>
               <p
-                style={{
-                  color: "var(--neutral-n-70, #AEA9B1)",
-                  textAlign: "right",
-                
-                  fontSize: "11px",
-                  fontStyle: "normal",
-                  fontWeight: 400,
-                  lineHeight: "normal",
-                }}
+               style={{
+                width: "40%",
+                color: "var(--neutral-n-70, #AEA9B1)",
+                textAlign: "right",
+
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "normal",
+              }}
+              class="text-xs md:text-xs lg:text-xs xl:text-xs"
               >
                {formattedTime}
               </p>

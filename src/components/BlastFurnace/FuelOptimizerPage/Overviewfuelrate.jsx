@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
+import Mymodal from "../BF_Components/Mymodal";
 
 
 
@@ -131,6 +132,10 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
               </p>
             </div>
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">kg/tHM</div>
+            <div className="flex justify-center items-center  w-[50px]">
+          <Mymodal  imageone={"/Bficons/fuelrateTop.svg"} imageTwo={""} />
+
+          </div>
           </div>
           <div
             className={`flex items-start gap-[2%] w-[80%]  `}

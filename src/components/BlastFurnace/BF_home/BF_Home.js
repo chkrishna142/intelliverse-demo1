@@ -1,5 +1,4 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel, div } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
+
 import { useEffect, useState } from "react";
 import Fuelrate from "./Fuelrate";
 import Production from "./Production";

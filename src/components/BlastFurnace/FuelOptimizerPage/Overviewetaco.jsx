@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
+import Mymodal from "../BF_Components/Mymodal";
 
 
 
@@ -128,6 +129,10 @@ function Overviewetaco({ isExpanded3, handleToggle3 }) {
               </p>
             </div>
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">%</div>
+            <div className="flex justify-center items-center  w-[50px]">
+          <Mymodal  imageone={"/Bficons/etacoTop.svg"} imageTwo={"/Bficons/etacobottom.svg"} />
+
+          </div>
           </div>
           <div
             className={`flex items-start gap-[2%] w-[80%]  `}
