@@ -16,7 +16,7 @@ const MaterialSelect = () => {
           <div className="flex justify-start mt-2 ml-3 mr-3 mb-3">
             <img className="h-6" src="/vision.svg" />
           </div>
-          <div className="flex flex-auto gap-8 items-center ml-3 mb-5">
+          <div className="flex flex-auto flex-col sm:flex-row gap-8 items-center ml-3 mb-5">
             {alerts.map((x, idx) => {
               return (
                 <MaterialCard

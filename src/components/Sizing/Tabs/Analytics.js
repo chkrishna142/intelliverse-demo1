@@ -197,14 +197,14 @@ const Analytics = ({ plantId, cameraId }) => {
           </div>
         </div>
         <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
-        <div className="relative flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
+        {/* <div className="relative flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
           <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
             <PieChart />
           </div>
           <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
             <StackBarChart />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col gap-4 rounded-xl bg-white">
         <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6 overflow-x-auto">
