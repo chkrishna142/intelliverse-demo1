@@ -5,7 +5,7 @@ function RcawaterfallChart({series,options}) {
  
 
   return (
-    <div id="chart" className="w-full">
+    <div id="chart" className="w-full h-full">
       <ReactApexChart options={options} series={series} type="rangeBar" height={350} />
     </div>
   );

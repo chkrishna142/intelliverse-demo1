@@ -252,7 +252,7 @@ const Thermalareachart = () => {
           options={state.options}
           series={state.series}
           type="rangeArea"
-          height="80%"
+          height="90%"
           width="80%"
         
         

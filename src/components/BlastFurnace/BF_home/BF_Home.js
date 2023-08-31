@@ -4,11 +4,12 @@ import Fuelrate from "./Fuelrate";
 import Production from "./Production";
 import Modelaccuracy from "../BF_Components/Modelaccuracy";
 import Averagepar from "./Averagepar";
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
 const BF_Home = () => {
   const [fetcheddata, setFetcheddata] = useState();
 
-  const client = "sesa";
+  const client = "jspl";
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,7 +65,7 @@ const BF_Home = () => {
     );
   }
   else{
-    return <></>
+    return <div className=" flex justify-center"><CircularProgress isIndeterminate color='green.300' /></div>
 
   }
 

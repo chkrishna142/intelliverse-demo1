@@ -18,75 +18,75 @@ function Thermalheatmap() {
         series: [
             {
             name: 'T01 +41807 R6',
-            data: [60,50,60,80]
+            data: [50,50,50,50]
           },
           {
             name: 'T02 +41807 R6',
-            data: [60,50,60,80]
+            data: [50,50,20,50]
           },
           {
             name: 'T03 +41807 R7',
-            data: [60,50,60,80]
+            data: [50,50,20,20]
           },
           {
             name: 'T04 +41807 R7',
-            data: [60,50,60,80]
+            data: [50,50,20,20]
           },
           {
             name: 'T05 +41807 R8',
-            data: [60,50,60,80]
+            data: [50,50,50,20]
           },
           {
             name: 'T06 +41807 R8',
-            data: [60,50,60,80]
+            data:  [50,50,50,50]
           },
           {
             name: 'T07 +41807 R9',
-            data: [60,50,60,80]
+            data:  [50,50,50,50]
           },
           {
             name: 'T08 +41807 R9',
-            data: [60,50,60,80]
+            data:  [50,50,50,50]
           },
           {
             name: 'T09 +41807 R10',
-            data: [60,50,60,80]
+            data:  [50,50,50,50]
           },
           {
             name: 'T10 +41807 R10',
-            data: [60,50,60,80]
+            data:  [50,50,50,50]
           },
           {
             name: 'T11 +41807 R11',
-            data: [60,10,60,80]
+            data:  [50,61,50,50]
           },
           {
             name: 'T12 +41807 R11',
-            data: [60,50,60,80]
+            data: [61,65,61,50]
           },
           {
             name: 'T13 +41807 R11',
-            data: [60,50,60,80]
+            data: [70,90,70,50]
           },
           {
             name: 'T14 +41807 R11',
-            data: [60,50,60,80]
+            data: [61,65,61,50]
           },
           {
             name: 'T15 +41807 R12',
-            data: [60,50,60,80]
+            data:  [50,61,50,50]
           },
           {
             name: 'T16 +41807 R13',
-            data: [60,50,60,10]
+            data:  [50,50,50,50]
           },
           {
             name: 'T17 +41807 R14',
-            data: [60,50,60,80]
+            data:  [50,50,50,50]
           },
           {
             name: 'T18 +41807 R15',
-            data: [60,50,60,80]
+            data: [50,50,50,50]
           }
 
           ],
@@ -98,6 +98,51 @@ function Thermalheatmap() {
               show: false
             }
           },
+          plotOptions: {
+            heatmap: {
+              shadeIntensity: 0.2,
+              radius: 2,
+              useFillColorAsStroke: false,
+              colorScale: {
+                ranges: [{
+                    from: 0,
+                    to: 30,
+                    name: 'Stave temperature is lower than Lower limit',
+                    color: '#D9EF8B',
+                    
+                  },
+                  {
+                    from: 30,
+                    to: 60,
+                    name: 'Stave temperature is in range',
+                    color: '#A6D96A',
+
+                  },
+                  {
+                    from: 61,
+                    to: 64,
+                    name: 'Stave temperature is 1-5% higher than Upper limit temp',
+                    color: '#FEE08B'
+                  },
+                  {
+                    from: 65,
+                    to: 70,
+                    name: 'Stave temperature is 5-10% higher than Upper limit temp',
+                    color: '#F46D43'
+                  }
+                  ,
+                  {
+                    from: 71,
+                    to: 100,
+                    name: 'Stave temperature is 10% higher than Upper limit temp',
+                    color: '#F11308'
+                  }
+                ]
+              },
+              width: 8, // Adjust the width of the color scale
+              height: 200,
+            }
+          },
           dataLabels: {
             enabled: false
           },
@@ -107,22 +152,12 @@ function Thermalheatmap() {
             type: 'category',
             categories: ['Quadrant 1', 'Quadrant 2', 'Quadrant 3', 'Quadrant 4',]
           },
-         
-          grid: {
-            padding: {
-              right: 20
-            }
-          }
-        },
+          
       
-      
+        }
       )
 
-    //   const coloredSeries = state.series.data.map(series => ({
-    //     name: series.name,
-    //     data: series.data,
-    //     colors: generateColors(series.data, min, max)
-    //   }));
+  
 
 
 
@@ -130,7 +165,7 @@ function Thermalheatmap() {
   return (
   
     <div id="chart" className="w-full h-full">
-    <ReactApexChart options={state.options} series={state.series} type="heatmap" height={450} />
+    <ReactApexChart options={state.options} series={state.series} type="heatmap" height="100%" />
   </div>
   );
 }
