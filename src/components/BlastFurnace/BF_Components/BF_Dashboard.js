@@ -23,7 +23,7 @@ const BF_Dashboard = () => {
   const [page, setPage] = useState("dashboard");
   const size = useWindowSize();
   return (
-    <div className="mt-5  w-full border-2 border-red-500">
+    <div className="mt-5  w-full ">
      <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
