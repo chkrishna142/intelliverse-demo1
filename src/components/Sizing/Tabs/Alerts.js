@@ -1,4 +1,7 @@
 import FloatingInput from "../SizingUtils/FloatingInput";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 import {
   Select,
   Table,
@@ -10,6 +13,7 @@ import {
   Th,
   Flex,
   Image,
+  Spinner
 } from "@chakra-ui/react";
 
 const alerts = [
@@ -104,19 +108,89 @@ const getReason = (reason) => {
   }
 };
 
-const Alerts = ({ plantId, cameraId }) => {
+const convertTimeString = (item) => {
+  let date = new Date(item).toISOString().split("T")[0];
+  let time = new Date(item).toTimeString();
+  return date.split("-").reverse().join("/") + " " + time.slice(0, 8);
+};
+
+const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
+  const param = useParams();
+  let material = param.material.toLowerCase();
+  let clientId = param.clientId.toLowerCase();
+  const [alertsChanging,setAlertsChanging] = useState(false)
+  const [fromTime, setFromTime] = useState(
+    new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+  );
+  const [toTime, setToTime] = useState(new Date());
+  const [selectedPlant, setSelectedPlant] = useState(
+    disable ? plantId : "All Plants"
+  );
+  const [selectedCam, setSelectedCam] = useState(
+    disable ? cameraId : "All Cams"
+  );
+  const apiCall = async () => {
+    const requestData = JSON.stringify({
+      clientId: clientId,
+      material: material,
+      startDate: convertTimeString(fromTime),
+      endDate: convertTimeString(toTime),
+      cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
+    });
+    const response = await axios
+      .post(
+        " https://intelliverse.backend-ripik.com/vision/v1/sizing/getOverviewAlerts/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        let totalAlerts = [];
+        Object.keys(response.data.plants).map((plant) => {
+          Object.keys(response.data.plants[plant][material]).map((cam) => {
+            totalAlerts.push(...response.data.plants[plant][material][cam]);
+          })
+          console.log(totalAlerts, "alerts");
+        });
+        setAlertsChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleClick = () =>{
+    setAlertsChanging(true);
+    apiCall();
+  }
+
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
         <div className="p-5 pl-6 pr-6 gap-6 flex flex-col md:flex-row items-center bg-white rounded-xl shadow-md">
           <div>
-            <FloatingInput text="From" type="datetime-local" />
+            <FloatingInput
+              text="From"
+              type="datetime-local"
+              setDateTime={setFromTime}
+            />
           </div>
           <div>
-            <FloatingInput text="To" type="datetime-local" />
+            <FloatingInput
+              text="To"
+              type="datetime-local"
+              setDateTime={setToTime}
+            />
           </div>
-          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
-            Show Alerts
+          <button
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+            onClick={handleClick}
+          >
+            {alertsChanging ? <Spinner/> : 'Show Alerts'}
           </button>
         </div>
       </div>
@@ -126,22 +200,51 @@ const Alerts = ({ plantId, cameraId }) => {
             <Select
               borderColor="#CAC5CD"
               color="#605D64"
-              placeholder={plantId}
+              placeholder={disable && plantId}
               variant="outline"
-              isDisabled={plantId !== "All Plants"}
+              isDisabled={disable}
               className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
-            />
+              onChange={(e) => setSelectedPlant(e.target.value)}
+              value={selectedPlant}
+            >
+              <option key="All Plants" value="All Plants">
+                All Plants
+              </option>
+              {!disable &&
+                Object.keys(plantCamMap).map((plant) => {
+                  return (
+                    <option key={plant} value={plant}>
+                      {plant}
+                    </option>
+                  );
+                })}
+            </Select>
           </div>
-          {plantId !== "All Plants" && (
+          {selectedPlant !== "All Plants" && (
             <div>
               <Select
                 borderColor="#CAC5CD"
                 color="#605D64"
-                placeholder={cameraId}
+                placeholder={disable && cameraId}
                 variant="outline"
-                isDisabled={cameraId !== ''}
+                isDisabled={disable}
                 className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
-              />
+                onChange={(e) => setSelectedCam(e.target.value)}
+                value={selectedCam}
+              >
+                {" "}
+                <option key="All Cams" value="All Cams">
+                  All Cams
+                </option>
+                {!disable &&
+                  plantCamMap[selectedPlant].map((cam) => {
+                    return (
+                      <option key={cam} value={cam}>
+                        {cam}
+                      </option>
+                    );
+                  })}
+              </Select>
             </div>
           )}
           <div>

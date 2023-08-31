@@ -14,7 +14,6 @@ const PlantCard = ({ PlantName, CamData }) => {
   Object.keys(CamData).map((cam) => {
     if(CamData[cam][0].noCoal !== 1)totalAlerts.push(CamData[cam][0]["alertMessages"].length);
     else totalAlerts.push(0);
-    console.log(CamData[cam][0],'data')
   }); 
   let sum = totalAlerts.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;

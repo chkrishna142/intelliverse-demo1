@@ -1,11 +1,12 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Feed from "./Tabs/Feed";
 import FeedLibrary from "./Tabs/FeedLibrary";
 import Alerts from "./Tabs/Alerts";
 import Report from "./Tabs/Report";
 import Analytics from "./Tabs/Analytics";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -17,10 +18,15 @@ const Capitalize = (str) => {
 };
 
 const Sizing = () => {
+  const size = useWindowSize();
+  const [plantCamMap, setPlantCamMap] = useState({});
   const [page, setPage] = useState("feed");
   const param = useParams();
   return (
-    <div className="pl-5 pr-5  font-poppins flex flex-col rounded-lg">
+    <div
+      className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
+      style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
+    >
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
@@ -84,19 +90,43 @@ const Sizing = () => {
 
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
-            <Feed material={param.material.toLowerCase()} clientId={param.clientId.toLowerCase()}/>
+            <Feed
+              material={param.material.toLowerCase()}
+              clientId={param.clientId.toLowerCase()}
+              setPlantCamMap={setPlantCamMap}
+            />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts plantId="All Plants" cameraId=''/>
+            <Alerts
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary plantId="All Plants" cameraId=''/>
+            <FeedLibrary
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Analytics plantId="All Plants" cameraId=''/>
+            <Analytics
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Report plantId="All Plants" cameraId=''/>
+            <Report
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>

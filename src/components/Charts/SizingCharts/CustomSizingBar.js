@@ -27,7 +27,7 @@ const CustomSizingBar = ({ size }) => {
     else isSmall = true;
   }
   return (
-    <div className="flex flex-col gap-4 min-w-[15vw]">
+    <div className='flex flex-col gap-4 min-w-[15vw]'>
       {/* <p className="text-base text-black">Size Distribution</p> */}
       <div className="flex flex-col h-[30vh]">
         {vals.map((x, idx) => {
@@ -44,7 +44,7 @@ const CustomSizingBar = ({ size }) => {
                 {isSmall ? `${x}%` : ""}
               </div>
               {!isSmall && (
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center min-w-[115px]">
                   <p className="font-medium " style={{ color: colors[idx] }}>
                     {x}%
                   </p>

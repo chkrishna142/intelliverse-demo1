@@ -53,6 +53,7 @@ const FloatingInput = (props) => {
           ref={props.inputRef}
           size="md"
           type={props.type}
+          onChange={(e)=>props?.setDateTime(e.target.value)}
           className="!border-1 !border-[#79767D] !rounded-[5px] !text-[#AEA9B1] !text-base"
         />
         {/* It is important that the Label comes after the Control due to css selectors */}

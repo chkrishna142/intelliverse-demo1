@@ -2,7 +2,7 @@ import PlantCard from "../SizingComponents/PlantCard";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const Feed = ({ material, clientId }) => {
+const Feed = ({ material, clientId, setPlantCamMap }) => {
   const [plantData, setPlantData] = useState("noPlant");
 
   const apiCall = async () => {
@@ -30,6 +30,16 @@ const Feed = ({ material, clientId }) => {
   };
 
   useEffect(() => {
+    if (plantData !== "noPlant") {
+      const plantCamMap = {};
+      Object.keys(plantData).map((plant) => {
+        plantCamMap[plant] = Object.keys(plantData[plant][material]);
+      });
+      setPlantCamMap(plantCamMap);
+    }
+  }, [plantData]);
+
+  useEffect(() => {
     apiCall();
     const intervalId = setInterval(() => {
       apiCall();
@@ -41,7 +51,8 @@ const Feed = ({ material, clientId }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4">
-      {plantData && plantData !== "noPlant" &&
+      {plantData &&
+        plantData !== "noPlant" &&
         Object.keys(plantData).map((plant) => {
           return (
             <PlantCard PlantName={plant} CamData={plantData[plant][material]} />
