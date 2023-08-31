@@ -20,6 +20,7 @@ import NavBox from "./components/NavBox";
 import Demo from './components/Main/Demo';
 import Setting from './components/ContactUs/Setting';
 import UserProfile from './components/ContactUs/UserProfile';
+import AskAnExpert from './components/Main/AskAnExpert';
 
 function App() {
 
@@ -74,6 +75,7 @@ function App() {
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/bookdemo" element={<Demo />} />
+                    <Route path="/askanexpert" element={<AskAnExpert />} />
                   </Routes>
                 </div>
               </div>

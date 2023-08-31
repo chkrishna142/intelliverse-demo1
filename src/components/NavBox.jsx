@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, createRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import NavContext from "./NavContext";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -49,7 +49,7 @@ const NavBox = () => {
                     marginTop="-7px"
                     marginLeft="127px"
                 >
-                    <div style={{ width: '75vw' }} className="bg-white px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
+                    <div className="bg-white w-[75vw] px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
                         <img className="h-5" src="/search.svg" />
                         <input className="w-full focus:outline-none " placeholder="Search Intelliverse" />
                     </div>
