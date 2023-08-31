@@ -2,11 +2,13 @@
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import Mymodal from "../BF_Components/Mymodal";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
 
 function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
 
+  const size = useWindowSize();
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
@@ -138,7 +140,7 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
           </div>
           </div>
           <div
-            className={`flex items-start gap-[2%] w-[80%]  `}
+            className={`flex  ${size.width<=768?"flex-col":""} items-start gap-[2%] w-[80%]  `}
           >
             <div className="flex gap-[2px] items-center justify-center">
               <div className="flex gap-[2px] ">
@@ -166,9 +168,9 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
       {/* bottom */}
       {isExpanded1 && (
          
-            <div className={`flex gap-[12px] w-full  h-full`}>
+            <div className={`flex ${size.width<=768?"flex-col":""}  gap-[12px] w-full  h-full`}>
               <div
-                class={`w-[25%] flex flex-col items-start h-[300px]  p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] bg-blue-100`}
+                class={`  ${size.width<=768?"w-full":"w-[25%]"}  flex flex-col items-start h-[300px]  p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] bg-blue-100`}
               >
                 {/* current fuel rate */}
 
@@ -196,7 +198,7 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
                 </div>
               </div>
               {/* charts */}
-              <div class={` w-[75%] flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              <div class={`  ${size.width<=768?"w-full":"w-[75%]"}  flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
                 
                 <div id="chart" className="h-[100%] w-full">
                 <Linechart  chart={fuelchart}/>

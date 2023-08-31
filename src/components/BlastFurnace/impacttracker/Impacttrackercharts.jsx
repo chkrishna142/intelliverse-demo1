@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-
 import ReactApexChart from "react-apexcharts";
+import Pichart from "../../Charts/BF_Charts/Pichart";
+
 
 const Impacttrackercharts = () => {
   const [isExpanded1, setIsExpanded1] = useState(true);
@@ -485,21 +486,21 @@ const Impacttrackercharts = () => {
      
 
       <div className="h-[68vh] w-full   p-[2px] overflow-y-auto gap-[16px] ">
-        <div class="w-full h-[auto]  p-[24px]  rounded-[12px] bg-white ">
+        <div className="w-full h-[auto]  p-[24px]  rounded-[12px] bg-white ">
           {/* Fuel rate pie chat */}
           {/* top */}
-          <div class="flex justify-between items-start w-full ">
+          <div className="flex justify-between items-start w-full ">
             {/* actual fuel rate top */}
-            <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+            <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
               <div className="flex items-center gap-[8px]">
                 {" "}
-                <div class="text-black font-roboto text-[22px] text-[#000] font-medium">
+                <div className="text-black font-roboto text-[22px] text-[#000] font-medium">
                 <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                 Fuel Rate
                   </p>
                   
                 </div>
-                <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+                <div className="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
               </div>
               <div className="flex text-[#605D64] text-[18px] font-medium items-start gap-[32px] ">
               <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-[20px] ">
@@ -508,27 +509,27 @@ const Impacttrackercharts = () => {
                
               </div>
             </div>
-            <div class="fill-white drop-shadow-md" onClick={handleToggle1}>
+            <div className="fill-white drop-shadow-md" onClick={handleToggle1}>
             <img src="/dropicon.svg" alt="" />
             </div>
           </div>
           {/* bottom */}
 
           {isExpanded1 && (
-            <div className={` flex w-[100%]  mt-[20px] p-[0px]  gap-4  items-center ${windowWidth<1440 ? " overflow-x-scroll":""}  `}>
+            <div className={ ` flex w-[100%]  mt-[20px] p-[2px]  items-center ${windowWidth<1440 ? "overflow-x-scroll":"" } `}>
               {/* pi chart 1 */}
-              <div class={` flex flex-col items-center  ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              <div className={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
                 {/* top text */}
-                   <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base ">
+                <div className="flex flex-col gap-[6px] text-left">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Non-Ideal conditions (22 hrs)
                   </div>
-                  <div class="text-orange-500 font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
-                   </div>
+                </div>
                 {/* pi chart */}
-                   <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -538,10 +539,10 @@ const Impacttrackercharts = () => {
                       width={"110%"}
                     />
                   </div>
-                   </div>
+                </div>
 
                 {/* svg and text */}
-                  <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -555,30 +556,30 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      Ideal conditions (22 hrs) 
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                      Ideal conditions (22 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
-                  </div>
+                </div>
               </div>
               {/* pi chart 2 */}
               
-              <div class="flex flex-col items-center w-[250px]   h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[250px]   h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Recommendations given <br /> (16 hrs)
                   </div>
-                  <div class="text-orange-500 font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -590,7 +591,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -604,29 +605,29 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       No recommendation (16 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 3 */}
-              <div class="flex flex-col items-center w-[220px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[220px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Recommendation <br /> followed (12 hrs)
                   </div>
-                  <div class="text-orange-500 font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -638,7 +639,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -652,42 +653,42 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      Recommendation ignored (12 hrs)
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                      Recommendation ignored (12 hrs) 
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 4 */}
-              <div class="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Ideal state attained <br />
                     (8 hrs)
                   </div>
-                  <div class="text-orange-500 font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
-                      options={orangechart1.options}
-                      series={orangechart1.series}
+                      options={orangechart4.options}
+                      series={orangechart4.series}
                       type="pie"
                       width={"110%"}
                     />
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -701,21 +702,21 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Ideal state not attained (8 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 5 */}
-              <div class="flex flex-col  items-center w-[180px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[180px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#3E3C42] text-[18px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#3E3C42] text-[18px] font-roboto font-medium text-base">
                     Monetary Impact
                   </div>
                 </div>
@@ -746,7 +747,7 @@ const Impacttrackercharts = () => {
                 </svg>
 
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                 </div>
               </div>
@@ -755,24 +756,24 @@ const Impacttrackercharts = () => {
         </div>
 
         {/* throughtput*/}
-        <div class="w-[100%] h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
+        <div className="w-[100%] h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
           {/* through pie chat */}
           {/* top */}
-          <div class="flex justify-between items-start w-[100%]">
+          <div className="flex justify-between items-start w-[100%]">
             {/* thruogh top */}
-            <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+            <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
               <div className="flex items-center gap-[8px]">
                 {" "}
-                <div class="text-black font-roboto text-[22px] text-[#000] font-medium">
+                <div className="text-black font-roboto text-[22px] text-[#000] font-medium">
                   Throughput
                 </div>
-                <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+                <div className="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
               </div>
               <div className="flex text-[#605D64] text-[18px] font-medium items-start gap-[32px] ">
                 Total time: 24 hrs
               </div>
             </div>
-            <div class="fill-white drop-shadow-md" onClick={handleToggle2}>
+            <div className="fill-white drop-shadow-md" onClick={handleToggle2}>
             <img src="/dropicon.svg" alt="" />
             </div>
           </div>
@@ -781,18 +782,18 @@ const Impacttrackercharts = () => {
           {isExpanded2 && (
             <div className={ ` flex w-[100%]  mt-[20px] p-[2px]  items-center ${windowWidth<1440 ? "overflow-x-scroll":"" } `}>
               {/* pi chart 1 */}
-              <div class={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              <div className={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Non-Ideal conditions (22 hrs)
                   </div>
-                  <div class="text-[#629CF2] font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -805,7 +806,7 @@ const Impacttrackercharts = () => {
                 </div>
 
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -819,11 +820,11 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Ideal conditions (22 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
@@ -831,18 +832,18 @@ const Impacttrackercharts = () => {
               </div>
               {/* pi chart 2 */}
               
-              <div class="flex flex-col items-center w-[250px]   h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] ">
+              <div className="flex flex-col items-center w-[250px]   h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Recommendations given <br /> (16 hrs)
                   </div>
-                  <div class="text-[#629CF2] font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -854,7 +855,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -868,29 +869,29 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       No recommendation (16 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 3 */}
-              <div class="flex flex-col items-center w-[220px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[220px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Recommendation <br /> followed (12 hrs)
                   </div>
-                  <div class="text-[#629CF2] font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -902,7 +903,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -916,30 +917,30 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Recommendation ignored (12 hrs) 
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 4 */}
-              <div class="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Ideal state attained <br />
                     (8 hrs)
                   </div>
-                  <div class="text-[#629CF2] font-roboto font-medium text-base">
+                  <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -951,7 +952,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -965,21 +966,21 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Ideal state not attained (8 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 5 */}
-              <div class="flex flex-col items-center w-[180px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[180px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#3E3C42] text-[18px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#3E3C42] text-[18px] font-roboto font-medium text-base">
                     Monetary Impact
                   </div>
                 </div>
@@ -1010,7 +1011,7 @@ const Impacttrackercharts = () => {
                 </svg>
 
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                 </div>
               </div>
@@ -1019,24 +1020,24 @@ const Impacttrackercharts = () => {
         </div>
 
         {/* Si vlaue */}
-        <div class="w-[100%] h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
+        <div className="w-[100%] h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
           {/* si value chart */}
           {/* top */}
-          <div class="flex justify-between items-start w-[100%]">
+          <div className="flex justify-between items-start w-[100%]">
             {/* si top */}
-            <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+            <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
               <div className="flex items-center gap-[8px]">
                 {" "}
-                <div class="text-black font-roboto text-[22px] text-[#000] font-medium">
+                <div className="text-black font-roboto text-[22px] text-[#000] font-medium">
                   Si Value
                 </div>
-                <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+                <div className="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
               </div>
               <div className="flex text-[#605D64] text-[18px] font-medium items-start gap-[32px] ">
                 Total time: 24 hrs
               </div>
             </div>
-            <div class="fill-white drop-shadow-md" onClick={handleToggle3}>
+            <div className="fill-white drop-shadow-md" onClick={handleToggle3}>
             <img src="/dropicon.svg" alt="" />
             </div>
           </div>
@@ -1045,18 +1046,18 @@ const Impacttrackercharts = () => {
           {isExpanded3 && (
             <div className={ ` flex w-[100%]  mt-[20px] p-[2px]  items-center ${windowWidth<1440 ? "overflow-x-scroll":"" } `}>
             {/* pi chart 1 */}
-            <div class={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+            <div className={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Non-Ideal conditions (22 hrs)
                   </div>
-                  <div class="text-[#06B898] font-roboto font-medium text-base">
+                  <div className="text-[#06B898] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -1069,7 +1070,7 @@ const Impacttrackercharts = () => {
                 </div>
 
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -1083,29 +1084,29 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Ideal conditions (22 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 2 */}
-              <div class="flex flex-col items-center w-[250px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] ">
+              <div className="flex flex-col items-center w-[250px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Recommendations given <br /> (16 hrs)
                   </div>
-                  <div class="text-[#06B898] font-roboto font-medium text-base">
+                  <div className="text-[#06B898] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -1117,7 +1118,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -1131,11 +1132,11 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       No recommendation (16 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
@@ -1143,18 +1144,18 @@ const Impacttrackercharts = () => {
               </div>
              
               {/* pi chart 3 */}
-              <div class="flex flex-col items-center w-[220px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[220px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Recommendation <br /> followed (12 hrs)
                   </div>
-                  <div class="text-[#06B898] font-roboto font-medium text-base">
+                  <div className="text-[#06B898] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -1166,7 +1167,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -1180,30 +1181,30 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Recommendation ignored (12 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 4 */}
-              <div class="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Ideal state attained <br />
                     (8 hrs)
                   </div>
-                  <div class="text-[#06B898] font-roboto font-medium text-base">
+                  <div className="text-[#06B898] font-roboto font-medium text-base">
                     43.5%
                   </div>
                 </div>
                 {/* pi chart */}
-                <div class=" w-[full] flex flex-col">
+                <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -1215,7 +1216,7 @@ const Impacttrackercharts = () => {
                   </div>
                 </div>
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                   <div>
                     <svg
@@ -1229,21 +1230,21 @@ const Impacttrackercharts = () => {
                     </svg>
                   </div>
                   {/* text div */}
-                  <div class="text-start text-left  mt-[-5px]">
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base">
+                  <div className="text-start text-left  mt-[-5px]">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Ideal state not attained (8 hrs)
                     </div>
-                    <div class="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
+                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
                       43.5%
                     </div>
                   </div>
                 </div>
               </div>
               {/* pi chart 5 */}
-              <div class="flex flex-col items-center w-[180px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
+              <div className="flex flex-col items-center w-[180px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
-                  <div class="text-neutral-n-30 text-[#3E3C42] text-[18px] font-roboto font-medium text-base">
+                  <div className="text-neutral-n-30 text-[#3E3C42] text-[18px] font-roboto font-medium text-base">
                     Monetary Impact
                   </div>
                 </div>
@@ -1274,7 +1275,7 @@ const Impacttrackercharts = () => {
                 </svg>
 
                 {/* svg and text */}
-                <div class="flex gap-[8px] text-left w-[80%]">
+                <div className="flex gap-[8px] text-left w-[80%]">
                   {/* svg div */}
                 </div>
               </div>

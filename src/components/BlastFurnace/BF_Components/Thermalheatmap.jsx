@@ -107,34 +107,34 @@ function Thermalheatmap() {
                 ranges: [{
                     from: 0,
                     to: 30,
-                    name: 'Stave temperature is lower than Lower limit',
+                    // name: 'Stave temperature is lower than Lower limit',
                     color: '#D9EF8B',
                     
                   },
                   {
                     from: 30,
                     to: 60,
-                    name: 'Stave temperature is in range',
+                    // name: 'Stave temperature is in range',
                     color: '#A6D96A',
 
                   },
                   {
                     from: 61,
                     to: 64,
-                    name: 'Stave temperature is 1-5% higher than Upper limit temp',
+                    // name: 'Stave temperature is 1-5% higher than Upper limit temp',
                     color: '#FEE08B'
                   },
                   {
                     from: 65,
                     to: 70,
-                    name: 'Stave temperature is 5-10% higher than Upper limit temp',
+                    // name: 'Stave temperature is 5-10% higher than Upper limit temp',
                     color: '#F46D43'
                   }
                   ,
                   {
                     from: 71,
                     to: 100,
-                    name: 'Stave temperature is 10% higher than Upper limit temp',
+                    // name: 'Stave temperature is 10% higher than Upper limit temp',
                     color: '#F11308'
                   }
                 ]
@@ -150,7 +150,8 @@ function Thermalheatmap() {
         },
           xaxis: {
             type: 'category',
-            categories: ['Quadrant 1', 'Quadrant 2', 'Quadrant 3', 'Quadrant 4',]
+            categories: ['Quadrant 1', 'Quadrant 2', 'Quadrant 3', 'Quadrant 4',],
+            tickPlacement: 'between',
           },
           
       
@@ -164,7 +165,7 @@ function Thermalheatmap() {
 
   return (
   
-    <div id="chart" className="w-full h-full">
+    <div id="chart" className="w-full h-[400px]">
     <ReactApexChart options={state.options} series={state.series} type="heatmap" height="100%" />
   </div>
   );

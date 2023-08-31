@@ -146,7 +146,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
           Last 1 Hour
         </p>
         <div className="w-full h-[200px] ">
-         <ThermalIndThermo maxTemperature={800} temperature={280}/>
+         <ThermalIndThermo maxTemperature={800} temperature={1000}/>
 
         </div>
       </div>
@@ -197,7 +197,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
 
       {/* Range bar */}
       <div class="w-[45%] flex h-full ">
-        <div class="w-[80%] h-[100%]">
+        <div class="w-[100%] h-[100%]">
        <Thermalheatmap/>
         </div>
 

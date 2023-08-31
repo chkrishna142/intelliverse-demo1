@@ -47,7 +47,7 @@ function App() {
           {login ? (
             <>
               <Navbar />
-              <NavBox />
+              {/* <NavBox /> */}
               <Sidebar />
               <div className="" style={{ display: "flex" }}>
                 <div className="md:ml-32 md:mr-10 md:mt-24 w-full mr-2 ml-2 mt-28 mb-10 md:mb-0">
