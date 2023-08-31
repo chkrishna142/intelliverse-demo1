@@ -64,7 +64,7 @@ function Overviewrecommendation({
               <p className="text-[#939393]  text-[12px]">Nm^3/hr</p>
             </div>
             <div className="mt-[30px]">
-              <Fuelrecommend recommendedValue={5750} currentValue={5950} />
+              <Fuelrecommend recommendedValue={5750} currentValue={9950} />
             </div>
           </div>
           {/* raft */}

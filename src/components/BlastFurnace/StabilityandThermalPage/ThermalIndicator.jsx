@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ThermalIndThermo from "../BF_Components/ThermalIndThermo";
 import Thermalareachart from "../BF_Components/Thermalareachart";
+import Thermalheatmap from "../BF_Components/Thermalheatmap";
 
 
 function ThermalIndicator({ isExpanded3, handleToggle3 }) {
@@ -145,7 +146,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
           Last 1 Hour
         </p>
         <div className="w-full h-[200px] ">
-         <ThermalIndThermo maxTemperature={1000} temperature={500}/>
+         <ThermalIndThermo maxTemperature={800} temperature={1000}/>
 
         </div>
       </div>
@@ -153,7 +154,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
       {/* Target Ranges for Stave Temperature */}
       <div class="w-[35%] h-[100%]  shadow-md p-1">
         {/* top */}
-        {/* <div class="w-full">
+        <div class="w-full">
           <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
             <div className="flex items-center gap-[8px]">
               {" "}
@@ -187,17 +188,17 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         {/* chart */}
-        <div class="w-full ">
+        <div class="w-full h-full  ">
           <Thermalareachart/>
         </div>
       </div>
 
       {/* Range bar */}
       <div class="w-[45%] flex h-full ">
-        <div class="w-[80%] h-[100%]">
-       hello
+        <div class="w-[100%] h-[100%]">
+       <Thermalheatmap/>
         </div>
 
         
