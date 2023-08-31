@@ -8,6 +8,7 @@ import Report from "./Tabs/Report";
 import CamFeed from "./Tabs/CamFeed";
 import Analytics from "./Tabs/Analytics";
 import Timer from "./SizingUtils/Timer";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -19,6 +20,7 @@ const Capitalize = (str) => {
 };
 
 const SingleCam = () => {
+  const size = useWindowSize();
   const param = useParams();
   const [page, setPage] = useState("feed");
   let material = param.material.toLowerCase();
@@ -26,7 +28,10 @@ const SingleCam = () => {
   let clientId = param.clientId;
   let plantId = param.plantId;
   return (
-    <div className="pl-5 pr-5 flex flex-col rounded-lg">
+    <div
+      className="pl-5 pr-5 flex flex-col rounded-lg"
+      style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
+    >
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
@@ -41,7 +46,7 @@ const SingleCam = () => {
         </Link>
       </div>
       <Tabs>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center overflow-x-auto h-14 md:h-10">
           <TabList className="!flex !border-0">
             <div className="flex items-center gap-4">
               <Tab
@@ -108,16 +113,16 @@ const SingleCam = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts plantId={plantId} cameraId={cameraId}/>
+            <Alerts plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary plantId={plantId} cameraId={cameraId}/>
+            <FeedLibrary plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Analytics plantId={plantId} cameraId={cameraId}/>
+            <Analytics plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Report plantId={plantId} cameraId={cameraId}/>
+            <Report plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
         </TabPanels>
       </Tabs>

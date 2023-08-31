@@ -2,7 +2,7 @@ import { useState } from "react";
 import PhotoGallery from "../SizingComponents/PhotoGallery";
 import VideoGallery from "../SizingComponents/VideoGallery";
 
-const FeedLibrary = ({plantId,cameraId}) => {
+const FeedLibrary = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [page, setPage] = useState("photo gallery");
   return (
     <div className="flex flex-col gap-0">
@@ -40,8 +40,10 @@ const FeedLibrary = ({plantId,cameraId}) => {
           </p>
         </div>
       </div>
-      {page==='photo gallery' && <PhotoGallery plantId={plantId} cameraId={cameraId}/>}
-      {page==='video gallery' && <VideoGallery />}
+      {page === "photo gallery" && (
+        <PhotoGallery plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap} />
+      )}
+      {page === "video gallery" && <VideoGallery />}
     </div>
   );
 };
