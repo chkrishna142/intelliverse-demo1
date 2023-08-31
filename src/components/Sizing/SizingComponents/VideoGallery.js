@@ -9,7 +9,7 @@ const VideoGallery = () => {
     setIsDrawerOpen(false);
   };
   return (
-    <div className="bg-white relative flex p-10 rounded-xl gap-8 items-center justify-between">
+    <div className="bg-white relative flex flex-col xl:flex-row p-10 rounded-xl gap-8 items-center justify-between">
       <img
         className="absolute top-3 right-3 cursor-pointer"
         src="/SizingIcons/Hamburger.svg"

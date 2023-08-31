@@ -6,7 +6,7 @@ const VideoInputForm = ({setIsVideo}) => {
   const [selectedCam, setSelectedCam] = useState("");
   const cams = [1, 2, 3];
   return (
-    <div className="flex flex-col gap-8 w-[24vw] h-full">
+    <div className="flex flex-col gap-8 w-[24vw] min-w-[245px] h-full">
       <div className="flex flex-col gap-6 items-center">
         <div className="flex flex-col gap-3 items-start w-full">
           <p className="text-[#938F96] text-sm font-medium">Select a plant</p>
@@ -22,12 +22,12 @@ const VideoInputForm = ({setIsVideo}) => {
         </div>
         <div className="flex flex-col gap-3 items-start w-full">
           <p className="text-[#938F96] text-sm font-medium">Select camera</p>
-          <div className="grid grid-cols-3 gap-3 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 w-full overflow-y-auto h-[45px]">
             {cams.map((id) => {
               return (
                 <div
                   key={id}
-                  className={`p-2 pl-3 pr-3 text-base border text-[#605D64] rounded-[32px] cursor-pointer ${
+                  className={`p-2 pl-3 pr-3 text-base text-center border text-[#605D64] rounded-[32px] cursor-pointer ${
                     selectedCam === id ? "border-[#6CA6FC]" : "border-[#EBEBEB]"
                   } ${selectedCam === id ? "bg-[#6CA6FC33]" : "bg-white"}`}
                   onClick={() => setSelectedCam(id)}

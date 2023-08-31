@@ -28,7 +28,7 @@ const Sizing = () => {
       </div>
       <Tabs>
         <TabList className="!flex !border-0">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 overflow-x-auto h-14 md:h-10">
             <Tab
               className={
                 page === "feed"
@@ -87,16 +87,16 @@ const Sizing = () => {
             <Feed material={param.material.toLowerCase()} clientId={param.clientId.toLowerCase()}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts />
+            <Alerts plantId="All Plants" cameraId=''/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary />
+            <FeedLibrary plantId="All Plants" cameraId=''/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Analytics />
+            <Analytics plantId="All Plants" cameraId=''/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Report />
+            <Report plantId="All Plants" cameraId=''/>
           </TabPanel>
         </TabPanels>
       </Tabs>

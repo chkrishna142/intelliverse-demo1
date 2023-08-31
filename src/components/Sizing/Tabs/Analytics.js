@@ -111,13 +111,14 @@ const report = [
   },
 ];
 
-const Analytics = () => {
+const Analytics = ({ plantId, cameraId }) => {
   const [selectedBasis, setSelectedBasis] = useState(0);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
-        <div className="flex justify-between items-center">
-          <div className="flex gap-6 text-[#49454F] text-base">
+        <div className="flex justify-between items-center overflow-x-auto">
+          <div className="flex gap-6 text-[#49454F] text-xs lg:text-base min-w-[445px]">
             <div
               className={`p-3 flex items-center gap-1 ${
                 selectedBasis === 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
@@ -162,16 +163,29 @@ const Analytics = () => {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <div>
+            <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
                 color="#605D64"
-                placeholder="Jaffrabad"
+                placeholder={plantId}
                 variant="outline"
+                isDisabled={plantId !== "All Plants"}
                 className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
               />
             </div>
-            <div>
+            {plantId !== "All Plants" && (
+              <div className="min-w-[110px]">
+                <Select
+                  borderColor="#CAC5CD"
+                  color="#605D64"
+                  placeholder={cameraId}
+                  variant="outline"
+                  isDisabled={cameraId !== ""}
+                  className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+                />
+              </div>
+            )}
+            <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
                 color="#605D64"
@@ -183,30 +197,43 @@ const Analytics = () => {
           </div>
         </div>
         <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
-        <div className="flex justify-between items-center">
-          <div className="w-[20vw]">
+        {/* <div className="relative flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
+          <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
             <PieChart />
           </div>
-          <div className="w-[60vw] h-[250px]">
+          <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
             <StackBarChart />
           </div>
-        </div>
+        </div> */}
       </div>
-      <div className="flex flex-col gap-4">
-        <div className="flex justify-between items-center pt-6 rounded-xl bg-white">
+      <div className="flex flex-col gap-4 rounded-xl bg-white">
+        <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6 overflow-x-auto">
           <p className="text-[#3E3C42] text-xl font-medium pl-6">
             Report table
           </p>
-          <div className="flex items-center gap-4 pr-6">
+          <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 min-w-[500px]">
             <div>
               <Select
                 borderColor="#CAC5CD"
                 color="#605D64"
-                placeholder="Jaffrabad"
+                placeholder={plantId}
                 variant="outline"
+                isDisabled={plantId !== "All Plants"}
                 className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
               />
             </div>
+            {plantId !== "All Plants" && (
+              <div>
+                <Select
+                  borderColor="#CAC5CD"
+                  color="#605D64"
+                  placeholder={cameraId}
+                  variant="outline"
+                  isDisabled={cameraId !== ""}
+                  className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+                />
+              </div>
+            )}
             <div>
               <Select
                 borderColor="#CAC5CD"
@@ -216,7 +243,7 @@ const Analytics = () => {
                 className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
               />
             </div>
-            <div className="flex items-baseline text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
+            <div className="flex items-baseline text-xs md:text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
               <p className="cursor-pointer">Download</p>
               <select
                 name="typeSheet"
@@ -229,7 +256,7 @@ const Analytics = () => {
             </div>
           </div>
         </div>
-        <TableContainer className="!whitespace-normal">
+        <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
           <Table variant="simple">
             <Thead className="bg-[#FAFAFA] !text-xs">
               <Tr>

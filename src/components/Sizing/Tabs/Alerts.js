@@ -9,7 +9,7 @@ import {
   TableContainer,
   Th,
   Flex,
-  Image
+  Image,
 } from "@chakra-ui/react";
 
 const alerts = [
@@ -104,33 +104,46 @@ const getReason = (reason) => {
   }
 };
 
-const Alerts = () => {
+const Alerts = ({ plantId, cameraId }) => {
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
-        <div className="p-5 pl-6 pr-6 gap-6 flex items-center bg-white rounded-xl shadow-md">
+        <div className="p-5 pl-6 pr-6 gap-6 flex flex-col md:flex-row items-center bg-white rounded-xl shadow-md">
           <div>
             <FloatingInput text="From" type="datetime-local" />
           </div>
           <div>
             <FloatingInput text="To" type="datetime-local" />
           </div>
-          <button className="text-center p-[10px] pl-4 pr-4 text-white text-base font-medium bg-[#084298] rounded-full">
+          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
             Show Alerts
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-4 mt-11 pt-[57px] bg-white rounded-xl justify-start">
+      <div className="flex flex-col gap-4 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
         <div className="flex gap-2 ml-6">
           <div>
             <Select
               borderColor="#CAC5CD"
               color="#605D64"
-              placeholder="All Plants"
+              placeholder={plantId}
               variant="outline"
+              isDisabled={plantId !== "All Plants"}
               className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
             />
           </div>
+          {plantId !== "All Plants" && (
+            <div>
+              <Select
+                borderColor="#CAC5CD"
+                color="#605D64"
+                placeholder={cameraId}
+                variant="outline"
+                isDisabled={cameraId !== ''}
+                className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+              />
+            </div>
+          )}
           <div>
             <Select
               borderColor="#CAC5CD"
@@ -141,24 +154,43 @@ const Alerts = () => {
             />
           </div>
         </div>
-        <TableContainer className="!whitespace-normal">
+        <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
           <Table variant="simple">
             <Thead className="bg-[#FAFAFA] !text-xs">
               <Tr>
-                <Th color="#79767D" fontWeight={400}>SR. NO.</Th>
-                <Th color="#79767D" fontWeight={400}>PLANT</Th>
-                <Th color="#79767D" fontWeight={400}>CAMERA</Th>
-                <Th color="#79767D" fontWeight={400}>TIME</Th>
-                <Th color="#79767D" fontWeight={400}>REASON</Th>
-                <Th color="#79767D" fontWeight={400}>COMMENT</Th>
-                <Th color="#79767D" fontWeight={400}>{""}</Th>
+                <Th color="#79767D" fontWeight={400}>
+                  SR. NO.
+                </Th>
+                <Th color="#79767D" fontWeight={400}>
+                  PLANT
+                </Th>
+                <Th color="#79767D" fontWeight={400}>
+                  CAMERA
+                </Th>
+                <Th color="#79767D" fontWeight={400}>
+                  TIME
+                </Th>
+                <Th color="#79767D" fontWeight={400}>
+                  REASON
+                </Th>
+                <Th color="#79767D" fontWeight={400}>
+                  COMMENT
+                </Th>
+                <Th color="#79767D" fontWeight={400}>
+                  {""}
+                </Th>
               </Tr>
             </Thead>
             <Tbody>
               {alerts.map((item, index) => {
                 return (
-                  <Tr key={index} className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white">
-                    <Td className="cursor-pointer">{String(index + 1).padStart(2,'0')}</Td>
+                  <Tr
+                    key={index}
+                    className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
+                  >
+                    <Td className="cursor-pointer">
+                      {String(index + 1).padStart(2, "0")}
+                    </Td>
                     <Td className="cursor-pointer">{item.Plant}</Td>
                     <Td className="cursor-pointer">{item.Camera}</Td>
                     <Td className="cursor-pointer">{item.Time}</Td>

@@ -24,6 +24,7 @@ const SingleCam = () => {
   let material = param.material.toLowerCase();
   let cameraId = param.cameraId;
   let clientId = param.clientId;
+  let plantId = param.plantId;
   return (
     <div className="pl-5 pr-5 flex flex-col rounded-lg">
       <div className="flex justify-between mb-3 mt-6">
@@ -95,7 +96,7 @@ const SingleCam = () => {
               </Tab>
             </div>
           </TabList>
-          {page==="feed" && <Timer initialSeconds={30}/>}
+          {page === "feed" && <Timer initialSeconds={30} />}
         </div>
 
         <TabPanels>
@@ -107,16 +108,16 @@ const SingleCam = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts />
+            <Alerts plantId={plantId} cameraId={cameraId}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary />
+            <FeedLibrary plantId={plantId} cameraId={cameraId}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Analytics/>
+            <Analytics plantId={plantId} cameraId={cameraId}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Report />
+            <Report plantId={plantId} cameraId={cameraId}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

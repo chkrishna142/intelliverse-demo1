@@ -10,6 +10,7 @@ import {
   Th,
   Flex,
   Image,
+  Select
 } from "@chakra-ui/react";
 const report = [
   {
@@ -124,26 +125,59 @@ const report = [
   },
 ];
 
-const Report = () => {
+const Report = ({ plantId, cameraId }) => {
   const [selectedBasis, setSelectedBasis] = useState("");
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
-        <div className="p-5 pl-6 pr-6 gap-6 flex items-center bg-white rounded-xl shadow-md">
+        <div className="p-5 pl-6 pr-6 gap-6 flex flex-col md:flex-row items-center bg-white rounded-xl shadow-md">
           <div>
             <FloatingInput text="From" type="datetime-local" />
           </div>
           <div>
             <FloatingInput text="To" type="datetime-local" />
           </div>
-          <button className="text-center p-[10px] pl-4 pr-4 text-white text-base font-medium bg-[#084298] rounded-full">
+          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
             Show Report
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-4 mt-[68px] pt-10 bg-white rounded-xl justify-start">
-        <div className="flex justify-between pl-4 pr-6 mr-3">
-          <div className="flex gap-6 text-[#49454F] text-base">
+      <div className="flex flex-col gap-4 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
+        <div className="flex justify-between gap-2 pl-4 pr-6 mr-3 overflow-x-auto">
+          <div className="flex gap-2 min-w-[200px]">
+            <div>
+              <Select
+                borderColor="#CAC5CD"
+                color="#605D64"
+                placeholder={plantId}
+                variant="outline"
+                isDisabled={plantId !== "All Plants"}
+                className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+              />
+            </div>
+            {plantId !== "All Plants" && (
+              <div>
+                <Select
+                  borderColor="#CAC5CD"
+                  color="#605D64"
+                  placeholder={cameraId}
+                  variant="outline"
+                  isDisabled={cameraId !== ""}
+                  className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+                />
+              </div>
+            )}
+            <div>
+              <Select
+                borderColor="#CAC5CD"
+                color="#605D64"
+                placeholder="Basis"
+                variant="outline"
+                className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
+              />
+            </div>
+          </div>
+          {/* <div className="flex gap-6 text-[#49454F] text-base">
             <div
               className={`p-3 flex items-center gap-1 ${
                 selectedBasis === 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
@@ -186,8 +220,8 @@ const Report = () => {
               />
               <p>Hourly Basis</p>
             </div>
-          </div>
-          <div className="flex items-baseline text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
+          </div> */}
+          <div className="flex items-baseline text-xs md:text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
             <p className="cursor-pointer">Download</p>
             <select
               name="typeSheet"
@@ -199,14 +233,14 @@ const Report = () => {
             </select>
           </div>
         </div>
-        <TableContainer className="!whitespace-normal">
+        <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
           <Table variant="simple">
             <Thead className="bg-[#FAFAFA] !text-xs">
               <Tr>
                 <Th color="#79767D" fontWeight={400}>
                   SR. NO.
                 </Th>
-                {Object.keys(report[0]).map((id,idx) => {
+                {Object.keys(report[0]).map((id, idx) => {
                   return (
                     <Th key={idx} color="#79767D" fontWeight={400}>
                       {id.toUpperCase()}
@@ -225,8 +259,12 @@ const Report = () => {
                     <Td className="cursor-pointer">
                       {String(index + 1).padStart(2, "0")}
                     </Td>
-                    {Object.keys(item).map((x,idx) => {
-                      return <Td key={idx} className="cursor-pointer">{item[x]}</Td>;
+                    {Object.keys(item).map((x, idx) => {
+                      return (
+                        <Td key={idx} className="cursor-pointer">
+                          {item[x]}
+                        </Td>
+                      );
                     })}
                   </Tr>
                 );
