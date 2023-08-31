@@ -24,7 +24,7 @@ const BF_Dashboard = () => {
     <div className="mt-5   ">
      
      <div className=" h-[50px]">
-        <p className="text-3xl sm:text-4xl font-semibold text-[#024D87] ">
+        <p className="text-3xl sm:text-4xl font-semibold text-[#024D87] ] ">
         {Capitalize(page)}
         </p>
         </div> 
@@ -32,11 +32,11 @@ const BF_Dashboard = () => {
       <div className=" flex flex-col rounded-lg  ">
         <Tabs className=" w-full">
           <TabList className="!flex !border-0">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center w-full gap-4 overflow-x-auto  h-[50px]">
               <Tab
-                className={
+                className={ 
                   page === "dashboard"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white  rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
                 }
                 onClick={() => setPage("dashboard")}
@@ -46,8 +46,8 @@ const BF_Dashboard = () => {
               <Tab
                 className={
                   page === "fuel optimizer"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white  whitespace-nowrap rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0  whitespace-nowrap"
                 }
                 onClick={() => setPage("fuel optimizer")}
               >
@@ -56,8 +56,8 @@ const BF_Dashboard = () => {
               <Tab
                 className={
                   page === "Stability & Thermal Performance"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
                 }
                 onClick={() => setPage("Stability & Thermal Performance")}
               >
@@ -66,8 +66,8 @@ const BF_Dashboard = () => {
               <Tab
                 className={
                   page === "Silicon Prediction"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
                 }
                 onClick={() => setPage("Silicon Prediction")}
               >
@@ -76,8 +76,8 @@ const BF_Dashboard = () => {
               <Tab
                 className={
                   page === "Avg. particle size"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
                 }
                 onClick={() => setPage("Avg. particle size")}
               >
@@ -86,8 +86,8 @@ const BF_Dashboard = () => {
               <Tab
                 className={
                   page === "Hearth Liquid Level"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
                 }
                 onClick={() => setPage("Hearth Liquid Level")}
               >
@@ -96,8 +96,8 @@ const BF_Dashboard = () => {
               <Tab
                 className={
                   page === "Impact Tracker"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white  whitespace-nowrap rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
                 }
                 onClick={() => setPage("Impact Tracker")}
               >
@@ -120,9 +120,9 @@ const BF_Dashboard = () => {
           </TabPanels>
         </Tabs>
       </div>
-      <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
+      {/* <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
      <Footdisplay/>
-     </div>
+     </div> */}
     </div>
   );
 };

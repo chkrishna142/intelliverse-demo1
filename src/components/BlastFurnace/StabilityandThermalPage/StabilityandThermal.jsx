@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Modelaccuracy from "../BF_Components/Modelaccuracy";
 import StabilityInd from "./StabilityInd";
@@ -81,8 +81,58 @@ const StabilityandThermal = () => {
         show: false // Hide y-axis data labels
       }
     },
+    
    
   };
+
+
+  const [activeOption, setActiveOption] = useState("StabilityIndicator");
+
+  const handleOptionClick = (option) => {
+    setActiveOption(option);
+    scrollToSection(option);
+  };
+
+  const scrollToSection = (section) => {
+    const element = document.getElementById(section);
+   
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
+  // const handleContainerScroll = (e) => {
+  //   const container = e.target;
+  //   const scrollPosition = container.scrollTop;
+
+  //   const sections = ["StabilityIndicator", "ThermalIndicator", "Recommendations"];
+  //   const sectionPositions = sections.map((section) => {
+  //     const element = document.getElementById(section);
+  //     return element.offsetTop;
+  //   });
+  //   console.log("Scroll Position:", scrollPosition);
+  //   console.log("Section Positions:", sectionPositions);
+
+  //   let newActiveOption = "StabilityIndicator";
+  //   for (let i = sectionPositions.length - 1; i >= 0; i--) {
+  //     if (scrollPosition >= sectionPositions[i]) {
+  //       newActiveOption = sections[i];
+  //       break;
+  //     }
+  //   }
+
+  //   setActiveOption(newActiveOption);
+  // };
+
+
+
+
+  
+
+
 
 
   const [isExpanded1, setIsExpanded1] = useState(true);
@@ -93,6 +143,10 @@ const StabilityandThermal = () => {
   const handleToggle2 = () => {
     setIsExpanded2((prevExpanded) => !prevExpanded);
   };
+  const [isExpanded21, setIsExpanded21] = useState(true);
+  const handleToggle21 = () => {
+    setIsExpanded21((prevExpanded) => !prevExpanded);
+  };
   const [isExpanded3, setIsExpanded3] = useState(true);
   const handleToggle3 = () => {
     setIsExpanded3((prevExpanded) => !prevExpanded);
@@ -102,84 +156,100 @@ const StabilityandThermal = () => {
     setIsExpanded4((prevExpanded) => !prevExpanded);
   };
 
-  const [page, setPage] = useState("StabilityIndicator");
 
   return (
     <div className="w-full h-full  flex flex-col     ">
-      <Tabs>
-        <TabList className="!flex !border-2 h-11 rounded-xl  ">
-          <div className="flex items-center gap-4">
-            <Tab
-              className={
-                page === "StabilityIndicator"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
-              }
-              onClick={() => setPage("StabilityIndicator")}
-            >
-              Stability Indicator
-            </Tab>
-            {/* <Tab
-              className={
-                page === "RCA"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
-              }
-              onClick={() => setPage("RCA")}
-            >
-              RCA
-            </Tab> */}
-            <Tab
-              className={
-                page === "ThermalIndicator"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
-              }
-              onClick={() => setPage("ThermalIndicator")}
-            >
-              Thermal Indicator
-            </Tab>
+      {/* nav */}
+      <div className="flex flex-col w-[60%] p-[5px] gap-[14px] justify-left    ">
+          {/* burden stability and modal button */}
+        
 
-            <Tab
-              className={
-                page === "Recommendations"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
-              }
-              onClick={() => setPage("Recommendations")}
+          {/* nav started */}
+          <div className="flex items-center     w-full gap-[20px] overflow-x-auto">
+            {/* StabilityIndicator */}
+            <div
+              className={`flex items-center  w-[170px] justify-center    gap-[16px] p-[7px]  rounded-[15px] ${
+                activeOption === "StabilityIndicator"
+                  ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
+                  : "bg-transparent text-[#938F96] whitespace-nowrap"
+              } `}
+              onClick={() => handleOptionClick("StabilityIndicator")}
             >
-              Recommendations
-            </Tab>
+              
+                <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-md ">
+                  Stability Indicator
+                </p>
+            
+            </div>
+
+           
+
+            {/* ThermalIndicator */}
+            <div
+              className={`flex items-center  w-[170px] justify-center   gap-[16px] p-[7px]  rounded-[15px] ${
+                activeOption === "ThermalIndicator"
+                  ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
+                  : "bg-transparent text-[#938F96] whitespace-nowrap"
+              } `}
+              onClick={() => handleOptionClick("ThermalIndicator")}
+            >
+              {/* <a
+                href="#ThermalIndicator"
+                onClick={() => handleOptionClick("ThermalIndicator")}
+              > */}
+                <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-md ">
+                  Thermal Indicator
+                </p>
+              {/* </a> */}
+            </div>
+
+            {/* recommendation */}
+            <div
+              className={`flex items-center  w-[170px] justify-center     gap-[16px] p-[7px]  rounded-[15px]  ${
+                activeOption === "Recommendations"
+                  ? "bg-white h-[40px] w-[100%]  gap-[16px] whitespace-nowrap"
+                  : "bg-transparent text-[#938F96] whitespace-nowrap"
+              } `}
+              onClick={() => handleOptionClick("Recommendations")}
+            >
+              {/* <a
+                href="#Recommendations"
+                onClick={() => handleOptionClick("Recommendations")}
+              > */}
+                <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-md ">
+                  Recommendations
+                </p>
+              {/* </a> */}
+            </div>
           </div>
-        </TabList>
+        </div>
+      
+      {/* body */}
+      <div className=" flex flex-col w-full gap-5  h-[62vh] overflow-y-auto " >
 
-        <TabPanels>
-          <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
+      <div id="StabilityIndicator" className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px ">
             <StabilityInd
               isExpanded1={isExpanded1}
               handleToggle1={handleToggle1}
             />
+           
             <Rca isExpanded2={isExpanded2} handleToggle2={handleToggle2} series={series} options={options}/>
-          </TabPanel>
+      </div>
 
-          <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
-            <ThermalIndicator
-              isExpanded3={isExpanded3}
-              handleToggle3={handleToggle3}
-            />
-            <Rca isExpanded2={isExpanded2} handleToggle2={handleToggle2} series={series} options={options}/>
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-            <Recommendations
-              isExpanded4={isExpanded4}
-              handleToggle4={handleToggle4}
-            />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-      {/* <div class="flex justify-end ">
-          <Modelaccuracy />
-        </div>  */}
+     
+
+     <div id="ThermalIndicator" className="flex flex-col gap-4 w-[100%] h-[auto]  p-2 flex-shrink-0 rounded-[12px] element transition-colors duration-1000 ease-in-out ">
+        <ThermalIndicator isExpanded3={isExpanded3} handleToggle3={handleToggle3}/>
+        <Rca isExpanded2={isExpanded21} handleToggle2={handleToggle21} series={series} options={options}/>
+
+      </div>
+
+
+       <div id="Recommendations" className="w-[100%] h-[auto] p-2 flex-shrink-0 rounded-[12px]  element transition-colors duration-1000 ease-in-out ">
+        <Recommendations isExpanded4={isExpanded4} handleToggle4={handleToggle4}/>
+        
+      </div>
+      </div>
     </div>
   );
 };

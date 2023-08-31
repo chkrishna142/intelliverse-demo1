@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ThermalIndThermo from "../BF_Components/ThermalIndThermo";
+import Thermalareachart from "../BF_Components/Thermalareachart";
 
 
 function ThermalIndicator({ isExpanded3, handleToggle3 }) {
@@ -113,7 +114,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
 
 
   return (
-    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+    <div className="flex flex-col  h-full bg-white p-4 rounded-xl  shadow-md  ">
       {/* top */}
       <div class="flex justify-between w-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -133,7 +134,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
       </div>
       {/* bottom */}
       {isExpanded3 && (
-  <div className={`flex gap-[18px]  h-auto w-full  `}>
+  <div className={`flex  gap-[18px]  h-auto w-full  `}>
     <div className={`flex gap-[18px]  h-auto  w-full`}>
       {/* thermal color indicator*/}
       <div class="flex flex-col w-[20%] h-full p-4  gap-3 items-center  bg-white  rounded-xl shadow-md">
@@ -144,7 +145,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
           Last 1 Hour
         </p>
         <div className="w-full h-[200px] ">
-         <ThermalIndThermo maxTemperature={1000} temperature={400}/>
+         <ThermalIndThermo maxTemperature={1000} temperature={500}/>
 
         </div>
       </div>
@@ -152,7 +153,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
       {/* Target Ranges for Stave Temperature */}
       <div class="w-[35%] h-[100%]  shadow-md p-1">
         {/* top */}
-        <div class="w-full">
+        {/* <div class="w-full">
           <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
             <div className="flex items-center gap-[8px]">
               {" "}
@@ -186,17 +187,17 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* chart */}
         <div class="w-full ">
-          
+          <Thermalareachart/>
         </div>
       </div>
 
       {/* Range bar */}
       <div class="w-[45%] flex h-full ">
         <div class="w-[80%] h-[100%]">
-       
+       hello
         </div>
 
         

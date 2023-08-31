@@ -215,12 +215,24 @@ const Flametemp = () => {
         fontFamily: 'Helvetica, Arial',
         fontWeight: 400,
         inverseOrder: false,
-        width: 100,
+        width: 120,
         height: 100,
         labels: {
           colors: undefined,
           useSeriesColors: false,
         },
+        markers: {
+          width: 30,
+          height: 10,
+          strokeWidth: 0,
+          strokeColor: '#fff',
+          fillColors: undefined,
+          radius: 2,
+          customHTML: undefined,
+          onClick: undefined,
+          offsetX: 0,
+          offsetY: 0
+      },
       },
       colors: ['#2660B6', '#F77F00', '#69B04B', '#DC362E'],
       xaxis: {

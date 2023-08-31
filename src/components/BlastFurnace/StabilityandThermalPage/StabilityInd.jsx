@@ -117,7 +117,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
 
   return (
     
-    <div class="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+    <div class="flex flex-col w-full h-full  bg-white p-4 rounded-xl  shadow-md ">
       {/* top part */}
       <div class="flex justify-between items-start w-[100%]">
         {/* stability ind top */}
