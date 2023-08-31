@@ -15,45 +15,78 @@ const Thermalareachart = () => {
             name: 'Optimal Range',
             data: [
               {
-                x: 'Jan',
-                y: [3100, 3400]
+                x: 'T01 +41807 R6',
+                y: [30, 34]
               },
               {
-                x: 'Feb',
-                y: [4200, 5200]
+                x: 'T02 +41807 R6',
+                y: [42, 52]
               },
               {
-                x: 'Mar',
-                y: [3900, 4900]
+                x: 'T03 +41807 R7',
+                y: [39, 49]
               },
               {
-                x: 'Apr',
-                y: [3400, 3900]
+                x: 'T04 +41807 R7',
+                y: [34, 39]
               },
               {
-                x: 'May',
-                y: [5100, 5900]
+                x: 'T05 +41807 R8',
+                y: [51, 59]
               },
               {
-                x: 'Jun',
-                y: [5400, 6700]
+                x: 'T06 +41807 R8',
+                y: [54, 67]
               },
               {
-                x: 'Jul',
-                y: [4300, 4600]
+                x: 'T07 +41807 R9',
+                y: [43, 46]
               },
               {
-                x: 'Aug',
-                y: [2100, 2900]
+                x: 'T08 +41807 R9',
+                y: [21, 29]
               },
               {
-                x: 'Sep',
-                y: [2100, 2900]
+                x: 'T09 +41807 R10',
+                y: [41, 49]
               },
               {
-                x: 'Oct',
-                y: [2100, 2900]
-              }
+                x: 'T10 +41807 R10',
+                y: [31, 39]
+              },
+              {
+                x: 'T11 +41807 R11',
+                y: [61, 69]
+              },
+              {
+                x: 'T12 +41807 R11',
+                y: [41, 50]
+              },
+              {
+                x: 'T13 +41807 R11',
+                y: [31, 20]
+              },
+              {
+                x: 'T14 +41807 R11',
+                y: [41, 30]
+              },
+              {
+                x: 'T15 +41807 R12',
+                y: [51, 30]
+              },
+              {
+                x: 'T16 +41807 R13',
+                y: [61, 55]
+              },
+              {
+                x: 'T17 +41807 R14',
+                y: [61, 45]
+              },
+              {
+                x: 'T18 +41807 R15',
+                y: [21, 29]
+              },
+              
             ]
           },
         
@@ -64,51 +97,83 @@ const Thermalareachart = () => {
             name: 'Current Temperature',
             data: [
               {
-                x: 'Jan',
-                y: 3300
+                x: 'T01 +41807 R6',
+                y: 33
               },
               {
-                x: 'Feb',
-                y: 4900
+                x: 'T02 +41807 R6',
+                y: 49
               },
               {
-                x: 'Mar',
-                y: 4300
+                x: 'T03 +41807 R7',
+                y: 43
               },
               {
-                x: 'Apr',
-                y: 3700
+                x: 'T04 +41807 R7',
+                y: 37
               },
               {
-                x: 'May',
-                y: 5500
+                x: 'T05 +41807 R8',
+                y: 55
               },
               {
-                x: 'Jun',
-                y: 5900
+                x: 'T06 +41807 R8',
+                y: 59
               },
               {
-                x: 'Jul',
-                y: 4500
+                x: 'T07 +41807 R9',
+                y: 45
               },
               {
-                x: 'Aug',
-                y: 2400
+                x: 'T08 +41807 R9',
+                y: 24
               },
               {
-                x: 'Sep',
-                y: 2100
+                x: 'T09 +41807 R10',
+                y: 21
               },
               {
-                x: 'Oct',
-                y: 1500
-              }
+                x: 'T10 +41807 R10',
+                y: 15
+              },
+              {
+                x: 'T11 +41807 R11',
+                y: 31
+              },
+              {
+                x: 'T12 +41807 R11',
+                y: 21
+              },
+              {
+                x: 'T13 +41807 R11',
+                y: 41
+              },
+              {
+                x: 'T14 +41807 R11',
+                y: 22
+              },
+              {
+                x: 'T15 +41807 R12',
+                y: 46
+              },
+              {
+                x: 'T16 +41807 R13',
+                y: 48
+              },
+              {
+                x: 'T17 +41807 R14',
+                y: 78
+              },
+              {
+                x: 'T18 +41807 R15',
+                y:66
+              },
             ]
           }
         ],
         options: {
             chart: {
-              height: 350,
+            
               type: "rangeArea",
               animations: {
                 speed: 500,
@@ -116,7 +181,9 @@ const Thermalareachart = () => {
               toolbar: {
                 show: false,
               },
+              
             },
+            
             colors: ["rgba(105, 176, 75, 0.28)", "#6CA6FC"],
             dataLabels: {
               enabled: false,
@@ -129,25 +196,34 @@ const Thermalareachart = () => {
               width: [0, 2],
             },
             xaxis: {
-              type: "category", // Use 'category' type for textual labels
-              categories: [
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-              ],
+              tickPlacement: 'on',
+           
+              // position:"left",
+              labels: {
+                show: true,
+                minWidth: 120,
+          maxWidth: 260,
+          offsetX: 5,
+          offsetY: 10,
+                // rotate: 265,
+                // rotateAlways: true,
+                style: {
+                  colors: [],
+                  
+                  fontSize: '10px',
+                  
+              },
+               
+              
+              }
             },
             yaxis: {
-              position: "bottom", // Change the position of y-axis to bottom
+
+              opposite:true,
+
             },
             legend: {
-              show: true,
+              show: false,
               customLegendItems: ["Optimal Range", "Current Temperature"],
               inverseOrder: true,
               position: "top",
@@ -160,27 +236,30 @@ const Thermalareachart = () => {
                 useSeriesColors: false,
               },
             },
-            title: {
-              text: "Target Ranges for Stave Temperature",
-              style: {
-                fontSize: "18px",
-                fontWeight: "semibold",
-                color: "#605D64",
-              },
-            },
-            markers: {
-              hover: {
-                sizeOffset: 5,
-              },
-            },
+           
           },
         });
   
 
   return (
-    <div id="chart">
-  <ReactApexChart options={state.options} series={state.series} type="rangeArea" height={350} />
-</div>
+    
+    // <div id="chart-container" className="">
+      <div id="chart" 
+      className="transform rotate-90  w-full h-full"
+      >
+
+        <ReactApexChart
+          options={state.options}
+          series={state.series}
+          type="rangeArea"
+          height="80%"
+          width="80%"
+        
+        
+        />
+      </div>
+    //  </div>
+
   );
 };
 

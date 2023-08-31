@@ -8,7 +8,7 @@ import Averagepar from "./Averagepar";
 const BF_Home = () => {
   const [fetcheddata, setFetcheddata] = useState();
 
-  const client = "jspl";
+  const client = "sesa";
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,7 +23,7 @@ const BF_Home = () => {
   
     // Fetch data initially
     fetchData();
-  }, []);
+  }, [client]);
   
 
  
@@ -47,11 +47,14 @@ const BF_Home = () => {
             //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"
             className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7 justify-center w-full"
           >
-            <Fuelrate data={fetcheddata?.tools.fuel_rate} />
+            <Fuelrate data={fetcheddata?.tools.fuel_rate}  />
   
              <Production data={fetcheddata?.tools.burden_production}/>
   
-            <Averagepar/>
+            {
+              client!="sesa"? <Averagepar/>:""
+            }
+            {/* <Averagepar/> */}
           </div>
           <div className="flex w-full justify-end  h-[20%]">
             {/* <Modelaccuracy /> */}
