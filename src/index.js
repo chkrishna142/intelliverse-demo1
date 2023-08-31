@@ -7,7 +7,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-//import "tw-elements-react/dist/css/tw-elements-react.min.css";
+
 export const baseURL = "https://intelliverse.backend-ripik.com/api/"; //Dev backend URL
 // export const baseURL = 'https://ultratech-ripik.com/images/'; //Prod backend URL
 

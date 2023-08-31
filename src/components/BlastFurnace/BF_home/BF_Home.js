@@ -45,7 +45,7 @@ const BF_Home = () => {
           <div
             style={{}}
             //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"
-            className="grid grid-cols-3 gap-7 justify-center w-full"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-7 justify-center w-full"
           >
             <Fuelrate data={fetcheddata?.tools.fuel_rate} />
   
@@ -54,7 +54,7 @@ const BF_Home = () => {
             <Averagepar/>
           </div>
           <div className="flex w-full justify-end  h-[20%]">
-            <Modelaccuracy />
+            {/* <Modelaccuracy /> */}
           </div>
         </div>
       </div>
