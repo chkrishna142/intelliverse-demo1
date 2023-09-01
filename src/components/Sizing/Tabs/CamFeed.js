@@ -1,10 +1,10 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import LineChart from "../../Charts/SizingCharts/LineCharts";
-import DonutChart from "../../Charts/SizingCharts/DonutChart";
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import LineChart from '../../Charts/SizingCharts/LineCharts';
+import DonutChart from '../../Charts/SizingCharts/DonutChart';
 
 const CamFeed = ({ material, cameraId, clientId }) => {
-  const [camData, setCamData] = useState("");
+  const [camData, setCamData] = useState('');
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
@@ -14,12 +14,12 @@ const CamFeed = ({ material, cameraId, clientId }) => {
     });
     const response = await axios
       .post(
-        "  https://intelliverse.backend-ripik.com/vision/v1/sizing/getDetailAnalysis/",
+        '  https://intelliverse.backend-ripik.com/vision/v1/sizing/getDetailAnalysis/',
         requestData,
         {
-          credentials: "same-origin",
+          credentials: 'same-origin',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       )
@@ -55,7 +55,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center w-[20vw]">
-            <p>No {material} on Belt</p>
+            <p>No {material} on belt</p>
           </div>
         )}
         {camData && camData.noCoal !== 1 ? (
@@ -65,7 +65,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center w-[20vw]">
-            <p>No {material} on Belt</p>
+            <p>No {material} on belt</p>
           </div>
         )}
       </div>
@@ -81,10 +81,10 @@ const CamFeed = ({ material, cameraId, clientId }) => {
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <p>No {material} on Belt</p>
+              <p>No {material} on belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 && material!=="coal" ? (
+          {camData && camData.noCoal !== 1 && material !== 'coal' ? (
             <div className="flex flex-col flex-1 gap-4 justify-center">
               <div className="flex justify-center">
                 <div className="rounded-xl bg-green-400 p-[50px] text-white font-semibold text-4xl text-center">
@@ -94,10 +94,10 @@ const CamFeed = ({ material, cameraId, clientId }) => {
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <p>No {material} on Belt</p>
+              <p>No {material} on belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 && material!=="coal" ? (
+          {camData && camData.noCoal !== 1 && material !== 'coal' ? (
             <div className="flex flex-col flex-1 gap-4 justify-center">
               <div className="flex justify-center">
                 <div className="rounded-xl bg-green-400 p-[30px] text-white font-semibold text-4xl text-center">
@@ -107,7 +107,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <p>No {material} on Belt</p>
+              <p>No {material} on belt</p>
             </div>
           )}
         </div>
@@ -122,7 +122,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                 <LineChart
                   data={Object.values(camData.size)}
                   timeStamps={new Date(
-                    camData?.timestamp.split(" ").join("T")
+                    camData?.timestamp.split(' ').join('T')
                   ).getTime()}
                   labels={Object.keys(camData.size)}
                 />
@@ -130,43 +130,43 @@ const CamFeed = ({ material, cameraId, clientId }) => {
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <p>No {material} on Belt</p>
+              <p>No {material} on belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 && material !== "coal"? (
+          {camData && camData.noCoal !== 1 && material !== 'coal' ? (
             <div className="flex flex-col flex-1 gap-4">
               <p className="font-bold text-sm">MPS Chart</p>
               <div className="h-[40vh]">
                 <LineChart
                   data={[camData.mps]}
                   timeStamps={new Date(
-                    camData?.timestamp.split(" ").join("T")
+                    camData?.timestamp.split(' ').join('T')
                   ).getTime()}
-                  labels={["mps"]}
+                  labels={['mps']}
                 />
               </div>
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <p>No {material} on Belt</p>
+              <p>No {material} on belt</p>
             </div>
           )}
-          {camData && camData.noCoal !== 1 && material !== "coal"? (
+          {camData && camData.noCoal !== 1 && material !== 'coal' ? (
             <div className="flex flex-col flex-1 gap-4">
               <p className="font-bold text-sm">Minute Average Chart</p>
               <div className="h-[40vh]">
                 <LineChart
                   data={[camData.minuteAverage]}
                   timeStamps={new Date(
-                    camData?.timestamp.split(" ").join("T")
+                    camData?.timestamp.split(' ').join('T')
                   ).getTime()}
-                  labels={["minuteAverage"]}
+                  labels={['minuteAverage']}
                 />
               </div>
             </div>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <p>No {material} on Belt</p>
+              <p>No {material} on belt</p>
             </div>
           )}
         </div>
