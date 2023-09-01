@@ -17,7 +17,7 @@ const Navbar = () => {
       bgColor="white"
       position="fixed"
       top="0"
-      zIndex="1000000000"
+      zIndex="100"
       className="border-b"
       align="center"
       left="0"  

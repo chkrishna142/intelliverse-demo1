@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import NewUseCaseModal from './NewUseCaseModal';
 
 
 const Home = ({ state }) => {
 
     const [alert, setAlert] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
+    const [onClose, setOnClose] = useState(false)
+
 
     return (
         <div className='h-screen'>
@@ -18,8 +22,9 @@ const Home = ({ state }) => {
                 {state === "vision" || state === "home" ? <div className='border shadow-md mt-5 px-4 py-4 pl-5 rounded-md '>
                     <div className='mt-2 mr-3 ml-3 flex justify-between'>
                         <img className='h-6 ' src="/vision.svg" />
-                        <div className=' md:flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2  border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 hidden'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
+                        <div onClick={()=>setIsOpen(true)} className=' md:flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2  border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 hidden'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
                     </div>
+                    <NewUseCaseModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
                     <div className=' w-full h-full ml-3 mb-5'>
                         <div className='mt-10 md:mt-5 flex flex-wrap gap-8 text-sm items-center'>
                             <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>

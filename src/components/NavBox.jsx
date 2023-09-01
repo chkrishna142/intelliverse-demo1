@@ -42,7 +42,7 @@ const NavBox = () => {
                     bgColor="#FAFAFA"
                     position="fixed"
                     top="16"
-                    zIndex="1000000000"
+                    zIndex="100"
                     align="center"
                     left="0"
                     className="border-b"
