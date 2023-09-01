@@ -26,19 +26,21 @@ const BF_Dashboard = () => {
     <div className="mt-5  w-full ">
      <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-          {Capitalize(page)}
+          {/* {Capitalize(page)} */}
+          Blast Furnace
+
         </p>
       </div>
 
       
         <Tabs >
           <TabList className={` !flex !border-0 `}>
-          <div className="flex items-center gap-4 overflow-x-auto h-[50px] md:h-10">
+          <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
               <Tab
                 className={
                   page === "dashboard"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm whitespace-nowrap  !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm whitespace-nowrap  !text-[#938F96] !border-0"
                 }
                 onClick={() => setPage("dashboard")}
               >

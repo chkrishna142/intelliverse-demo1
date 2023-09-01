@@ -9,12 +9,15 @@ import Overviewetaco from "./Overviewetaco";
 import Overviewheatflux from "./Overviewheatflux";
 import Overviewrecommendation from "./Overviewrecommendation";
 import Flametemp from "./Flametemp";
+import { useWindowSize } from "@uidotdev/usehooks";
 // import StabilityInd from "./StabilityInd";
 // import Rca from "./Rca";
 // import ThermalIndicator from "./ThermalIndicator";
 // import Recommendations from "./Recommendations";
 
 const Fueloptimizercomp = () => {
+  const size = useWindowSize();
+
   const [isExpanded1, setIsExpanded1] = useState(true);
   const handleToggle1 = () => {
     setIsExpanded1((prevExpanded) => !prevExpanded);
@@ -43,29 +46,29 @@ const Fueloptimizercomp = () => {
       data: [
         {
           x: "Current Value",
-          y: [15, 25],
+          y: [0, 25],
           fillColor: "#FFC107",
         },
         {
           x: "RAFT", // First instance of Oxygen Enrichment
-          y: [25, 45],
+          y: [25, 75],
           seriesIndex: 1, // Unique identifier
         },
         {
           x: "PCI",
-          y: [30, 70],
+          y: [75, 100],
         },
         {
           x: "Blast Moisture",
-          y: [50, 80],
+          y: [100, 110],
         },
         {
           x: "Oxygen Enrichment",
-          y: [70, 40],
+          y: [110, 97],
         },
         {
           x: "Cold Blast Volume",
-          y: [60, 30],
+          y: [97, 64],
         },
         // {
         //   x: 'Oxygen Enrichmen', // Second instance of Oxygen Enrichment
@@ -74,7 +77,7 @@ const Fueloptimizercomp = () => {
         // },
         {
           x: "Final Value",
-          y: [30, 15],
+          y: [64, 15],
           fillColor: "#FFC107",
         },
       ],
@@ -105,8 +108,8 @@ const Fueloptimizercomp = () => {
       //   },
     },
     yaxis: {
-      min: 0,
-      max: 100,
+      // min: 0,
+      // max: 100,
       labels: {
         show: false, // Hide y-axis data labels
       },
@@ -116,69 +119,69 @@ const Fueloptimizercomp = () => {
   return (
     <div className="w-full h-full  flex flex-col     ">
       <Tabs>
-        <TabList className="!flex !border-2 h-11 rounded-xl">
-          <div className="flex items-center gap-4">
-            {/* overview */}
+        <TabList className="!flex !border-0 h-11 rounded-xl w-full">
+          <div className="flex items-center border-2 rounded-sm gap-4 w-[75vw] overflow-x-auto">
+          
             <Tab
               className={
                 page === "Overview"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap  pl-4 pr-4 pt-1 pb-1 !border-0"
+                  : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
               }
               onClick={() => setPage("Overview")}
             >
               Overview
             </Tab>
-            {/* solution loss */}
+          
             <Tab
               className={
                 page === "Solution Loss Carbon"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
               }
               onClick={() => setPage("Solution Loss Carbon")}
             >
               Solution Loss Carbon
             </Tab>
-            {/* reduction indirect */}
+           
             <Tab
               className={
                 page === "Reduction Indirect"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap  pl-4 pr-4 pt-1 pb-1 !border-0"
+                  : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
               }
               onClick={() => setPage("Reduction Indirect")}
             >
               Reduction Indirect
             </Tab>
-            {/* flame temp */}
+       
             <Tab
               className={
                 page === "Flame Temperature"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap "
               }
               onClick={() => setPage("Flame Temperature")}
             >
               Flame Temperature
             </Tab>
-            {/* etaco */}
+       
             <Tab
               className={
                 page === "etaCO"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0  whitespace-nowrap "
               }
               onClick={() => setPage("etaCO")}
             >
               etaCO
             </Tab>
-            {/* reduction direct */}
+  
             <Tab
               className={
                 page === "Reduction Direct"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap "
               }
               onClick={() => setPage("Reduction Direct")}
             >
@@ -188,12 +191,12 @@ const Fueloptimizercomp = () => {
         </TabList>
 
         <TabPanels>
-          <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
+          <TabPanel className="w-full flex flex-col !pl-0 !pr-0 gap-3">
             <Overviewfuelrate
               isExpanded1={isExpanded1}
               handleToggle1={handleToggle1}
             />
-            <div className="flex w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+            <div className={`flex ${size.width<1400?"flex-col":""} w-full h-full bg-white p-4 rounded-xl  shadow-md `}>
               <Overviewcokerate
                 isExpanded2={isExpanded2}
                 handleToggle2={handleToggle2}
@@ -203,7 +206,7 @@ const Fueloptimizercomp = () => {
                 handleToggle2={handleToggle2}
               />
             </div>
-            <div className="flex w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+            <div className={`flex ${size.width<1400?"flex-col":""} w-full h-full bg-white p-4 rounded-xl  shadow-md `}>
               <Overviewetaco
                 isExpanded3={isExpanded3}
                 handleToggle3={handleToggle3}

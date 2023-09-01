@@ -58,7 +58,6 @@ const BF_Home = () => {
             {
               client!="sesa"? <Averagepar/>:""
             }
-            {/* <Averagepar/> */}
           </div>
           <div className="flex w-full justify-end  h-[20%]">
             {/* <Modelaccuracy /> */}
