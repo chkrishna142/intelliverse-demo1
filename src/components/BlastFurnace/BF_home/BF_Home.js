@@ -11,7 +11,7 @@ const BF_Home = () => {
   console.log('--------------------', size);
   const [fetcheddata, setFetcheddata] = useState();
 
-  const client = 'imfa';
+  const client = 'jspl';
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,7 +19,7 @@ const BF_Home = () => {
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
-        // console.log("fetched data=====>>>",json);
+        console.log('fetched data=====>>>', json);
         setFetcheddata(json);
       } catch (error) {
         console.error('Error fetching data:', error);
