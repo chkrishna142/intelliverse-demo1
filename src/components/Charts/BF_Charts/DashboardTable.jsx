@@ -9,6 +9,7 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const rows = [
   {
@@ -50,6 +51,8 @@ export default function DashboardTable({
   tabelname,
  
 }) {
+
+  const size = useWindowSize();
   function isLessRange(currentValue, optimalRange) {
     const [min, max] = optimalRange.map(value => parseFloat(value));
     return currentValue < min;
@@ -74,11 +77,10 @@ export default function DashboardTable({
 
   return (
    
-    <div width="100%" className="w-full ">
+    <div width="100%" className="w-full  ">
       <table
         style={{
           borderBottom: "none",
-
           boxShadow: "none",
           borderBottom: "none",
           boxShadow: "none",
@@ -88,21 +90,22 @@ export default function DashboardTable({
           width: "100%",
         }}
         size="sm"
+       
       >
         <tr style={{}}>
-          <th className="w-[100px]"></th>
-          <th style={{ textAlign: "center", width: "80px" }} className=" ">
-            <p className="text-xs md:text-xs lg:text-xs xl:text-[10px]  " >
+          <th className=" "></th>
+          <th style={{ textAlign: "center", }} className=" ">
+            <p className="text-xs md:text-[10px] lg:text-xs xl:text-[12px]  " >
               Current
             </p>
           </th>
-          <th style={{ textAlign: "right", width: "100px" }} className=" ">
-            <p className="text-[#084298] text-xs md:text-xs lg:text-xs xl:text-[10px]   ">
+          <th style={{ textAlign: "right",  }} className=" ">
+            <p className="text-[#084298] text-xs md:text-[10px] lg:text-xs xl:text-[12px]   ">
               Optimal Range
             </p>
           </th>
-          <th style={{ textAlign: "right", width: "80px" }} className=" ">
-            <p className="text-[#084298] text-xs md:text-xs lg:text-xs xl:text-[10px] ">
+          <th style={{ textAlign: "right"}} className=" ">
+            <p className="text-[#084298] text-xs md:text-[10px] lg:text-xs xl:text-[12px] ">
               Impact &nbsp;{tabelname === "fuelrate" ? "(Kg)" : "(TPD)"}
             </p>
           </th>
@@ -150,7 +153,9 @@ export default function DashboardTable({
                     }}
                   />
                 )}
-                <p className="text-[#938F96] w-[82px] text-[13px] font-medium text-xs md:text-xs lg:text-xs xl:text-[10px]">
+                <p className="text-[#938F96] w-full text-[13px] font-medium 
+               text-xs    sm:text-sm md:text-[10px] lg:text-sm xl:text-[10px]   2xl:text-base "
+                >
                   {" "}
                   {row.name}
                 </p>
@@ -177,7 +182,10 @@ export default function DashboardTable({
                
               >
                 <p
-                  className={`font-semibold w-[40px] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  ${
+                  className={`font-semibold text-[#69B04B]  w-full Current text-xs xl:text-[12px]
+                      sm:text-xs md:text-sm lg:text-sm xl:text-sm 2xl:text-base 
+                  
+                  ${
                     isOutOfRange(row.current, row.optimal_range)
                       ? "text-red-500"
                       : ""
@@ -205,7 +213,7 @@ export default function DashboardTable({
                   width: "100px",
                 }}
               >
-                <p className=" text-[#69B04B]  w-[80px] text-xs md:text-xs lg:text-xs xl:text-[12px]">
+                <p className="  w-full text-xs  xl:text-[12px] font-[400]  sm:text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-base">
                   {row.optimal_range[0]}-{row.optimal_range[1]}
                 </p>{" "}
               </td>
@@ -245,7 +253,7 @@ export default function DashboardTable({
                   />
                 )}
                 <p
-                  className={`font-semibold w-[40px] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  `}
+                  className={`font-semibold w-full Current text-xs md:text-xs lg:text-xs xl:text-[12px]   `}
                 >
                   {row.impact}
                 </p>
@@ -253,7 +261,7 @@ export default function DashboardTable({
             </tr>
 
             {isOutOfRange(row.current, row.optimal_range) && (
-              <tr style={{ height: "80px" }}>
+              <tr style={{ height: "80px" ,width:"100%"}}>
                 <td
                   colSpan={4}
                   style={{
@@ -262,10 +270,11 @@ export default function DashboardTable({
                     padding: "20px",
                     borderRadius: " 0 0 10px 10px",
                   }}
+                  className="text-sm  sm:text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-base"
                 >
                   Recommendation
                   {isLessRange(row.current, row.optimal_range) && (
-                    <p className="text-sm">
+                    <p className="text-sm  sm:text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-base">
                       Increase {row.name} to {row.optimal_range[0]}- {row.optimal_range[1]}
                     </p>
                   )}

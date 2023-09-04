@@ -27,7 +27,7 @@ function Guagecomp() {
         ]}
         needleCustom={customNeedle}
         
-        percent={0.60}
+        percent={0.94}
         arcPadding={0.03}
         arcWidth={0.45}
         textColor={"#000"}

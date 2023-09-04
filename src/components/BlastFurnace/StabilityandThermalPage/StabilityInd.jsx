@@ -99,7 +99,9 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         customLegendItems: ["Team B", "Team A"],
         inverseOrder: true,
       },
-
+      xaxis:{
+       labels:{offsetX:3}
+      },
       markers: {
         hover: {
           sizeOffset: 5,
