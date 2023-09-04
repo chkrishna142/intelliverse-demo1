@@ -43,7 +43,7 @@ const FeedLibrary = ({ plantId, cameraId, disable, plantCamMap }) => {
       {page === "photo gallery" && (
         <PhotoGallery plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap} />
       )}
-      {page === "video gallery" && <VideoGallery />}
+      {page === "video gallery" && <VideoGallery plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap}/>}
     </div>
   );
 };

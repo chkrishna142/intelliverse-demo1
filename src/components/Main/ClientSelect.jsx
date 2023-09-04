@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const ClientSelect = () => {
 
@@ -35,11 +36,11 @@ const ClientSelect = () => {
                     <div className="flex w-full flex-wrap gap-4 ml-3 mb-5">
                         {clients?.map((item, index) => {
                             return (
-                                <div>
+                                <Link to={`./${item}`} style={{ textDecoration: 'none' }}>
                                     <div key={index} className="h-32 w-32 border items-center uppercase text-[#024D87] font-bold rounded-md flex justify-center shadow-md hover:bg-gray-100 hover:transition duration-200 cursor-pointer">
                                         {item}
                                     </div>
-                                </div>
+                                </Link>
                             )
                         })}
                     </div>

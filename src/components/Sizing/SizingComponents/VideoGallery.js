@@ -2,9 +2,9 @@ import VideoInputForm from "./VideoInputForm";
 import { useState, useRef } from "react";
 import VideoHistoryDrawer from "./VideoHistoryDrawer";
 
-const VideoGallery = () => {
+const VideoGallery = ({plantId, cameraId, disable, plantCamMap}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isVideo, setIsVideo] = useState(false);
+  const [isVideo, setIsVideo] = useState("");
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
@@ -19,7 +19,7 @@ const VideoGallery = () => {
       {isDrawerOpen && (
         <VideoHistoryDrawer isOpen={isDrawerOpen} onClose={closeDrawer} />
       )}
-      {!isVideo ? (
+      {isVideo == "" ? (
         <div className="flex flex-col gap-6 items-center h-full">
           <img src="/SizingIcons/VideoPlayer.svg" alt="No support" />
           <div className="flex flex-col gap-2 items-center">
@@ -40,7 +40,7 @@ const VideoGallery = () => {
             className="rounded-lg w-[45vw]"
           >
             <source
-              src="https://blf-demo.s3.eu-north-1.amazonaws.com/sinter3.mp4"
+              src={isVideo}
               type="video/mp4"
             />
           </video>
@@ -50,7 +50,7 @@ const VideoGallery = () => {
           </div>
         </div>
       )}
-      <VideoInputForm setIsVideo={setIsVideo} />
+      <VideoInputForm setIsVideo={setIsVideo} plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap}/>
     </div>
   );
 };
