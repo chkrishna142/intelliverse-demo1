@@ -13,8 +13,6 @@ import MaterialSelectOfBf from "./MaterialSelectOfBf";
 import Particleswitchcomp from "./Particleswitchcomp";
 import { useLocation, useNavigate } from "react-router-dom";
 import Sizing from "../../Sizing/Sizing";
-
-
 const BF_Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,12 +24,9 @@ const BF_Dashboard = () => {
     const str2 = arr.join(" ");
     return str2;
   };
-
   const [page, setPage] = useState("dashboard");
   const size = useWindowSize();
   const [fetcheddata, setFetcheddata] = useState();
-
-
   const client = "jspl";
   useEffect(() => {
     const fetchData = async () => {
@@ -44,24 +39,17 @@ const BF_Dashboard = () => {
         console.error("Error fetching data:", error);
       }
     };
-  
     // Fetch data initially
     fetchData();
   }, [client]);
-
- 
-
   return (
     <div className="mt-5  w-full ">
      <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {/* {Capitalize(page)} */}
           Blast Furnace
-
         </p>
       </div>
-
-      
         <Tabs >
           <TabList className={` !flex !border-0 `}>
           <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
@@ -137,7 +125,6 @@ const BF_Dashboard = () => {
               </Tab>
             </div>
           </TabList>
-
           <TabPanels>
             <TabPanel className="!pl-0 !pr-0 mb-[10px]">
               <BF_Home fetcheddata={fetcheddata} client={client}/>
@@ -152,8 +139,6 @@ const BF_Dashboard = () => {
               <Siliconpredictor />
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-               
-              
          <Particleswitchcomp/>
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0 mb-[10px]">
@@ -164,12 +149,10 @@ const BF_Dashboard = () => {
             </TabPanel>
           </TabPanels>
         </Tabs>
-     
       <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
      <Footdisplay/>
      </div>
     </div>
   );
 };
-
 export default BF_Dashboard;
