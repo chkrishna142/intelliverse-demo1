@@ -130,7 +130,7 @@ const BF_Dashboard = () => {
               <BF_Home fetcheddata={fetcheddata} client={client}/>
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-              <Fueloptimizercomp fetcheddata={fetcheddata}/>
+              {/* <Fueloptimizercomp fetcheddata={fetcheddata}/> */}
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0 mb-[10px]">
               <StabilityandThermal />
