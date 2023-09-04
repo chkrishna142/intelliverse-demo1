@@ -32,7 +32,7 @@ export default function Mymodal({ imageone, imageTwo }) {
             />
           
           </Box>
-          <ModalBody maxHeight="500px" overflowY="auto">
+          <ModalBody maxHeight="500px" overflowY="auto" justifyItems="center" alignItems="center" >
             <img src={imageone} alt="" style={{marginTop:"20px",marginBottom:"20px"}}/>
             <img src={imageTwo} alt="" style={{marginTop:"20px",marginBottom:"20px"}}/>
           </ModalBody>

@@ -1,6 +1,6 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Feed from "./Tabs/Feed";
 import FeedLibrary from "./Tabs/FeedLibrary";
 import Alerts from "./Tabs/Alerts";
@@ -19,6 +19,7 @@ const Capitalize = (str) => {
 
 const Sizing = () => {
   const size = useWindowSize();
+  const location = useLocation();
   const [plantCamMap, setPlantCamMap] = useState({});
   const [page, setPage] = useState("feed");
   const param = useParams();
@@ -27,11 +28,15 @@ const Sizing = () => {
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-      <div className="flex justify-between mb-3 mt-6">
+      
+      { (location.pathname.includes('blastfurnace')?<></>: <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {Capitalize(page)}
         </p>
-      </div>
+      </div>) }
+      
+       
+     
       <Tabs>
         <TabList className="!flex !border-0">
           <div className="flex items-center gap-4 overflow-x-auto h-14 md:h-10">

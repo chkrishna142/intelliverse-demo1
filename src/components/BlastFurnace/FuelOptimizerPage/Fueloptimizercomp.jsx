@@ -15,7 +15,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 // import ThermalIndicator from "./ThermalIndicator";
 // import Recommendations from "./Recommendations";
 
-const Fueloptimizercomp = () => {
+const Fueloptimizercomp = ({fetcheddata}) => {
   const size = useWindowSize();
 
   const [isExpanded1, setIsExpanded1] = useState(true);
@@ -38,7 +38,14 @@ const Fueloptimizercomp = () => {
   const handleToggle5 = () => {
     setIsExpanded5((prevExpanded) => !prevExpanded);
   };
-
+const difftabs=fetcheddata?.tools.fuel_rate.data;
+// console.log("difftabs",difftabs)
+  const displayfun=()=>{
+    difftabs.map((ele)=>{
+console.log(ele)
+    })
+  }
+displayfun();
   const [page, setPage] = useState("Overview");
 
   const series = [
@@ -132,61 +139,23 @@ const Fueloptimizercomp = () => {
             >
               Overview
             </Tab>
+
+            {
+              difftabs.map((ele)=>{
+              return  <Tab
+                className={
+                  page === ele.name
+                    ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                    : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
+                }
+                onClick={() => setPage(ele.name)}
+              >
+                {ele.name}
+              </Tab>
+              })
+            }
           
-            <Tab
-              className={
-                page === "Solution Loss Carbon"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
-              }
-              onClick={() => setPage("Solution Loss Carbon")}
-            >
-              Solution Loss Carbon
-            </Tab>
            
-            <Tab
-              className={
-                page === "Reduction Indirect"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap  pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
-              }
-              onClick={() => setPage("Reduction Indirect")}
-            >
-              Reduction Indirect
-            </Tab>
-       
-            <Tab
-              className={
-                page === "Flame Temperature"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap "
-              }
-              onClick={() => setPage("Flame Temperature")}
-            >
-              Flame Temperature
-            </Tab>
-       
-            <Tab
-              className={
-                page === "etaCO"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0  whitespace-nowrap "
-              }
-              onClick={() => setPage("etaCO")}
-            >
-              etaCO
-            </Tab>
-  
-            <Tab
-              className={
-                page === "Reduction Direct"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap "
-              }
-              onClick={() => setPage("Reduction Direct")}
-            >
-              Reduction Direct
-            </Tab>
           </div>
         </TabList>
 
@@ -226,12 +195,19 @@ const Fueloptimizercomp = () => {
               handleToggle2={handleToggle5}/>
 
           </TabPanel>
+          
 
-          <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
-           <p>solution loss carbon</p>
-           <Flametemp/>
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
+          {
+            difftabs.map((ele)=>{
+              return <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
+             
+              <Flametemp name={ele.name} current={ele.current} min={ele.optimal_range[0]} max={ele.optimal_range[1]} impact={ele.impact}/>
+             </TabPanel>
+            })
+          }
+
+          
+          {/* <TabPanel className="!pl-0 !pr-0">
            <p>reduction indirect</p> 
            <Flametemp/>
           </TabPanel>
@@ -245,7 +221,7 @@ const Fueloptimizercomp = () => {
           <TabPanel className="!pl-0 !pr-0">
            <p>Reduction direct</p> 
            <Flametemp/>
-          </TabPanel>
+          </TabPanel> */}
         </TabPanels>
       </Tabs>
       {/* <div class="flex justify-end ">

@@ -7,27 +7,26 @@ import Averagepar from "./Averagepar";
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 import { useWindowSize } from "@uidotdev/usehooks";
 
-const BF_Home = () => {
+const BF_Home = ({fetcheddata,client}) => {
   const size = useWindowSize();
-  console.log("--------------------",size);
-  const [fetcheddata, setFetcheddata] = useState();
+  // const [fetcheddata, setFetcheddata] = useState();
 
-  const client = "jspl";
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`);
-        const json = await response.json();
-        // console.log("fetched data=====>>>",json);
-        setFetcheddata(json)
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // const client = "jspl";
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`);
+  //       const json = await response.json();
+  //       // console.log("fetched data=====>>>",json);
+  //       setFetcheddata(json)
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
   
-    // Fetch data initially
-    fetchData();
-  }, [client]);
+  //   // Fetch data initially
+  //   fetchData();
+  // }, [client]);
   
 
  
@@ -53,7 +52,7 @@ const BF_Home = () => {
           >
             <Fuelrate data={fetcheddata?.tools.fuel_rate}  />
   
-             <Production data={fetcheddata?.tools.burden_production}/> 
+             <Production data={fetcheddata?.tools.burden_production} /> 
   
             {
               client!="sesa"? <Averagepar/>:""

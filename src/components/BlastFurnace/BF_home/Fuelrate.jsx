@@ -8,6 +8,9 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
 const Fuelrate = ({ data }) => {
+
+
+ 
   const current = new Date();
   const size = useWindowSize();
   // Format the date

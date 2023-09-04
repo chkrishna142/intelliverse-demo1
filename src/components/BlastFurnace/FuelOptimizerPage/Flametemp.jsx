@@ -3,7 +3,7 @@ import Linechart from "../../Charts/BF_Charts/Linechart";
 import Splinechart from "../../Charts/BF_Charts/Splinechart";
 
 
-const Flametemp = () => {
+const Flametemp = ({name,current,min,max,impact}) => {
   const [isExpanded1, setIsExpanded1] = useState(true);
   const handleToggle1 = () => {
     setIsExpanded1((prevExpanded) => !prevExpanded);
@@ -156,8 +156,8 @@ const Flametemp = () => {
       annotations: {
         yaxis: [
           {
-            y: 2260,
-            y2: 2300,
+            y: {min},
+            y2: {max},
             borderColor: "#000",
             fillColor: "rgba(105, 176, 75, 0.16)            ",
             label: {
@@ -271,22 +271,23 @@ const Flametemp = () => {
   return (
     <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
     {/* top */}
-    <div class="flex justify-between w-full">
+    <div class="flex justify-between w-full ">
       <div class="flex flex-col items-start justify-center gap-[12px] w-[100%] ">
-        <div className="flex   items-center gap-[8px] w-[50%] justify-between  ">
+        <div className="flex   items-center gap-[8px] w-[90%] justify-between ">
           {" "}
           {/* top */}
-          <div className="flex ">
+          <div className="flex w-full ">
 
-          <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium  ">
+          <div class=" flex w-full text-[22px] text-[#3E3C42] font-medium  ">
             <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
-            Flame Temperature
+            {name}
             </p>
+            <p class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">&deg;C</p>
           </div>
-          <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"> &deg;C
+          {/* <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"> &deg;C
+          </div> */}
           </div>
-          </div>
-          <div className="flex  items-center  w-[50%]  justify-between ">
+          <div className="flex  items-center  w-full  justify-between ">
         {/* <Mymodal  imageone={"/Bficons/fuelrateTop.svg"} imageTwo={""} /> */}
             <div className="">
                 <p className="text-[#084298] font-semibold" >2290</p>
