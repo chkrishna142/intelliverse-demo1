@@ -47,7 +47,7 @@ const NavBox = () => {
                     left="0"
                     className="border-b"
                     marginTop="-7px"
-                    marginLeft="127px"
+                    marginLeft="125px"
                 >
                     <div className="bg-white w-[75vw] px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
                         <img className="h-5" src="/search.svg" />

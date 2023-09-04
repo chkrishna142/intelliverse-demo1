@@ -51,7 +51,7 @@ function App() {
               <NavBox />
               <Sidebar />
               <div className="" style={{ display: "flex" }}>
-                <div className="md:ml-32 md:mr-10 md:mt-24 w-full mr-2 ml-2 mt-28 mb-10 md:mb-0">
+                <div className="md:ml-32 md:mr-10 md:mt-24 w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
                   <Routes>
                     {default_plant?.length > 0 ? (
                       <Route

@@ -22,12 +22,12 @@ const Login = () => {
   const { setLogin } = useContext(NavContext)
   const { isAuth, default_plant } = useSelector(get_auth_status);
   const { auth_process_loading, auth_process_failure, auth_error_message } =
-    useSelector(get_auth_process_states);
+  useSelector(get_auth_process_states);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuth) {
-      navigate('/intelliverse');
+      navigate('/home');
     }
   }, [isAuth]);
 
@@ -142,8 +142,7 @@ const Login = () => {
                       className="!text-gray-500"
                     >
                       Select user
-                    </option>
-                    
+                    </option>                 
                     <option value="Admin"> Ripik </option>
                     <option value="Plant Operator">Plant User</option>
                   </Select>
@@ -162,13 +161,10 @@ const Login = () => {
                     </Select>
                   )}
                 </div> */}
-
                 <button
                   className="w-[200px] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
                   onClick={handleSubmitForm}
                   style={{ textAlign: 'center' }}
-                  
-
                 >
                   {sendingOTP ? <Spinner /> : 'Get OTP'}
                 </button>
@@ -214,7 +210,7 @@ const Login = () => {
                   }}
                 />
                 <button
-                  className="w-[200px] ml-3 !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
+                  className="w-[200px] ml-[2vw] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
                   onClick={handleSubmitOTP}
                   appearance='primary'
                 >

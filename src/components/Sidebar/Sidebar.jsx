@@ -10,7 +10,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
- 
+
 } from '@chakra-ui/react'
 import "./Sidebar.css";
 
@@ -112,12 +112,10 @@ const Sidebar = () => {
               <AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/optimus"><AccordionButton _hover={false} className="flex justify-center">
-
                     <div className={location.pathname.includes("/optimus") ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
                       <div className="w-full flex justify-center"><img className={location.pathname.includes("/optimus") ? "w-7 pb-2" : "w-9 pb-2"} src={location.pathname.includes("/optimus") ? "/optimus_new.svg" : "/new2.svg"} alt="home logo" /></div>
                       <p className={location.pathname.includes("/optimus") ? "font-bold text-xs text-[#024D87] -mt-2" : "font-light text-xs -mt-1"}>Optimus</p>
                     </div>
-
                   </AccordionButton>
                   </Link>
                 </h2>
@@ -131,9 +129,11 @@ const Sidebar = () => {
                   <div className="text-xs px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Manpower Scheduling
                   </div>
-                  <div className="text-xs px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
+                  <Link to="/optimus/blastfurnace"><div className={location.pathname.includes("/optimus/blastfurnace") ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md" : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"}>
                     Blast Furnace
                   </div>
+                  </Link>
+
                   <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Kiln
                   </div>
@@ -223,8 +223,7 @@ const Sidebar = () => {
             height: "76px",
             bottom: '0px',
             backgroundColor: "#024D87",
-            boxShadow:
-              "0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3)",
+            boxShadow: "0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
@@ -233,7 +232,7 @@ const Sidebar = () => {
             marginBottom: "0px",
             borderRadius: '8px 8px 0px 0px',
             paddingBottom: "30px",
-            zIndex:1000
+            zIndex: 1000
           }}
         >
           <div className="text-white text-center text-xs ">
@@ -259,53 +258,44 @@ const Sidebar = () => {
           <div className="w-full flex justify-center"><img className="w-6" src="/comm.svg" alt="home logo" /></div>
           <p className="font-light">Help</p>
         </div> */}
-            
-              <Accordion allowToggle className="flex items-center" >
-                <AccordionItem className="border-none">
 
-                  <h2>
-                    <Link to="/home"><AccordionButton _hover={false} className="flex justify-center items-center hover:bg-none">
+            <Accordion allowToggle className="flex items-center" >
+              <AccordionItem className="border-none">
+                <h2>
+                  <Link to="/home"><AccordionButton _hover={false} className="flex justify-center items-center hover:bg-none">
 
-                      <div className={location.pathname.includes("/home") ? "w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                        <div className="w-full flex justify-center"><img className={location.pathname.includes("/home") ? "w-6" : "w-5"} src={location.pathname.includes("/home") ? "/home_curved_selected.svg" : "/home_curved.svg"} alt="home logo" /></div>
-                        <p className={location.pathname.includes("/home") ? "font-bold text-xs text-[#024D87]" : "font-light text-xs"}>Home</p>
-                      </div>
+                    <div className={location.pathname.includes("/home") ? "w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
+                      <div className="w-full flex justify-center"><img className={location.pathname.includes("/home") ? "w-6" : "w-5"} src={location.pathname.includes("/home") ? "/home_curved_selected.svg" : "/home_curved.svg"} alt="home logo" /></div>
+                      <p className={location.pathname.includes("/home") ? "font-bold text-xs text-[#024D87]" : "font-light text-xs"}>Home</p>
+                    </div>
 
-                    </AccordionButton>
-                    </Link>
-                  </h2>
-
-                </AccordionItem>
-
-                <AccordionItem className="border-none">
-                  <h2>
-                    <Link to="/vision"><AccordionButton _hover={false} className="flex justify-center">
-
-                      <div className={location.pathname.includes("/vision") ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                        <div className="w-full flex justify-center"><img className={location.pathname.includes("/vision") ? "w-11 pb-2" : "w-7 pb-2"} src={location.pathname.includes("/vision") ? "/vision_updated.svg" : "/new1.svg"} alt="home logo" /></div>
-                        <p className={location.pathname.includes("/vision") ? "font-bold text-xs text-[#024D87] -mt-2" : "font-light text-xs -mt-1"}>Vision</p>
-                      </div>
-
-                    </AccordionButton>
-                    </Link>
-                  </h2>
-
-                </AccordionItem>
-                <AccordionItem className="border-none">
-                  <h2>
-                    <Link to="/optimus"><AccordionButton _hover={false} className="flex justify-center">
-
-                      <div className={location.pathname.includes("/optimus") ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                        <div className="w-full flex justify-center"><img className={location.pathname.includes("/optimus") ? "w-7 pb-2" : "w-9 pb-2"} src={location.pathname.includes("/optimus") ? "/optimus_new.svg" : "/new2.svg"} alt="home logo" /></div>
-                        <p className={location.pathname.includes("/optimus") ? "font-bold text-xs text-[#024D87] -mt-2" : "font-light text-xs -mt-1"}>Optimus</p>
-                      </div>
-
-                    </AccordionButton>
-                    </Link>
-                  </h2>
-
-                </AccordionItem>
-                {/* <AccordionItem className="border-none -mt-4">
+                  </AccordionButton>
+                  </Link>
+                </h2>
+              </AccordionItem>
+              <AccordionItem className="border-none">
+                <h2>
+                  <Link to="/vision"><AccordionButton _hover={false} className="flex justify-center">
+                    <div className={location.pathname.includes("/vision") ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
+                      <div className="w-full flex justify-center"><img className={location.pathname.includes("/vision") ? "w-11 pb-2" : "w-7 pb-2"} src={location.pathname.includes("/vision") ? "/vision_updated.svg" : "/new1.svg"} alt="home logo" /></div>
+                      <p className={location.pathname.includes("/vision") ? "font-bold text-xs text-[#024D87] -mt-2" : "font-light text-xs -mt-1"}>Vision</p>
+                    </div>
+                  </AccordionButton>
+                  </Link>
+                </h2>
+              </AccordionItem>
+              <AccordionItem className="border-none">
+                <h2>
+                  <Link to="/optimus"><AccordionButton _hover={false} className="flex justify-center">
+                    <div className={location.pathname.includes("/optimus") ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
+                      <div className="w-full flex justify-center"><img className={location.pathname.includes("/optimus") ? "w-7 pb-2" : "w-9 pb-2"} src={location.pathname.includes("/optimus") ? "/optimus_new.svg" : "/new2.svg"} alt="home logo" /></div>
+                      <p className={location.pathname.includes("/optimus") ? "font-bold text-xs text-[#024D87] -mt-2" : "font-light text-xs -mt-1"}>Optimus</p>
+                    </div>
+                  </AccordionButton>
+                  </Link>
+                </h2>
+              </AccordionItem>
+              {/* <AccordionItem className="border-none -mt-4">
             <h2>
               <AccordionButton _hover={false} className="flex justify-center items-center ">
                 <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200 p-2">
@@ -315,8 +305,7 @@ const Sidebar = () => {
               </AccordionButton>
             </h2>
           </AccordionItem> */}
-              </Accordion>
-            
+            </Accordion>
             {/* <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
           <div className="w-full flex justify-center"><img  src="/bot.svg" alt="home logo" /></div>
           <p className="font-light">AI Advisor</p>
@@ -330,56 +319,9 @@ const Sidebar = () => {
           <div className="w-full flex justify-center"><p className="font-light w-24">Impact Tracker</p></div>
         </div> */}
           </div>
-
-          {/* <div
-        className="sidebar_bottom"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="ripik_avatar"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Avatar name="Ripik" src="" style={{ marginRight: "10px" }} />
-          <span
-            style={{ marginLeft: "10px", fontSize: "16px", lineHeight: "24px" }}
-          >
-            Ripik
-          </span>
-        </div>
-        <hr
-          style={{ width: "120%", marginTop: "10px", marginBottom: "10px" }}
-        />
-        <div
-          className="logout"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <LogoutOutlinedIcon
-            style={{
-              width: "200px !important",
-              marginRight: "10px",
-              color: "red",
-            }}
-          />
-          <span
-            style={{ fontSize: "16px", lineHeight: "24px", marginLeft: "10px" }}
-          >
-            Log Out
-          </span>
-        </div>
-      </div> */}
-        </div >}
+          
+        </div >
+      }
     </>
   );
 };
