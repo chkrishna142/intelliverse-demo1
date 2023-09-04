@@ -6,7 +6,7 @@ const Messages = () => {
 
     return (
         <>
-            <TableContainer className='mt-6 border rounded-md shadow-md bg-white'>
+            <TableContainer className='mt-[3vh] border rounded-md shadow-md bg-white'>
                 <Table variant='simple' >
                     <TableCaption>
 
