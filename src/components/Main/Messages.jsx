@@ -9,7 +9,6 @@ const Messages = () => {
             <TableContainer className='mt-[3vh] border rounded-md shadow-md bg-white'>
                 <Table variant='simple' >
                     <TableCaption>
-
                         <div className='w-full flex justify-between mb-3 items-center'>
                             <div className='flex items-center gap-1'>     
                                     <span>
