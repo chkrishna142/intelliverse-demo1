@@ -33,7 +33,7 @@ const DonutChart = ({ data, labels }) => {
     ],
     labels: customLabels,
     legend: {
-      position: "right",
+      position: "bottom",
       fontSize: "12px",
       customLegendItems: customLegendItems,
     },

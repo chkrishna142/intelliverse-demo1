@@ -101,7 +101,7 @@ const SingleCam = () => {
               </Tab>
             </div>
           </TabList>
-          {page === "feed" && <Timer initialSeconds={30} />}
+          {<div className={`${page==="feed" ? "opacity-100" : "opacity-0"}`}><Timer initialSeconds={30} /></div>}
         </div>
 
         <TabPanels>
