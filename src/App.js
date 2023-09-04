@@ -21,6 +21,7 @@ import Demo from './components/Main/Demo';
 import Setting from './components/ContactUs/Setting';
 import UserProfile from './components/ContactUs/UserProfile';
 import AskAnExpert from './components/Main/AskAnExpert';
+import ClientSelect from './components/Main/ClientSelect';
 
 function App() {
 
@@ -62,6 +63,7 @@ function App() {
                     <Route path="/optimus" element={<Home state={"optimus"}/>} />
                     <Route path="/community" element={<Home state={"community"}/>} />
                     <Route path="/community/advisor" element={<AiAdvisor />} /> 
+                    <Route path="/client_select" element={<ClientSelect />} /> 
                     <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
                     <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
                     <Route path="/vision/Sizing/:material/:clientId" element={<Sizing/>} />

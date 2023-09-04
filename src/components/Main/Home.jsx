@@ -9,7 +9,6 @@ const Home = ({ state }) => {
     const [isOpen, setIsOpen] = useState(false)
     const [onClose, setOnClose] = useState(false)
 
-
     return (
         <div>
             <div>
