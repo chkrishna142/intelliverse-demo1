@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
 
@@ -109,7 +110,7 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
         },
       });
   
-
+      const size = useWindowSize();
   
 
   return (
@@ -126,9 +127,10 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
             </div>
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">kg/tHM</div>
           </div>
-          <div
-            className={`flex items-start gap-[2%] w-[80%]  `}
-          >
+          {isExpanded2?
+        (   <div
+          className={`flex  ${size.width<=768?"flex-col":""} items-start gap-[2%] w-[80%]  `}
+        >
             <div className="flex gap-[2px] items-center justify-center">
               <div className="flex gap-[2px] ">
                 <img src="/Bficons/skyblue.svg" alt="" />
@@ -146,7 +148,20 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
                 Baseline coke rate
               </div>
             </div>
-          </div>
+          </div>):(
+        <div className="flex  flex-col w-full gap-2">
+       <div className="flex  w-[300px] gap-2  justify-between">
+         <p className="text-[18px] text-[#938F96]">Current coke rate</p>
+         <p className="text-[#084298] text-[20px] font-[600]"> 537 kg/tHM</p>
+       </div>
+       <div className="flex w-[300px] gap-2   justify-between">
+         <p className="text-[18px] text-[#938F96]">Baseline coke rate</p>
+         <p className="text-[#605D64] text-[20px] font-[600]"> 537 kg/tHM</p>
+       </div>
+        
+        </div>
+        )}
+         
         </div>
         <div onClick={handleToggle2}>
           <img src="/dropicon.svg" alt="" />

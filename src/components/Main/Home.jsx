@@ -23,7 +23,7 @@ const Home = ({ state }) => {
                         <img className='h-6 ' src="/vision.svg" />
                         <div onClick={()=>setIsOpen(true)} className=' md:flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2  border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 hidden'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
                     </div>
-                    <NewUseCaseModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+                    
                     <div className=' w-full h-full ml-3 mb-5'>
                         <div className='mt-10 md:mt-5 flex flex-wrap gap-8 text-sm items-center'>
                             <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>
@@ -148,14 +148,14 @@ const Home = ({ state }) => {
                                     <Link to="/community/askanexpert">
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             {/* <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">2</div></div> */}
-                                            <div className='w-full flex justify-center '><img className='mt-0 ml-2' src="/askexpert.svg" /></div>
+                                            <div className='w-full flex justify-center items-center '><img className='mt-0 ml-2 object-fit' src="/askexpert.svg" /></div>
                                             {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div> */}
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Ask An Expert</p></div>
                                     </Link>
                                     <Link to="/community/advisor">
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
-                                            <div className='w-full flex justify-center '><img className='mt-0 h-32 ' src="/advisor.svg" /></div>
+                                            <div className='w-full flex justify-center items-center '><img className='mt-0 h-32 object-fit ' src="/advisor.svg" /></div>
                                             {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div> */}
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>AI Advisor </p></div>
@@ -163,7 +163,7 @@ const Home = ({ state }) => {
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             {/* <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">1</div></div> */}
-                                            <div className='w-full flex justify-center '><img className='mt-3 h-20 w-24 p-2' src="/man.svg" /></div>
+                                            <div className='w-full flex justify-center items-center '><img className='object-fit' src="/people.svg" /></div>
                                             {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div> */}
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Community</p></div>
@@ -173,6 +173,7 @@ const Home = ({ state }) => {
                         </div>
                     </div> : null}
             </div>
+            <NewUseCaseModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
         </div>
     );
 };

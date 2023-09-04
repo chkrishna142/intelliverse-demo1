@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const AskAnExpert = () => {
 
     const [submitted, setSubmitted] = useState(false)
     
-
     return (
         <div className='mt-6'>
             <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
@@ -22,7 +22,7 @@ const AskAnExpert = () => {
                             <p className='font-semibold text-2xl mt-4'>Thank You for Your Query!</p>
                         </div>
                         <div className='mt-5 w-full'>
-                            <p className='px-10 font-light'>Your question has been successfully submitted to our team of manufacturing experts. Please allow up to 24 hours for one of our experts to review and respond to your query. Keep an eye out for the response in your notification. Meanwhile, you can ask the query to our Al advisor <span className='font-bold text-[#034C85] cursor-pointer'>here.</span></p>
+                            <p className='px-10 font-light'>Your question has been successfully submitted to our team of manufacturing experts. Please allow up to 24 hours for one of our experts to review and respond to your query. Keep an eye out for the response in your notification. Meanwhile, you can ask the query to our Al advisor <Link to="/community/advisor"><span className='font-bold text-[#034C85] cursor-pointer'>here.</span></Link></p>
                         </div>
                         <div className='mt-5 w-full'>
                             <p className='px-10 font-light'>Here's a summary of the information you provided:</p>
@@ -38,8 +38,6 @@ const AskAnExpert = () => {
                         <div className='mt-5 w-full mb-4'>
                             <p className='px-10 font-light'>Thank you for using our <span className='font-bold'>"Ask an Expert"</span> module. We're here to help you optimize efficiency and reduce waste in your manufacturing processes.</p>
                         </div>
-
-
                     </div>}
                 {submitted === false ?
                     <div className='mx-5 mb-[5vh]'>
@@ -102,7 +100,7 @@ const AskAnExpert = () => {
                             </div>
                         </div>
                         <div className='w-full font-light mt-6'>
-                            Please provide a detailed description of your question or issue. Include relevant background information, any steps you've already taken to address the problem, and any specific challenges you're facing. If your question involves measurements, specifications or technical details please include them in your description This will help our experts provide you a more accurate response. Feel free to attach an relevant files images or diagrams that can provide additional context to your question.
+                        Please provide a detailed description of your question or issue. Include relevant background information, any steps you've already taken to address the problem, and any specific challenges you're facing. If your question involves measurements, specifications, or technical details please include them in your description. This will help our experts provide you with a more accurate response. Feel free to attach relevant files, images or diagrams that can provide additional context to your question.
                         </div>
                         <div className='w-full mt-4'>
                             <textarea placeholder='Type your query here...' className='w-full h-20 border rounded-md px-2 py-2' />

@@ -37,7 +37,6 @@ import RangeSlider from "./RangeSlider";
 
 const rows = [
   {
-    id: "permeabiltyDarcy",
     name: "Permeability (Darcy)",
     overallRange: [2.2, 3.2],
     optimalRange: [2.59, 2.7],

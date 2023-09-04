@@ -134,35 +134,53 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
 
           </div>
           </div>
-          <div
-            className={`flex items-start gap-[2%] w-[80%]  `}
-          >
-            <div className="flex gap-[2px] items-center justify-center">
-              <div className="flex gap-[2px] ">
-                <img src="/Bficons/orangedot.svg" alt="" />
-              </div>
-              <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
-                {" "}
-                Actual heat flux
-              </div>
-            </div>
+
+          {isExpanded3?
+        (  
+         <div
+          className={`flex items-start gap-[2%] w-[80%]  `}
+        >
+          <div className="flex gap-[2px] items-center justify-center">
             <div className="flex gap-[2px] ">
-              <div>
-                <img src="/Bficons/brightyellowdot.svg" alt="" />
-              </div>
-              <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-              Predictive heat flux
-              </div>
+              <img src="/Bficons/orangedot.svg" alt="" />
             </div>
-            <div className="flex gap-[2px] ">
-              <div>
-                <img src="/Bficons/darkblue.svg" alt="" />
-              </div>
-              <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-              Target heat flux
-              </div>
+            <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
+              {" "}
+              Actual heat flux
             </div>
           </div>
+          <div className="flex gap-[2px] ">
+            <div>
+              <img src="/Bficons/brightyellowdot.svg" alt="" />
+            </div>
+            <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+            Predictive heat flux
+            </div>
+          </div>
+          <div className="flex gap-[2px] ">
+            <div>
+              <img src="/Bficons/darkblue.svg" alt="" />
+            </div>
+            <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+            Target heat flux
+            </div>
+          </div>
+        </div>
+        ):(
+        <div className="flex  flex-col w-full gap-2">
+       <div className="flex  w-[300px] gap-2  justify-between">
+         <p className="text-[18px] text-[#938F96]">Current Heat Flux</p>
+         <p className="text-[#084298] text-[20px] font-[600]"> 1200 &deg;C</p>
+       </div>
+       <div className="flex w-[300px] gap-2   justify-between">
+         <p className="text-[18px] text-[#938F96]">Predictive Heat Flux</p>
+         <p className="text-[#16FCD2] text-[20px] font-[600]"> 1400 &deg;C</p>
+       </div>
+        
+        </div>
+        )
+        }
+          
         </div>
         <div onClick={handleToggle3}>
           <img src="/dropicon.svg" alt="" />

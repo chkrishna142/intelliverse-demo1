@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Fuelrecommend from "./Fuelrecommend";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 function Overviewrecommendation({
   isExpanded2,
@@ -7,10 +8,12 @@ function Overviewrecommendation({
   series,
   options,
 }) {
+  const size = useWindowSize();
+
   return (
     <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
-      <div class="flex justify-between w-full">
+      <div class="flex justify-between w-full h-full">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
           <div className="flex items-center gap-[8px]">
             {" "}
@@ -28,25 +31,29 @@ function Overviewrecommendation({
       </div>
       {/* bottom */}
       {isExpanded2 && (
-        <div className="w-full h-[150px] grid grid-cols-6 gap-0">
-          <div className="col-span-1 items-center justify-between p-2  ">
-            <div className="flex  items-center h-[37%] justify-center">
+        <div className={`flex ${size.width<700?"flex-col" :""} h-full`}>
+        <div className="h-full">
+           <div className="col-span-1 items-center justify-between p-2  h-[150px]">
+              <div className="flex  items-center h-[37%] justify-center">
               <p className="text-[#3E3C42] font-bold"></p>
-              <p className="text-[#939393]"></p>
+               <p className="text-[#939393]"></p>
             </div>
             <div className="flex flex-col h-[50%] items-center justify-between">
-              {/* <Fuelrecommend recommendedValue={18} currentValue={16} /> */}
-              {/* legends */}
-              <div className="flex gap-[2px] w-full">
+          {/* <Fuelrecommend recommendedValue={18} currentValue={16} /> */}
+          {/* legends */}
+            <div className="flex gap-[2px] w-full">
                 <img src="/Bficons/skyblue.svg" alt="" />
-                <p className="text-[#79767D] text-[12px]">Current value </p>
-              </div>
-              <div className="flex w-full">
-                <img src="/Bficons/tealblue.svg" alt="" />
-                <p  className="text-[#79767D] text-[12px]">Recommended value</p>
-              </div>
-            </div>
+              <p className="text-[#79767D] text-[12px]">Current value </p>
+             </div>
+          <div className="flex w-full">
+            <img src="/Bficons/tealblue.svg" alt="" />
+            <p  className="text-[#79767D] text-[12px]">Recommended value</p>
           </div>
+        </div>
+      </div>
+        </div>
+         <div className="w-full md:h-[150px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-0 ">
+         
           {/* blast moisture */}
           <div className="col-span-1 items-center justify-between p-2 ">
             <div className="flex  items-center justify-center gap-2">
@@ -100,7 +107,7 @@ function Overviewrecommendation({
          
          
         </div>
-
+      </div>
         //  <Fuelrecommend recommendedValue={18} currentValue={16} />
       )}
     </div>

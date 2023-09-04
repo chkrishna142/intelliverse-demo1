@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import DashboardTable from "../../Charts/BF_Charts/DashboardTable";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { WarningTwoIcon } from "@chakra-ui/icons";
 
 
 
 const Production = ({data}) => {
 
-
+  const size = useWindowSize();
 
 
   const [productionTabel,setProductionTabel]=useState(
@@ -259,116 +260,35 @@ const Production = ({data}) => {
           }}
           className="flex p-10 px-16 justify-between items-center self-stretch"
         >
-          <div
-            style={{ width: "146px" }}
-            className="flex  flex-col items-start gap-4"
-          >
-            <p
-              style={{ fontSize: "20px" }}
-              className="text-white text-neutral-n-99 font-roboto text-20 font-normal leading-normal "
-            >
+           <div className="flex  flex-col items-start gap-0 w-[146px]">
+                       <p className="text-white text-neutral-n-99 text-base  md:text-[15px] lg:text-[20px]  font-normal">
+
               Production
             </p>
-            <p
-              style={{
-                color: "var(--primary-p-99, #6CA6FC)",
-               
-                fontSize: "18px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "normal",
-                marginTop: "-10px",
-              }}
-            >
+            <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[20px] ">
               10500 tpd
             </p>
-            {/* <p
-            style={{
-              color: "var(--primary-p-99, #6CA6FC)",
-              fontFamily: "Poppins",
-              fontSize: "18px",
-              fontStyle: "normal",
-              fontWeight: "500",
-              lineHeight: "normal",
-              marginTop: "-10px",
-            }}
-          >
-            540 kg/tHM
-          </p> */}
+           
           </div>
 
           {alertS === 0 ? (
             // show optimal
-            <div
-              style={{
-                width: "133px",
-                height: "44px",
-                borderRadius: "8px",
-                background: "#69B04B",
-                alignItem: "center",
-                justifyContent: "center",
-              }}
-              class=" flex p-6 px-8 items-center gap-12 "
-            >
+            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[133px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
               <CheckCircleOutlineIcon
-                style={{ width: "38px", height: "38px", color: "#FFF" }}
+                // style={{ width: "38px", height: "38px", color: "#FFF" }}
+                style={{ width: `${size.width < 420 ? '28px' : '35px'}`,
+                 height:`${size.width < 420 ? '28px' : '35px'}`, color: '#FFF' }}
+            
               />
-              <p
-                style={{
-                  color: "#FFF",
-                  fontSize: "18px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  lineHeight: "normal",
-
-                  width: "120%",
-                  marginLeft: "-35px",
-                }}
-              >
-                Optimal
-              </p>
+              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[20px]  font-normal ">Optimal</p>
             </div>
           ) : (
             //  alert
-            <div
-              style={{
-                width: "121px",
-                height: "44px",
-                borderRadius: "8px",
-                background: "var(--error-e-50, #DC362E)",
-                alignItem: "center",
-                justifyContent: "center",
-              }}
-              className=" flex p-6 px-8 items-center gap-2  "
-            >
-              <svg
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  flexShrink: "0",
-                  // marginLeft: "-20px",
-                }}
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewdiv="0 0 32 32"
-                fill="none"
-              >
-                <path
-                  d="M15.9997 8.65334L26.0397 26H5.95967L15.9997 8.65334ZM15.9997 3.33334L1.33301 28.6667H30.6663L15.9997 3.33334ZM17.333 22H14.6663V24.6667H17.333V22ZM17.333 14H14.6663V19.3333H17.333V14Z"
-                  fill="white"
-                />
-              </svg>
+            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[133px]"} h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}>
+            <WarningTwoIcon  style={{ width: `${size.width < 420 ? '20px' : '25px'}`,
+                 height:`${size.width < 420 ? '20px' : '25px'}`, color: '#FFF' }}/>
               <div>
-                <p
-                  className="flex items-center text-white font-roboto text-base font-normal "
-                  style={{
-                    fontSize: "18px",
-                    width: "58px",
-
-                    // marginLeft: "8px",
-                  }}
-                >
+                <p className={`flex items-center text-[18px]  ${size.width<420? "w-[50px]":"w-[58px]"}  text-white font-roboto text-base font-normal `}>
                   {alertS} Alert
                 </p>
               </div>
@@ -377,7 +297,7 @@ const Production = ({data}) => {
         </div>
         {/* chart part */}
 
-        <div class="w-[95%] h-[200px] ">
+        <div className="w-[95%] h-[200px] ">
           <Linechart  chart={chart}/>
         </div>
 
@@ -385,7 +305,7 @@ const Production = ({data}) => {
 
         <div
           style={{ justifyContent: "center" }}
-          class="flex items-center  w-[100%] p-3 justify-between  "
+          className="flex items-center  w-[100%] p-3 justify-between  "
         >
           <p
             style={{
@@ -398,39 +318,19 @@ const Production = ({data}) => {
               lineHeight: "normal",
             }}
             // className="text-neutral-n-60 font-roboto  text-base font-normal"
-            class="text-xs md:text-xs lg:text-xs xl:text-xs"
+            className="text-xs md:text-xs lg:text-xs xl:text-xs"
           >
             Top Drivers
           </p>
           <div style={lineStyle}></div>
-          <div class="flex w-[37%] ml-[10px] justify-between ">
+          <div className="flex w-[37%] ml-[10px] justify-between ">
             <p
-              style={{
-                width: "50%",
-                color: "var(--neutral-n-70, #AEA9B1)",
-                textAlign: "right",
-                
-
-                fontStyle: "normal",
-                fontWeight: 400,
-                lineHeight: "normal",
-              }}
-              class="text-xs md:text-xs lg:text-[10px] xl:text-[13px]"
+              className="text-xs md:text-xs lg:text-[10px] xl:text-[13px] w-[50%] text-[#AEA9B1] text-right font-[400]"
             >
              {formattedDate}
             </p>
             <p
-              style={{
-                width: "50%",
-                color: "var(--neutral-n-70, #AEA9B1)",
-                textAlign: "right",
-                
-
-                fontStyle: "normal",
-                fontWeight: 400,
-                lineHeight: "normal",
-              }}
-              class="text-xs md:text-xs lg:text-xs xl:text-xs"
+              className="text-xs md:text-xs lg:text-xs xl:text-xs w-[50%] text-[#AEA9B1] text-right font-[400]"
             >
              {formattedTime}
             </p>
@@ -439,7 +339,7 @@ const Production = ({data}) => {
 
         {/* mid part of div */}
         {/* Tabel */}
-        <div class="w-full  p-4 ">
+        <div className="w-full  p-4 ">
         
           <DashboardTable rowArray={data.data} tabelname={"production"}  handleAlert={handleAlert}/>
         </div>

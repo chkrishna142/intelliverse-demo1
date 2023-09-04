@@ -122,10 +122,10 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
   
 
   return (
-    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+    <div className="flex flex-col  w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
-      <div class="flex justify-between w-full">
-        <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+      <div class="flex justify-between w-full ">
+        <div class="flex flex-col items-start justify-center gap-[12px] w-[90%] ">
           <div className="flex items-center gap-[8px]">
             {" "}
             <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
@@ -139,29 +139,43 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
 
           </div>
           </div>
-          <div
-            className={`flex  ${size.width<=768?"flex-col":""} items-start gap-[2%] w-[80%]  `}
-          >
-            <div className="flex gap-[2px] items-center justify-center">
-              <div className="flex gap-[2px] ">
-                <img src="/Bficons/darkgreendot.svg" alt="" />
-              </div>
-              <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
-                {" "}
-               Actual fuel rate
-              </div>
-            </div>
+        {isExpanded1?
+        (  <div
+          className={`flex  ${size.width<=768?"flex-col":""} items-start gap-[2%] w-[80%]  `}
+        >
+          
+          <div className="flex gap-[2px] items-center justify-center">
             <div className="flex gap-[2px] ">
-              <div>
-                <img src="/Bficons/blackdot.svg" alt="" />
-              </div>
-              <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                Baseline fuel rate
-              </div>
+              <img src="/Bficons/darkgreendot.svg" alt="" />
+            </div>
+            <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
+              {" "}
+             Actual fuel rate
             </div>
           </div>
+          <div className="flex gap-[2px] ">
+            <div>
+              <img src="/Bficons/blackdot.svg" alt="" />
+            </div>
+            <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+              Baseline fuel rate
+            </div>
+          </div>
+        </div>):(
+        <div className="flex  w-full gap-12">
+       <div className="flex  w-[300px] gap-2  justify-between">
+         <p className="text-[18px] text-[#938F96]">Current fuel rate</p>
+         <p className="text-[#084298] text-[20px] font-[600]"> 537 kg/tHM</p>
+       </div>
+       <div className="flex w-[300px] gap-2   justify-between">
+         <p className="text-[18px] text-[#938F96]">Baseline fuel rate</p>
+         <p className="text-[#605D64] text-[20px] font-[600]"> 537 kg/tHM</p>
+       </div>
+        
         </div>
-        <div onClick={handleToggle1}>
+        )}
+        </div>
+        <div onClick={handleToggle1} className="">
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const Linechart = ({chart}) => {
+
+ 
   
 
   return (
