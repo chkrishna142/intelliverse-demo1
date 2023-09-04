@@ -1,35 +1,35 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
-import Feed from "./Tabs/Feed";
-import FeedLibrary from "./Tabs/FeedLibrary";
-import Alerts from "./Tabs/Alerts";
-import Report from "./Tabs/Report";
-import Analytics from "./Tabs/Analytics";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Feed from './Tabs/Feed';
+import FeedLibrary from './Tabs/FeedLibrary';
+import Alerts from './Tabs/Alerts';
+import Report from './Tabs/Report';
+import Analytics from './Tabs/Analytics';
+import { useWindowSize } from '@uidotdev/usehooks';
 
 const Capitalize = (str) => {
-  const arr = str.split(" ");
+  const arr = str.split(' ');
   for (var i = 0; i < arr.length; i++) {
     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
   }
-  const str2 = arr.join(" ");
+  const str2 = arr.join(' ');
   return str2;
 };
 
 const Sizing = () => {
   const size = useWindowSize();
   const [plantCamMap, setPlantCamMap] = useState({});
-  const [page, setPage] = useState("feed");
+  const [page, setPage] = useState('feed');
   const param = useParams();
   return (
     <div
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
-      style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
+      style={{ width: size.width >= 768 ? 'calc(100vw - 168px)' : '100vw' }}
     >
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-          {Capitalize(page)}
+          {param.material + ' Sizing'}
         </p>
       </div>
       <Tabs>
@@ -37,51 +37,51 @@ const Sizing = () => {
           <div className="flex items-center gap-4 overflow-x-auto h-14 md:h-10">
             <Tab
               className={
-                page === "feed"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                page === 'feed'
+                  ? '!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]'
+                  : '!text-xs sm:!text-sm !text-[#938F96] !border-0'
               }
-              onClick={() => setPage("feed")}
+              onClick={() => setPage('feed')}
             >
               Feed
             </Tab>
             <Tab
               className={
-                page === "alerts"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                page === 'alerts'
+                  ? '!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]'
+                  : '!text-xs sm:!text-sm !text-[#938F96] !border-0'
               }
-              onClick={() => setPage("alerts")}
+              onClick={() => setPage('alerts')}
             >
               Alerts
             </Tab>
             <Tab
               className={
-                page === "feed library"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                page === 'feed library'
+                  ? '!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]'
+                  : '!text-xs sm:!text-sm !text-[#938F96] !border-0'
               }
-              onClick={() => setPage("feed library")}
+              onClick={() => setPage('feed library')}
             >
               Feed Library
             </Tab>
             <Tab
               className={
-                page === "analytics"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                page === 'analytics'
+                  ? '!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]'
+                  : '!text-xs sm:!text-sm !text-[#938F96] !border-0'
               }
-              onClick={() => setPage("analytics")}
+              onClick={() => setPage('analytics')}
             >
               Analytics
             </Tab>
             <Tab
               className={
-                page === "report"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                page === 'report'
+                  ? '!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]'
+                  : '!text-xs sm:!text-sm !text-[#938F96] !border-0'
               }
-              onClick={() => setPage("report")}
+              onClick={() => setPage('report')}
             >
               Report
             </Tab>
