@@ -7,8 +7,8 @@ const AskAnExpert = () => {
     
 
     return (
-        <div className=' mt-6'>
-            <div className='h-max w-full border shadow-md bg-white rounded-md mb-5 '>
+        <div className='mt-6'>
+            <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
                 <p className='mt-6 ml-5 text-black text-xl font-semibold'>Ask An Expert</p>
                 {submitted === false ? <div>
                     <p className='mt-3 ml-5 font-light'>Have your most pressing questions answered by world renown experts.</p>

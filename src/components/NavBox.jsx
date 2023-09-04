@@ -6,8 +6,10 @@ import { useWindowSize } from "@uidotdev/usehooks";
 
 const NavBox = () => {
     const [nav, setNav] = useState(false)
+    const [text, setText] = useState(false)
     const size = useWindowSize();
     const navRef = useRef(null)
+    const textRef = useRef(null)
     //const plant_name = query.get("plant_name");
     const { setLogin } = useContext(NavContext)
 
@@ -17,6 +19,19 @@ const NavBox = () => {
             document.removeEventListener("mousedown", handleOutsideClicks);
         };
     }, [nav]);
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleOutsideClicks2);
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClicks2);
+        };
+    }, [text]);
+
+    const handleOutsideClicks2 = (event) => {
+        if (text && textRef.current && !textRef.current.contains(event.target)) {
+            setText(false);
+        };
+    };
 
     const handleOutsideClicks = (event) => {
         if (nav && navRef.current && !navRef.current.contains(event.target)) {
@@ -56,7 +71,32 @@ const NavBox = () => {
                     <div className="flex gap-5 items-center ml-5">
                         <img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/bar.svg" />
                         <Link to="/settings"><img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/setting.svg" /></Link>
-                        <img className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/messages.svg" />
+                        <img onClick={() => setText(!text)} className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/messages.svg" />
+                        {text === true ? <div ref={textRef} className="absolute right-52 -mr-2 top-12 z-10 mt-2 w-80  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div className="py-1 mx-3 h-[42vh] overflow-y-scroll" role="none">
+                                <div className="text-xs px-2 py-3 border-b">
+                                    Expert Luc Bonte has replied to your query
+                                    <div className="flex justify-end w-full mr-3 mt-3 text-xs text-[#BEBDBE]">1 hour ago</div>
+                                </div>
+                                <div className="text-xs px-2 py-3 border-b">
+                                    You have a new direct message from User_123.
+                                    <div className="flex justify-end w-full mr-3 mt-3 text-xs text-[#BEBDBE]">4 hours ago</div>
+                                </div>
+                                <div className="text-xs px-2 py-3 border-b">
+                                    User 546 replied to discussion in the community forum.
+                                    <div className="flex justify-end w-full mr-3 mt-3 text-xs text-[#BEBDBE]">Yesterday</div>
+                                </div>
+                                <div className="text-xs px-2 py-3 border-b">
+                                    Administrator has posted a new community notification in the JSPL group.
+                                    <div className="flex justify-end w-full mr-3 mt-3 text-xs text-[#BEBDBE]">2 Sep 2023</div>
+                                </div>
+                                <div className="text-xs px-2 py-3 border-b">
+                                    Expert Luc Bonte has replied to your query
+                                    <div className="flex justify-end w-full mr-3 mt-3 text-xs text-[#BEBDBE]">1 Sep 2023</div>
+                                </div>
+                            </div>
+                            <div className="w-full px-2 cursor-pointer py-2 bg-[#034D86] text-white text-xs font-bold flex justify-center rounded-b-md hover:bg-gray-600 hover:transition duration-200"> View All</div>
+                        </div> : null}
                         <img onClick={() => setNav(!nav)} className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/profile.svg" />
                         {nav === true ? <div ref={navRef} className="absolute right-44 -mr-2 top-12 z-10 mt-2 w-40  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div className="py-1" role="none">
@@ -70,7 +110,7 @@ const NavBox = () => {
                                 </form>
                             </div>
                         </div> : null}
-                    </div>    
+                    </div>
                 </Flex> : <Flex
                     p="4px"
                     justify="gap"

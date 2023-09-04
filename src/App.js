@@ -38,13 +38,7 @@ function App() {
   return (
     <>
       <NavContext.Provider value={{ setLogin }}>
-        <Box
-          maxW="100vw"
-          boxSizing="border-box"
-          bgColor="#FAFAFA"
-          color="#000000"
-          overflowX="hidden"
-        >
+        <div>
           {login ? (
             <>
               <Navbar />
@@ -66,7 +60,8 @@ function App() {
                     <Route path="/home" element={<Home state={"home"} />} />
                     <Route path="/vision" element={<Home state={"vision"}/>} />
                     <Route path="/optimus" element={<Home state={"optimus"}/>} />
-                    <Route path="/advisor" element={<AiAdvisor />} /> 
+                    <Route path="/community" element={<Home state={"community"}/>} />
+                    <Route path="/community/advisor" element={<AiAdvisor />} /> 
                     <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
                     <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
                     <Route path="/vision/Sizing/:material/:clientId" element={<Sizing/>} />
@@ -75,7 +70,7 @@ function App() {
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/bookdemo" element={<Demo />} />
-                    <Route path="/askanexpert" element={<AskAnExpert />} />
+                    <Route path="/community/askanexpert" element={<AskAnExpert />} />
                   </Routes>
                 </div>
               </div>
@@ -83,7 +78,7 @@ function App() {
           ) : (
             <Login />
           )}
-        </Box>
+        </div>
       </NavContext.Provider>
     </>
   );

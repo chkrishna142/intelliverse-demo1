@@ -10,7 +10,7 @@ const MaterialSelect = () => {
   const alerts = [5, 2, 0, 1];
   const deployments = [5, 5, 5, 5];
   return (
-    <div className="h-screen">
+    <div className="h-full">
       <div className="bg-white rounded-xl shadow-md p-4 mt-5 border">
         <div className="flex flex-col gap-5">
           <div className="flex justify-start mt-2 ml-3 mr-3 mb-3">

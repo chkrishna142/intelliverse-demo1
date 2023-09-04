@@ -69,21 +69,16 @@ const Sidebar = () => {
         </div> */}
             <Accordion allowToggle >
               <AccordionItem className="border-none">
-
                 <h2>
                   <Link to="/home"><AccordionButton _hover={false} className="flex justify-center items-center hover:bg-none">
-
                     <div className={location.pathname.includes("/home") ? "w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
                       <div className="w-full flex justify-center"><img className={location.pathname.includes("/home") ? "w-6" : "w-5"} src={location.pathname.includes("/home") ? "/home_curved_selected.svg" : "/home_curved.svg"} alt="home logo" /></div>
                       <p className={location.pathname.includes("/home") ? "font-bold text-xs text-[#024D87]" : "font-light text-xs"}>Home</p>
                     </div>
-
                   </AccordionButton>
                   </Link>
                 </h2>
-
               </AccordionItem>
-
               <AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/vision"><AccordionButton _hover={false} className="flex justify-center">
@@ -142,16 +137,30 @@ const Sidebar = () => {
                   </div>
                 </AccordionPanel>
               </AccordionItem>
-              {/* <AccordionItem className="border-none -mt-4">
-            <h2>
-              <AccordionButton _hover={false} className="flex justify-center items-center ">
-                <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200 p-2">
-                  <div className="w-full flex justify-center"><img className="w-6" src="/comm.svg" alt="home logo" /></div>
-                  <p className="font-light text-white text-xs">Community</p>
-                </div>
-              </AccordionButton>
-            </h2>
-          </AccordionItem> */}
+              <AccordionItem className="border-none -mt-4">
+                <h2>
+                  <Link to="/community"><AccordionButton _hover={false} className="flex justify-center items-center ">
+                  <div className={location.pathname.includes("/community") ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
+                    <div className="w-full flex justify-center"><img className={location.pathname.includes("/community") ? "w-7 pb-2" : "w-7 pb-2"} src={location.pathname.includes("/community") ? "/comm_selected.svg" : "/comm.svg"} alt="home logo" /></div>
+                    <p className={location.pathname.includes("/community") ? "font-bold text-xs text-[#024D87] -mt-1" : "font-light text-xs -mt-1"}>Community</p>
+                    </div>
+                  </AccordionButton>
+                  </Link>
+                </h2>
+                <AccordionPanel pb={0} className="-mt-2">     
+                  <Link to="/community/askanexpert"><div className={location.pathname.includes("/askanexpert") ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md" : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"}>
+                    Ask An Expert
+                  </div>
+                  </Link>
+                  <Link to="/community/advisor"><div className={location.pathname.includes("/advisor") ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md" : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"}>
+                    AI Advisor
+                  </div>
+                  </Link>
+                  <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
+                    Community
+                  </div>
+                  </AccordionPanel>
+              </AccordionItem>
             </Accordion>
             {/* <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
           <div className="w-full flex justify-center"><img  src="/bot.svg" alt="home logo" /></div>
@@ -319,7 +328,7 @@ const Sidebar = () => {
           <div className="w-full flex justify-center"><p className="font-light w-24">Impact Tracker</p></div>
         </div> */}
           </div>
-          
+
         </div >
       }
     </>

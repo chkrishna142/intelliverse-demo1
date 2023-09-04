@@ -210,7 +210,7 @@ const Login = () => {
                   }}
                 />
                 <button
-                  className="w-[200px] ml-[2vw] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
+                  className="w-full !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
                   onClick={handleSubmitOTP}
                   appearance='primary'
                 >
