@@ -17,11 +17,10 @@ const NewUseCaseModal = ({ isOpen, onOpen, onClose }) => {
             <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xl"}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader><div className='text-[#034D86] w-full h-10 flex justify-center items-center rounded-md'>
-                        Request New Use Case
-
-                    </div></ModalHeader>
-                    <ModalCloseButton />      
+                    <div className='text-white w-full h-16 flex bg-[#034D86] font-semibold justify-center items-center rounded-t-md'>
+                        Request a New Use Case
+                    </div>
+                    <ModalCloseButton className='mt-2' color={"white"} />      
                     <ModalBody>
                         <div className='mt-2'>
                             <p className='text-[#034D86] font-semibold '>Title</p>

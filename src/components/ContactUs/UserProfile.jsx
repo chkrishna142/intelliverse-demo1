@@ -111,8 +111,8 @@ const UserProfile = () => {
               <FormControl>
                 <div>
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Email</div>
-                  <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
-                    <input className="w-full focus:outline-none pl-2" placeholder="Enter Your Email" />
+                  <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center bg-gray-100">
+                    <input disabled className="w-full focus:outline-none pl-2" placeholder="abc@email.com" />
                      
                   </div>
                 </div>
