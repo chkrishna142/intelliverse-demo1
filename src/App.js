@@ -65,14 +65,13 @@ function App() {
                     <Route path="/community/advisor" element={<AiAdvisor />} /> 
                     <Route path="/client_select" element={<ClientSelect />} /> 
                     <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
-                    <Route path="/vision/Sizing" element={<MaterialSelect/>} />  
+                    <Route path="/vision/Sizing" element={<MaterialSelect/>} />
+                    <Route path="/vision/Sizing/:material" element={<ClientSelect/>} />
                     <Route path="/vision/Sizing/:material/:clientId" element={<Sizing/>} />
+                    <Route path="/vision/Sizing/:material/:clientId/:plantId/:cameraId" element={<SingleCam/>} />
                     <Route path="/optimus/blastfurnace/Sizing/:material/:clientId" element={<BF_Dashboard >
                       <Sizing/> </BF_Dashboard>} 
-                     
                      />
-                    <Route path="/vision/Sizing/:material/:clientId/:plantId/:cameraId" element={<SingleCam/>} />
-                   
                     <Route path="/contactus" element={<ConatctUs />} />
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/profile" element={<UserProfile />} />

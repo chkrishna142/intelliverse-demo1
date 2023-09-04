@@ -10,9 +10,7 @@ const MaterialCard = ({ material, alerts, deployments }) => {
   console.log('Material', material, demoRouting[material.split(' ')[0]]);
   return (
     <Link
-      to={`/vision/Sizing/${material?.split(' ')[0]}/${
-        demoRouting[material.split(' ')[0]]
-      }`}
+      to={`/vision/Sizing/${material?.split(' ')[0]}`}
       style={{ textDecoration: 'none' }}
     >
       <div className="w-28 h-[115px] relative rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer">
