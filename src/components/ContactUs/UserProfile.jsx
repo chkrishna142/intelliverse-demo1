@@ -56,6 +56,12 @@ const UserProfile = () => {
           gap={"60px"}
           flexDirection={"column"}
         >
+          <div className="w-full flex justify-center">
+            <img src="/profile_sample.svg" />
+            <span className="bg-[#034D87] h-10 w-10 rounded-full absolute mt-32 ml-28 flex justify-center items-center cursor-pointer">
+              <img src="pencil.svg" />
+            </span>
+          </div>
           <Flex flexDirection={"column"} gap={"30px"}>
             <Flex gap={"35px"}>
               <FormControl>
