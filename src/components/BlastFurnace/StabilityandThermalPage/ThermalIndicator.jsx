@@ -202,7 +202,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
           </div>
         </div>
         {/* chart */}
-        <div class="w-full h-full  border-2 border-red-500">
+        <div class="w-full h-full">
           <Thermalareachart/>
         </div>
       </div>
