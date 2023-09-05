@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ThermalIndThermo from "../BF_Components/ThermalIndThermo";
 import Thermalareachart from "../BF_Components/Thermalareachart";
 import Thermalheatmap from "../BF_Components/Thermalheatmap";
+import Mymodal from "../BF_Components/Mymodal";
 
 
 function ThermalIndicator({ isExpanded3, handleToggle3 }) {
@@ -129,8 +130,15 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
           </div>
         </div>
-        <div onClick={handleToggle3}>
-          <img src="/dropicon.svg" alt="" />
+        <div class="flex w-[100px] justify-between fill-white drop-shadow-md  " >
+          <div className="flex justify-center items-center  w-[50px]">
+          <Mymodal  imageone={"/Bficons/HeatmapIndTop.svg"} imageTwo={""} />
+
+          </div>
+          <div >
+          <img src="/dropicon.svg" alt="" onClick={handleToggle3} style={{ cursor: 'pointer' }}  />
+
+          </div>
         </div>
       </div>
       {/* bottom */}
@@ -139,9 +147,12 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
     <div className={`flex gap-[18px]  h-auto  w-full`}>
       {/* thermal color indicator*/}
       <div class="flex flex-col w-[20%] h-full p-4  gap-3 items-center  bg-white  rounded-xl shadow-md">
+        <div className="flex gap-2 justify-center items-center">
         <p class="text-[18px] text-left  w-full font-semibold text-[#3E3C42]">
           Thermal Indicator
         </p>
+        <Mymodal imageone={"/Bficons/ThermometerindicatorTop.svg"} imageTwo={""}/>
+        </div>
         <p class="text-[12px] text-left w-full  font-normal text-[#AEA9B1]">
           Last 1 Hour
         </p>
@@ -158,10 +169,11 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
           <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
             <div className="flex items-center gap-[8px]">
               {" "}
-              <div class=" font-roboto text-[22px] text-[#605D64] font-medium">
+              <div class="flex gap-2 items-center font-roboto text-[22px] text-[#605D64] font-medium">
                 <p className="!text-base  sm:!text-base md:!text-base lg:!text-[22px] ">
                   Target Ranges for Stave Temperature
                 </p>
+                <Mymodal imageone={"/Bficons/StavetempTop.svg"} imageTwo={""}/>
               </div>
               <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
             </div>
@@ -190,7 +202,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
           </div>
         </div>
         {/* chart */}
-        <div class="w-full h-full  ">
+        <div class="w-full h-full  border-2 border-red-500">
           <Thermalareachart/>
         </div>
       </div>

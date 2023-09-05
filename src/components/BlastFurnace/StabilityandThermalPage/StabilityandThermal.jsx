@@ -170,7 +170,9 @@ const StabilityandThermal = () => {
             <div
               className={`flex items-center  w-[170px] justify-center    gap-[16px] p-[7px]  rounded-[15px] ${
                 activeOption === "StabilityIndicator"
-                  ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
+                  // ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
+                  ? "bg-transparent text-[#938F96] whitespace-nowrap"
+
                   : "bg-transparent text-[#938F96] whitespace-nowrap"
               } `}
               onClick={() => handleOptionClick("StabilityIndicator")}
@@ -188,8 +190,10 @@ const StabilityandThermal = () => {
             <div
               className={`flex items-center  w-[170px] justify-center   gap-[16px] p-[7px]  rounded-[15px] ${
                 activeOption === "ThermalIndicator"
-                  ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
-                  : "bg-transparent text-[#938F96] whitespace-nowrap"
+                 // ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
+                 ? "bg-transparent text-[#938F96] whitespace-nowrap"
+
+                 : "bg-transparent text-[#938F96] whitespace-nowrap"
               } `}
               onClick={() => handleOptionClick("ThermalIndicator")}
             >
@@ -207,8 +211,10 @@ const StabilityandThermal = () => {
             <div
               className={`flex items-center  w-[170px] justify-center     gap-[16px] p-[7px]  rounded-[15px]  ${
                 activeOption === "Recommendations"
-                  ? "bg-white h-[40px] w-[100%]  gap-[16px] whitespace-nowrap"
-                  : "bg-transparent text-[#938F96] whitespace-nowrap"
+                 // ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
+                 ? "bg-transparent text-[#938F96] whitespace-nowrap"
+
+                 : "bg-transparent text-[#938F96] whitespace-nowrap"
               } `}
               onClick={() => handleOptionClick("Recommendations")}
             >

@@ -49,6 +49,7 @@ const Pichart = ({topText,topTextvalue,option,series,bottomText,bottomTextvalue,
           series={series}
           type="pie"
           width={wid}
+          height={wid}
         />
       </div>
        

@@ -245,15 +245,15 @@ const Thermalareachart = () => {
     
     // <div id="chart-container" className="">
       <div id="chart"
-      className=" w-full h-full" 
-      // className="transform rotate-90  w-full h-full"
+      // className=" w-full h-full" 
+      className="transform rotate-90  w-full h-full border-2"
       >
 
         <ReactApexChart
           options={state.options}
           series={state.series}
           type="rangeArea"
-          height="100%"
+          // height="100%"
           width="100%"
         
         

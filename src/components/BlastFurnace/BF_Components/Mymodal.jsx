@@ -28,12 +28,13 @@ export default function Mymodal({ imageone, imageTwo }) {
               borderRadius="50%"
               top="-15px"
               
-              left="50%"
+              right={"50%"}
+              shadow="md"
             />
           
           </Box>
-          <ModalBody maxHeight="500px" overflowY="auto" justifyItems="center" alignItems="center" >
-            <img src={imageone} alt="" style={{marginTop:"20px",marginBottom:"20px"}}/>
+          <ModalBody maxHeight="500px" overflowY="auto" justifyItems="center" alignItems="center"  className='flex flex-col'>
+            <img src={imageone} alt="" style={{marginTop:"20px",marginBottom:"20px",}}/>
             <img src={imageTwo} alt="" style={{marginTop:"20px",marginBottom:"20px"}}/>
           </ModalBody>
 

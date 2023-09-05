@@ -518,18 +518,18 @@ const Impacttrackercharts = () => {
           {isExpanded1 && (
             <div className={ ` flex w-[100%]  mt-[20px] p-[2px]  items-center ${windowWidth<1440 ? "overflow-x-scroll":"" } `}>
               {/* pi chart 1 */}
-              <div className={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              {/* <div className={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}> */}
                 {/* top text */}
-                <div className="flex flex-col gap-[6px] text-left">
+                {/* <div className="flex flex-col gap-[6px] text-left">
                   <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
                     Non-Ideal conditions (22 hrs)
                   </div>
                   <div className="text-[#629CF2] font-roboto font-medium text-base">
                     43.5%
                   </div>
-                </div>
+                </div> */}
                 {/* pi chart */}
-                <div className=" w-[full] flex flex-col">
+                {/* <div className=" w-[full] flex flex-col">
                   {" "}
                   <div id="chart">
                     <ReactApexChart
@@ -539,12 +539,12 @@ const Impacttrackercharts = () => {
                       width={"110%"}
                     />
                   </div>
-                </div>
+                </div> */}
 
                 {/* svg and text */}
-                <div className="flex gap-[8px] text-left w-[80%]">
+                {/* <div className="flex gap-[8px] text-left w-[80%]"> */}
                   {/* svg div */}
-                  <div>
+                  {/* <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="12"
@@ -554,9 +554,9 @@ const Impacttrackercharts = () => {
                     >
                       <circle cx="6" cy="6" r="6" fill="#938F96" />
                     </svg>
-                  </div>
+                  </div> */}
                   {/* text div */}
-                  <div className="text-start text-left  mt-[-5px]">
+                  {/* <div className="text-start text-left  mt-[-5px]">
                     <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
                       Ideal conditions (22 hrs)
                     </div>
@@ -565,10 +565,11 @@ const Impacttrackercharts = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
+              <Pichart topText={"Non-Ideal conditions (22 hrs)"} topTextvalue="43.5%" option={orangechart1.options} series={orangechart1.series} bottomText={"Ideal conditions"} bottomTextvalue={"43.5%"} wid="12"/>
               {/* pi chart 2 */}
               
-              <div className="flex flex-col items-center w-[250px]   h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] ">
+              <div className={`flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
                 {/* top text */}
                 <div className="flex flex-col gap-[6px] text-left">
                   <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">

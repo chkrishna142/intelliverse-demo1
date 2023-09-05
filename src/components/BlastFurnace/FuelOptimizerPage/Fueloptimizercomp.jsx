@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import Rca from "../StabilityandThermalPage/Rca";
@@ -15,7 +15,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 // import ThermalIndicator from "./ThermalIndicator";
 // import Recommendations from "./Recommendations";
 
-const Fueloptimizercomp = ({fetcheddata}) => {
+const Fueloptimizercomp = ({ fetcheddata }) => {
   const size = useWindowSize();
 
   const [isExpanded1, setIsExpanded1] = useState(true);
@@ -38,14 +38,22 @@ const Fueloptimizercomp = ({fetcheddata}) => {
   const handleToggle5 = () => {
     setIsExpanded5((prevExpanded) => !prevExpanded);
   };
-const difftabs=fetcheddata?.tools.fuel_rate.data;
-// console.log("difftabs",difftabs)
-  const displayfun=()=>{
-    difftabs.map((ele)=>{
-console.log(ele)
-    })
-  }
-displayfun();
+  const difftabs = fetcheddata?.tools.fuel_rate.data;
+  // console.log("difftabs",difftabs)
+  const displayfun = () => {
+    if(fetcheddata){
+      difftabs.map((ele) => {
+        console.log(ele);
+      });
+    }
+    
+  };
+
+  useEffect(()=>{
+    displayfun();
+  },[])
+  
+  
   const [page, setPage] = useState("Overview");
 
   const series = [
@@ -123,112 +131,125 @@ displayfun();
     },
   };
 
-  return (
-    <div className="w-full h-full  flex flex-col     ">
-      <Tabs>
-        <TabList className="!flex !border-0 h-11 rounded-xl w-full">
-          <div className="flex items-center border-2 rounded-sm gap-4 w-[75vw] overflow-x-auto">
-          
-            <Tab
-              className={
-                page === "Overview"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap  pl-4 pr-4 pt-1 pb-1 !border-0"
-                  : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
-              }
-              onClick={() => setPage("Overview")}
-            >
-              Overview
-            </Tab>
-
-            {
-              difftabs.map((ele)=>{
-              return  <Tab
+  if (difftabs) {
+    return (
+      <div className="w-full h-full  flex flex-col     ">
+        <Tabs>
+          <TabList className="!flex !border-0 h-11 rounded-xl w-full">
+            <div className="flex items-center border-2 rounded-sm gap-4 w-[75vw] overflow-x-auto">
+              <Tab
                 className={
-                  page === ele.name
-                    ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                  page === "Overview"
+                    ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap  pl-4 pr-4 pt-1 pb-1 !border-0"
                     : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
                 }
-                onClick={() => setPage(ele.name)}
+                onClick={() => setPage("Overview")}
               >
-                {ele.name}
+                Overview
               </Tab>
-              })
-            }
-          
-           
-          </div>
-        </TabList>
 
-        <TabPanels>
-          <TabPanel className="w-full flex flex-col !pl-0 !pr-0 gap-3">
-            <Overviewfuelrate
-              isExpanded1={isExpanded1}
-              handleToggle1={handleToggle1}
-            />
-            <div className={`flex ${size.width<1400?"flex-col":""} w-full h-full bg-white p-4 rounded-xl  shadow-md `}>
-              <Overviewcokerate
-                isExpanded2={isExpanded2}
-                handleToggle2={handleToggle2}
-              />
-              <Overviewpci
-                isExpanded2={isExpanded2}
-                handleToggle2={handleToggle2}
-              />
+              {difftabs.map((ele) => {
+                return (
+                  <Tab
+                    className={
+                      page === ele.name
+                        ? "!text-black !text-xs sm:!text-sm !bg-white whitespace-nowrap  rounded-full pl-4 pr-4 pt-1 pb-1 !border-0"
+                        : "!text-xs sm:!text-sm !text-[#938F96] whitespace-nowrap  !border-0"
+                    }
+                    onClick={() => setPage(ele.name)}
+                  >
+                    {ele.name}
+                  </Tab>
+                );
+              })}
             </div>
-            <div className={`flex ${size.width<1400?"flex-col":""} w-full h-full bg-white p-4 rounded-xl  shadow-md `}>
-              <Overviewetaco
-                isExpanded3={isExpanded3}
-                handleToggle3={handleToggle3}
+          </TabList>
+
+          <TabPanels>
+            <TabPanel className="w-full flex flex-col !pl-0 !pr-0 gap-3">
+              <Overviewfuelrate
+                isExpanded1={isExpanded1}
+                handleToggle1={handleToggle1}
               />
-              <Overviewheatflux
-                isExpanded3={isExpanded3}
-                handleToggle3={handleToggle3}
+              <div
+                className={`flex ${
+                  size.width < 1400 ? "flex-col" : ""
+                } w-full h-full bg-white p-4 rounded-xl  shadow-md `}
+              >
+                <Overviewcokerate
+                  isExpanded2={isExpanded2}
+                  handleToggle2={handleToggle2}
+                />
+                <Overviewpci
+                  isExpanded2={isExpanded2}
+                  handleToggle2={handleToggle2}
+                />
+              </div>
+              <div
+                className={`flex ${
+                  size.width < 1400 ? "flex-col" : ""
+                } w-full h-full bg-white p-4 rounded-xl  shadow-md `}
+              >
+                <Overviewetaco
+                  isExpanded3={isExpanded3}
+                  handleToggle3={handleToggle3}
+                />
+                <Overviewheatflux
+                  isExpanded3={isExpanded3}
+                  handleToggle3={handleToggle3}
+                />
+              </div>
+              <Rca
+                isExpanded2={isExpanded4}
+                handleToggle2={handleToggle4}
+                series={series}
+                options={options}
               />
-            </div>
-            <Rca
-              isExpanded2={isExpanded4}
-              handleToggle2={handleToggle4}
-              series={series}
-              options={options}
-            />
-            <Overviewrecommendation isExpanded2={isExpanded5}
-              handleToggle2={handleToggle5}/>
+              <Overviewrecommendation
+                isExpanded2={isExpanded5}
+                handleToggle2={handleToggle5}
+              />
+            </TabPanel>
 
-          </TabPanel>
-          
+            {difftabs.map((ele) => {
+              return (
+                <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
+                  <Flametemp
+                    name={ele.name}
+                    current={ele.current}
+                    min={ele.optimal_range[0]}
+                    max={ele.optimal_range[1]}
+                    impact={ele.impact}
+                  />
+                </TabPanel>
+              );
+            })}
 
-          {
-            difftabs.map((ele)=>{
-              return <TabPanel className=" flex flex-col !pl-0 !pr-0 gap-3">
-             
-              <Flametemp name={ele.name} current={ele.current} min={ele.optimal_range[0]} max={ele.optimal_range[1]} impact={ele.impact}/>
-             </TabPanel>
-            })
-          }
-
-          
-          {/* <TabPanel className="!pl-0 !pr-0">
-           <p>reduction indirect</p> 
-           <Flametemp/>
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-           <Flametemp/>
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-           <p>Eta co</p> 
-           <Flametemp/>
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-           <p>Reduction direct</p> 
-           <Flametemp/>
-          </TabPanel> */}
-        </TabPanels>
-      </Tabs>
-      {/* <div class="flex justify-end ">
-          <Modelaccuracy />
-        </div>  */}
-    </div>
-  );
+            {/* <TabPanel className="!pl-0 !pr-0">
+             <p>reduction indirect</p> 
+             <Flametemp/>
+            </TabPanel>
+            <TabPanel className="!pl-0 !pr-0">
+             <Flametemp/>
+            </TabPanel>
+            <TabPanel className="!pl-0 !pr-0">
+             <p>Eta co</p> 
+             <Flametemp/>
+            </TabPanel>
+            <TabPanel className="!pl-0 !pr-0">
+             <p>Reduction direct</p> 
+             <Flametemp/>
+            </TabPanel> */}
+          </TabPanels>
+        </Tabs>
+        {/* <div class="flex justify-end ">
+            <Modelaccuracy />
+          </div>  */}
+      </div>
+    );
+  } else {
+    <></>;
+  }
 };
 
 export default Fueloptimizercomp;

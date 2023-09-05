@@ -31,10 +31,12 @@ const BF_Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`);
+        const response = await fetch(
+          `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
+        );
         const json = await response.json();
         // console.log("fetched data=====>>>",json);
-        setFetcheddata(json)
+        setFetcheddata(json);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -42,116 +44,152 @@ const BF_Dashboard = () => {
     // Fetch data initially
     fetchData();
   }, [client]);
+  const [activeTab, setActiveTab] = useState(0); // 0 for Home, 1 for Data
+
+  const handleTabChange = (index) => {
+    setActiveTab(index);
+  };
+
+  const pageshift = (pagename) => {
+    setPage(pagename)
+  };
   return (
     <div className="mt-5  w-full ">
-     <div className="flex justify-between mb-3 mt-6">
+      <div className="flex justify-between mb-3 mt-6">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {/* {Capitalize(page)} */}
           Blast Furnace
         </p>
       </div>
-        <Tabs >
-          <TabList className={` !flex !border-0 `}>
+      <Tabs index={activeTab} onChange={handleTabChange}>
+        <TabList className={` !flex !border-0 `}>
           <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
-              <Tab
-                className={
-                  page === "dashboard"
+            <Tab
+              className={
+                page === "dashboard"
                   ? "!text-black !text-xs sm:!text-sm whitespace-nowrap  !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm whitespace-nowrap  !text-[#938F96] !border-0"
-                }
-                onClick={() => {setPage("dashboard");navigate('/optimus/blastfurnace');}}
-              >
-                Dashboard
-              </Tab>
-              <Tab
-                className={
-                  page === "fuel optimizer"
+              }
+              onClick={() => {
+                setPage("dashboard");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Dashboard
+            </Tab>
+            <Tab
+              className={
+                page === "fuel optimizer"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
-                }
-                onClick={() => {setPage("fuel optimizer");navigate('/optimus/blastfurnace');}}
-              >
-                Fuel Optimizer
-              </Tab>
-              <Tab
-                className={
-                  page === "Stability & Thermal Performance"
+              }
+              onClick={() => {
+                setPage("fuel optimizer");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Fuel Optimizer
+            </Tab>
+            <Tab
+              className={
+                page === "Stability & Thermal Performance"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
-                }
-                onClick={() => {setPage("Stability & Thermal Performance");navigate('/optimus/blastfurnace');}}
-              >
-                Stability & Thermal Performance
-              </Tab>
-              <Tab
-                className={
-                  page === "Silicon Prediction"
+              }
+              onClick={() => {
+                setPage("Stability & Thermal Performance");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Stability & Thermal Performance
+            </Tab>
+            <Tab
+              className={
+                page === "Silicon Prediction"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
-                }
-                onClick={() =>{ setPage("Silicon Prediction");  navigate('/optimus/blastfurnace');} }
-              >
-                Silicon Prediction
-              </Tab>
-              <Tab
-                className={
-                  page === "Avg. particle size"
+              }
+              onClick={() => {
+                setPage("Silicon Prediction");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Silicon Prediction
+            </Tab>
+            <Tab
+              className={
+                page === "Avg. particle size"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
-                }
-                onClick={() => {setPage("Avg. particle size");navigate('/optimus/blastfurnace');}}
-              >
-                Avg. particle size
-              </Tab>
-              <Tab
-                className={
-                  page === "Hearth Liquid Level"
+              }
+              onClick={() => {
+                setPage("Avg. particle size");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Avg. particle size
+            </Tab>
+            <Tab
+              className={
+                page === "Hearth Liquid Level"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
-                }
-                onClick={() =>{ setPage("Hearth Liquid Level");navigate('/optimus/blastfurnace');}}
-              >
-                Hearth Liquid Level
-              </Tab>
-              <Tab
-                className={
-                  page === "Impact Tracker"
+              }
+              onClick={() => {
+                setPage("Hearth Liquid Level");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Hearth Liquid Level
+            </Tab>
+            <Tab
+              className={
+                page === "Impact Tracker"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
-                }
-                onClick={() => {setPage("Impact Tracker");navigate('/optimus/blastfurnace');}}
-              >
-                Impact Tracker
-              </Tab>
-            </div>
-          </TabList>
-          <TabPanels>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-              <BF_Home fetcheddata={fetcheddata} client={client}/>
-            </TabPanel>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-              {/* <Fueloptimizercomp fetcheddata={fetcheddata}/> */}
-            </TabPanel>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-              <StabilityandThermal />
-            </TabPanel>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-              <Siliconpredictor />
-            </TabPanel>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-         <Particleswitchcomp/>
-            </TabPanel>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-            <HearthChart/>
-            </TabPanel>
-            <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-              <Impacttrackercharts/>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+              }
+              onClick={() => {
+                setPage("Impact Tracker");
+                navigate("/optimus/blastfurnace");
+              }}
+            >
+              Impact Tracker
+            </Tab>
+          </div>
+        </TabList>
+        <TabPanels>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <BF_Home
+              fetcheddata={fetcheddata}
+              client={client}
+              pageshift={pageshift}
+              handleTabChange={handleTabChange}
+            />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <Fueloptimizercomp fetcheddata={fetcheddata} />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <StabilityandThermal />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <Siliconpredictor />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <Particleswitchcomp />
+            {/* <MaterialSelectOfBf/> */}
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <HearthChart />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+            <Impacttrackercharts />
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
       <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
-     <Footdisplay/>
-     </div>
+        <Footdisplay />
+      </div>
     </div>
   );
 };
