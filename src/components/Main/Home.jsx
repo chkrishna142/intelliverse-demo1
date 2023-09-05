@@ -40,7 +40,7 @@ const Home = ({ state }) => {
                             </Link>
                             <Link to="/bookdemo"><div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer '>
-                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/process.svg" /></div>
+                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24  p-2' src="/qty.svg" /></div>
                                     <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Process Monitoring</p></div>
@@ -48,7 +48,7 @@ const Home = ({ state }) => {
                             </Link>
                             <Link to="/bookdemo"><div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer '>
-                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/quality.svg" /></div>
+                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 p-2' src="/pm.svg" /></div>
                                     <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Quality Tracking/Monitoring</p></div>
@@ -56,7 +56,7 @@ const Home = ({ state }) => {
                             </Link>
                             <Link to="/bookdemo"><div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer '>
-                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/wf.svg" /></div>
+                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/wm.svg" /></div>
                                     <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Workforce Monitoring</p></div>
@@ -64,7 +64,7 @@ const Home = ({ state }) => {
                             </Link>
                             <div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
-                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/ocr.svg" /></div>
+                                    <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/automation.svg" /></div>
                                     <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div>
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Automate Data Digitization </p></div>
@@ -94,14 +94,14 @@ const Home = ({ state }) => {
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">2</div></div>
-                                            <div className='w-full flex justify-center '><img className='mt-1 h-20 w-20 p-3' src="/production.svg" /></div>
+                                            <div className='w-full flex justify-center '><img className='mt-1 h-20 w-24 p-2' src="/pp.svg" /></div>
                                             <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div>
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Production Planning</p></div>
                                     </div>
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
-                                            <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/qc.svg" /></div>
+                                            <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/sch.svg" /></div>
                                             <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div>
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>QC Scheduling </p></div>
@@ -109,7 +109,7 @@ const Home = ({ state }) => {
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">1</div></div>
-                                            <div className='w-full flex justify-center '><img className='mt-1 h-20 w-20 p-3' src="/man.svg" /></div>
+                                            <div className='w-full flex justify-center '><img className='mt-1 h-20 w-24 p-2' src="/mp.svg" /></div>
                                             <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div>
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Manpower Scheduling</p></div>
@@ -122,7 +122,7 @@ const Home = ({ state }) => {
                                     <Link to="/optimus/blastfurnace" style={{ textDecoration: 'none' }}>
                                         <div>
                                             <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer  '>
-                                                <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/furnace.svg" /></div>
+                                                <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-0' src="/bf.svg" /></div>
                                                 <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div>
                                             </div>
                                             <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Blast Furnace </p></div>
@@ -130,14 +130,14 @@ const Home = ({ state }) => {
                                     </Link>
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer bg-gray-200  '>
-                                            <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/kiln.svg" /></div>
+                                            <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-1' src="/cement_kiln.svg" /></div>
                                             <div className='w-full flex justify-center text-white  text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Kiln </p></div>
                                     </div>
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer bg-gray-200 '>
-                                            <div className='w-full flex justify-center '><img className='mt-4 h-20 w-20 p-3' src="/potline.svg" /></div>
+                                            <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/pot.svg" /></div>
                                             <div className='w-full flex justify-center text-white  text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Potline </p></div>
@@ -158,14 +158,14 @@ const Home = ({ state }) => {
                                     <Link to="/community/askanexpert">
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             {/* <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">2</div></div> */}
-                                            <div className='w-full flex justify-center items-center '><img className='mt-0 ml-2 object-fit' src="/askexpert.svg" /></div>
+                                            <div className='w-full flex justify-center items-center '><img className='mt-0 ml-2 object-fit ' src="/askexpert.svg" /></div>
                                             {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div> */}
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Ask An Expert</p></div>
                                     </Link>
                                     <Link to="/community/advisor">
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
-                                            <div className='w-full flex justify-center items-center '><img className='mt-0 h-32 object-fit ' src="/advisor.svg" /></div>
+                                            <div className='w-full flex justify-center items-center '><img className='-mt-2 h-32 w-full -ml-7' src="/advisor.svg" /></div>
                                             {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div> */}
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>AI Advisor </p></div>
