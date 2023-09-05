@@ -41,7 +41,7 @@ const Messages = () => {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr className='font-semibold '>
+                        <Tr className='font-semibold'>
                             <Td className='flex items-center gap-4'>
                                 <span className='bg-blue-500 h-2 w-2 rounded-full absolute -ml-4'></span>
                                 <input type="checkbox" />
