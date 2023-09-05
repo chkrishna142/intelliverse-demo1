@@ -85,7 +85,7 @@ function App() {
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/bookdemo" element={<Demo />} />
-                    <Route path="/messages" element={<Messages />} />
+                    <Route path="/notifications" element={<Messages />} />
                     
                   </Routes>
                 </div>
