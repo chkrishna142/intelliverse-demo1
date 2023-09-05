@@ -7,7 +7,7 @@ import { type } from "@testing-library/user-event/dist/type";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const Fuelrate = ({ data }) => {
+const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
 
 
  
@@ -42,7 +42,7 @@ const Fuelrate = ({ data }) => {
 
   const handleAlert = () => {
     alertState = alertState + 1;
-    console.log("alert increased", alertState);
+    // console.log("alert increased", alertState);
   };
 
   useEffect(() => {
@@ -216,10 +216,10 @@ const Fuelrate = ({ data }) => {
         {/* top part of div */}
         <div className="flex  justify-between items-center self-stretch rounded-t-[12px]  bg-[#084298] w-[100%] h-[81px] px-[16px] py-[16px]">
           <div className="flex  flex-col items-start gap-0 w-[146px]">
-            <p className="text-white text-neutral-n-99 text-base  md:text-[15px] lg:text-[20px]  font-normal">
+            <p className="text-white text-neutral-n-99 text-[14px]  md:text-[15px] lg:text-[18px]  font-normal">
               Fuel Rate
             </p>
-            <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[20px] ">
+            <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
               545 kg/tHM
             </p>
           </div>
@@ -227,22 +227,22 @@ const Fuelrate = ({ data }) => {
 
           {alertS === 0 ? (
             // show optimal
-            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[133px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
+            <div className={` flex p-6 px-8 items-center gap-1  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
               <CheckCircleOutlineIcon
                 // style={{ width: "38px", height: "38px", color: "#FFF" }}
-                style={{ width: `${size.width < 420 ? '28px' : '35px'}`,
-                 height:`${size.width < 420 ? '28px' : '35px'}`, color: '#FFF' }}
+                style={{ width: `${size.width < 420 ? '28px' : '30px'}`,
+                 height:`${size.width < 420 ? '28px' : '30px'}`, color: '#FFF' }}
             
               />
-              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[20px]  font-normal ">Optimal</p>
+              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">Optimal</p>
             </div>
           ) : (
             //  alert
-            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[133px]"} h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}>
+            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}>
             <WarningTwoIcon  style={{ width: `${size.width < 420 ? '20px' : '25px'}`,
                  height:`${size.width < 420 ? '20px' : '25px'}`, color: '#FFF' }}/>
               <div>
-                <p className={`flex items-center text-[18px]  ${size.width<420? "w-[50px]":"w-[58px]"}  text-white font-roboto text-base font-normal `}>
+                <p className={`flex items-center   ${size.width<420? "w-[50px]":"w-[58px]"}  text-white  text-[18px] text-base  md:text-[15px] lg:text-[18px] font-normal `}>
                   {alertS} Alert
                 </p>
               </div>
@@ -290,6 +290,8 @@ const Fuelrate = ({ data }) => {
             height="44"
             viewdiv="0 0 44 44"
             fill="none"
+            onClick={()=>{pageshift("fuel optimizer"); handleTabChange(1)}}
+              cursor="pointer"
           >
             <g filter="url(#filter0_d_260_2062)">
               <rect

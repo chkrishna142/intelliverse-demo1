@@ -1,48 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { WarningTwoIcon } from "@chakra-ui/icons";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+
+import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
+import { useWindowSize } from "@uidotdev/usehooks";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import DashboardTable from "../../Charts/BF_Charts/DashboardTable";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import { useWindowSize } from "@uidotdev/usehooks";
-import { WarningTwoIcon } from "@chakra-ui/icons";
-
-const Production = ({ data, pageshift, handleTabChange }) => {
+const BFHomeComponent = ({data,toolname,tableData,pageshift,handleTabChange}) => {
   const size = useWindowSize();
 
-  const [productionTabel, setProductionTabel] = useState([
-    {
-      name: "Oxygen Enrichment",
-      current: 10.2,
-      optimalRange: "10.0-10.3",
-      impact: "-",
-    },
-    {
-      name: "Cold Blast Volume",
-      current: 5650,
-      optimalRange: "5750-5950",
-      impact: "4",
-    },
-    {
-      name: "Permeability",
-      current: 2.55,
-      optimalRange: "2.59-2.69",
-      impact: "6",
-    },
-    {
-      name: "Stave Cooling - Heat Loss",
-      current: 33,
-      optimalRange: "32-34",
-      impact: "-",
-    },
-    {
-      name: "HS RTD Temp H3",
-      current: 43,
-      optimalRange: "42-45",
-      impact: "-",
-    },
-  ]);
-
   const current = new Date();
-
   // Format the date
   const day = current.getDate();
   const month = current
@@ -59,26 +26,26 @@ const Production = ({ data, pageshift, handleTabChange }) => {
   const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
 
+  const lineStyle = {
+    width: "32%",
+    height: "1px",
+    background: "#EBEBEB",
+  };
+
+  // line chart data
+
   const [alertS, setAlertState] = useState(0);
   let alertState = 0;
 
   const handleAlert = () => {
     alertState = alertState + 1;
+    // console.log("alert increased", alertState);
   };
 
   useEffect(() => {
     setAlertState(alertState);
   }, [alertState]);
 
-  const lineStyle = {
-    width: "35%",
-    height: "1px",
-    background: "#EBEBEB",
-  };
-
-  // line chart
-
-  // console.log("table====>", data.chart);
   const optimalValue = data.chart.optimal_value;
   const current_values = data.chart.values;
   const timeArray = data.chart.times;
@@ -88,18 +55,16 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       {
         name: "Current",
         data: current_values,
-        // [9500, 11000, 11500, 10500, 10000,9500]
       },
       {
-        name: "Optimal",
+        name: "optimal",
         data: Array(data.chart.values.length).fill(optimalValue),
-        //  [10500,10500,10500,10500,10500,10500]
       },
     ],
 
     options: {
       chart: {
-        height: 250,
+        // height: 250,
         type: "line",
         dropShadow: {
           enabled: true,
@@ -136,15 +101,13 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       },
       xaxis: {
         categories: timeArray,
-        //  [
-        //   "5 Aug",
-        //   "6 Aug",
-        //   "7 Aug",
-        //   "8 Aug",
-        //   "9 Aug",
-        //   "10 Aug",
-        //   "11 Aug",
-
+        // [
+        //   "11 pm",
+        //   "11:10 pm",
+        //   "11:20 pm",
+        //   "11:30 pm",
+        //   "11:40 pm",
+        //   "11:50 pm",
         // ]
         labels: {
           show: true,
@@ -172,9 +135,9 @@ const Production = ({ data, pageshift, handleTabChange }) => {
         // title: {
         //   text: "Temperature",
         // },
-        // min: 6000,
-        // max: 14000,
-        tickAmount: 4,
+        min: 525,
+        max: 575,
+        tickAmount: 3,
       },
 
       colors: ["#6CA6FC", "#69B04B"], // Set the colors for the first and second series
@@ -205,89 +168,41 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       },
     },
   });
-
+ 
+  
   return (
-    <div
-      style={{
-        // width: "331px",
-        marginTop: "10px",
-
-        paddingBottom: "0px",
-      }}
-      className="flex h-auto  pb-0 text-left flex-col items-end gap-4 w-[100%]"
-    >
-      <div
-        className="flex flex-col bg-blue-300 w-full h-auto items-center  "
-        style={{
-          // width: "331px",
-
-          borderRadius: "12px",
-          background: "#FFF",
-          divShadow: "4px 4px 12px 0px rgba(8, 66, 152, 0.10)",
-        }}
-      >
+    <div className="flex  w-[100%] text-left pb-0 flex-col items-end mt-[10px] rounded-[12px]">
+      <div className="flex flex-col w-full h-auto gap-[5px]  items-center rounded-[12px] bg-[#FFF]  ">
         {/* top part of div */}
-        <div
-          style={{
-            borderRadius: "12px 12px 0px 0px",
-            background: "var(--primary-p-10, #084298)",
-            width: "100%",
-            height: "81px",
-            display: "flex",
-            padding: "10px 16px",
-            justifyContent: "space-between",
-            alignItem: "center",
-          }}
-          className="flex p-10 px-16 justify-between items-center self-stretch"
-        >
+        <div className="flex  justify-between items-center self-stretch rounded-t-[12px]  bg-[#084298] w-[100%] h-[81px] px-[16px] py-[16px]">
           <div className="flex  flex-col items-start gap-0 w-[146px]">
-            <p className="text-white text-neutral-n-99 text-[14px]  md:text-[15px] lg:text-[18px]  font-normal">
-              Production
+            <p className="text-white text-neutral-n-99 text-[14px]  md:text-[15px] lg:text-[18px]  font-normal" >
+              {toolname}
             </p>
-            <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
-              10500 tpd
+            <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px] ">
+              {optimalValue} kg/tHM
             </p>
           </div>
+          {/* condition for numbers of alert or optimal  */}
 
           {alertS === 0 ? (
             // show optimal
-            <div
-              className={` flex p-6 px-8 items-center gap-1  ${
-                size.width < 420 ? "w-[100px]" : "w-[118px]"
-              } h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}
-            >
+            <div className={` flex p-6 px-8 items-center gap-1  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
               <CheckCircleOutlineIcon
                 // style={{ width: "38px", height: "38px", color: "#FFF" }}
-                style={{
-                  width: `${size.width < 420 ? "28px" : "30px"}`,
-                  height: `${size.width < 420 ? "28px" : "30px"}`,
-                  color: "#FFF",
-                }}
+                style={{ width: `${size.width < 420 ? '28px' : '30px'}`,
+                 height:`${size.width < 420 ? '28px' : '30px'}`, color: '#FFF' }}
+            
               />
-              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">
-                Optimal
-              </p>
+              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">Optimal</p>
             </div>
           ) : (
             //  alert
-            <div
-              className={` flex p-6 px-8 items-center gap-2  ${
-                size.width < 420 ? "w-[100px]" : "w-[118px]"
-              } h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}
-            >
-              <WarningTwoIcon
-                style={{
-                  width: `${size.width < 420 ? "20px" : "25px"}`,
-                  height: `${size.width < 420 ? "20px" : "25px"}`,
-                  color: "#FFF",
-                }}
-              />
+            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}>
+            <WarningTwoIcon  style={{ width: `${size.width < 420 ? '20px' : '25px'}`,
+                 height:`${size.width < 420 ? '20px' : '25px'}`, color: '#FFF' }}/>
               <div>
-                <p
-                  className={`flex items-center   ${
-                    size.width < 420 ? "w-[50px]" : "w-[58px]"
-                  }  text-white  text-[18px] text-base  md:text-[15px] lg:text-[18px] font-normal `}
-                >
+                <p className={`flex items-center   ${size.width<420? "w-[50px]":"w-[58px]"}  text-white  text-[18px] text-base  md:text-[15px] lg:text-[18px] font-normal `}>
                   {alertS} Alert
                 </p>
               </div>
@@ -295,75 +210,48 @@ const Production = ({ data, pageshift, handleTabChange }) => {
           )}
         </div>
         {/* chart part */}
-
-        <div className="w-[95%] h-[200px] ">
+        {/* <div className="w-[95%] h-[200px] ">
           <Linechart chart={chart} />
-        </div>
+        </div> */}
 
-        {/* top diver */}
-
-        <div
+        {/* mid part of div */}
+        {/* top drivers */}
+        {/* <div
           style={{ justifyContent: "center" }}
           className="flex items-center  w-[100%] p-3 justify-between  "
         >
-          <p
-            style={{
-              color: " var(--neutral-n-50, #79767D)",
-
-              fontStyle: "normal",
-              fontWeight: 500,
-              width: "28%",
-              lineHeight: "normal",
-            }}
-            // className="text-neutral-n-60 font-roboto  text-base font-normal"
-            className="text-xs md:text-xs lg:text-xs xl:text-xs"
-          >
+          <p className="text-xs md:text-xs lg:text-xs xl:text-xs 2xl:text-[18px] text-[#79767D] font-[500] w-[28%] ">
             Top Drivers
           </p>
           <div style={lineStyle}></div>
-          <div className="flex w-[37%] ml-[10px] justify-between ">
-            <p className="text-xs md:text-xs lg:text-[10px] xl:text-[13px] w-[50%] text-[#AEA9B1] text-right font-[400]">
+          <div className="flex w-[38%] ml-[10px] justify-between ">
+            <p className="text-xs xs:text-[8px] sm:text-sm md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[18px] w-[50%] text-[#AEA9B1] text-right font-[400]">
               {formattedDate}
             </p>
-            <p className="text-xs md:text-xs lg:text-xs xl:text-xs w-[50%] text-[#AEA9B1] text-right font-[400]">
+            <p className="text-xs xs:text-[8px] sm:text-sm md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[18px] w-[50%] text-[#AEA9B1] text-right font-[400]">
               {formattedTime}
             </p>
           </div>
-        </div>
-
-        {/* mid part of div */}
+        </div> */}
         {/* Tabel */}
-        <div className="w-full  p-4 ">
+        <div className="w-full  p-2 ">
           <DashboardTable
-            rowArray={data.data}
-            tabelname={"production"}
+            // rowArray={data.data}
+            rowArray={tableData}
             handleAlert={handleAlert}
+            tabelname={""}
           />
         </div>
-        <div
-          style={{
-            display: "flex",
-            width: "97%",
-
-            // padding: "7px",
-            paddingBottom: "0px",
-            flexDirection: "column",
-            alignItems: "flex-end",
-            marginBottom: "10px",
-            borderRadius: "12px",
-          }}
-          // className="flex flex-col items-end gap-16 w-331 pb-0"
-        >
+        {/* forward button */}
+        <div className="flex  flex-col items-end w-[97%] mb-[10px] rounded-[12px] ">
+          {/* <Link to={"/fueloptimizer"}> */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="44"
             height="44"
             viewdiv="0 0 44 44"
             fill="none"
-            onClick={() => {
-              pageshift("Stability & Thermal Performance");
-              handleTabChange(2);
-            }}
+            onClick={()=>{pageshift("Silicon Prediction");handleTabChange(3)}}
             cursor="pointer"
           >
             <g filter="url(#filter0_d_260_2062)">
@@ -419,10 +307,13 @@ const Production = ({ data, pageshift, handleTabChange }) => {
               </filter>
             </defs>
           </svg>
+          {/* </Link> */}
         </div>
       </div>
     </div>
   );
+ 
+ 
 };
 
-export default Production;
+export default BFHomeComponent;

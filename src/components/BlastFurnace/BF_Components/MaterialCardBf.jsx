@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const MaterialCardBf = ({ material, alerts, deployments }) => {
   return (
     <Link
-      to={`/optimus/blastfurnace/Sizing/${material.split(" ")[0]}/jspl`}
+      to={`/optimus/blastfurnace/Sizing/${material.split(" ")[0]}`}
       style={{ textDecoration: "none" }}
     >
       <div className="w-28 h-[115px] relative rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer">

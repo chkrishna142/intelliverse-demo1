@@ -1,10 +1,11 @@
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
-const Averagepar = () => {
+const Averagepar = ({pageshift,handleTabChange}) => {
 
     const current = new Date();
-
+const size=useWindowSize();
   // Format the date
   const day = current.getDate();
   const month = current
@@ -60,63 +61,25 @@ const Averagepar = () => {
           }}
           className="flex p-10 px-16 justify-between items-center self-stretch"
         >
-          <div
-            style={{ width: "146px" }}
-            className="flex  flex-col items-start gap-4"
-          >
-            <p
-              style={{ fontSize: "20px" }}
-              class="text-white text-neutral-n-99 font-roboto text-20 font-normal leading-normal "
-            >
-              Avg. Particle Size
+         
+          <div className="flex  flex-col items-start gap-0 w-[146px]">
+            <p className="text-white text-neutral-n-99 text-[14px]  md:text-[15px] lg:text-[18px]  font-normal">
+            Avg. Particle Size
             </p>
-  
-            {/* <p
-              style={{
-                color: "var(--primary-p-99, #6CA6FC)",
-                fontFamily: "Poppins",
-                fontSize: "18px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "normal",
-                marginTop: "-10px",
-              }}
-            >
-              540 kg/tHM
-            </p> */}
-          </div>
-  
-          <div
-            style={{
-              width: "133px",
-              height: "44px",
-              borderRadius: "8px",
-              background: "#69B04B",
-              alignItem: "center",
-              justifyContent: "center",
-            }}
-            className=" flex p-6 px-8 items-center gap-12  "
-          >
-            <CheckCircleOutlineIcon
-              style={{ width: "38px", height: "38px", color: "#FFF" }}
-            />
-            <p
-              style={{
-                color: "#FFF",
-               
-                fontSize: "18px",
-               
-                fontWeight: "400",
-                lineHeight: "normal",
-                marginLeft: "8px",
-  
-                width: "120%",
-                marginLeft: "-35px",
-              }}
-            >
-              Optimal
+            <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
+             
             </p>
           </div>
+  
+          <div className={` flex p-6 px-8 items-center gap-1  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
+              <CheckCircleOutlineIcon
+                // style={{ width: "38px", height: "38px", color: "#FFF" }}
+                style={{ width: `${size.width < 420 ? '28px' : '30px'}`,
+                 height:`${size.width < 420 ? '28px' : '30px'}`, color: '#FFF' }}
+            
+              />
+              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">Optimal</p>
+            </div>
         </div>
   
         {/* mid part of box */}
@@ -203,7 +166,7 @@ const Averagepar = () => {
           {/* pci */}
           <div style={{}} className="flex w-full justify-between items-center mt-[20px] ">
             <div
-              style={{ width: "100%" }}
+              style={{ width: "50%" }}
               className="flex  text-left items-center gap-8  "
             >
               <p
@@ -227,39 +190,52 @@ const Averagepar = () => {
               </p>
             </div>
   
-            <div className="flex  w-[60%] justify-evenly   ">
-              {" "}
-              <p
-                style={{
-                  width: "60%",
-                  color: "var(--neutral-n-70, #AEA9B1)",
-                  textAlign: "left",
-  
-                  fontStyle: "normal",
-                  fontWeight: 400,
-                  lineHeight: "normal",
-                }}
-                class="text-xs md:text-xs lg:text-xs xl:text-xs"
-              >
-                {formattedDate}
-              </p>
-              <p
-               style={{
-                width: "40%",
-                color: "var(--neutral-n-70, #AEA9B1)",
-                textAlign: "right",
-
-                fontStyle: "normal",
-                fontWeight: 400,
-                lineHeight: "normal",
-              }}
-              class="text-xs md:text-xs lg:text-xs xl:text-xs"
-              >
-               {formattedTime}
-              </p>
+            <div className="flex w-[50%] ml-[10px] justify-between ">
+            <p className="text-xs xs:text-[8px] sm:text-sm md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[18px] w-[50%] text-[#AEA9B1] text-right font-[400]">
+              {formattedDate}
+            </p>
+            <p className="text-xs xs:text-[8px] sm:text-sm md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[18px] w-[50%] text-[#AEA9B1] text-right font-[400]">
+              {formattedTime}
+            </p>
             </div>
           </div>
   
+
+          <div style={{}} className="flex w-full justify-between items-center mt-[20px] ">
+            <div
+              style={{ width: "50%" }}
+              className="flex  text-left items-center gap-8  "
+            >
+              <p
+                style={{
+                  color: " var(--neutral-n-50, #79767D)",
+    
+                  fontStyle: "normal",
+                  fontWeight: 500,
+                  width: "100%",
+                  lineHeight: "normal",
+                }}
+                // className="text-neutral-n-60 font-roboto  text-base font-normal"
+                class="text-xs md:text-xs lg:text-xs xl:text-xs">
+               Avg. Coke Size
+              </p>
+  
+              <p
+                className={`font-semibold w-[100%] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  `}
+              >
+                40 mm
+              </p>
+            </div>
+  
+            <div className="flex w-[50%] ml-[10px] justify-between ">
+            <p className="text-xs xs:text-[8px] sm:text-sm md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[18px] w-[50%] text-[#AEA9B1] text-right font-[400]">
+              {formattedDate}
+            </p>
+            <p className="text-xs xs:text-[8px] sm:text-sm md:text-[10px] lg:text-[10px] xl:text-[10px] 2xl:text-[18px] w-[50%] text-[#AEA9B1] text-right font-[400]">
+              {formattedTime}
+            </p>
+            </div>
+          </div>
           {/* lowewr part move forward icon */}
           <div
             style={{
@@ -283,6 +259,10 @@ const Averagepar = () => {
               height="44"
               viewBox="0 0 44 44"
               fill="none"
+              onClick={()=>{
+                pageshift("Avg. particle size");
+                handleTabChange(4)}}
+              cursor="pointer"
             >
               <g filter="url(#filter0_d_260_2062)">
                 <rect

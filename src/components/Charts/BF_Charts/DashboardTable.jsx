@@ -44,13 +44,7 @@ const rows = [
   },
 ];
 
-export default function DashboardTable({
-  handleAlert,
-  rowArray,
-
-  tabelname,
- 
-}) {
+export default function DashboardTable({handleAlert,rowArray,tabelname,}) {
 
   const size = useWindowSize();
   function isLessRange(currentValue, optimalRange) {
@@ -73,7 +67,6 @@ export default function DashboardTable({
 
  
 
-  
 
   return (
    
@@ -95,18 +88,18 @@ export default function DashboardTable({
         <tr style={{}}>
           <th className=" "></th>
           <th style={{ textAlign: "center", }} className=" ">
-            <p className="text-xs md:text-[10px] lg:text-xs xl:text-[12px]  " >
+            <p className="text-xs xs:text-xs sm:text-sm md:text-[12px] lg:text-[13px] xl:text-[12px] 2xl:text-[18px] " >
               Current
             </p>
           </th>
-          <th style={{ textAlign: "right",  }} className=" ">
-            <p className="text-[#084298] text-xs md:text-[10px] lg:text-xs xl:text-[12px]   ">
+          <th style={{ textAlign: "center",  }} className=" ">
+            <p className="text-[#084298] text-xs xs:text-xs sm:text-sm md:text-[12px] lg:text-[13px] xl:text-[12px] 2xl:text-[18px]  ">
               Optimal Range
             </p>
           </th>
-          <th style={{ textAlign: "right"}} className=" ">
-            <p className="text-[#084298] text-xs md:text-[10px] lg:text-xs xl:text-[12px] ">
-              Impact &nbsp;{tabelname === "fuelrate" ? "(Kg)" : "(TPD)"}
+          <th style={{ textAlign: "center"}} className=" ">
+            <p className="text-[#084298] text-xs xs:text-xs sm:text-sm md:text-[12px] lg:text-[13px] xl:text-[12px] 2xl:text-[18px]">
+              Impact &nbsp;{tabelname === "fuelrate" ? "(Kg)" : tabelname === "fuelrate" ? "(TDP)":""}
             </p>
           </th>
         </tr>
@@ -167,7 +160,7 @@ export default function DashboardTable({
                   border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                  textAlign: "right",
+                  textAlign: "center",
                   // borderRadius: ' 0 0 10px 10px',
                   borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
@@ -182,9 +175,8 @@ export default function DashboardTable({
                
               >
                 <p
-                  className={`font-semibold text-[#69B04B]  w-full Current text-xs xl:text-[12px]
-                      sm:text-xs md:text-sm lg:text-sm xl:text-sm 2xl:text-base 
-                  
+                  className={`font-semibold text-[#69B04B]  w-full 
+                  xs:text-xs sm:text-sm md:text-[12px] lg:text-[13px] xl:text-[12px] 2xl:text-[18px]                  
                   ${
                     isOutOfRange(row.current, row.optimal_range)
                       ? "text-red-500"
@@ -201,7 +193,7 @@ export default function DashboardTable({
                   border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                  textAlign: "right",
+                  textAlign: "center",
                   // borderRadius: ' 0 0 10px 10px',
                   borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "none"
@@ -213,7 +205,7 @@ export default function DashboardTable({
                   width: "100px",
                 }}
               >
-                <p className="  w-full text-xs  xl:text-[12px] font-[400]  sm:text-sm md:text-sm lg:text-sm xl:text-sm 2xl:text-base">
+                <p className="  w-full text-xs   font-[400] xs:text-xs sm:text-sm md:text-[12px] lg:text-[13px] xl:text-[12px] 2xl:text-[18px]">
                   {row.optimal_range[0]}-{row.optimal_range[1]}
                 </p>{" "}
               </td>
@@ -223,7 +215,7 @@ export default function DashboardTable({
                   border: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
                     : "none",
-                  textAlign: "right",
+                  textAlign: "center",
 
                   borderRight: isOutOfRange(row.current, row.optimal_range)
                     ? "2px solid #E46962"
