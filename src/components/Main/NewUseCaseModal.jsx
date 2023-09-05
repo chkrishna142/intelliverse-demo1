@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 
 
-const NewUseCaseModal = ({ isOpen, onOpen, onClose }) => {
+const NewUseCaseModal = ({ isOpen, onOpen, onClose , size}) => {
 
     const [submitted, setSubmitted] = useState(false)
 
@@ -20,7 +20,7 @@ const NewUseCaseModal = ({ isOpen, onOpen, onClose }) => {
 
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"xl"}>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered size={size}>
                 <ModalOverlay />
                 <ModalContent>
                     <div className='text-white w-full h-16 flex bg-[#034D86] font-semibold justify-center items-center rounded-t-md'>
@@ -30,22 +30,22 @@ const NewUseCaseModal = ({ isOpen, onOpen, onClose }) => {
                     <ModalBody>
                         {submitted === false ? <div><div className='mt-2'>
                             <p className='text-[#034D86] font-semibold '>Title</p>
-                            <textarea placeholder='Be concise and include the most important requirement' className='h-18 w-full border rounded-md mt-3 px-2 py-2 text-sm' />
+                            <textarea placeholder='Be concise and include the most important requirement' className='h-18 w-full border rounded-md mt-3 px-2 py-2 md:text-sm text-[10px]' />
 
                         </div>
                             <div className='mt-2'>
                                 <p className='text-[#034D86] font-semibold '>Details</p>
-                                <p className='font-light text-sm mt-2'>Provide a clear and concise description of the new use case. Kindly include information about its objectives, intended benefit, and usage. Feel free to elaborate on any specific requirements or unique aspects of the use case that you believe are important for us to consider. The more information you provide, the better we can assess the feasibility and potential impact of adding this use case to our plattorm.</p>
-                                <textarea placeholder='Enter the details' className='h-20 w-full border rounded-md mt-3 px-2 py-2 text-sm' />
+                                <p className='font-light md:text-sm text-[10px] mt-2'>Provide a clear and concise description of the new use case. Kindly include information about its objectives, intended benefit, and usage. Feel free to elaborate on any specific requirements or unique aspects of the use case that you believe are important for us to consider. The more information you provide, the better we can assess the feasibility and potential impact of adding this use case to our plattorm.</p>
+                                <textarea placeholder='Enter the details' className='h-20 w-full border rounded-md mt-3 px-2 py-2 md:text-sm text-[10px]' />
                             </div>
                             <div className='grid grid-cols-2 gap-6'>
                                 <div className='mt-2'>
                                     <p className='text-[#034D86] font-semibold '>Name</p>
-                                    <textarea placeholder='Enter Your Full Name' className='h-12 w-full border rounded-md mt-3 px-2 py-2 text-sm' />
+                                    <textarea placeholder='Enter Your Full Name' className='h-12 w-full border rounded-md mt-3 px-2 py-2 md:text-sm text-[10px]' />
                                 </div>
                                 <div className='mt-2'>
                                     <p className='text-[#034D86] font-semibold '>Email ID</p>
-                                    <textarea placeholder='Enter Organization Email ID' className='h-12 w-full border rounded-md mt-3 px-2 py-2 text-sm' />
+                                    <textarea placeholder='Enter Organization Email ID' className='h-12 w-full border rounded-md mt-3 px-2 py-2 md:text-sm text-[10px]' />
                                 </div>
                             </div> </div> :
                             <div>
