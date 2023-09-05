@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const ClientSelect = () => {
-
+    let param = useParams();
     const [clients, setClients] = useState([])
 
     useEffect(() => {
@@ -10,7 +10,7 @@ const ClientSelect = () => {
     }, [])
 
     const getClients = async () => {
-        const data = await fetch(`https://intelliverse.backend-ripik.com/api/getClientIdList`, {
+        const data = await fetch(`https://intelliverse.backend-ripik.com/vision/v1/sizing/getClientIdsByUseCase/`, {
             method: 'POST',
             headers: {
 
@@ -18,12 +18,12 @@ const ClientSelect = () => {
             },
             body: JSON.stringify(
                 {
-                    "email": 'test@ripik.in'
+                    "material": param.material.toLowerCase()
                 }
             )
         })
         const res = await data.json()
-        setClients(res?.clientIds)
+        setClients(res)
     }
 
     return (

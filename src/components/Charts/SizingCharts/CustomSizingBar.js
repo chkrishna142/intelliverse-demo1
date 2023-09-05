@@ -43,7 +43,7 @@ const CustomSizingBar = ({ size }) => {
               >
                 {isSmall ? `${x}%` : ""}
               </div>
-              {!isSmall && (
+              {!isSmall && (x>4) && (
                 <div className="flex gap-2 items-center min-w-[115px]">
                   <p className="font-medium " style={{ color: colors[idx] }}>
                     {x}%

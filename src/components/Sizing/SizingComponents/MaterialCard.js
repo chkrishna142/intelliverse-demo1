@@ -1,13 +1,6 @@
 import { Link } from 'react-router-dom';
 
 const MaterialCard = ({ material, alerts, deployments }) => {
-  const demoRouting = {
-    Coke: 'esl',
-    Coal: 'imfa',
-    Sinter: 'jspl',
-    Cement: 'jspl',
-  };
-  console.log('Material', material, demoRouting[material.split(' ')[0]]);
   return (
     <Link
       to={`/vision/Sizing/${material?.split(' ')[0]}`}

@@ -1,4 +1,6 @@
 import CamCard from "./CamCard";
+import DetailModal from "./DetailModal";
+import { useState } from "react";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -10,6 +12,7 @@ const Capitalize = (str) => {
 };
 
 const PlantCard = ({ PlantName, CamData }) => {
+  const [openModal,setOpenModal] = useState(false)
   let totalAlerts = [];
   Object.keys(CamData).map((cam) => {
     if(CamData[cam][0].noCoal !== 1)totalAlerts.push(CamData[cam][0]["alertMessages"].length);
@@ -28,9 +31,10 @@ const PlantCard = ({ PlantName, CamData }) => {
               {sum}{" "}
               alerts
             </p>
-            <p className="text-[#DC362E] text-sm font-medium cursor-pointer">
+            <p className="text-[#DC362E] text-sm font-medium cursor-pointer" onClick={()=>setOpenModal(true)}>
               See Detail
             </p>
+            {openModal && <DetailModal openModal={openModal} closeModal={()=>setOpenModal(false)}/>}
           </div>
         )}
       </div>

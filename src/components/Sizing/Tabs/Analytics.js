@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {useParams} from "react-router-dom"
 import PieChart from "../../Charts/SizingCharts/PieChart";
 import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
 import FloatingInput from "../SizingUtils/FloatingInput";
@@ -6,6 +7,8 @@ import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
 import { Select } from "@chakra-ui/react";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
+  let param = useParams();
+  let material = param.material.toLowerCase();
   const [selectedBasis, setSelectedBasis] = useState(0);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(
@@ -32,51 +35,57 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
-        <div className="flex justify-between items-center overflow-x-auto h-[60px]">
-          <div className="flex gap-6 text-[#49454F] text-xs lg:text-base min-w-[445px]">
-            <div
-              className={`p-3 flex items-center gap-1 ${
-                selectedBasis === 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-              }`}
-            >
-              <input
-                value={0}
-                onClick={() => setSelectedBasis(0)}
-                type="radio"
-                name="freq"
-                className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-              />
-              <p>Size distribution</p>
+        <div
+          className={`flex ${
+            material === "coal" ? "justify-between" : "justify-end"
+          } items-center overflow-x-auto h-[60px]`}
+        >
+          {material === "coal" && (
+            <div className="flex gap-6 text-[#49454F] text-xs lg:text-base min-w-[445px]">
+              <div
+                className={`p-3 flex items-center gap-1 ${
+                  selectedBasis === 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
+                }`}
+              >
+                <input
+                  value={0}
+                  onClick={() => setSelectedBasis(0)}
+                  type="radio"
+                  name="freq"
+                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
+                />
+                <p>Size distribution</p>
+              </div>
+              <div
+                className={`p-3 flex items-center gap-1 ${
+                  selectedBasis === 1 ? "bg-[#e7effb] rounded-xl" : "bg-white"
+                }`}
+              >
+                <input
+                  value={1}
+                  onClick={() => setSelectedBasis(1)}
+                  type="radio"
+                  name="freq"
+                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
+                />
+                <p>Colour Analysis</p>
+              </div>
+              <div
+                className={`p-3 flex items-center gap-1 ${
+                  selectedBasis === 2 ? "bg-[#e7effb] rounded-xl" : "bg-white"
+                }`}
+              >
+                <input
+                  value={2}
+                  onClick={() => setSelectedBasis(2)}
+                  type="radio"
+                  name="freq"
+                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
+                />
+                <p>Moisture analysis</p>
+              </div>
             </div>
-            <div
-              className={`p-3 flex items-center gap-1 ${
-                selectedBasis === 1 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-              }`}
-            >
-              <input
-                value={1}
-                onClick={() => setSelectedBasis(1)}
-                type="radio"
-                name="freq"
-                className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-              />
-              <p>Colour Analysis</p>
-            </div>
-            <div
-              className={`p-3 flex items-center gap-1 ${
-                selectedBasis === 2 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-              }`}
-            >
-              <input
-                value={2}
-                onClick={() => setSelectedBasis(2)}
-                type="radio"
-                name="freq"
-                className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-              />
-              <p>Moisture analysis</p>
-            </div>
-          </div>
+          )}
           <div className="flex items-center gap-2">
             <div className="min-w-[110px]">
               <Select

@@ -1,5 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
-import CustomSizingBar from '../../Charts/SizingCharts/CustomSizingBar';
+import { Link, useParams } from "react-router-dom";
+import CustomSizingBar from "../../Charts/SizingCharts/CustomSizingBar";
 
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();
@@ -16,7 +16,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           <Link
             to={`./${plantId}/${cameraName}`}
             className="self-start"
-            style={{ textDecoration: 'none' }}
+            style={{ textDecoration: "none" }}
           >
             <p className="p-1 pl-2 pr-2 text-sm text-[#525056] font-medium ">
               {cameraName}
@@ -38,7 +38,8 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
             <CustomSizingBar size={data.size} />
           </div>
         ) : (
-          <div className="h-full flex items-center justify-center text-black font-bold text-center text-2xl min-w-[15vw]">
+          <div className="h-full flex flex-col gap-8 items-center justify-center text-black font-bold text-center text-2xl min-w-[15vw]">
+            <img src="/SizingIcons/noCoal.svg" className="h-[10vh]" />
             <p>No {material} on belt</p>
           </div>
         )}

@@ -1,11 +1,10 @@
 import ReactApexCharts from "react-apexcharts";
 import { useState, useEffect } from "react";
 
-const LineChart = ({ data, timeStamps, labels }) => {
+const LineChart = ({ data, timeStamps, labels, noCoal }) => {
   //manging x axis and y axis values
   const [times, setTimes] = useState([]);
   const [series, setSeries] = useState([]);
-
   // update the series each time new points come
   const updateSeries = (newNames, newData) => {
     setSeries((prevSeries) => {
@@ -31,9 +30,11 @@ const LineChart = ({ data, timeStamps, labels }) => {
   };
 
   useEffect(() => {
-    updateSeries(labels, data);
-    setTimes((prev) => [...prev, timeStamps]);
-  }, [timeStamps, data, labels]);
+    if (noCoal === 0) {
+      updateSeries(labels, data);
+      setTimes((prev) => [...prev, timeStamps]);
+    }
+  }, [timeStamps, data, labels, noCoal]);
 
   //chart options
   const options = {
