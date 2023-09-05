@@ -7,7 +7,6 @@ const AskAnExpert = () => {
 
     const [submitted, setSubmitted] = useState(false)
     const [selected, setSelected] = useState(false)
-
     const [isOpen, setIsOpen] = useState(false)
     const [onClose, setOnClose] = useState(false)
     const [expert, setExpert] = useState(0)
@@ -72,7 +71,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700 w-5/6 mb-7'>Speciality: Chemistry, Data, Al, Technology</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={()=>{setIsOpen(true); setExpert(0)}} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input value={val1} onChange={()=>setVal1(!val1)} className='mr-5' type='checkbox' />
+                                        <input name="firstchoice" value={val1} onChange={()=>setVal1(!val1)} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +85,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3'>Speciality: Automobile, Food & Beverage, Apparel</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={()=>{setIsOpen(true); setExpert(1)}} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input value={val2} onChange={()=>setVal2(!val2)} className='mr-5' type='checkbox' />
+                                        <input name="firstchoice" value={val2} onChange={()=>setVal2(!val2)} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +99,7 @@ const AskAnExpert = () => {
                                     <p className='w-full text-sm mt-2 text-gray-700 w-5/6 md:ml-0 ml-3'>Speciality: Maintenance methodology, Ironmaking & Steel, Cape & Opex modeling</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={()=>{setIsOpen(true); setExpert(2)}} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input value={val3} onChange={()=>setVal3(!val3)} className='mr-5' type='checkbox' />
+                                        <input name="firstchoice" value={val3} onChange={()=>setVal3(!val3)} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +113,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3'>Speciality: Pharma, Lifescience</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={()=>{setIsOpen(true); setExpert(3)}} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input value={val4} onChange={()=>setVal4(!val4)} className='mr-5' type='checkbox' />
+                                        <input name="firstchoice" value={val4} onChange={()=>setVal4(!val4)} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
