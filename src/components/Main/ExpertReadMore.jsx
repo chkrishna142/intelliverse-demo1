@@ -25,7 +25,7 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                 <ModalContent>
                     <ModalCloseButton className='mt-2' />
                     <ModalBody>
-                        {expert === 2 ? <div className='mt-5 pb-10 pt-10 w-full grid grid-cols-3 gap-0'>
+                        {expert === 2 ? <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                             <div className='col-span-1 flex justify-center items-center'>
                                 <img className='rounded-md shadow-md h-40' src="/advisor3.png" />
 
@@ -37,7 +37,7 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                                     Previous Head of ArcelorMittal Operational Excellence worldwide</p>
                                 <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span> PhD State University of Ghent, Belgium (Grid Connected Photovoltaic Energy Applications)</p>
                             </div>
-                        </div> : expert === 0 ? <div className='mt-5 pb-10 pt-10 w-full grid grid-cols-3 gap-0'>
+                        </div> : expert === 0 ? <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                             <div className='col-span-1 flex justify-center items-center'>
                                 <img className='rounded-md shadow-md h-40' src="/advisor1.png" />
 
@@ -49,7 +49,7 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                                 <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span> PhD, Physical Chemistry & Surface Science, Freie Universität Berlin</p>
                             </div>
                         </div> : expert === 1 ?
-                            <div className='mt-5 pb-10 pt-10 w-full grid grid-cols-3 gap-0'>
+                            <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                                 <div className='col-span-1 flex justify-center items-center'>
                                     <img className='rounded-md shadow-md h-40' src="/advisor2.png" />
 
@@ -62,7 +62,7 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                                     </p>
                                     <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span> MBA, Indian Institute of Management Bangalore</p>
                                 </div>
-                            </div> : <div className='mt-5 pb-10 pt-10 w-full grid grid-cols-3 gap-0'>
+                            </div> : <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                                 <div className='col-span-1 flex justify-center items-center'>
                                     <img className='rounded-md shadow-md h-40' src="/advisor4.png" />
 
