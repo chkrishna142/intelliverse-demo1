@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import NewUseCaseModal from './NewUseCaseModal';
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
 const Home = ({ state }) => {
@@ -8,6 +9,7 @@ const Home = ({ state }) => {
     const [alert, setAlert] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [onClose, setOnClose] = useState(false)
+    const size = useWindowSize();
 
     return (
         <div>
@@ -21,9 +23,9 @@ const Home = ({ state }) => {
                 {state === "vision" || state === "home" ? <div className='border shadow-md mt-6 px-4 py-4 pl-5 rounded-md bg-white '>
                     <div className='mt-2 mr-3 ml-3 flex justify-between'>
                         <img className='h-6 ' src="/vision.svg" />
-                        <div onClick={()=>setIsOpen(true)} className=' md:flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2  border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 hidden'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
+                        <div onClick={() => setIsOpen(true)} className=' md:flex flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2 h-8 border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  '><div className='ml-2 '>+</div><div className='mr-3 '>Add Use Case</div></div>
                     </div>
-                    
+
                     <div className=' w-full h-full ml-3 mb-5'>
                         <div className='mt-10 md:mt-5 flex flex-wrap gap-8 text-sm items-center'>
                             <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>
@@ -67,17 +69,17 @@ const Home = ({ state }) => {
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Automate Data Digitization </p></div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div> : null}
                 {state === "optimus" || state === "home" ?
                     <div className='border shadow-md px-4 py-4 md:pb-5 pl-5 rounded-md text-sm mt-6 bg-white'>
                         <div className='mt-0 mr-3 -ml-0 flex justify-between '>
-                            <img className='h-8' src="/optimus.svg" />
-                            <div onClick={()=>setIsOpen(true)}  className='md:flex items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 hidden'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
+                            <img className='md:h-8 h-6' src="/optimus.svg" />
+                            <div onClick={() => setIsOpen(true)} className=' md:flex h-8 flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2  border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  '><div className='ml-2 '>+</div><div className='mr-3 '>Add Use Case</div></div>
                         </div>
-                        <div className='grid grid-cols-2 gap-2'>
+                        <div className='grid grid-cols-2 gap-2 md:mt-0 mt-7'>
                             <div className='mt-2 border-r'>
                                 <div className='w-full flex justify-start ml-3 text-gray-500 font-bold'>Scheduling</div>
                                 <div className='mt-8 flex flex-wrap gap-8 mb-3 ml-3  items-center '>
@@ -104,7 +106,7 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Manpower Scheduling</p></div>
                                     </div>
-                                  </div>
+                                </div>
                             </div>
                             <div>
                                 <div className='mt-2 flex flex-wrap gap-8 items-center ml-4'>
@@ -136,11 +138,11 @@ const Home = ({ state }) => {
                             </div>
                         </div>
                     </div> : null}
-                    {state === "community" || state === "home"?
+                {state === "community" || state === "home" ?
                     <div className='border shadow-md mt-4 px-4 py-4 pb-20 md:pb-5 pl-5 rounded-md text-sm mt-6 bg-white'>
                         <div className='mt-0 mr-3 -ml-0 flex justify-between '>
-                            <img className='h-14 ml-2' src="/community.svg" />
-                            <div onClick={()=>setIsOpen(true)}  className='md:flex h-9 items-center gap-3 font-bold text-white bg-[#3182CE] mt-3 px-2 py-2 pr-4 border rounded-md text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 hidden'><div className='ml-2 '>+</div><div className='mr-3'>Add Use Case</div></div>
+                            <img className='lg:h-14 h-10 ml-2' src="/community.svg" />
+                            <div onClick={() => setIsOpen(true)} className=' md:flex flex h-8 items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2  border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  '><div className='ml-2 '>+</div><div className='mr-3 '>Add Use Case</div></div>
                         </div>
                         <div>
                             <div className='mt-0'>
@@ -168,12 +170,12 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Community</p></div>
                                     </div>
-                                  </div>
-                            </div>          
+                                </div>
+                            </div>
                         </div>
                     </div> : null}
             </div>
-            <NewUseCaseModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            {size.width > 640 ? <NewUseCaseModal isOpen={isOpen} onClose={() => setIsOpen(false)} size={"2xl"} /> : <NewUseCaseModal isOpen={isOpen} onClose={() => setIsOpen(false)} size={"xs"} />}
         </div>
     );
 };
