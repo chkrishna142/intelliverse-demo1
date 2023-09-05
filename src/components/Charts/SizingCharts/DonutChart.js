@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
 
-const DonutChart = ({ data, labels }) => {
+const DonutChart = ({ data, labels, position }) => {
   const [series, setSeries] = useState([]);
   const customLabels = labels;
   const [customLegendItems, setCustomLegendItems] = useState([]);
@@ -33,7 +33,7 @@ const DonutChart = ({ data, labels }) => {
     ],
     labels: customLabels,
     legend: {
-      position: "bottom",
+      position: position,
       fontSize: "12px",
       customLegendItems: customLegendItems,
     },

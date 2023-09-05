@@ -5,10 +5,9 @@ const MaterialSelect = () => {
     "Coal Sizing",
     "Coke Sizing",
     "Sinter Sizing",
-    "Cement Kiln",
   ];
-  const alerts = [5, 2, 0, 1];
-  const deployments = [5, 5, 5, 5];
+  const alerts = [5, 2, 0];
+  const deployments = [5, 5, 5];
   return (
     <div className="h-full">
       <div className="bg-white rounded-xl shadow-md p-4 mt-5 border">
