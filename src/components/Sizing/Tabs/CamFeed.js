@@ -191,13 +191,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                       <div className="h-full w-[6vw] flex flex-col gap-1">
                         <div
                           style={{ height: `${camData.color.gray}%` }}
-                          className="bg-[#79767D] rounded-tr-lg rounded-tl-lg text-white text-center text-lg font-medium"
+                          className="flex justify-center items-center bg-[#79767D] rounded-tr-lg rounded-tl-lg text-white text-center text-lg font-medium"
                         >
                           {camData.color.gray.toFixed(2)}%
                         </div>
                         <div
                           style={{ height: `${camData.color.black}%` }}
-                          className="bg-black rounded-br-lg rounded-bl-lg text-white text-center text-lg font-medium"
+                          className="flex justify-center items-center bg-black rounded-br-lg rounded-bl-lg text-white text-center text-lg font-medium"
                         >
                           {camData.color.black.toFixed(2)}%
                         </div>
