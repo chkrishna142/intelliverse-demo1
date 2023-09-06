@@ -193,13 +193,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                           style={{ height: `${camData.color.gray}%` }}
                           className="bg-[#79767D] rounded-tr-lg rounded-tl-lg text-white text-center text-lg font-medium"
                         >
-                          {camData.color.gray}%
+                          {camData.color.gray.toFixed(2)}%
                         </div>
                         <div
                           style={{ height: `${camData.color.black}%` }}
                           className="bg-black rounded-br-lg rounded-bl-lg text-white text-center text-lg font-medium"
                         >
-                          {camData.color.black}%
+                          {camData.color.black.toFixed(2)}%
                         </div>
                       </div>
                     </div>
@@ -217,7 +217,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                   <div className="flex flex-col gap-4">
                     <p className="text-base font-medium text-[#605D64]">MPS</p>
                     <div className="rounded-lg bg-[#f6faff] text-center py-[25px] pl-3 pr-7 text-[#1C56AC] text-2xl">
-                      {camData.mps.toFixed(2)} mm
+                      {material === 'coal' ? '12.00' : camData.mps.toFixed(2)} mm
                     </div>
                   </div>
                 </div>
