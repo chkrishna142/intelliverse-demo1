@@ -49,10 +49,10 @@ const FloatingInput = (props) => {
     <ChakraProvider theme={theme}>
       <FormControl variant="floating" id="Dates">
         <Input
-          placeholder=""
-          ref={props.inputRef}
+          // placeholder=""
           size="md"
           type={props.type}
+          value = {props.value}
           onChange={(e)=>props?.setDateTime(e.target.value)}
           className="!border-1 !border-[#79767D] !rounded-[5px] !text-[#AEA9B1] !text-base"
         />
