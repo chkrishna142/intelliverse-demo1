@@ -44,8 +44,8 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                             </div>
                             <div className='col-span-2 w-full pr-8'>
                                 <p className='text-[#034D86] font-semibold'>Florian Budde</p>
-                                <p className='text-xs w-full mt-2'><span className='font-bold'>Industry or Functional Focus:</span>Chemistry and Technology, Business Strategy and Operations- served clients across Europe, North America, Asia and Middle East </p>
-                                <p className='text-xs w-full mt-3'><span className='font-bold'>Experience:</span> Senior Partner Emeritus, McKinsey and Company- Established and led Global Chemicals and Ag Practice </p>
+                                <p className='text-xs w-full mt-2'><span className='font-bold'>Industry or Functional Focus:</span> Chemistry and Technology, Business Strategy and Operations - Served clients across Europe, North America, Asia and Middle East </p>
+                                <p className='text-xs w-full mt-3'><span className='font-bold'>Experience:</span> Senior Partner Emeritus, McKinsey and Company - Established and led Global Chemicals and Ag Practice </p>
                                 <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span> PhD, Physical Chemistry & Surface Science, Freie Universität Berlin</p>
                             </div>
                         </div> : expert === 1 ?
@@ -69,9 +69,9 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                                 </div>
                                 <div className='col-span-2 w-full pr-8'>
                                     <p className='text-[#034D86] font-semibold'>Sujesh Vasudevan</p>
-                                    <p className='text-xs w-full mt-2'><span className='font-bold'>Industry or Functional Focus:</span> With more than 30 years of experience in Pharma Industry, Strategic leadership
+                                    <p className='text-xs w-full mt-2'><span className='font-bold'>Industry or Functional Focus:</span> More than 30 years of experience in Pharma Industry, Strategic leadership
                                     </p>
-                                    <p className='text-xs w-full mt-3'><span className='font-bold'>Experience:</span> Senior Advisor for Boston Consulting Group, Independent Director of ERIS Lifesciences, Ex-President Glenmark Pharmaceuticals- India Formulations, Middle East & Africa, Ex-Direrctor Marketing and Sales for Abbott</p>
+                                    <p className='text-xs w-full mt-3'><span className='font-bold'>Experience:</span> Senior Advisor for Boston Consulting Group, Independent Director of ERIS Lifesciences, Ex-President Glenmark Pharmaceuticals - India Formulations, Middle East & Africa, Ex-Direrctor Marketing and Sales for Abbott</p>
                                     <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span>  Advanced Management Program, Harvard Business School</p>
                                 </div>
                             </div>}

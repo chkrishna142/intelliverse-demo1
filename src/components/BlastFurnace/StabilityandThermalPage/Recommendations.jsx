@@ -151,9 +151,9 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
       {/* bottom */}
       {isExpanded4 && (
         <div className={`flex gap-[18px] h-auto w-full  `}>
-          <div className={`flex gap-[18px]  h-auto  w-full`}>
+          <div className={`flex gap-[18px]  h-auto  w-[1200px] overflow-x-auto`}>
             {/* RAFT/Tuyere Velocity Trend*/}
-            <div class="flex flex-col w-[35%] h-full p-4  gap-3 items-center  bg-white  rounded-xl  ">
+            <div class="flex flex-col w-[420px] h-full p-4  gap-3 items-center  bg-white  rounded-xl  ">
               {/* top*/}
               <div class="w-full">
                 <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -202,7 +202,7 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
             </div>
 
             {/* Burden distribution ore-coke ratio */}
-            <div class="w-[65%] h-[100%]">
+            <div class="w-[780px] h-[100%]">
               {/* top */}
               <div class="w-full">
                 <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">

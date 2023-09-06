@@ -32,7 +32,7 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
               </div>
               <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
                 {" "}
-                Parameters
+                Controllable
               </div>
             </div>
             <div className="flex gap-[2px] ">
@@ -41,6 +41,14 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
               </div>
               <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
                 Initial/Final values
+              </div>
+            </div>
+            <div className="flex gap-[2px] ">
+              <div>
+                <img src="/Bficons/blackdot.svg" alt="" />
+              </div>
+              <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+                    Non-Controllable
               </div>
             </div>
           </div>

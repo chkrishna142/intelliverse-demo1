@@ -67,7 +67,7 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
         {
           x: "RAFT", // First instance of Oxygen Enrichment
           y: [25, 75],
-          seriesIndex: 1, // Unique identifier
+          fillColor: "#605D64",
         },
         {
           x: "PCI",
@@ -84,6 +84,7 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
         {
           x: "Cold Blast Volume",
           y: [97, 64],
+          fillColor: "#605D64",
         },
         // {
         //   x: 'Oxygen Enrichmen', // Second instance of Oxygen Enrichment
