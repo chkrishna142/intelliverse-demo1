@@ -85,7 +85,7 @@ const NavBox = () => {
                     </div>
                     <div className="flex gap-5 items-center ml-5">
                         <img onClick={() => setBar(!bar)} className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/bar.svg" />
-                        {bar === true ? <div ref={barRef} className="absolute right-80 -mr-2 top-12 z-10 mt-2 w-80  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                        {bar === true ? <div ref={barRef} className="absolute right-80 -mr-2 top-12 z-10 mt-2 w-[22vw]  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div className="py-1 mx-3 h-[60vh] overflow-y-scroll" role="none">
                                 <div className=' w-full h-full mb-5'>
                                     <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-4 text-sm items-center'>
