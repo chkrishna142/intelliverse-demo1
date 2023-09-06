@@ -90,7 +90,7 @@ const NavBox = () => {
                                 <div className=' w-full h-full mb-5'>
                                     <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-4 text-sm items-center'>
                                         <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/sizing1.svg" /></div>
@@ -100,7 +100,7 @@ const NavBox = () => {
                                             </div>
                                         </Link>
                                         <Link to="/bookdemo">
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/qty.svg" /></div>
@@ -110,7 +110,7 @@ const NavBox = () => {
                                             </div>
                                         </Link>
                                         <Link to="/bookdemo">
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/pm.svg" /></div>
@@ -120,7 +120,7 @@ const NavBox = () => {
                                             </div>
                                         </Link>
                                         <Link to="/bookdemo">
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/wm.svg" /></div>
@@ -129,7 +129,7 @@ const NavBox = () => {
                                                 <div className='mt-4 flex text-[10px] justify-center h-10 w-20 '><p className='font-bold text-[#024D87] text-center'>Workforce Monitoring</p></div>
                                             </div>
                                         </Link>
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                 <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/automation.svg" /></div>
@@ -142,7 +142,7 @@ const NavBox = () => {
                                     <div className="text-md text-[#024D87] font-bold ml-3">Scheduling</div>
                                     <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-4 text-sm items-center'>
 
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                 <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/pp.svg" /></div>
@@ -151,16 +151,16 @@ const NavBox = () => {
                                             <div className='mt-4 flex justify-center text-[10px] w-20 h-10 '><p className='font-bold text-center text-[#024D87]'>Production Planning</p></div>
                                         </div>
 
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                 <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/sch.svg" /></div>
 
                                             </div>
                                             <div className='mt-4 text-[10px] flex justify-center h-10 w-20'><p className='font-bold text-[#024D87] text-center'>QC Scheduling</p></div>
-                                        </div>
+                                        </div >
 
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                 <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/mp.svg" /></div>
@@ -176,7 +176,7 @@ const NavBox = () => {
                                     <div className="text-md text-[#024D87] font-bold ml-3">Process Optimization</div>
                                     <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-4 text-sm items-center'>
                                         <Link to="/optimus/blastfurnace" >
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/bf.svg" /></div>
@@ -186,13 +186,13 @@ const NavBox = () => {
                                             </div>
                                         </Link>
 
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                                 <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/cement_kiln.svg" /></div>
                                             </div>
                                             <div className='mt-4 text-[10px] flex justify-center h-10 w-20'><p className='font-bold text-[#024D87] text-center'>Kiln</p></div>
                                         </div>
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                                 <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/pot.svg" /></div>
                                             </div>
@@ -203,7 +203,7 @@ const NavBox = () => {
                                     <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-4 text-sm items-center'>
 
                                         <Link to="/community/askanexpert" >
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className='mt-2 h-20 w-20 p-0' src="/askexpert.svg" /></div>
@@ -214,7 +214,7 @@ const NavBox = () => {
                                         </Link>
 
                                         <Link to="/community/advisor" >
-                                            <div>
+                                            <div onClick={()=>setBar(false)}>
                                                 <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                     <div className='w-full flex justify-center '><img className=' h-full p-0 mt-0 -ml-4 mt-2' src="/advisor.svg" /></div>
@@ -224,7 +224,7 @@ const NavBox = () => {
                                             </div>
                                         </Link>
 
-                                        <div>
+                                        <div onClick={()=>setBar(false)}>
                                             <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
                                                 <div className='w-full flex justify-center '><img className='mt-2 h-20 w-20 p-0' src="/people.svg" /></div>
