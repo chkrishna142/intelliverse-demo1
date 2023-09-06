@@ -188,7 +188,7 @@ const BF_Dashboard = () => {
         </TabPanels>
       </Tabs>
       <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
-        <Footdisplay />
+        <Footdisplay client={client}/>
       </div>
     </div>
   );
