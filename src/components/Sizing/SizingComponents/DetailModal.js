@@ -30,8 +30,12 @@ const DetailModal = ({ openModal, closeModal }) => {
             />
           </div>
         </ModalHeader>
-        <ModalBody>
-          <div className="flex px-2">
+        <ModalBody pos="relative" px="0px">
+          <div className="flex">
+            <img
+              className="sticky top-[50%] left-0 h-[32px] pl-2"
+              src="/SizingIcons/arrowLeft.svg"
+            />
             <div className="flex-1 flex flex-col gap-4 p-5 w-[290px]">
               <div className="flex flex-col gap-2 items-center">
                 <p className="text-sm text-[#3E3C42] self-start">
@@ -107,23 +111,33 @@ const DetailModal = ({ openModal, closeModal }) => {
                   <div className="flex gap-7 w-full h-full items-center">
                     <LiquidGauge moisture={23} r={50} />
                     <div className="flex flex-col items-start justify-center">
-                        <p className="text-[#69B04B] text-xl font-medium">Good</p>
-                        <p className="text-[#AEA9B1] text-sm">Moisture content within the limit</p>
+                      <p className="text-[#69B04B] text-xl font-medium">Good</p>
+                      <p className="text-[#AEA9B1] text-sm">
+                        Moisture content within the limit
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <img
+              className="sticky top-[50%] right-0 h-[32px] pr-2"
+              src="/SizingIcons/arrowRight.svg"
+            />
           </div>
         </ModalBody>
 
         <ModalFooter>
-            <div className="flex w-full justify-end">
-                <div className="flex flex-col gap-1 items-end">
-                    <p className="text-[#605D64] text-base">Noticed incorrect data?</p>
-                    <p className="text-[#084298] text-base font-semibold">Give us feedback</p>
-                </div>
+          <div className="flex w-full justify-end">
+            <div className="flex flex-col gap-1 items-end">
+              <p className="text-[#605D64] text-base">
+                Noticed incorrect data?
+              </p>
+              <p className="text-[#084298] text-base font-semibold">
+                Give us feedback
+              </p>
             </div>
+          </div>
         </ModalFooter>
       </ModalContent>
     </Modal>

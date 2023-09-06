@@ -1,7 +1,7 @@
 import FloatingInput from "../SizingUtils/FloatingInput";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   Table,
@@ -13,81 +13,81 @@ import {
   Th,
   Flex,
   Image,
-  Spinner
+  Spinner,
 } from "@chakra-ui/react";
 
-const alerts = [
-  {
-    Plant: "Plant 1",
-    Camera: "Camera 1",
-    Time: "Time 1",
-    Reason: Math.floor(Math.random() * 3), // Generates random number between 0 and 2
-    Comment: "Comment 1",
-  },
-  {
-    Plant: "Plant 2",
-    Camera: "Camera 2",
-    Time: "Time 2",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 2",
-  },
-  {
-    Plant: "Plant 3",
-    Camera: "Camera 3",
-    Time: "Time 3",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 3",
-  },
-  {
-    Plant: "Plant 4",
-    Camera: "Camera 4",
-    Time: "Time 4",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 4",
-  },
-  {
-    Plant: "Plant 5",
-    Camera: "Camera 5",
-    Time: "Time 5",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 5",
-  },
-  {
-    Plant: "Plant 6",
-    Camera: "Camera 6",
-    Time: "Time 6",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 6",
-  },
-  {
-    Plant: "Plant 7",
-    Camera: "Camera 7",
-    Time: "Time 7",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 7",
-  },
-  {
-    Plant: "Plant 8",
-    Camera: "Camera 8",
-    Time: "Time 8",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 8",
-  },
-  {
-    Plant: "Plant 9",
-    Camera: "Camera 9",
-    Time: "Time 9",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 9",
-  },
-  {
-    Plant: "Plant 10",
-    Camera: "Camera 10",
-    Time: "Time 10",
-    Reason: Math.floor(Math.random() * 3),
-    Comment: "Comment 10",
-  },
-];
+// const alerts = [
+//   {
+//     Plant: "Plant 1",
+//     Camera: "Camera 1",
+//     Time: "Time 1",
+//     Reason: Math.floor(Math.random() * 3), // Generates random number between 0 and 2
+//     Comment: "Comment 1",
+//   },
+//   {
+//     Plant: "Plant 2",
+//     Camera: "Camera 2",
+//     Time: "Time 2",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 2",
+//   },
+//   {
+//     Plant: "Plant 3",
+//     Camera: "Camera 3",
+//     Time: "Time 3",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 3",
+//   },
+//   {
+//     Plant: "Plant 4",
+//     Camera: "Camera 4",
+//     Time: "Time 4",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 4",
+//   },
+//   {
+//     Plant: "Plant 5",
+//     Camera: "Camera 5",
+//     Time: "Time 5",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 5",
+//   },
+//   {
+//     Plant: "Plant 6",
+//     Camera: "Camera 6",
+//     Time: "Time 6",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 6",
+//   },
+//   {
+//     Plant: "Plant 7",
+//     Camera: "Camera 7",
+//     Time: "Time 7",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 7",
+//   },
+//   {
+//     Plant: "Plant 8",
+//     Camera: "Camera 8",
+//     Time: "Time 8",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 8",
+//   },
+//   {
+//     Plant: "Plant 9",
+//     Camera: "Camera 9",
+//     Time: "Time 9",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 9",
+//   },
+//   {
+//     Plant: "Plant 10",
+//     Camera: "Camera 10",
+//     Time: "Time 10",
+//     Reason: Math.floor(Math.random() * 3),
+//     Comment: "Comment 10",
+//   },
+// ];
 const getImage = (reason) => {
   if (reason === 0) {
     return "https://img.icons8.com/color/96/null/dew-point.png";
@@ -118,11 +118,12 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   let material = param.material.toLowerCase();
   let clientId = param.clientId.toLowerCase();
-  const [alertsChanging,setAlertsChanging] = useState(false)
+  const [alerts, setAlerts] = useState([]);
+  const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+    new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString().slice(0,16)
   );
-  const [toTime, setToTime] = useState(new Date());
+  const [toTime, setToTime] = useState(new Date().toISOString().slice(0,16));
   const [selectedPlant, setSelectedPlant] = useState(
     disable ? plantId : "All Plants"
   );
@@ -133,13 +134,14 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     const requestData = JSON.stringify({
       clientId: clientId,
       material: material,
-      startDate: convertTimeString(fromTime),
-      endDate: convertTimeString(toTime),
+      startDate: new Date(fromTime).getTime(),
+      endDate: new Date(toTime).getTime(),
       cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
+      plantId: selectedPlant === "All Plants" ? "all" : selectedPlant,
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v1/sizing/getOverviewAlerts/",
+        " https://intelliverse.backend-ripik.com/vision/v2/sizing/getOverviewAlerts/",
         requestData,
         {
           credentials: "same-origin",
@@ -149,13 +151,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
         }
       )
       .then((response) => {
-        let totalAlerts = [];
-        Object.keys(response.data.plants).map((plant) => {
-          Object.keys(response.data.plants[plant][material]).map((cam) => {
-            totalAlerts.push(...response.data.plants[plant][material][cam]);
-          })
-          console.log(totalAlerts, "alerts");
-        });
+        setAlerts(response.data);
         setAlertsChanging(false);
       })
       .catch((error) => {
@@ -163,11 +159,14 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       });
   };
 
-  const handleClick = () =>{
+  const handleClick = () => {
     setAlertsChanging(true);
     apiCall();
-  }
+  };
 
+  useEffect(()=>{
+    handleClick();
+  },[])
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
@@ -177,6 +176,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               text="From"
               type="datetime-local"
               setDateTime={setFromTime}
+              value={fromTime}
             />
           </div>
           <div>
@@ -184,13 +184,14 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               text="To"
               type="datetime-local"
               setDateTime={setToTime}
+              value={toTime}
             />
           </div>
           <button
             className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
             onClick={handleClick}
           >
-            {alertsChanging ? <Spinner/> : 'Show Alerts'}
+            {alertsChanging ? <Spinner /> : "Show Alerts"}
           </button>
         </div>
       </div>
@@ -294,22 +295,22 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                     <Td className="cursor-pointer">
                       {String(index + 1).padStart(2, "0")}
                     </Td>
-                    <Td className="cursor-pointer">{item.Plant}</Td>
-                    <Td className="cursor-pointer">{item.Camera}</Td>
-                    <Td className="cursor-pointer">{item.Time}</Td>
+                    <Td className="cursor-pointer">{item.plantId}</Td>
+                    <Td className="cursor-pointer">{item.cameraId}</Td>
+                    <Td className="cursor-pointer">{item.timestamp}</Td>
                     <Td className="cursor-pointer">
                       <Flex gap="1rem" align="center">
                         <div className="flex flex-col justify-center items-center">
                           <Image
                             className="h-8 w-8"
-                            src={getImage(item.Reason)}
+                            src={getImage(item.alertCodes[0])}
                             alt="none"
                           />
-                          <span>{getReason(item.Reason)}</span>
+                          <span>{getReason(item.alertCodes[0])}</span>
                         </div>
                       </Flex>{" "}
                     </Td>
-                    <Td className="cursor-pointer">{item.Comment}</Td>
+                    <Td className="cursor-pointer">{item.alertMessages.join(' ')}</Td>
                     <Td>
                       <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
                         View Details

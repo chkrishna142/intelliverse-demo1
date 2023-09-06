@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import CustomSizingBar from "../../Charts/SizingCharts/CustomSizingBar";
+import KilnHealthCard from "../../Charts/KilnCharts/kilnHealthCard";
 
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();

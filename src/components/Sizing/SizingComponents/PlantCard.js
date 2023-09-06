@@ -1,5 +1,6 @@
 import CamCard from "./CamCard";
 import DetailModal from "./DetailModal";
+import KilnModal from "./KilnModal";
 import { useState } from "react";
 
 const Capitalize = (str) => {
