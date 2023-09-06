@@ -19,7 +19,7 @@ const StabilityandThermal = () => {
         {
           x: 'Oxygen Enrichment', // First instance of Oxygen Enrichment
           y: [25, 45],
-          seriesIndex: 1 // Unique identifier
+          fillColor: "#605D64",
         },
         {
           x: 'Cold Blast Volume',
@@ -158,7 +158,7 @@ const StabilityandThermal = () => {
 
 
   return (
-    <div className="w-full h-full  flex flex-col     ">
+    <div className="w-full h-full  flex flex-col   mt-[-15px]  ">
       {/* nav */}
       <div className="flex flex-col w-[60%] p-[5px] gap-[14px] justify-left    ">
           {/* burden stability and modal button */}

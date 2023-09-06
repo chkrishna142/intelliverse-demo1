@@ -157,7 +157,7 @@ const BF_Dashboard = () => {
             </Tab>
           </div>
         </TabList>
-        <TabPanels>
+        <TabPanels className="">
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <BF_Home
               fetcheddata={fetcheddata}
@@ -169,7 +169,7 @@ const BF_Dashboard = () => {
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Fueloptimizercomp fetcheddata={fetcheddata} />
           </TabPanel>
-          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+          <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
             <StabilityandThermal />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
