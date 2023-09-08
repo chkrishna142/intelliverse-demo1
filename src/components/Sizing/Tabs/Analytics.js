@@ -1,5 +1,5 @@
-import { useState } from "react";
-import {useParams} from "react-router-dom"
+import { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import PieChart from "../../Charts/SizingCharts/PieChart";
 import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
 import FloatingInput from "../SizingUtils/FloatingInput";
@@ -19,18 +19,46 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   );
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10)
   );
   const [toTime, setToTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 10)
   );
-
+  const prevFromTimeRef = useRef();
+  const prevToTimeRef = useRef();
+  useEffect(() => {
+    prevFromTimeRef.current = fromTime;
+    prevToTimeRef.current = toTime;
+  }, []);
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
     if (e.target.value == 0) {
-      setFromTime(new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000));
-      setToTime(new Date(new Date().getTime() - 24 * 60 * 60 * 1000));
+      setFromTime(
+        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10)
+      );
+      setToTime(
+        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10)
+      );
     }
   };
+
+  useEffect(() => {
+    if (
+      prevToTimeRef.current !== toTime &&
+      prevFromTimeRef.current !== fromTime
+    ) {
+      console.log(fromTime, toTime, "changed");
+      prevToTimeRef.current = toTime;
+      prevFromTimeRef.current = fromTime;
+    }
+  }, [toTime, fromTime]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -161,12 +189,18 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                   text="From"
                   type="date"
                   setDateTime={setFromTime}
+                  value={fromTime}
                 />
               </div>
             )}
             {selectedRange == 1 && (
               <div className="min-w-[110px]">
-                <FloatingInput text="To" type="date" setDateTime={setToTime} />
+                <FloatingInput
+                  text="To"
+                  type="date"
+                  setDateTime={setToTime}
+                  value={toTime}
+                />
               </div>
             )}
           </div>

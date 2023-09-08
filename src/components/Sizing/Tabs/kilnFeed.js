@@ -1,10 +1,28 @@
 import LineChart from "../../Charts/SizingCharts/LineCharts";
 import WaterfallChart from "../../Charts/KilnCharts/WaterfallChart";
+import GaugeChart from "react-gauge-chart";
+import { useState,useEffect } from "react";
 
 const KilnFeed = () => {
+  const [val,setVal] = useState(Math.ceil(Math.random()*10)/10);
   let a = 16,
     b = 18;
   let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const getColor = (val) =>{
+    let x = val*10;
+    if(x <= 2)return "#F5CD19";
+    else if(x >=9)return "#EA4228"
+    else return "#5BE12C"
+  }
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setVal(Math.ceil(Math.random()*10)/10)
+    }, 5000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-10 bg-white rounded-xl py-4 px-6">
@@ -17,11 +35,51 @@ const KilnFeed = () => {
               {new Date().toTimeString()}
             </p>
           </div>
-          <div className="w-full h-full bg-black flex justify-center items-center rounded-lg">
-            <img
-              className="rounded-xl w-[20vw]"
-              src="https://media.istockphoto.com/id/1442909982/photo/closeup-of-a-rotary-kiln-for-clinker-production-in-a-cement-plant.jpg?s=612x612&w=0&k=20&c=nLwOPUSNyuYTBHKK5Rqq6-rLWrK0XBo9p7JjRF9kQdk="
-            />
+          <div className="flex gap-4 w-full h-full">
+            <div className="w-full h-full bg-black flex justify-center items-center rounded-lg">
+              <img
+                className="rounded-xl w-[20vw]"
+                src="https://media.istockphoto.com/id/1442909982/photo/closeup-of-a-rotary-kiln-for-clinker-production-in-a-cement-plant.jpg?s=612x612&w=0&k=20&c=nLwOPUSNyuYTBHKK5Rqq6-rLWrK0XBo9p7JjRF9kQdk="
+              />
+            </div>
+            <div className="pt-5 pl-4 pr-6 pb-6 flex flex-col gap-6 rounded bg-[#fffcf2] w-[30%]">
+              <div>
+                <GaugeChart
+                  nrOfLevels={10}
+                  arcsLength={[0.2, 0.7, 0.2]}
+                  colors={["#F5CD19", "#5BE12C", "#EA4228"]}
+                  textColor="#000000"
+                  needleColor={getColor(val)}
+                  needleBaseColor={getColor(val)}
+                  percent={val}
+                  arcWidth={0.2}
+                  arcPadding={0}
+                  cornerRadius={2}
+                  formatTextValue={(value)=> value/10}
+                />
+              </div>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
+                  <p className="text-sm text-[#605D64]">Health:</p>
+                  <div className="flex gap-3 items-center">
+                    <img src="/KilnIcons/dusty.svg" />
+                    <p className="text-[#3E3C42] font-medium text-lg">Dusty</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-2 items-center">
+                    <p className="text-[#605D64] text-sm">Kiln Index</p>
+                    <img src="/KilnIcons/info.svg" />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <p className="text-[#3E3C42] text-lg font-medium">6</p>
+                    <p className="p-2 rounded-[34px] bg-[#F9DEDC] text-[#DC362E] text-xs font-medium">
+                      Critical
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex flex-col gap-8 flex-1">
