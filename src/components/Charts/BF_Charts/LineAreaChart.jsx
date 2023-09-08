@@ -97,12 +97,15 @@ function LineAreaChart({Lineareachart}) {
   // });
 
   return (
-    <div id="chart">
+    <div id="chart"
+    className=" w-full h-full flex justify-center -mt-10 items-center "
+    >
       <ReactApexChart
         options={Lineareachart.options}
         series={Lineareachart.series}
         type="rangeArea"
-        height={350}
+        height="90%"     
+        className="rotate-90"
       />
     </div>
   );

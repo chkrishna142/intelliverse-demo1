@@ -13,7 +13,7 @@ function Guagecomp() {
 
 
   return (
-    <div style={{ position: 'relative'}}>
+    <div style={{ position: 'relative'}} className="w-full ">
       <GaugeChart
         id="gauge-chart1"
         nrOfLevels={10}
@@ -36,15 +36,8 @@ function Guagecomp() {
         needleBaseColor	={"#464A4F"}
       />
       <div
-        style={{
-          position: 'absolute',
-          top: '160%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          fontSize: '22px',
-          fontWeight: "500",
-          textAlign:"center"
-        }}
+        
+        className="absolute  top-[160%] left-[40%]  text-center text-2xl font-semibold"
       >
         94%
         <p className="text-[18px] text-[#938F96]">Current</p>
