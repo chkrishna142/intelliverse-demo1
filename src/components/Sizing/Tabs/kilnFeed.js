@@ -1,4 +1,5 @@
 import LineChart from "../../Charts/SizingCharts/LineCharts";
+import WaterfallChart from "../../Charts/KilnCharts/WaterfallChart";
 
 const KilnFeed = () => {
   let a = 16,
@@ -7,34 +8,56 @@ const KilnFeed = () => {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex gap-10 bg-white rounded-xl py-4 px-6">
-        <div className="flex flex-col gap-8">
-          <div></div>
-          <div className="flex flex-col gap-8 flex-1 h-[40vh]">
+        <div className="flex flex-col gap-8 flex-1">
+          <div className="flex justify-between items-center w-full">
             <p className="self-start text-[#3E3C42] text-xl font-medium">
               Kiln Index Graph
             </p>
+            <p className="text-sm text-[#79767D]">
+              {new Date().toTimeString()}
+            </p>
+          </div>
+          <div className="w-full h-full bg-black flex justify-center items-center rounded-lg">
+            <img
+              className="rounded-xl w-[20vw]"
+              src="https://media.istockphoto.com/id/1442909982/photo/closeup-of-a-rotary-kiln-for-clinker-production-in-a-cement-plant.jpg?s=612x612&w=0&k=20&c=nLwOPUSNyuYTBHKK5Rqq6-rLWrK0XBo9p7JjRF9kQdk="
+            />
+          </div>
+        </div>
+        <div className="flex flex-col gap-8 flex-1">
+          <p className="self-start text-[#3E3C42] text-xl font-medium">
+            Kiln Index Graph
+          </p>
+          <div className="h-[40vh]">
             <LineChart />
           </div>
         </div>
       </div>
       <div className="flex bg-white rounded-xl gap-6 py-4 px-6">
-        <div className="flex flex-col gap-8 flex-1 h-[40vh]">
+        <div className="flex flex-col gap-8 flex-1">
           <p className="self-start text-[#3E3C42] text-xl font-medium">
             Burning Zone Temperature
           </p>
-          <LineChart />
+          <div className="h-[40vh]">
+            <LineChart />
+          </div>
         </div>
-        <div className="flex flex-col gap-8 flex-1 h-[40vh]">
+        <div className="flex flex-col gap-8 flex-1">
           <p className="self-start text-[#3E3C42] text-xl font-medium">
             C3S Quality
           </p>
-          <LineChart />
+          <div className="h-[40vh]">
+            <LineChart />
+          </div>
         </div>
       </div>
       <div className="flex flex-col gap-8 bg-white rounded-xl py-4 px-6">
         <p className="self-start text-[#3E3C42] text-xl font-medium">
           RCA of Kiln Index
         </p>
+        <div className="h-[50vh]">
+          <WaterfallChart />
+        </div>
       </div>
       <div className="flex flex-col bg-white rounded-xl gap-5 py-4 px-6">
         <div className="flex flex-col gap-2">
@@ -83,16 +106,20 @@ const KilnFeed = () => {
                   <div className="flex flex-col gap-4 w-full text-sm h-[56px]">
                     <div
                       style={{
-                        width: a < b ? `${Math.ceil((a / b)*100)}%` : "100%",
+                        width: a < b ? `${Math.ceil((a / b) * 100)}%` : "100%",
                       }}
                       className="bg-[#6CA6FC] text-white rounded-r-[5px] h-full"
-                    >{a}</div>
+                    >
+                      {a}
+                    </div>
                     <div
                       style={{
-                        width: b < a ? `${Math.ceil((b / a)*100)}%` : "100%",
+                        width: b < a ? `${Math.ceil((b / a) * 100)}%` : "100%",
                       }}
                       className="bg-[#16FCD2] text-[#3E3E3E] rounded-r-[5px] h-full"
-                    >{b}</div>
+                    >
+                      {b}
+                    </div>
                   </div>
                 </div>
               );

@@ -121,9 +121,9 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [alerts, setAlerts] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() - 24 * 60 * 60 * 1000).toISOString().slice(0,16)
+    new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5*60*60*1000).toISOString().slice(0,16)
   );
-  const [toTime, setToTime] = useState(new Date().toISOString().slice(0,16));
+  const [toTime, setToTime] = useState(new Date(new Date().getTime() + 5.5*60*60*1000).toISOString().slice(0,16));
   const [selectedPlant, setSelectedPlant] = useState(
     disable ? plantId : "All Plants"
   );
@@ -134,8 +134,8 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     const requestData = JSON.stringify({
       clientId: clientId,
       material: material,
-      startDate: new Date(fromTime).getTime(),
-      endDate: new Date(toTime).getTime(),
+      startDate: (new Date(fromTime).getTime() + 5.5*60*60*1000),
+      endDate: (new Date(toTime).getTime() + 5.5*60*60*1000),
       cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
       plantId: selectedPlant === "All Plants" ? "all" : selectedPlant,
     });
@@ -166,7 +166,8 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
 
   useEffect(()=>{
     handleClick();
-  },[])
+  },[]);
+  console.log(fromTime,toTime,'times');
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
