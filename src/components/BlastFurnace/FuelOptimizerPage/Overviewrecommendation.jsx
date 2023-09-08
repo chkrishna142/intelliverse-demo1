@@ -13,45 +13,42 @@ function Overviewrecommendation({
   return (
     <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
-      <div class="flex justify-between w-full h-full">
-        <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
-          <div className="flex items-center gap-[8px]">
+      <div class="flex justify-between w-full h-full ">
+        <div class="flex flex-col items-start justify-center gap-[12px] w-[95%] ">
+          <div className="flex items-center gap-[8px]  w-full  ">
             {" "}
-            <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
+            <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium ">
               <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                 Recommendation
               </p>
             </div>
-            <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+            <div class="  text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+            
+            
+             
+
+            
           </div>
         </div>
-        <div onClick={handleToggle2}>
+        <div onClick={handleToggle2} className="">
           <img src="/dropicon.svg" alt="" />
         </div>
+      </div>
+      <div className={`flex ${size.width<576?"flex-col":""}  w-full justify-start `}>
+               
+             <div className="flex gap-[2px] w-full">
+                <img src="/Bficons/skyblue.svg" alt="" />
+              <p className="text-[#79767D] text-[12px]">Current value </p>
+             </div>
+             <div className="flex w-full">
+            <img src="/Bficons/tealblue.svg" alt="" />
+            <p  className="text-[#79767D] text-[12px]">Recommended value</p>
+            </div>
       </div>
       {/* bottom */}
       {isExpanded2 && (
         <div className={`flex ${size.width<700?"flex-col" :""} h-full`}>
-        <div className="h-full">
-           <div className="col-span-1 items-center justify-between p-2  h-[150px]">
-              <div className="flex  items-center h-[37%] justify-center">
-              <p className="text-[#3E3C42] font-bold"></p>
-               <p className="text-[#939393]"></p>
-            </div>
-            <div className="flex flex-col h-[50%] items-center justify-between">
-          {/* <Fuelrecommend recommendedValue={18} currentValue={16} /> */}
-          {/* legends */}
-            <div className="flex gap-[2px] w-full">
-                <img src="/Bficons/skyblue.svg" alt="" />
-              <p className="text-[#79767D] text-[12px]">Current value </p>
-             </div>
-          <div className="flex w-full">
-            <img src="/Bficons/tealblue.svg" alt="" />
-            <p  className="text-[#79767D] text-[12px]">Recommended value</p>
-          </div>
-        </div>
-      </div>
-        </div>
+       
          <div className="w-full md:h-[150px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-0 ">
          
           {/* blast moisture */}

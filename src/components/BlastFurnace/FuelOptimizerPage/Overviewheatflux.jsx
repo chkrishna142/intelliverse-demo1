@@ -167,14 +167,14 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
           </div>
         </div>
         ):(
-        <div className="flex  flex-col w-full gap-2">
-       <div className="flex  w-[300px] gap-2  justify-between">
-         <p className="text-[18px] text-[#938F96]">Current Heat Flux</p>
-         <p className="text-[#084298] text-[20px] font-[600]"> 1200 &deg;C</p>
+        <div className="flex   w-full gap-4">
+       <div className="flex  w-full  justify-center gap-4">
+         <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Current Heat Flux</p>
+         <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal"> 1200 &deg;C</p>
        </div>
-       <div className="flex w-[300px] gap-2   justify-between">
-         <p className="text-[18px] text-[#938F96]">Predictive Heat Flux</p>
-         <p className="text-[#16FCD2] text-[20px] font-[600]"> 1400 &deg;C</p>
+       <div className="flex w-full gap-4   justify-center">
+         <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Predictive Heat Flux</p>
+         <p className="text-[#16FCD2]  font-[600]  text-center font-roboto text-xs leading-normal"> 1400 &deg;C</p>
        </div>
         
         </div>

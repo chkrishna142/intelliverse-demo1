@@ -3,13 +3,14 @@ import Linechart from "../../Charts/BF_Charts/Linechart";
 import BurdenDistributionChart from "../../Charts/BF_Charts/BurdenDistributionChart";
 import BottomIndicator from "../BF_Components/BottomIndicator";
 import Mymodal from "../BF_Components/Mymodal";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 // import Linechart from "../Charts/Linechart";
 // import BurdenDistributionChart from "../Charts/BurdenDistributionChart";
 // import BottomIndicator from "../Charts/BottomIndicator";
 
 function Recommendations({ isExpanded4, handleToggle4 }) {
-
+     const size= useWindowSize();
     const [raftLineChart, setraftLineChart] = useState({
         series: [
           {
@@ -169,10 +170,10 @@ function Recommendations({ isExpanded4, handleToggle4 }) {
                     </div>
                   </div>
                   <div
-                    className={`flex items-start gap-[2%] w-[80%]  `}
+                    className={`flex items-start gap-[2%] w-[80%]  ${size.width<=768?"flex-col":""}`}
                   >
                     {/* svg legends */}
-                    <div className="flex gap-[2px] items-center justify-center">
+                    <div className={`flex   gap-[2px] items-center justify-center`}>
                       <div className="flex gap-[2px] ">
                         <img src="/darkbluedot.svg" alt="" />
                       </div>
