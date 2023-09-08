@@ -87,7 +87,7 @@ export default function RangeTable() {
   const flexDirection = windowWidth < 1200 ? "flex-col" : "flex-row";
 
   return (
-    <div>
+    <div className="w-full">
       <table>
         <tr>
           <th

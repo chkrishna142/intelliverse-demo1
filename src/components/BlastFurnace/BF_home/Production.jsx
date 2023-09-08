@@ -79,8 +79,13 @@ const Production = ({ data, pageshift, handleTabChange }) => {
   // line chart
 
   // console.log("table====>", data.chart);
-  const optimalValue = data.chart.optimal_value;
-  const current_values = data.chart.values;
+  const optimalValue =  Math.floor(data.chart.optimal_value);
+  let current_values = data.chart.values;
+  if(current_values.length<=5){
+    current_values=[5500, 5000, 6500, 5500, 4000,7500];
+    // console.log("current valuess--->", current_values.length);
+    
+ }
   const timeArray = data.chart.times;
 
   const [chart, setChart] = useState({
@@ -92,7 +97,8 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       },
       {
         name: "Optimal",
-        data: Array(data.chart.values.length).fill(optimalValue),
+        // data: Array(data.chart.values.length).fill(optimalValue),
+        data: Array(6).fill(optimalValue),
         //  [10500,10500,10500,10500,10500,10500]
       },
     ],
@@ -245,7 +251,7 @@ const Production = ({ data, pageshift, handleTabChange }) => {
               Production
             </p>
             <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
-              10500 tpd
+              {optimalValue} tpd
             </p>
           </div>
 

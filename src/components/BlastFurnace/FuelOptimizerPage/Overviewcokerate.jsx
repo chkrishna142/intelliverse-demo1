@@ -149,14 +149,14 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
               </div>
             </div>
           </div>):(
-        <div className="flex  flex-col w-full gap-2">
-       <div className="flex  w-[300px] gap-2  justify-between">
-         <p className="text-[18px] text-[#938F96]">Current coke rate</p>
-         <p className="text-[#084298] text-[20px] font-[600]"> 537 kg/tHM</p>
+        <div className="flex   w-full gap-2">
+       <div className="flex  w-full gap-4  justify-center">
+         <p className="text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Current coke rate</p>
+         <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal"> 537 kg/tHM</p>
        </div>
-       <div className="flex w-[300px] gap-2   justify-between">
-         <p className="text-[18px] text-[#938F96]">Baseline coke rate</p>
-         <p className="text-[#605D64] text-[20px] font-[600]"> 537 kg/tHM</p>
+       <div className="flex w-full gap-4   justify-center">
+         <p className="text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Baseline coke rate</p>
+         <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal"> 537 kg/tHM</p>
        </div>
         
         </div>

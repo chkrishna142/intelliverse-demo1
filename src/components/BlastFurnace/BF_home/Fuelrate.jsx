@@ -49,8 +49,14 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
     setAlertState(alertState);
   }, [alertState]);
 
-  const optimalValue = data.chart.optimal_value;
-  const current_values = data.chart.values;
+  const optimalValue = Math.floor(data.chart.optimal_value);
+  let current_values = data.chart.values;
+  if(current_values.length<=5){
+     current_values=[530,540,533,555,568,550,];
+  // console.log("current valuess--->", current_values.length);
+     
+  }
+
   const timeArray = data.chart.times;
 
   const [chart, setChart] = useState({
@@ -61,7 +67,8 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
       },
       {
         name: "optimal",
-        data: Array(data.chart.values.length).fill(optimalValue),
+        // data: Array(data.chart.values.length).fill(optimalValue),
+        data: Array(6).fill(optimalValue),
       },
     ],
 
@@ -220,7 +227,7 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
               Fuel Rate
             </p>
             <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
-              545 kg/tHM
+              {optimalValue} kg/tHM
             </p>
           </div>
           {/* condition for numbers of alert or optimal  */}
