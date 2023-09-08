@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
 
-
 const AiAdvisor = () => {
 
     const [send, setSend] = useState(false)
