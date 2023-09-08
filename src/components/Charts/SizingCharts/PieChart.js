@@ -1,7 +1,29 @@
 import ReactApexChart from "react-apexcharts";
 
-const PieChart = () => {
-  const series = [44, 55, 13, 43];
+const PieChart = ({ data, type }) => {
+  const graphData = {};
+  const labels = Object.keys(data[0][type]);
+  labels.map((i) => {
+    graphData[i] = [];
+  });
+
+  data.map((i) => {
+    Object.keys(i[type]).map((j) => {
+      graphData[j].push(parseFloat(i[type][j]));
+    });
+  });
+
+  const series = [];
+  labels.map((i) => {
+    series.push(
+      parseFloat((
+        graphData[i].reduce(function (x, y) {
+          return x + y;
+        }, 0) / labels.length
+      ).toFixed(2))
+    );
+  });
+
   const options = {
     chart: {
       type: "pie",
@@ -16,7 +38,7 @@ const PieChart = () => {
       "#8bc34a",
       "#9c27b0",
     ],
-    labels: ["0-2 mm", "2-6 mm", "6-8 mm", "8+ mm"],
+    labels: labels,
     legend: {
       show: false,
       position: "right",

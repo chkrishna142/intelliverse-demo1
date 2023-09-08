@@ -4,12 +4,15 @@ import PieChart from "../../Charts/SizingCharts/PieChart";
 import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
-import { Select } from "@chakra-ui/react";
+import { Select, Skeleton } from "@chakra-ui/react";
+import axios from "axios";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   let material = param.material.toLowerCase();
-  const [selectedBasis, setSelectedBasis] = useState(0);
+  const [sizeData, setSizeData] = useState([]);
+  const [sizeDataChanging, setSizeDataChanging] = useState(false);
+  const [selectedBasis, setSelectedBasis] = useState("SIZE");
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(
     disable ? plantId : "All Plants"
@@ -29,10 +32,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   );
   const prevFromTimeRef = useRef();
   const prevToTimeRef = useRef();
-  useEffect(() => {
-    prevFromTimeRef.current = fromTime;
-    prevToTimeRef.current = toTime;
-  }, []);
+
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
     if (e.target.value == 0) {
@@ -49,14 +49,52 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     }
   };
 
+  const apiCall = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      material: param.material.toLowerCase(),
+      cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
+      plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
+      startDate: new Date(fromTime).getTime(),
+      endDate: new Date(toTime).getTime(),
+      distType: selectedBasis,
+    });
+    const response = await axios
+      .post(
+        " https://intelliverse.backend-ripik.com/vision/v2/sizing/analytics/distribution/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setSizeData(response.data);
+        setSizeDataChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    apiCall();
+    prevFromTimeRef.current = fromTime;
+    prevToTimeRef.current = toTime;
+  }, []);
+
   useEffect(() => {
     if (
       prevToTimeRef.current !== toTime &&
       prevFromTimeRef.current !== fromTime
     ) {
-      console.log(fromTime, toTime, "changed");
-      prevToTimeRef.current = toTime;
+      setSizeDataChanging(true);
+      // console.log(fromTime, toTime, "changed");
+      apiCall();
       prevFromTimeRef.current = fromTime;
+      prevToTimeRef.current = toTime;
     }
   }, [toTime, fromTime]);
 
@@ -76,8 +114,8 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                 }`}
               >
                 <input
-                  value={0}
-                  onClick={() => setSelectedBasis(0)}
+                  value="SIZE"
+                  onClick={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
                   className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
@@ -90,8 +128,8 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                 }`}
               >
                 <input
-                  value={1}
-                  onClick={() => setSelectedBasis(1)}
+                  value="COLOR"
+                  onClick={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
                   className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
@@ -104,8 +142,8 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                 }`}
               >
                 <input
-                  value={2}
-                  onClick={() => setSelectedBasis(2)}
+                  value="MOISTURE"
+                  onClick={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
                   className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
@@ -206,21 +244,31 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         </div>
         <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
-        <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
-          <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
-            <PieChart />
+        {sizeDataChanging && <Skeleton height="20px" />}
+        {sizeData.length != 0 && (
+          <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
+            <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
+              <PieChart data={sizeData} type={selectedBasis.toLowerCase()} />
+            </div>
+            <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
+              <StackBarChart
+                data={sizeData}
+                type={selectedBasis.toLowerCase()}
+              />
+            </div>
           </div>
-          <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
-            <StackBarChart />
-          </div>
-        </div>
+        )}
       </div>
-      <HistoryAnalytics
-        plantId={plantId}
-        cameraId={cameraId}
-        disable={disable}
-        plantCamMap={plantCamMap}
-      />
+      {(disable || Object.keys(plantCamMap) != 0) && (
+        <HistoryAnalytics
+          plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
+          cameraId={
+            disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
+          }
+          disable={disable}
+          plantCamMap={plantCamMap}
+        />
+      )}
     </div>
   );
 };
