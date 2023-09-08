@@ -1,12 +1,13 @@
 
 import React, { useEffect, useState } from "react";
 import RcawaterfallChart from "../../Charts/BF_Charts/RcawaterfallChart";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
 
 function Rca({ isExpanded2, handleToggle2 ,series,options}) {
   
- 
+ const size=useWindowSize();
   
 
   return (
@@ -24,7 +25,7 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
           </div>
           <div
-            className={`flex items-start gap-[2%] w-[80%]  `}
+            className={`flex  ${size.width<=768?"flex-col":""} items-start gap-[2%] w-[80%]  `}
           >
             <div className="flex gap-[2px] items-center justify-center">
               <div className="flex gap-[2px] ">

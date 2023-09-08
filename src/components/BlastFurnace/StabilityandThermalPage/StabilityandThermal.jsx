@@ -65,14 +65,9 @@ const StabilityandThermal = () => {
       }
     },
     xaxis: {
-      type: 'category' // Using categories for x-axis labels,
-    //   labels: {
-    //     formatter: function (value, timestamp, index) {
-    //       // Replace with your own logic for line breaks
-    //       // For example, break at "Oxygen Enrichment"
-    //       return value? value.split(" ").join("\n") : "";
-    //     },
-    //   },
+      type: 'category' ,// Using categories for x-axis labels,
+     tickPlacement: 'between',
+   
     },
     yaxis: {
       min: 0,
@@ -81,6 +76,8 @@ const StabilityandThermal = () => {
         show: false // Hide y-axis data labels
       }
     },
+   
+    
     
    
   };

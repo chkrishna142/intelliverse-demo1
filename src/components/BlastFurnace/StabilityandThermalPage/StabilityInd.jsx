@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Guagecomp from "../../Charts/BF_Charts/Guagecomp";
 import LineAreaChart from "../../Charts/BF_Charts/LineAreaChart";
 import RangeTable from "../../Charts/BF_Charts/RangeTable";
-import { InfoOutlineIcon} from '@chakra-ui/icons'
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 import Mymodal from "../BF_Components/Mymodal";
 import { useWindowSize } from "@uidotdev/usehooks";
-
 
 function StabilityInd({ isExpanded1, handleToggle1 }) {
   const size = useWindowSize();
@@ -15,7 +14,6 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
       {
         type: "rangeArea",
         name: "Optimal Range Area",
-       
 
         data: [
           {
@@ -34,10 +32,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
             x: "PMStack Press5",
             y: [2.0, 3.0],
           },
-          
-         
         ],
-
       },
       {
         type: "line",
@@ -59,7 +54,6 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
             x: "PMStack Press5",
             y: 2.9,
           },
-          
         ],
       },
     ],
@@ -74,7 +68,6 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         toolbar: {
           show: false,
         },
-
       },
 
       colors: ["rgba(105, 176, 75, 0.28)", "#6CA6FC"],
@@ -89,35 +82,30 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         width: [0, 2],
       },
       xaxis: {
-        tickPlacement: 'on',
+        tickPlacement: "on",
 
         // position:"left",
         labels: {
           show: true,
           minWidth: 120,
           maxWidth: 260,
-          
-         // offsetX: -15,
+
+          // offsetX: -15,
           offsetY: -0,
           rotate: -90,
           //rotateAlways: true,
           style: {
-            colors: [],  
-            fontSize: '10px',
-
+            colors: [],
+            fontSize: "10px",
           },
-
-
-        }
+        },
       },
-      
+
       yaxis: {
-
         opposite: true,
-        labels:{
+        labels: {
           rotate: -90,
-        }
-
+        },
       },
       legend: {
         show: false,
@@ -135,92 +123,109 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
       },
       grid: {
         show: true,
-        borderColor: '#EBEBEB',
+        borderColor: "#EBEBEB",
         strokeDashArray: 4,
-        width:4,
-        position: 'back',
+        width: 4,
+        position: "back",
         xaxis: {
-            lines: {
-                show: true,
-
-            }
-        }, 
+          lines: {
+            show: true,
+          },
+        },
         yaxis: {
           lines: {
-              show: false
-          }
-      }, 
+            show: false,
+          },
+        },
         padding: {
-          bottom: 50,
+          bottom: 80,
         },
       },
       tooltip: {
-        custom: function({series, seriesIndex, dataPointIndex, w}) {
+        custom: function ({ series, seriesIndex, dataPointIndex, w }) {
           var data1 = w.globals.initialSeries[0].data[dataPointIndex];
           var data2 = w.globals.initialSeries[1].data[dataPointIndex];
-         
-          return '<div class="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
-          '<p class="font-bold mb-1"> ' + data1.x +':'+ '</p>' +
-          '<p  class="mb-1"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
-          '<p> Current: '+  data2.y+'</p>' +
-          
-          '</div>';
-        }
-      }
 
+          return (
+            '<div className="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
+            '<p className="font-bold mb-1"> ' +
+            data1.x +
+            ":" +
+            "</p>" +
+            '<p  className="mb-1"> Optimal Range: ' +
+            "[" +
+            data1.y[0] +
+            "-" +
+            data1.y[1] +
+            "]" +
+            "</p>" +
+            "<p> Current: " +
+            data2.y +
+            "</p>" +
+            "</div>"
+          );
+        },
+      },
     },
   });
 
-
-
-
+  const guagepercent=0.96
 
   return (
-    
-    <div class="flex flex-col w-full h-full  bg-white p-4 rounded-xl  shadow-md ">
+    <div className="flex flex-col w-full h-full  bg-white p-4 rounded-xl  shadow-md ">
       {/* top part */}
-      <div class="flex justify-between items-start w-[100%]">
+      <div className="flex justify-between items-start w-[100%]">
         {/* stability ind top */}
-        <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+        <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
           <div className="flex items-center gap-[8px]">
             {" "}
-            <div class="  text-[22px] text-[#3E3C42] font-medium">
+            <div className="  text-[22px] text-[#3E3C42] font-medium">
               <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                 Stability Indicator
               </p>
             </div>
             <div className="">
-           
-            <Mymodal imageone={"/Bficons/stabilityindicatorTop.svg"} imageTwo={"/Bficons/stabilityindicatorBottom.svg"}/>
+              <Mymodal
+                imageone={"/Bficons/stabilityindicatorTop.svg"}
+                imageTwo={"/Bficons/stabilityindicatorBottom.svg"}
+              />
             </div>
           </div>
-          <div
-            className={`flex items-start gap-[2%] w-[80%]   `}
-          >
-          
-          </div>
+          <div className={`flex items-start gap-[2%] w-[80%]   `}></div>
         </div>
-        <div class="flex w-[100px] justify-between fill-white drop-shadow-md  " >
+        <div className="flex w-[100px] justify-between fill-white drop-shadow-md  ">
           <div className="flex justify-center items-center  w-[50px]">
-          <Mymodal  imageone={"/Bficons/stabilityindtopcard.svg"} imageTwo={""} />
-
+            <Mymodal
+              imageone={"/Bficons/stabilityindtopcard.svg"}
+              imageTwo={""}
+            />
           </div>
-          <div >
-          <img src="/dropicon.svg" alt="" onClick={handleToggle1} style={{ cursor: 'pointer' }}  />
-
+          <div>
+            <img
+              src="/dropicon.svg"
+              alt=""
+              onClick={handleToggle1}
+              style={{ cursor: "pointer" }}
+            />
           </div>
         </div>
       </div>
       {/* bottom part */}
       {isExpanded1 && (
-        <div className={`flex ${size.width<760 ? "flex-col":""}  w-full gap-[18px] h-auto  transition-all duration-300 ${isExpanded1 ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0'}`}>
+        <div
+          className={`grid  grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5
+           w-full gap-[18px] h-auto  transition-all duration-300 
+           border-red-500 
+          `}
+        >
           {/* guagechart component */}
-          <div class={`flex flex-col  ${size.width<760 ? "w-[80%] justify-center items-center":"w-[20%]"}   h-full p-2  gap-3 items-center  bg-white  rounded-xl shadow-md`}>
-            <p class="text-[18px] font-semibold text-[#3E3C42]">
+          <div className={`flex flex-col w-full col-span-1   h-full p-2  gap-3 items-center    border-red-500  bg-white  rounded-xl shadow-md`}
+          >
+            <p className="text-[18px] font-semibold text-[#3E3C42]">
               Stability Indicator
             </p>
-            <Guagecomp />
-            <div class="flex w-[90%]  justify-between">
+            <Guagecomp  guagepercent={guagepercent}/>
+            <div className="flex w-[90%]  justify-between">
               <p className="w-[100px] bg-[#D9E7D3] text-center  rounded-xl">
                 Unstable
               </p>
@@ -228,31 +233,35 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
                 Stable
               </p>
             </div>
+            <div className="flex w-full justify-center gap-3 text-center text-2xl font-semibold">
+             
+              <p className="text-[18px] text-[#938F96]">Current</p>
+              <p className="text-[18px] "> 94%</p>
+            </div>
           </div>
 
           {/* stack pressure */}
-          <div class="w-[35%] h-[100%]  shadow-md p-2">
+          <div className="col-span-2  w-full  shadow-md p-2    border-red-500">
             {/* top */}
-            <div class="w-full">
-              <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+            <div className="w-full">
+              <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
                 <div className="flex items-center gap-[8px]">
                   {" "}
-                  <div class="  text-[22px] text-[#3E3C42] font-medium">
+                  <div className="  text-[22px] text-[#3E3C42] font-medium">
                     <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                       Stack Pressure
                     </p>
                   </div>
-                  <div class="text-neutral-n-80 text-[#CAC5CD]  text-[16px] font-normal leading-normal">Bar</div>
+                  <div className="text-neutral-n-80 text-[#CAC5CD]  text-[16px] font-normal leading-normal">
+                    Bar
+                  </div>
                 </div>
-                <div
-                  className={`flex items-start gap-[2%] w-[80%]  `}
-                >
+                <div className={`flex  ${size.width<800? "flex-col":""} items-start gap-[2%] w-[80%]  `}>
                   <div className="flex gap-[2px] items-center justify-center">
                     <div className="flex gap-[2px] ">
                       <img src="/darkbluedot.svg" alt="" />
-                      
                     </div>
-                    <div class="text-gray-600 mt-[-9px] text-center  text-xs font-normal leading-normal">
+                    <div className="text-gray-600 mt-[-9px] text-center  text-xs font-normal leading-normal">
                       {" "}
                       Current Stack Pressure
                     </div>
@@ -261,7 +270,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
                     <div>
                       <img src="/lightgreendot.svg" alt="" />
                     </div>
-                    <div class="text-gray-600 text-center  text-xs font-normal leading-normal">
+                    <div className="text-gray-600 text-center  text-xs font-normal leading-normal">
                       Optimal Range
                     </div>
                   </div>
@@ -269,14 +278,21 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
               </div>
             </div>
             {/* chart */}
-            <div class="w-full h-full">
-              <LineAreaChart Lineareachart={Lineareachart}/>
+            <div className="w-full h-full overflow-x-auto">
+            <div className={`  ${size.width>1440? "w-full h-full": "w-[320px] h-[400px] "}  `}>
+              <LineAreaChart Lineareachart={Lineareachart} />
+            </div>
             </div>
           </div>
 
           {/* Range bar */}
-          <div class="w-[45%] h-full shadow-md p-2">
+          <div className=" col-span-2 w-full overflow-x-auto ">
+          <div className={`
+           ${size.width>1440? "w-full": "w-[380px]"} 
+           
+            h-full shadow-md p-2    `}>
             <RangeTable />
+          </div>
           </div>
         </div>
       )}
