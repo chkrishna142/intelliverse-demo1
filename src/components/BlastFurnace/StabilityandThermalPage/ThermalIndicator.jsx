@@ -184,7 +184,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
   ];
 
   return (
-    <div className="flex flex-col  h-full bg-white p-4 rounded-xl  shadow-md  ">
+    <div className="flex flex-col  h-full bg-white p-4 rounded-xl  shadow-md  overflow-x-auto">
       {/* top */}
       <div class="flex justify-between w-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -214,10 +214,10 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
       </div>
       {/* bottom */}
       {isExpanded3 && (
-        <div className={`flex  gap-[18px]  h-auto w-full   `}>
-          <div className={`flex gap-[10px]  h-auto  w-[1200px]  overflow-x-auto`}>
+        <div className={`flex  gap-[18px]  h-full w-full  `}>
+          <div className={`flex gap-[10px]  h-full  w-[1200px]  `}>
             {/* thermal color indicator*/}
-            <div class="flex flex-col w-[250px] h-full p-4  gap-3 items-center  bg-white  rounded-xl shadow-md ">
+            <div class="flex flex-col w-[250px] h-full p-4  gap-3 items-center  bg-white   rounded-xl shadow-md ">
               <div className="flex w-full gap-2 justify-center items-center">
                 <p class="text-[18px] text-left  w-full font-semibold text-[#3E3C42]">
                   Thermal Indicator
@@ -231,13 +231,13 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
                 Last 1 Hour
               </p>
               <div className="w-[200px] h-[200px] ">
-                <ThermalIndThermo maxTemperature={800} temperature={200} />
+                <ThermalIndThermo maxTemperature={100} temperature={1000} />
               </div>
             </div>
 
             {/* Target Ranges for Stave Temperature */}
 
-            <div class="w-[400px] h-[400px]   p-0 ">
+            <div class="w-[400px] h-[400px]     p-0 ">
               {/* top */}
               <div class="w-full">
                 <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
@@ -282,14 +282,14 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
             </div>
 
             {/* Range bar */}
-            <div class="w-[600px] flex h-full  ">
-              <div class="w-[600px] h-[100%] mt-[50px]">
+            <div class="w-[280px] flex h-[420px]   ">
+              <div class="w-[350px] h-[100%] mt-[27px] ml-[-55px]">
                 <Thermalheatmap />
               </div>
             </div>
 
          
-              <img src="/Bficons/heatmaplegends.svg" alt="heat map legends" width="100%" height="300px" />
+              <img src="/Bficons/heatmaplegends.svg" alt="heat map legends" width="200px"  style={{ height:"300px", }} />
         
              
           </div>

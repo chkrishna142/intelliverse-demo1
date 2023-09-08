@@ -160,75 +160,7 @@ const StabilityandThermal = () => {
   return (
     <div className="w-full h-full  flex flex-col   mt-[-15px]  ">
       {/* nav */}
-      <div className="flex flex-col w-[60%] p-[5px] gap-[14px] justify-left    ">
-          {/* burden stability and modal button */}
-        
-
-          {/* nav started */}
-          <div className="flex items-center     w-full gap-[20px] overflow-x-auto">
-            {/* StabilityIndicator */}
-            <div
-              className={`flex items-center  w-[170px] justify-center    gap-[16px] p-[7px]  rounded-[15px] ${
-                activeOption === "StabilityIndicator"
-                  // ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
-                  ? "bg-transparent text-[#938F96] whitespace-nowrap"
-
-                  : "bg-transparent text-[#938F96] whitespace-nowrap"
-              } `}
-              onClick={() => handleOptionClick("StabilityIndicator")}
-            >
-              
-                <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-md ">
-                  Stability Indicator
-                </p>
-            
-            </div>
-
-           
-
-            {/* ThermalIndicator */}
-            <div
-              className={`flex items-center  w-[170px] justify-center   gap-[16px] p-[7px]  rounded-[15px] ${
-                activeOption === "ThermalIndicator"
-                 // ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
-                 ? "bg-transparent text-[#938F96] whitespace-nowrap"
-
-                 : "bg-transparent text-[#938F96] whitespace-nowrap"
-              } `}
-              onClick={() => handleOptionClick("ThermalIndicator")}
-            >
-              {/* <a
-                href="#ThermalIndicator"
-                onClick={() => handleOptionClick("ThermalIndicator")}
-              > */}
-                <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-md ">
-                  Thermal Indicator
-                </p>
-              {/* </a> */}
-            </div>
-
-            {/* recommendation */}
-            <div
-              className={`flex items-center  w-[170px] justify-center     gap-[16px] p-[7px]  rounded-[15px]  ${
-                activeOption === "Recommendations"
-                 // ? "bg-white h-[40px] w-[100%] gap-[16px] whitespace-nowrap"
-                 ? "bg-transparent text-[#938F96] whitespace-nowrap"
-
-                 : "bg-transparent text-[#938F96] whitespace-nowrap"
-              } `}
-              onClick={() => handleOptionClick("Recommendations")}
-            >
-              {/* <a
-                href="#Recommendations"
-                onClick={() => handleOptionClick("Recommendations")}
-              > */}
-                <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-md ">
-                  Recommendations
-                </p>
-              {/* </a> */}
-            </div>
-          </div>
-        </div>
+     
       
       {/* body */}
       <div className=" flex flex-col w-full gap-5  h-[62vh] overflow-y-auto " >

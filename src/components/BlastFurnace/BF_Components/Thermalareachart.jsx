@@ -101,7 +101,11 @@ const Thermalareachart = () => {
             y: [30, 34]
           },
 
-        ]
+        ],
+        // tooltip: {
+        //   headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>', // Customize the tooltip header
+        //   pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y[0]} - {point.y[1]}</b><br/>' // Customize the tooltip content
+        // }
       },
 
 
@@ -196,7 +200,11 @@ const Thermalareachart = () => {
             x: 'T01 +41807 R6',
             y: 30
           },
-        ]
+        ],
+        // tooltip: {
+        //   headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>', // Customize the tooltip header
+        //   pointFormat: '<span style="color:{point.color}">\u25CF</span> {series.name}: <b>{point.y}</b><br/>' // Customize the tooltip content
+        // }
       }
     ],
     options: {
@@ -244,7 +252,8 @@ const Thermalareachart = () => {
           },
 
 
-        }
+        },
+        
       },
       
       yaxis: {
@@ -270,27 +279,65 @@ const Thermalareachart = () => {
         },
       },
       grid: {
+        show: true,
+        borderColor: '#EBEBEB',
+        strokeDashArray: 4,
+        width:4,
+        position: 'back',
+        xaxis: {
+            lines: {
+                show: true,
+
+            }
+        }, 
+        yaxis: {
+          lines: {
+              show: false
+          }
+      }, 
         padding: {
           bottom: 50,
         },
       },
+      tooltip: {
+        custom: function({series, seriesIndex, dataPointIndex, w}) {
+          var data1 = w.globals.initialSeries[0].data[dataPointIndex];
+          var data2 = w.globals.initialSeries[1].data[dataPointIndex];
+         
+          return '<div class="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
+          '<p class="font-bold mb-1"> ' + data1.x +':'+ '</p>' +
+          '<p  class="mb-1"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
+          '<p> Current: '+  data2.y+'</p>' +
+          
+          '</div>';
+        }
+      }
+      
+        
+     
 
     },
   });
 
 
+
+
+
   return (
 
     // <div id="chart-container" className="">
-    <div id="chart"
-      className=" w-full h-full flex justify-center -mt-10 items-center "
-    >
+    // <div id="chart"
+    //   className=" w-full h-full flex justify-center -mt-10 items-center "
+    // >
+    <div id="chart" className="w-full h-full flex justify-end -mt-10 items-center space-x-4  rotate-90">
+
       <ReactApexChart
         options={state.options}
         series={state.series}
         type="rangeArea"
-        height="100%"     
-        className="rotate-90"
+        height="100%"  
+        width="125%"   
+        // className="rotate-90"
       />
     </div>
     //  </div>

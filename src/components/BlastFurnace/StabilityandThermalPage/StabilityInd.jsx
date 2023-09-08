@@ -4,13 +4,11 @@ import LineAreaChart from "../../Charts/BF_Charts/LineAreaChart";
 import RangeTable from "../../Charts/BF_Charts/RangeTable";
 import { InfoOutlineIcon} from '@chakra-ui/icons'
 import Mymodal from "../BF_Components/Mymodal";
-// import Guagecomp from "../Charts/Guagecomp";
-// import StackpressureChart from "../Charts/LineAreaChart";
-// import RangeTable from "../Charts/Rangetable";
-// import LineAreaChart from "../Charts/LineAreaChart";
+import { useWindowSize } from "@uidotdev/usehooks";
+
 
 function StabilityInd({ isExpanded1, handleToggle1 }) {
-  
+  const size = useWindowSize();
 
   const [Lineareachart, setLineareachart] = useState({
     series: [
@@ -67,49 +65,109 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
     ],
     options: {
       chart: {
+        parentHeightOffset: 0,
+
+        type: "rangeArea",
+        animations: {
+          speed: 500,
+        },
         toolbar: {
           show: false,
         },
-        // height: 350,
-        type: "rangeArea",
-        animations: {
-          speed: 400,
-        },
-       
+
       },
-      colors: ["rgba(105, 176, 75, 0.28)", "#3A74CA"],
+
+      colors: ["rgba(105, 176, 75, 0.28)", "#6CA6FC"],
       dataLabels: {
         enabled: false,
       },
-     
       fill: {
-        // opacity: [0.24, 0.24, 1, 1],
-      },
-      forecastDataPoints: {
-        count: 0,
+        opacity: [0.24, 1],
       },
       stroke: {
-        show: true,
         curve: "straight",
-        lineCap: "butt",
-        width: [0, 2], // Width for the rangeArea and line series
+        width: [0, 2],
+      },
+      xaxis: {
+        tickPlacement: 'on',
+
+        // position:"left",
+        labels: {
+          show: true,
+          minWidth: 120,
+          maxWidth: 260,
+          
+         // offsetX: -15,
+          offsetY: -0,
+          rotate: -90,
+          //rotateAlways: true,
+          style: {
+            colors: [],  
+            fontSize: '10px',
+
+          },
+
+
+        }
+      },
+      
+      yaxis: {
+
+        opposite: true,
+        labels:{
+          rotate: -90,
+        }
+
       },
       legend: {
         show: false,
-        customLegendItems: ["Team B", "Team A"],
+        customLegendItems: ["Optimal Range", "Current Temperature"],
         inverseOrder: true,
-      },
-      xaxis:{
-       labels:{offsetX:3}
-      },
-      markers: {
-        hover: {
-          sizeOffset: 5,
+        position: "top",
+        showForSingleSeries: false,
+        showForNullSeries: true,
+        showForZeroSeries: true,
+        horizontalAlign: "left",
+        labels: {
+          colors: undefined,
+          useSeriesColors: false,
         },
       },
-      
-     
-     
+      grid: {
+        show: true,
+        borderColor: '#EBEBEB',
+        strokeDashArray: 4,
+        width:4,
+        position: 'back',
+        xaxis: {
+            lines: {
+                show: true,
+
+            }
+        }, 
+        yaxis: {
+          lines: {
+              show: false
+          }
+      }, 
+        padding: {
+          bottom: 50,
+        },
+      },
+      tooltip: {
+        custom: function({series, seriesIndex, dataPointIndex, w}) {
+          var data1 = w.globals.initialSeries[0].data[dataPointIndex];
+          var data2 = w.globals.initialSeries[1].data[dataPointIndex];
+         
+          return '<div class="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
+          '<p class="font-bold mb-1"> ' + data1.x +':'+ '</p>' +
+          '<p  class="mb-1"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
+          '<p> Current: '+  data2.y+'</p>' +
+          
+          '</div>';
+        }
+      }
+
     },
   });
 
@@ -155,9 +213,9 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
       </div>
       {/* bottom part */}
       {isExpanded1 && (
-        <div className={`flex w-full gap-[18px] h-auto  transition-all duration-300 ${isExpanded1 ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0'}`}>
+        <div className={`flex ${size.width<760 ? "flex-col":""}  w-full gap-[18px] h-auto  transition-all duration-300 ${isExpanded1 ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0'}`}>
           {/* guagechart component */}
-          <div class="flex flex-col w-[20%] h-full p-2  gap-3 items-center  bg-white  rounded-xl shadow-md">
+          <div class={`flex flex-col  ${size.width<760 ? "w-[80%] justify-center items-center":"w-[20%]"}   h-full p-2  gap-3 items-center  bg-white  rounded-xl shadow-md`}>
             <p class="text-[18px] font-semibold text-[#3E3C42]">
               Stability Indicator
             </p>
@@ -166,7 +224,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
               <p className="w-[100px] bg-[#D9E7D3] text-center  rounded-xl">
                 Unstable
               </p>
-              <p className="w-[100px] bg-[#69B04B] text-center   rounded-xl">
+              <p className="w-[100px] bg-[#69B04B] text-center  text-[white]  rounded-xl">
                 Stable
               </p>
             </div>
@@ -211,7 +269,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
               </div>
             </div>
             {/* chart */}
-            <div class="w-full ">
+            <div class="w-full h-full">
               <LineAreaChart Lineareachart={Lineareachart}/>
             </div>
           </div>
