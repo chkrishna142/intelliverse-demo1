@@ -121,9 +121,15 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [alerts, setAlerts] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5*60*60*1000).toISOString().slice(0,16)
+    new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 16)
   );
-  const [toTime, setToTime] = useState(new Date(new Date().getTime() + 5.5*60*60*1000).toISOString().slice(0,16));
+  const [toTime, setToTime] = useState(
+    new Date(new Date().getTime() + 5.5 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 16)
+  );
   const [selectedPlant, setSelectedPlant] = useState(
     disable ? plantId : "All Plants"
   );
@@ -134,10 +140,10 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     const requestData = JSON.stringify({
       clientId: clientId,
       material: material,
-      startDate: (new Date(fromTime).getTime() + 5.5*60*60*1000),
-      endDate: (new Date(toTime).getTime() + 5.5*60*60*1000),
+      startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
+      endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
       cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
-      plantId: selectedPlant === "All Plants" ? "all" : selectedPlant,
+      plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
     });
     const response = await axios
       .post(
@@ -164,10 +170,9 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     apiCall();
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     handleClick();
-  },[]);
-  console.log(fromTime,toTime,'times');
+  }, []);
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
@@ -249,7 +254,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               </Select>
             </div>
           )}
-          <div>
+          {/* <div>
             <Select
               borderColor="#CAC5CD"
               color="#605D64"
@@ -257,72 +262,68 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               variant="outline"
               className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
             />
-          </div>
+          </div> */}
         </div>
-        <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
-          <Table variant="simple">
-            <Thead className="bg-[#FAFAFA] !text-xs">
-              <Tr>
-                <Th color="#79767D" fontWeight={400}>
-                  SR. NO.
-                </Th>
-                <Th color="#79767D" fontWeight={400}>
-                  PLANT
-                </Th>
-                <Th color="#79767D" fontWeight={400}>
-                  CAMERA
-                </Th>
-                <Th color="#79767D" fontWeight={400}>
-                  TIME
-                </Th>
-                <Th color="#79767D" fontWeight={400}>
-                  REASON
-                </Th>
-                <Th color="#79767D" fontWeight={400}>
-                  COMMENT
-                </Th>
-                <Th color="#79767D" fontWeight={400}>
-                  {""}
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {alerts.map((item, index) => {
-                return (
-                  <Tr
-                    key={index}
-                    className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
-                  >
-                    <Td className="cursor-pointer">
-                      {String(index + 1).padStart(2, "0")}
-                    </Td>
-                    <Td className="cursor-pointer">{item.plantId}</Td>
-                    <Td className="cursor-pointer">{item.cameraId}</Td>
-                    <Td className="cursor-pointer">{item.timestamp}</Td>
-                    <Td className="cursor-pointer">
-                      <Flex gap="1rem" align="center">
-                        <div className="flex flex-col justify-center items-center">
-                          <Image
-                            className="h-8 w-8"
-                            src={getImage(item.alertCodes[0])}
-                            alt="none"
-                          />
-                          <span>{getReason(item.alertCodes[0])}</span>
-                        </div>
-                      </Flex>{" "}
-                    </Td>
-                    <Td className="cursor-pointer">{item.alertMessages.join(' ')}</Td>
-                    <Td>
-                      <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
-                        View Details
-                      </p>
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-          </Table>
-        </TableContainer>
+        {alerts.hasOwnProperty('data') && (
+          <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
+            <Table variant="simple">
+              <Thead className="bg-[#FAFAFA] !text-xs">
+                <Tr>
+                  <Th color="#79767D" fontWeight={400}>
+                    SR. NO.
+                  </Th>
+                  {alerts.order.map((item) => {
+                    return (
+                      <Th color="#79767D" fontWeight={400}>
+                        {item.toUpperCase()}
+                      </Th>
+                    );
+                  })}
+                  <Th color="#79767D" fontWeight={400}>
+                    {""}
+                  </Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {alerts.data.map((item, index) => {
+                  return (
+                    <Tr
+                      key={index}
+                      className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
+                    >
+                      <Td className="cursor-pointer">
+                        {String(index + 1).padStart(2, "0")}
+                      </Td>
+                      <Td className="cursor-pointer">{item.plantId}</Td>
+                      <Td className="cursor-pointer">{item.cameraId}</Td>
+                      <Td className="cursor-pointer">{item.timestamp}</Td>
+                      <Td className="cursor-pointer">
+                        <Flex gap="1rem" align="center">
+                          <div className="flex flex-col justify-center items-center">
+                            <Image
+                              className="h-8 w-8"
+                              src={getImage(item.alertCodes[0])}
+                              alt="none"
+                            />
+                            <span>{getReason(item.alertCodes[0])}</span>
+                          </div>
+                        </Flex>{" "}
+                      </Td>
+                      <Td className="cursor-pointer">
+                        {item.alertMessages.join(" ")}
+                      </Td>
+                      <Td>
+                        <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
+                          View Details
+                        </p>
+                      </Td>
+                    </Tr>
+                  );
+                })}
+              </Tbody>
+            </Table>
+          </TableContainer>
+        )}
       </div>
     </div>
   );

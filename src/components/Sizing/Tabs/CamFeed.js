@@ -4,8 +4,10 @@ import LineChart from "../../Charts/SizingCharts/LineCharts";
 import DonutChart from "../../Charts/SizingCharts/DonutChart";
 import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
 import { Spinner } from "@chakra-ui/react";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const CamFeed = ({ material, cameraId, clientId }) => {
+  const size = useWindowSize();
   const [camData, setCamData] = useState("");
   const [bulkData, setBulkData] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -99,7 +101,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
             loaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="grid grid-cols-3 gap-6 rounded-xl p-4 pr-6 pl-6 bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 rounded-xl p-4 pr-6 pl-6 bg-white">
             <div className="flex flex-col gap-2 items-center w-full">
               <p className="self-start text-[#3E3C42] text-sm">
                 Original Image
@@ -150,7 +152,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
           </div>
           <div
             className={
-              material === "coal" ? "flex flex-col gap-2" : "flex gap-2"
+              material === "coal" ? "flex flex-col gap-2" : `flex flex-col min-[1150px]:flex-row gap-2`
             }
           >
             <div className="flex flex-col gap-4 rounded-xl p-6 pt-4 bg-white">
@@ -173,13 +175,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                       className={
                         material === "coal"
                           ? "w-[30vw] h-[30vh]"
-                          : "w-[20vw] h-[50vh]"
+                          : `w-full min-[1150px]:w-[20vw] h-[50vh]`
                       }
                     >
                       <DonutChart
                         data={Object.values(camData.size)}
                         labels={Object.keys(camData.size)}
-                        position={material === 'coal' ? 'right' : 'bottom'}
+                        position={material === "coal" ? "right" : "bottom"}
                       />
                     </div>
                   </div>
@@ -217,50 +219,54 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                   <div className="flex flex-col gap-4">
                     <p className="text-base font-medium text-[#605D64]">MPS</p>
                     <div className="rounded-lg bg-[#f6faff] text-center py-[25px] pl-3 pr-7 text-[#1C56AC] text-2xl">
-                      {material === 'coal' ? '12.00' : camData.mps.toFixed(2)} mm
+                      {material === "coal" ? "12.00" : camData.mps.toFixed(2)}{" "}
+                      mm
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col gap-8 items-center justify-center h-full">
-                  <img src="/SizingIcons/noCoal.svg" className="h-[10vh] w-[30vw]" />
+                  <img
+                    src="/SizingIcons/noCoal.svg"
+                    className="h-[10vh] w-[30vw]"
+                  />
                   <p>No {material} on belt</p>
                 </div>
               )}
             </div>
             <div className="flex flex-col gap-6 rounded-xl p-6 pt-4 bg-white w-full">
-              <div className="flex gap-6">
+              <div className="flex flex-col xl:flex-row gap-6">
                 <p className="text-[#3E3C42] text-xl font-medium">
                   Trend analysis
                 </p>
-                <div className="px-4 py-1 flex gap-4 rounded-lg bg-[#f6faff]">
+                <div className="px-4 py-1 flex gap-4 rounded-lg bg-[#f6faff] text-base font-medium overflow-x-auto">
                   <div className="flex gap-2 px-3 py-[2px] items-baseline">
-                    <p className="text-[#605D64] text-base font-medium">MPS</p>
+                    <p className="text-[#605D64]">MPS</p>
                     <p> </p>
                   </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline">
-                    <p className="text-[#1C56AC] text-base font-medium">
+                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
+                    <p className="text-[#1C56AC]">
                       7.24 mm
                     </p>
-                    <p className="text-[#605D64] text-xs">1hr</p>
+                    <p className="text-[#605D64] text-xs font-normal">1hr</p>
                   </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline">
-                    <p className="text-[#1C56AC] text-base font-medium">
+                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
+                    <p className="text-[#1C56AC]">
                       7.24 mm
                     </p>
-                    <p className="text-[#605D64] text-xs">4hr</p>
+                    <p className="text-[#605D64] text-xs font-normal">4hr</p>
                   </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline">
-                    <p className="text-[#1C56AC] text-base font-medium">
+                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
+                    <p className="text-[#1C56AC]">
                       7.24 mm
                     </p>
-                    <p className="text-[#605D64] text-xs">8hr</p>
+                    <p className="text-[#605D64] text-xs font-normal">8hr</p>
                   </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline">
-                    <p className="text-[#1C56AC] text-base font-medium">
+                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
+                    <p className="text-[#1C56AC]">
                       7.24 mm
                     </p>
-                    <p className="text-[#605D64] text-xs">24hr</p>
+                    <p className="text-[#605D64] text-xs font-normal">24hr</p>
                   </div>
                 </div>
               </div>
@@ -269,14 +275,14 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                   <p className="text-[#605D64] font-medium text-base">
                     Size trend
                   </p>
-                  <div className={material === "coal" ? "h-[40vh]" : "h-full"}>
+                  <div className={material === "coal" ? "h-[40vh]" : "h-[40vh] min-[1150px]:h-full"}>
                     <LineChart
                       data={Object.values(camData.size)}
                       timeStamps={new Date(
                         camData?.timestamp.split(" ").join("T")
                       ).getTime()}
                       labels={Object.keys(camData.size)}
-                      noCoal = {camData.noCoal}
+                      noCoal={camData.noCoal}
                     />
                   </div>
                 </div>
@@ -293,7 +299,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                             camData?.timestamp.split(" ").join("T")
                           ).getTime()}
                           labels={Object.keys(camData.color)}
-                          noCoal = {camData.noCoal}
+                          noCoal={camData.noCoal}
                         />
                       </div>
                     </div>
@@ -308,7 +314,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                             camData?.timestamp.split(" ").join("T")
                           ).getTime()}
                           labels={["Moisture"]}
-                          noCoal = {camData.noCoal}
+                          noCoal={camData.noCoal}
                         />
                       </div>
                     </div>

@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import FloatingInput from "../SizingUtils/FloatingInput";
+import axios from "axios";
 import {
   Table,
   Td,
@@ -9,128 +11,68 @@ import {
   TableContainer,
   Th,
   Select,
+  Skeleton,
 } from "@chakra-ui/react";
 
-const report = [
-  {
-    Plant: "Plant A",
-    Camera: "Camera 1",
-    time: "10:00 AM",
-    "0-2mm": "5",
-    "2-6mm": "10",
-    "6-8mm": "2",
-    "8+ mm": "0",
-    Moisture: "High",
-    Black: "Yes",
-    Gray: "No",
-  },
-  {
-    Plant: "Plant B",
-    Camera: "Camera 2",
-    time: "11:30 AM",
-    "0-2mm": "8",
-    "2-6mm": "12",
-    "6-8mm": "3",
-    "8+ mm": "1",
-    Moisture: "Medium",
-    Black: "No",
-    Gray: "Yes",
-  },
-  {
-    Plant: "Plant C",
-    Camera: "Camera 3",
-    time: "1:15 PM",
-    "0-2mm": "3",
-    "2-6mm": "8",
-    "6-8mm": "1",
-    "8+ mm": "0",
-    Moisture: "Low",
-    Black: "Yes",
-    Gray: "No",
-  },
-  {
-    Plant: "Plant D",
-    Camera: "Camera 4",
-    time: "3:45 PM",
-    "0-2mm": "6",
-    "2-6mm": "9",
-    "6-8mm": "2",
-    "8+ mm": "0",
-    Moisture: "High",
-    Black: "No",
-    Gray: "Yes",
-  },
-  {
-    Plant: "Plant E",
-    Camera: "Camera 1",
-    time: "5:30 PM",
-    "0-2mm": "4",
-    "2-6mm": "11",
-    "6-8mm": "2",
-    "8+ mm": "1",
-    Moisture: "Medium",
-    Black: "Yes",
-    Gray: "No",
-  },
-  {
-    Plant: "Plant F",
-    Camera: "Camera 2",
-    time: "8:00 AM",
-    "0-2mm": "7",
-    "2-6mm": "10",
-    "6-8mm": "3",
-    "8+ mm": "1",
-    Moisture: "High",
-    Black: "No",
-    Gray: "Yes",
-  },
-  {
-    Plant: "Plant G",
-    Camera: "Camera 3",
-    time: "2:45 PM",
-    "0-2mm": "2",
-    "2-6mm": "7",
-    "6-8mm": "1",
-    "8+ mm": "0",
-    Moisture: "Low",
-    Black: "Yes",
-    Gray: "No",
-  },
-  {
-    Plant: "Plant H",
-    Camera: "Camera 4",
-    time: "7:15 AM",
-    "0-2mm": "4",
-    "2-6mm": "8",
-    "6-8mm": "1",
-    "8+ mm": "0",
-    Moisture: "Medium",
-    Black: "No",
-    Gray: "Yes",
-  },
-];
-
 const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
-    const [selectedBasis, setSelectedBasis] = useState(0);
-    const [selectedRange, setSelectedRange] = useState(0);
-    const [selectedPlant, setSelectedPlant] = useState(
-      disable ? plantId : "All Plants"
-    );
-    const [selectedCam, setSelectedCam] = useState(
-      disable ? cameraId : "All Cams"
-    );
-    const [fromTime, setFromTime] = useState(
-      new Date(new Date().getTime() - 7*24*60*60*1000)
-    );
-    const [toTime, setToTime] = useState(new Date(new Date().getTime() - 24*60*60*1000));
-  
-    const handleRangeSelect = (e) =>{
-      setSelectedRange(e.target.value);
-      if(e.target.value == 0){
-        setFromTime(new Date(new Date().getTime() - 7*24*60*60*1000))
-        setToTime(new Date(new Date().getTime() - 24*60*60*1000))
-      }
+  let param = useParams();
+  const [history, setHistory] = useState([]);
+  const [historyChanging, setHistoryChanging] = useState(false);
+  const [selectedRange, setSelectedRange] = useState(0);
+  const [selectedPlant, setSelectedPlant] = useState(plantId);
+  const [selectedCam, setSelectedCam] = useState(cameraId);
+  const [date, setDate] = useState(
+    new Date(new Date() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  );
+  const handleRangeSelect = (e) => {
+    setSelectedRange(e.target.value);
+    if (e.target.value === 0) {
+      setDate(
+        new Date(new Date() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+      );
     }
+  };
+
+  const apiCall = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      material: param.material.toLowerCase(),
+      cameraId: selectedCam,
+      plantName: selectedPlant,
+      startDate: new Date(date).getTime(),
+    });
+    const response = await axios
+      .post(
+        " https://intelliverse.backend-ripik.com/vision/v2/sizing/analytics/history/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setHistory(response.data);
+        setHistoryChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (!disable && Object.keys(plantCamMap).length !== 0) {
+      setSelectedPlant(Object.keys(plantCamMap)[0]);
+      setSelectedCam(plantCamMap[Object.keys(plantCamMap)[0]][0]);
+    }
+  }, [plantCamMap]);
+
+  useEffect(() => {
+    setHistoryChanging(true);
+    apiCall();
+  }, [date]);
+
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6 overflow-x-auto">
@@ -140,33 +82,67 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             <Select
               borderColor="#CAC5CD"
               color="#605D64"
-              placeholder={plantId}
               variant="outline"
-              isDisabled={plantId !== "All Plants"}
+              placeholder={disable && plantId}
+              isDisabled={disable}
               className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
-            />
+              value={selectedPlant}
+              onChange={(e) => setSelectedPlant(e.target.value)}
+            >
+              {!disable &&
+                Object.keys(plantCamMap)?.map((plant) => {
+                  return (
+                    <option key={plant} value={plant}>
+                      {plant}
+                    </option>
+                  );
+                })}
+            </Select>
           </div>
-          {plantId !== "All Plants" && (
-            <div className="min-w-[110px]">
-              <Select
-                borderColor="#CAC5CD"
-                color="#605D64"
-                placeholder={cameraId}
-                variant="outline"
-                isDisabled={cameraId !== ""}
-                className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
-              />
-            </div>
-          )}
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
               color="#605D64"
-              placeholder="Yesterday"
+              placeholder={disable && cameraId}
+              variant="outline"
+              isDisabled={disable}
+              className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+              value={selectedCam}
+              onChange={(e) => setSelectedCam(e.target.value)}
+            >
+              {!disable &&
+                plantCamMap[selectedPlant]?.map((cam) => {
+                  return (
+                    <option key={cam} value={cam}>
+                      {cam}
+                    </option>
+                  );
+                })}
+            </Select>
+          </div>
+          <div className="min-w-[110px]">
+            <Select
+              borderColor="#CAC5CD"
+              color="#605D64"
               variant="outline"
               className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
-            />
+              value={selectedRange}
+              onChange={(e) => handleRangeSelect(e)}
+            >
+              <option value={0}>Yesterday</option>
+              <option value={1}>Custom</option>
+            </Select>
           </div>
+          {selectedRange == 1 && (
+            <div className="min-w-[110px]">
+              <FloatingInput
+                text="Date"
+                type="date"
+                setDateTime={setDate}
+                value={date}
+              />
+            </div>
+          )}
           <div className="flex items-baseline text-xs md:text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
             <p className="cursor-pointer">Download</p>
             <select
@@ -180,53 +156,56 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         </div>
       </div>
-      <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
-        <Table variant="simple">
-          <Thead className="bg-[#FAFAFA] !text-xs">
-            <Tr>
-              <Th color="#79767D" fontWeight={400}>
-                SR. NO.
-              </Th>
-              {Object.keys(report[0]).map((id, idx) => {
+      {historyChanging && <Skeleton height="20px" />}
+      {history.hasOwnProperty("data") && (
+        <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
+          <Table variant="simple">
+            <Thead className="bg-[#FAFAFA] !text-xs">
+              <Tr>
+                <Th color="#79767D" fontWeight={400}>
+                  SR. NO.
+                </Th>
+                {history.order.map((id, idx) => {
+                  return (
+                    <Th key={idx} color="#79767D" fontWeight={400}>
+                      {id.toUpperCase()}
+                    </Th>
+                  );
+                })}
+                <Th color="#79767D" fontWeight={400}>
+                  {""}
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {history.data.map((item, index) => {
                 return (
-                  <Th key={idx} color="#79767D" fontWeight={400}>
-                    {id.toUpperCase()}
-                  </Th>
+                  <Tr
+                    key={index}
+                    className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
+                  >
+                    <Td className="cursor-pointer">
+                      {String(index + 1).padStart(2, "0")}
+                    </Td>
+                    {history.order.map((x, idx) => {
+                      return (
+                        <Td key={idx} className="cursor-pointer">
+                          {item[x]}
+                        </Td>
+                      );
+                    })}
+                    <Td>
+                      <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
+                        View Details
+                      </p>
+                    </Td>
+                  </Tr>
                 );
               })}
-              <Th color="#79767D" fontWeight={400}>
-                {""}
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {report.map((item, index) => {
-              return (
-                <Tr
-                  key={index}
-                  className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
-                >
-                  <Td className="cursor-pointer">
-                    {String(index + 1).padStart(2, "0")}
-                  </Td>
-                  {Object.keys(item).map((x, idx) => {
-                    return (
-                      <Td key={idx} className="cursor-pointer">
-                        {item[x]}
-                      </Td>
-                    );
-                  })}
-                  <Td>
-                    <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
-                      View Details
-                    </p>
-                  </Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
-      </TableContainer>
+            </Tbody>
+          </Table>
+        </TableContainer>
+      )}
     </div>
   );
 };
