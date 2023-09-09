@@ -72,7 +72,7 @@ const AiAdvisor = () => {
                         </div>
 
                     </div>}
-                {send === false ? <div>
+                {send === false ? <div className='md:visible invisible'>
                     <div className='fixed bottom-48 ml-4 text-xs'>
                         <div onClick={() => setSend(true)} style={{ width: '85.5vw' }} className='flex gap-4' >
                             <div className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>

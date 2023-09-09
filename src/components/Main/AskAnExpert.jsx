@@ -24,7 +24,6 @@ const AskAnExpert = () => {
         }
     }, [val1, val2, val3, val4])
 
-
     return (
         <div className='mt-6'>
             <div className='w-full border shadow-md bg-white rounded-md mb-5 '>

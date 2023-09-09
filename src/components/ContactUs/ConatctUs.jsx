@@ -2,6 +2,7 @@ import { IoMdMail } from "react-icons/io";
 import { CgPhone } from "react-icons/cg";
 import { FaLocationDot } from "react-icons/fa6";
 import { TEInput } from "tw-elements-react";
+import { useWindowSize } from "@uidotdev/usehooks";
 import {
   Flex,
   HStack,
@@ -20,19 +21,15 @@ import {
 } from "@chakra-ui/react";
 const ConatctUs = () => {
   // handling button submit
+  const size = useWindowSize();
   const handleSubmit = () => {
     console.log("click");
   };
   return (
     <>
-      <Flex
-        padding={"5px"}
-        marginTop={"10px"}
-        className="shadow-lg"
-        bg="#FFFFFF"
-      >
+      <div className="shadow-lg bg-white mt-4 p-2 w-full flex">
         {/* left container */}
-        <VStack
+        {size.width > 640 ? <VStack
           height={"80vh"}
           color={"white"}
           justifyContent={"flex-start"}
@@ -69,36 +66,46 @@ const ConatctUs = () => {
           <Box position={"absolute"} boxSize={"100px"} top={"71%"} left={"28%"}>
             <Img src="contactusellipse.svg" />
           </Box>
-        </VStack>
+        </VStack> : null}
 
         {/* right conatiner */}
-        <Flex
-          width={"65%"}
-          padding={"30px"}
-          paddingTop={"40px"}
-          gap={"60px"}
-          flexDirection={"column"}
+        <div className="p-[30px] pt-[40px] flex flex-col gap-[60px] md:w-[60vw] w-full"
         >
           <Flex flexDirection={"column"} gap={"30px"}>
             <Flex gap={"35px"}>
               <FormControl>
-                <TEInput type="text" id="name" label="Username"></TEInput>
+                <div>
+                  <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Full Name</div>
+                  <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
+                    <input className="w-full focus:outline-none pl-2" placeholder="Enter Your Name" />
+                  </div>
+                </div>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
               <FormControl>
-                <TEInput type="text" id="name" label="Email Id"></TEInput>
+                <div>
+                  <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Full Name</div>
+                  <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
+                    <input className="w-full focus:outline-none pl-2" placeholder="Email ID" />
+                  </div>
+                </div>
                 {/* <Input placeholder="Enter Your Official Email Id" /> */}
               </FormControl>
             </Flex>
             <Flex gap={"35px"}>
               <FormControl>
-                <TEInput type="text" id="name" label="Company Name"></TEInput>
+                <div>
+                  <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Full Name</div>
+                  <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
+                    <input className="w-full focus:outline-none pl-2" placeholder="Company Name" />
+                  </div>
+                </div>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
               <FormControl>
-                <Select>
+                <select className="h-14 border border-[#084298] rounded-md w-full px-2 py-2">
                   <option value="">Company Size</option>
-                </Select>
+                </select>
               </FormControl>
             </Flex>
           </Flex>
@@ -135,8 +142,8 @@ const ConatctUs = () => {
               Submit
             </Button>
           </Flex>
-        </Flex>
-      </Flex>
+        </div>
+      </div>
     </>
   );
 };

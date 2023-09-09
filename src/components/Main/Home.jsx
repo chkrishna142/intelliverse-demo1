@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import NewUseCaseModal from './NewUseCaseModal';
 import { useWindowSize } from "@uidotdev/usehooks";
+import { baseURL } from '../..';
+import NavContext from '../NavContext';
 
 
 const Home = ({ state }) => {
 
     const [alert, setAlert] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
-    const [onClose, setOnClose] = useState(false)
     const size = useWindowSize();
+    const { auth } = useContext(NavContext)
+
+    useEffect(()=>{
+        getProducts()
+    },[])
+
+    const getProducts = async () => {
+        try {
+            const data = await fetch(baseURL + 'getProducts', {
+                method: 'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-Token": auth
+                },
+            })
+            const res = await data.json()
+            console.log('res', res)
+
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
         <div>
@@ -75,8 +98,8 @@ const Home = ({ state }) => {
                                     <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div>
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Automate Data Digitization </p></div>
-                            </div>  
-                            
+                            </div>
+
 
                         </div>
                     </div>

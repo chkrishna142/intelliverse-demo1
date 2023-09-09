@@ -3,6 +3,7 @@ import React from "react";
 import { useQuery } from "../util/util";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Vision from "./Navbar.svg";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   let query = useQuery();
@@ -20,7 +21,7 @@ const Navbar = () => {
       zIndex="100"
       className="border-b"
       align="center"
-      left="0"  
+      left="0"
     >
       <Flex alignItems="center" marginLeft="10px"
         style={{
@@ -33,11 +34,11 @@ const Navbar = () => {
           // src="https://www.ultratechcement.com/content/dam/ultratechcementwebsite/new-header-design/desk.png"
           src={"/logo.svg"}
         />
-       
+
       </Flex>
-      {size.width>=430?<Flex alignItems="center" marginRight="30px">
-        <img className='w-40 h-12' src="/verse.jpg" alt="heading"/>
-      </Flex>:<div className="h-12"></div>}
+      {size.width >= 430 ? <Flex alignItems="center" marginRight="30px">
+        <Link to="/home"><img className='w-40 h-12 cursor-pointer' src="/verse.jpg" alt="heading" /></Link>
+      </Flex> : <div className="h-12"></div>}
       <Flex alignItems="center" marginRight="30 px">
         <div className="px-2 py-2 italic text-xl ">Steel Co.</div>
       </Flex>

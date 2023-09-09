@@ -5,21 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
 
 export const baseURL = "https://intelliverse.backend-ripik.com/api/"; //Dev backend URL
 // export const baseURL = 'https://ultratech-ripik.com/images/'; //Prod backend URL
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <Provider store={store}>
+root.render( 
     <BrowserRouter>
       <ChakraProvider>
         <App />
       </ChakraProvider>
     </BrowserRouter>
-  </Provider>
 );
 
 reportWebVitals();

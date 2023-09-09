@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  get_auth_process_states,
-  get_auth_status,
-} from '../../redux/Auth/auth.selectors';
 import { useNavigate } from 'react-router-dom';
-import { login_action } from '../../redux/Auth/auth.actions';
-import axios from 'axios';
-import { Box, Select, background, Button,Spinner } from '@chakra-ui/react';
-import { Input, Dropdown, Loader } from 'rsuite';
+import { Spinner } from '@chakra-ui/react';
 import OTPInput from 'react-otp-input';
 import { baseURL } from '../../index';
 import { EditIcon } from '@chakra-ui/icons';
@@ -18,52 +10,39 @@ import { useContext } from 'react';
 
 const Login = () => {
 
-  const dispatch = useDispatch();
-  const { setLogin } = useContext(NavContext)
-  const { isAuth, default_plant } = useSelector(get_auth_status);
-  const { auth_process_loading, auth_process_failure, auth_error_message } =
-  useSelector(get_auth_process_states);
+  const { setLogin, login, setAuth } = useContext(NavContext)
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isAuth) {
+    if (login) {
       navigate('/home');
     }
-  }, [isAuth]);
+  }, [login]);
 
-  // const [email, setEmail] = useState('');
   const emailRef = useRef();
-  const [plant, setPlant] = useState(default_plant || 'Dhar');
+  const [plant, setPlant] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('');
   const [email, setEmail] = useState('');
+  const [authToken, setAuthToken] = useState("")
+
+  //OTP States
+  const [sentOTP, setSentOTP] = useState(false);
+  const [sendingOTP, setSendingOTP] = useState(false);
+  const [submittingOTP, setSubmittingOTP] = useState(false)
+  const [errorOTP, setErrorOTP] = useState('');
 
   const handleSubmitOTP = (e) => {
     e.preventDefault();
     setSendingOTP(false);
+    setSubmittingOTP(true)
     let user_type = userType;
-    // let email = emailRef?.current?.value;
-    localStorage.setItem('logged_in', true)
-    setLogin(true)
-    dispatch(login_action({ email, password, user_type, plant }));
+    login_action({ email, password, user_type, plant, authToken, setLogin, setErrorOTP, setPassword, setSubmittingOTP })
 
-    console.log(
-      'Error',
-      auth_error_message,
-      auth_process_failure,
-      auth_process_loading
-    );
-    if (auth_process_failure) {
-      setErrorOTP(auth_error_message);
-    }
   };
-  const [sentOTP, setSentOTP] = useState(false);
-  const [sendingOTP, setSendingOTP] = useState(false);
-  const [errorOTP, setErrorOTP] = useState('');
 
   const sendOTPCall = async () => {
     try {
-
       const data = await fetch(baseURL + 'login', {
         credentials: 'same-origin',
         method: 'POST',
@@ -73,23 +52,26 @@ const Login = () => {
         body: JSON.stringify(
           {
             "email": emailRef?.current?.value,
-
           }
         )
       })
-
       if (data.status === 202) {
+        setAuth(data?.headers?.get('x-auth-token'))
+        setAuthToken(data?.headers?.get('x-auth-token'))
+        setSendingOTP(false);
         setSentOTP(true);
         setEmail(emailRef.current?.value);
         setErrorOTP('');
-
+      } else if (data.status === 500) {
+        setSendingOTP(false);
+        if (emailRef?.current?.value?.length > 0) {
+          setErrorOTP('Unauthorized or invalid email address');
+        } else setErrorOTP('Please enter an email address');
       }
     } catch (e) {
       setSendingOTP(false);
       console.log(e);
-      if (userType.length === 0) {
-        setErrorOTP('Please select a user');
-      } else if (emailRef?.current?.value?.length > 0) {
+      if (emailRef?.current?.value?.length > 0) {
         setErrorOTP('Unauthorized or invalid email address');
       } else setErrorOTP('Please enter an email address');
     }
@@ -101,12 +83,49 @@ const Login = () => {
     sendOTPCall();
   };
 
+  const login_action =
+    async ({ email, password, user_type, plant, authToken, setLogin, setErrorOTP, setPassword, setSubmittingOTP }) => {
+      try {
+        console.log('making a post request for login');
+        const login_response = await fetch("https://intelliverse.backend-ripik.com/api/verify", {
+          credentials: 'same-origin',
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": authToken
+          },
+          body: JSON.stringify(
+            {
+              "otp": password
+            }
+          )
+        })
+        const data = login_response.status;
+        if (data === 202) {
+          localStorage.setItem('logged_in', true)
+          localStorage.setItem('auth_token', authToken)
+          console.log('token', authToken)
+          setLogin(true)
+          setSubmittingOTP(false)
+        } else if (data === 403) {
+          setErrorOTP("Please check the OTP you have entered!")
+          setPassword("")
+          setSubmittingOTP(false)
+        }
+      } catch (err) {
+        setErrorOTP('Error: Please try again!')
+        setSubmittingOTP(false)
+        setPassword("")
+
+      }
+    };
+
   return (
     <div className="bg-gradient-to-tl w-screen h-screen from-[#0B295E] to-[#3C8FD4]">
       <div className="absolute top-0 bottom-0 left-0 right-0 h-[70%] m-auto w-[80%] md:h-[65%] md:w-[50%] bg-white rounded-xl flex flex-row normal-case">
         <div className="lg:w-[60%] w-[100%] p-4 pb-0 flex flex-col justify-center gap-20 lg:gap-[25%]">
           <img
-            src="ripik.svg"
+            src="/ripik.svg"
             alt="Ripik Logo"
             className="h-[30px] lg:h-[40px] absolute top-[2%] justify-self-center self-center lg:top-4 lg:left-4 lg:justify-self-start lg:self-start "
           />
@@ -123,10 +142,11 @@ const Login = () => {
                   // onChange={handleEmailChange}
                   ref={emailRef}
                 /> */}
-                <div className="mb-6 w-[200px]">
-                  <FloatingInput text={'Email'} inputRef={emailRef} />
-                </div>
-                {/* <div className="flex flex-col gap-6 w-[200px] mb-6">
+                <form>
+                  <div className="mb-6 w-[200px]">
+                    <FloatingInput text={'Email'} inputRef={emailRef} />
+                  </div>
+                  {/* <div className="flex flex-col gap-6 w-[200px] mb-6">
                   <Select
                     className="!w-[100%] !text-start !text-base"
                     value={userType}
@@ -161,14 +181,16 @@ const Login = () => {
                     </Select>
                   )}
                 </div> */}
-                <button
-                  className="w-[200px] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
-                  onClick={handleSubmitForm}
-                  style={{ textAlign: 'center' }}
-                >
-                  {sendingOTP ? <Spinner /> : 'Get OTP'}
-                </button>
-                <p className="text-red-500">{errorOTP}</p>
+                  <button
+                    type='submit'
+                    className="w-[200px] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
+                    onClick={handleSubmitForm}
+                    style={{ textAlign: 'center' }}
+                  >
+                    {sendingOTP ? <Spinner /> : 'Get OTP'}
+                  </button>
+                </form>
+                <p className="text-red-500 mt-4 text-sm flex justify-center">{errorOTP}</p>
               </>
             ) : (
               <>
@@ -188,35 +210,38 @@ const Login = () => {
                     }}
                   />
                 </span>
-                <OTPInput
-                  // className="w-[200px]"
-                  value={password}
-                  onChange={setPassword}
-                  numInputs={6}
-                  renderSeparator={<span>{'  '}</span>}
-                  renderInput={(props) => <input {...props} />}
-                  inputStyle={{
-                    border: '0.5px solid #79767D',
-                    padding: '8px',
-                    width: '25%',
-                    borderRadius: '5px',
-                    // backgroundColor: '#f5f5f5',
-                  }}
-                  containerStyle={{
-                    width: '220px',
-                    gap: '5px',
-                    marginBottom: '32px',
-                    justifySelf: 'center',
-                  }}
-                />
-                <button
-                  className="w-full !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
-                  onClick={handleSubmitOTP}
-                  appearance='primary'
-                >
-                  {sendingOTP ? 'Login' : <Spinner />}
-                </button>
-                <p className="text-red-500">{errorOTP}</p>
+             
+                  <OTPInput
+                    // className="w-[200px]"
+                    value={password}
+                    onChange={setPassword}
+                    numInputs={6}
+                    renderSeparator={<span>{'  '}</span>}
+                    renderInput={(props) => <input {...props} />}
+                    inputStyle={{
+                      border: '0.5px solid #79767D',
+                      padding: '8px',
+                      width: '25%',
+                      borderRadius: '5px',
+                      // backgroundColor: '#f5f5f5',
+                    }}
+                    containerStyle={{
+                      width: '220px',
+                      gap: '5px',
+                      marginBottom: '32px',
+                      justifySelf: 'center',
+                    }}
+                  />
+                  <button
+                    type='submit'
+                    className="w-full !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
+                    onClick={handleSubmitOTP}
+                    appearance='primary'
+                  >
+                    {submittingOTP === false ? 'Login' : <Spinner />}
+                  </button>
+               
+                <p className="text-red-500 mt-4 text-sm">{errorOTP}</p>
               </>
             )}
           </div>
