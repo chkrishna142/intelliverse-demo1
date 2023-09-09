@@ -7,7 +7,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 
 export const baseURL = "https://intelliverse.backend-ripik.com/api/"; //Dev backend URL
-// export const baseURL = 'https://ultratech-ripik.com/images/'; //Prod backend URL
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render( 

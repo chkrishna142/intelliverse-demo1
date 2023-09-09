@@ -45,7 +45,7 @@ const Messages = () => {
                             <Td className='flex items-center gap-4'>
                                 <span className='bg-blue-500 h-2 w-2 rounded-full absolute -ml-4'></span>
                                 <input type="checkbox" />
-                                <p className='text-sm'>Expert Luc Bonte has replied to your query.</p>
+                                <Link to="/notifications/singleMessage"><p className='text-sm'>Expert Luc Bonte has replied to your query.</p></Link>
                             </Td>
                             <Td className='text-sm'>Luc Bonte</Td>
                             <Td className='text-sm' isNumeric>10:01 AM</Td>

@@ -20,13 +20,14 @@ import Setting from './components/ContactUs/Setting';
 import UserProfile from './components/ContactUs/UserProfile';
 import AskAnExpert from './components/Main/AskAnExpert';
 import ClientSelect from './components/Main/ClientSelect';
-import Messages from './components/Main/Messages';
+import Messages from './components/Main/Messages/Messages';
+import SingleMessage from './components/Main/Messages/SingleMessage';
 
 function App() {
 
   const [login, setLogin] = useState(false);
   const [auth, setAuth] = useState("")
-  
+
   useEffect(() => {
     if (localStorage.getItem("logged_in")) {
       setLogin(true);
@@ -76,6 +77,7 @@ function App() {
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/bookdemo" element={<Demo />} />
                     <Route path="/notifications" element={<Messages />} />
+                    <Route path="/notifications/singleMessage" element={<SingleMessage />} />
 
                   </Routes>
                 </div>

@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import NavContext from "./NavContext";
 import { useWindowSize } from "@uidotdev/usehooks";
-import MessageNav from "./Main/MessageNav";
+import MessageNav from "./Main/Messages/MessageNav";
 import ProfileNav from "./Main/ProfileNav";
 import AppNav from "./Main/AppNav";
 
