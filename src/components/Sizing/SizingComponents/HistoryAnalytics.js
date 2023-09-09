@@ -62,13 +62,6 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   useEffect(() => {
-    if (!disable && Object.keys(plantCamMap).length !== 0) {
-      setSelectedPlant(Object.keys(plantCamMap)[0]);
-      setSelectedCam(plantCamMap[Object.keys(plantCamMap)[0]][0]);
-    }
-  }, [plantCamMap]);
-
-  useEffect(() => {
     setHistoryChanging(true);
     apiCall();
   }, [date]);

@@ -1,24 +1,29 @@
 import ReactApexChart from "react-apexcharts";
 
-const StackBarChart = () => {
-  const series = [
-    {
-      name: "0-2 mm",
-      data: [44, 55, 41, 67, 22, 43, 21, 49],
-    },
-    {
-      name: "2-6 mm",
-      data: [13, 23, 20, 8, 13, 27, 33, 12],
-    },
-    {
-      name: "6-8 mm",
-      data: [11, 17, 15, 15, 21, 14, 15, 13],
-    },
-    {
-      name: "8+ mm",
-      data: [11, 17, 15, 15, 21, 14, 15, 13],
-    },
-  ];
+const StackBarChart = ({ data, type }) => {
+  let graphData = {};
+  let times = [];
+  data.map(i => {
+    times.push(i.timestamp)
+  });
+  const labels = Object.keys(data[0][type]);
+  labels.map((i) => {
+    graphData[i] = [];
+  });
+
+  data.map((i) => {
+    Object.keys(i[type]).map((j) => {
+      graphData[j].push(i[type][j].toFixed(2));
+    });
+  });
+
+  const series = [];
+  Object.keys(graphData).map((i) => {
+    series.push({
+      name: i,
+      data: graphData[i],
+    });
+  });
 
   const options = {
     chart: {
@@ -40,16 +45,20 @@ const StackBarChart = () => {
       "#9c27b0",
     ],
     xaxis: {
-      categories: [
-        "2011 Q1",
-        "2011 Q2",
-        "2011 Q3",
-        "2011 Q4",
-        "2012 Q1",
-        "2012 Q2",
-        "2012 Q3",
-        "2012 Q4",
-      ],
+      categories: times,
+      labels: {
+        show: true,
+        formatter: function (value) {
+          const date = new Date(value);
+          const daysOfWeekAbbreviated = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+          const dayOfWeekAbbreviated = daysOfWeekAbbreviated[date.getDay()];
+        
+          return dayOfWeekAbbreviated;
+        },
+        style: {
+          fontSize: "14px",
+        },
+      },
     },
     fill: {
       opacity: 1,
@@ -70,7 +79,7 @@ const StackBarChart = () => {
       alignLabels: true,
       itemMargin: {
         horizontal: 0,
-        vertical: 15,
+        vertical: 5,
       },
     },
   };
