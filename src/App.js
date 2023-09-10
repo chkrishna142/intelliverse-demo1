@@ -29,7 +29,7 @@ function App() {
   const [auth, setAuth] = useState("")
 
   useEffect(() => {
-    if (localStorage.getItem("logged_in")) {
+    if (localStorage.getItem("logged_in") && localStorage.getItem('auth_token')) {
       setLogin(true);
     } else {
       setLogin(false);
@@ -46,7 +46,7 @@ function App() {
               <NavBox />
               <Sidebar />
               <div className="" style={{ display: "flex" }}>
-                <div className="md:ml-32 md:mr-10 md:mt-24 w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
+                <div className="md:ml-32 md:mr-10 md:mt-[12vh] w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
                   <Routes>
 
                     <Route path="/" element={<Navigate to="/home" />} />
