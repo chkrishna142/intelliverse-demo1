@@ -87,7 +87,7 @@ const Login = () => {
     async ({ email, password, user_type, plant, authToken, setLogin, setErrorOTP, setPassword, setSubmittingOTP }) => {
       try {
         console.log('making a post request for login');
-        const login_response = await fetch("https://intelliverse.backend-ripik.com/api/verify", {
+        const login_response = await fetch("https://backend-ripik.com/api/verify", {
           credentials: 'same-origin',
           method: 'POST',
           headers: {

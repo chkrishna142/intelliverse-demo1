@@ -1,22 +1,14 @@
 import {
   Flex,
-  HStack,
   Heading,
-  Icon,
-  Text,
-  Input,
   Button,
   FormControl,
-  FormLabel,
   VStack,
-  Select,
   Box,
   Img,
-  Textarea,
   Spinner,
 } from "@chakra-ui/react";
-import NavContext from "../NavContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { baseURL } from "../..";
 const UserProfile = () => {
 
@@ -27,7 +19,7 @@ const UserProfile = () => {
   const [department, setDepartment] = useState()
   const [location, setLocation] = useState()
   const [email, setEmail] = useState()
-  const [imageUrl, setImageUrl] = useState()
+  const [imageUrl, setImageUrl] = useState("")
   const [sendImage, setSendImage] = useState()
   //Spinner State
   const [spinner, setSpinner] = useState(false)
@@ -78,7 +70,7 @@ const UserProfile = () => {
       body: raw,
       redirect: 'follow'
     };
-    const data = await fetch("https://intelliverse.backend-ripik.com/api/user", requestOptions)
+    const data = await fetch("https://backend-ripik.com/api/user", requestOptions)
     await imageUpload()
     const res = await data.json()
     setSpinner(false)
@@ -153,7 +145,7 @@ const UserProfile = () => {
           flexDirection={"column"}
         >
           <div className="w-full flex justify-center">
-            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null ? "/profile_sample.svg" : imageUrl} />
+            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null  ? "/profile_sample.svg" : imageUrl} />
             <span className="bg-[#034D87] h-10 w-10 rounded-full absolute mt-32 ml-28 flex justify-center items-center cursor-pointer">
               <img className="absolute cursor-pointer" src="pencil.svg" alt="pencil" />
               <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} />
