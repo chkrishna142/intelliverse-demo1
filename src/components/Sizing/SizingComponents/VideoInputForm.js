@@ -1,8 +1,9 @@
-import { Select, Input } from "@chakra-ui/react";
+import { Select, Input, Spinner } from "@chakra-ui/react";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useToast } from '@chakra-ui/react'
 
 const VideoInputForm = ({
   setIsVideo,
@@ -13,17 +14,19 @@ const VideoInputForm = ({
 }) => {
   const param = useParams();
   const [selectedPlant, setSelectedPlant] = useState(disable ? plantId : "select plant");
+  const [videoLoading,setVideoLoading] = useState(false);
   const [selectedCam, setSelectedCam] = useState(cameraId);
   const [date, setDate] = useState(new Date());
-  const [toTime, setToTime] = useState(new Date());
-  const [fromTime, setFromTime] = useState(new Date());
+  const [toTime, setToTime] = useState('00-00');
+  const [fromTime, setFromTime] = useState('00-00');
+  const toast = useToast();
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
       plantId: selectedPlant,
       cameraId: selectedCam,
-      startTime: new Date(date + "T" + fromTime).getTime(),
-      endTime: new Date(date + "T" + toTime).getTime(),
+      startTime: new Date(date + "T" + fromTime).getTime() + 5.5*60*60*1000,
+      endTime: new Date(date + "T" + toTime).getTime() + 5.5*60*60*1000,
       clientId: param.clientId.toLowerCase(),
       material: param.material.toLowerCase(),
     });
@@ -39,7 +42,16 @@ const VideoInputForm = ({
         }
       )
       .then((response) => {
-        setIsVideo(response.data);
+        setIsVideo(response.data.url);
+        toast({
+          position: 'top-right',
+          title: response.data.url === "" ? 'Failed' : 'Video loaded',
+          description: response.data.url === "" ? 'No video in range' : 'Video is ready to play',
+          status: response.data.url === "" ? 'error' : 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+        setVideoLoading(false);
       })
       .catch((error) => {
         console.log(error);
@@ -47,6 +59,7 @@ const VideoInputForm = ({
   };
 
   const handleSubmit = () =>{
+    setVideoLoading(true);
     apiCall();
   }
 
@@ -125,11 +138,13 @@ const VideoInputForm = ({
               text="Start time"
               type="time"
               setDateTime={setFromTime}
+              value={fromTime}
             />
             <FloatingInput
               text="End time"
               type="time"
               setDateTime={setToTime}
+              value={toTime}
             />
           </div>
         </div>
@@ -139,7 +154,7 @@ const VideoInputForm = ({
           className="p-[10px] pl-4 pr-4 text-base font-medium text-white bg-[#084298] rounded-[100px]"
           onClick={handleSubmit}
         >
-          Generate Video
+          {videoLoading ? <Spinner/> : 'Generate Video'}
         </button>
       </div>
     </div>

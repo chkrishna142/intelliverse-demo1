@@ -142,12 +142,12 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       material: material,
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
-      cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
+      cameraId: selectedCam === "All Cams" || selectedPlant === 'All Plants' ? "all" : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/sizing/getOverviewAlerts/",
+        " https://intelliverse.backend-ripik.com/vision/v2/sizing/alerts/overview/",
         requestData,
         {
           credentials: "same-origin",
@@ -265,7 +265,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div> */}
         </div>
         {alerts.hasOwnProperty('data') && (
-          <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
+          <TableContainer className="!max-h-[80vh] !overflow-y-auto">
             <Table variant="simple">
               <Thead className="bg-[#FAFAFA] !text-xs">
                 <Tr>

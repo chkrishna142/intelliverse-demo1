@@ -1,12 +1,16 @@
 import VideoInputForm from "./VideoInputForm";
 import { useState, useRef } from "react";
 import VideoHistoryDrawer from "./VideoHistoryDrawer";
+import saveAs from "file-saver";
 
 const VideoGallery = ({plantId, cameraId, disable, plantCamMap}) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isVideo, setIsVideo] = useState("");
   const closeDrawer = () => {
     setIsDrawerOpen(false);
+  };
+  const VidDownload = ( url, idx ) => {
+    saveAs(url, `video-${idx}`);
   };
   return (
     <div className="bg-white relative flex flex-col xl:flex-row p-10 rounded-xl gap-8 items-center justify-between">
@@ -44,9 +48,9 @@ const VideoGallery = ({plantId, cameraId, disable, plantCamMap}) => {
               type="video/mp4"
             />
           </video>
-          <div className="flex gap-4 absolute top-2 right-2 opacity-0 hover:opacity-75">
+          <div className="flex gap-4 absolute top-2 right-2 opacity-40 hover:opacity-90">
             <img src="/SizingIcons/ShareIcon.svg" alt="" />
-            <img src="/SizingIcons/DownloadIcon.svg" alt="" />
+            <img className = "cursor-pointer" src="/SizingIcons/DownloadIcon.svg" alt="" onClick={()=>VidDownload(isVideo,'sample')}/>
           </div>
         </div>
       )}

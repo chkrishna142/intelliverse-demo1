@@ -9,10 +9,12 @@ const Feed = ({ material, clientId, setPlantCamMap }) => {
     const requestData = JSON.stringify({
       clientId: clientId,
       material: material,
+      cameraId: 'all',
+      plantName: 'all'
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v1/sizing/fetchOverviewAnalysis/",
+        " https://intelliverse.backend-ripik.com/vision/v2/sizing/analysis/overview/",
         requestData,
         {
           credentials: "same-origin",
