@@ -6,9 +6,12 @@ const SingleMessage = () => {
 
     return (
         <div className='mt-8 w-full'>
-            <div className='border bg-white rounded-md shadow-md bg-[#FDFDFD]'>
+             <p className="text-3xl mt-[4vh] sm:text-4xl font-semibold text-[#024D87]">
+                Notifications
+            </p>
+            <div className='border bg-white rounded-md shadow-md bg-[#FDFDFD] mt-5'>
                 <div className='h-14 bg-[#FDFDFD] w-full border rounded-t-md flex items-center gap-3'>
-                    <Link to="/notifications"><div className='h-6 w-6 bg-[#BEE0FF] rounded-full ml-2 cursor-pointer flex justify-center items-center'> <img src="/go_back.svg" alt='back'/></div></Link>
+                    <Link to="/notifications"><div className='h-6 w-6 bg-[#BEE0FF] rounded-full ml-2 cursor-pointer flex justify-center items-center'> <img className='h-4 w-4' src="/go_back.svg" alt='back'/></div></Link>
                     <p className='text-[#024D87] font-semibold text-xl'>Luc Bonte has replied to your query</p>
 
                 </div>
@@ -27,11 +30,11 @@ const SingleMessage = () => {
                         </div>
                     </div>
                 </div>
-                <div className='text-[#141619] font-light mx-11 mt-5'>
+                <div className='text-[#141619] text-base font-light mx-11 mt-5'>
                     <p className='mb-2'>Dear Rakesh,</p>
                     <p className='mb-2'>Thank you for reaching out with your question regarding improving Blast Furnace efficiency in steel plants. I appreciate your dedication to operational excellence in the steelmaking industry. Based on my experience and expertise, I can offer you some insights and recommendations on this matter.</p>
 
-                    <p className='mb-2'>mproving Blast Furnace efficiency is crucial for enhancing the overall performance and competitiveness of a steel plant. Here are some key considerations and strategies to achieve this:</p>
+                    <p className='mb-2'>Improving Blast Furnace efficiency is crucial for enhancing the overall performance and competitiveness of a steel plant. Here are some key considerations and strategies to achieve this:</p>
 
                     <p className='mb-2'>Maintenance Methodology: Implement a proactive and predictive maintenance approach for the Blast Furnace. Regular inspections, preventive maintenance, and addressing minor issues promptly can prevent costly breakdowns and downtime.</p>
 
