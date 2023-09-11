@@ -214,7 +214,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
       </div>
       {/* bottom */}
       {isExpanded3 && (
-        <div className={`flex  gap-[18px]  h-full w-full  overflow-x-auto`}>
+        <div className={`flex  gap-[18px]  h-full w-full  overflow-x-auto overflow-y-hidden`}>
           <div className={`flex gap-[10px]  h-full  w-[1200px]  `}>
             {/* thermal color indicator*/}
             <div class="flex flex-col w-[250px] h-full p-4  gap-3 items-center  bg-white   rounded-xl shadow-md ">
@@ -230,8 +230,8 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
               <p class="text-[12px] text-left w-full  font-normal text-[#AEA9B1]">
                 Last 1 Hour
               </p>
-              <div className="w-[200px] h-[200px] ">
-                <ThermalIndThermo maxTemperature={100} temperature={1000} />
+              <div className="w-[200px] h-full">
+                <ThermalIndThermo maxTemperature={100} temperature={140} />
               </div>
             </div>
 

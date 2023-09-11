@@ -169,7 +169,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
     },
   });
 
-  const guagepercent=0.96
+  const guagepercent=66
 
   return (
     <div className="flex flex-col w-full h-full  bg-white p-4 rounded-xl  shadow-md ">
@@ -225,18 +225,18 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
               Stability Indicator
             </p>
             <Guagecomp  guagepercent={guagepercent}/>
-            <div className="flex w-[90%]  justify-between">
-              <p className="w-[100px] bg-[#D9E7D3] text-center  rounded-xl">
+            <div className="flex w-[90%] gap-2  justify-between">
+              <p className="w-[45%] bg-[#D9E7D3] text-center text-[15px]  rounded-xl">
                 Unstable
               </p>
-              <p className="w-[100px] bg-[#69B04B] text-center  text-[white]  rounded-xl">
+              <p className="w-[45%] bg-[#69B04B] text-center  text-[white]  text-[15px] rounded-xl">
                 Stable
               </p>
             </div>
             <div className="flex w-full justify-center gap-3 text-center text-2xl font-semibold">
              
               <p className="text-[18px] text-[#938F96]">Current</p>
-              <p className="text-[18px] "> 94%</p>
+              <p className="text-[18px] ">{guagepercent}%</p>
             </div>
           </div>
 

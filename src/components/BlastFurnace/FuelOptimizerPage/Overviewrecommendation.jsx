@@ -11,7 +11,7 @@ function Overviewrecommendation({
   const size = useWindowSize();
 
   return (
-    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md  ">
       {/* top */}
       <div class="flex justify-between w-full h-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[95%] ">
@@ -34,7 +34,7 @@ function Overviewrecommendation({
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>
-      <div className={`flex ${size.width<576?"flex-col":""}  w-full justify-start `}>
+      <div className={`flex ${size.width<576?"flex-col":""}  w-full justify-start h-full`}>
                
              <div className="flex gap-[2px] w-full">
                 <img src="/Bficons/skyblue.svg" alt="" />
@@ -47,9 +47,9 @@ function Overviewrecommendation({
       </div>
       {/* bottom */}
       {isExpanded2 && (
-        <div className={`flex ${size.width<700?"flex-col" :""} h-full`}>
+        <div className={`flex ${size.width<700?"flex-col" :""} h-full `}>
        
-         <div className="w-full md:h-[150px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-0 ">
+         <div className="w-full h-full  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-0 ">
          
           {/* blast moisture */}
           <div className="col-span-1 items-center justify-between p-2 ">

@@ -13,7 +13,7 @@ const Linechart = ({chart}) => {
         series={chart.series}
         type="line"
         height={"100%"}
-        // width={"100%"}
+        width={"100%"}
       />
     </div>
   );

@@ -73,17 +73,9 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
           "11 pm",
           "12 am",
         ],
-        // title: {
-        //   text: "Month",
-        // },
+       
       },
-      yaxis: {
-        // title: {
-        //   text: "Temperature",
-        // },
-        // min: 500,
-        // max: 550,
-      },
+      
       colors: ["#69B04B", "#525056"], // Set the colors for the first and second series
 
       dataLabels: {
@@ -99,7 +91,6 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
       stroke: {
         curve: "straight",
         width: [1, 1],
-        // width: [1, 3, 3, 1],
         dashArray: [0, 6],
       },
       legend: {

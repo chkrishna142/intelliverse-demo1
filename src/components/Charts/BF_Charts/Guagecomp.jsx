@@ -1,6 +1,6 @@
 import GaugeChart from "react-gauge-chart";
 
-function Guagecomp() {
+function Guagecomp({guagepercent}) {
 
 
     // const customNeedle = (
@@ -10,7 +10,7 @@ function Guagecomp() {
       const customNeedle = (
         <rect x="48.5%" y="5%" width="3%" height="50%" fill="green" />
       );
-
+let percent=guagepercent/100;
 
   return (
     <div  className="w-full ">
@@ -27,7 +27,7 @@ function Guagecomp() {
         ]}
         needleCustom={customNeedle}
         
-        percent={0.94}
+        percent={percent}
         arcPadding={0.03}
         arcWidth={0.45}
         textColor={"#000"}
