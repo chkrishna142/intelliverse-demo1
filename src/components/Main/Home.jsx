@@ -12,25 +12,6 @@ const Home = ({ state }) => {
     const size = useWindowSize();
     const { auth } = useContext(NavContext)
 
-    useEffect(()=>{
-        getProducts()
-    },[])
-
-    const getProducts = async () => {
-        try {
-            const data = await fetch(baseURL + 'user', {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-Auth-Token": auth
-                },
-            })
-            const res = await data.json()
-            console.log('res', res)
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     return (
         <div>

@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 
-export const baseURL = "https://intelliverse.backend-ripik.com/api/"; //Dev backend URL
+export const baseURL = "https://backend-ripik.com/api/"; //Dev backend URL
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render( 
