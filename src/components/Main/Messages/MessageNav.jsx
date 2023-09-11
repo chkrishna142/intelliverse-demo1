@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
@@ -9,8 +9,8 @@ const MessageNav = () => {
     return (
         <>
             <ClickAwayListener onClickAway={() => setText(false)}><div >
-                <img onClick={() => setText(!text)} className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/messages.svg" />
-                {text === true ? <div className="absolute right-52 -mr-2 top-12 z-10 mt-2 w-80  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <img onClick={() => setText(!text)} className="hover:scale-110 hover:transition duration-200 cursor-pointer" src="/messages.svg" alt="message" />
+                {text === true ? <div className="absolute right-[15vw] -mr-2 top-12 z-10 mt-2 w-80  origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div className="py-1 mx-3 h-[42vh] overflow-y-scroll" role="none">
                         <Link to="/notifications/singleMessage">
                             <div onClick={()=>setText(false)} className="text-xs px-2 py-3 border-b">

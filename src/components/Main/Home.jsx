@@ -5,7 +5,6 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { baseURL } from '../..';
 import NavContext from '../NavContext';
 
-
 const Home = ({ state }) => {
 
     const [alert, setAlert] = useState(false)
@@ -19,7 +18,7 @@ const Home = ({ state }) => {
 
     const getProducts = async () => {
         try {
-            const data = await fetch(baseURL + 'getProducts', {
+            const data = await fetch(baseURL + 'user', {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -28,7 +27,6 @@ const Home = ({ state }) => {
             })
             const res = await data.json()
             console.log('res', res)
-
         } catch (e) {
             console.log(e);
         }
@@ -48,7 +46,6 @@ const Home = ({ state }) => {
                         <img className='h-6 ' src="/vision.svg" />
                         <div onClick={() => setIsOpen(true)} className=' md:flex flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2 h-8 border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  '><div className='ml-2 '>+</div><div className='mr-3 '>Add Use Case</div></div>
                     </div>
-
                     <div className=' w-full h-full mb-5'>
                         <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-8 text-sm items-center'>
                             <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>
@@ -99,8 +96,6 @@ const Home = ({ state }) => {
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Automate Data Digitization </p></div>
                             </div>
-
-
                         </div>
                     </div>
                 </div> : null}

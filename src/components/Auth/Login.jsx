@@ -10,7 +10,7 @@ import { useContext } from 'react';
 
 const Login = () => {
 
-  const { setLogin, login, setAuth } = useContext(NavContext)
+  const { setLogin, login } = useContext(NavContext)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -55,8 +55,8 @@ const Login = () => {
           }
         )
       })
-      if (data.status === 202) {
-        setAuth(data?.headers?.get('x-auth-token'))
+      if (data.status === 202) { 
+        //console.log(data?.headers?.get('x-auth-token'))
         setAuthToken(data?.headers?.get('x-auth-token'))
         setSendingOTP(false);
         setSentOTP(true);
