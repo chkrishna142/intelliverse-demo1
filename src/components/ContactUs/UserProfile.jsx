@@ -145,7 +145,7 @@ const UserProfile = () => {
           flexDirection={"column"}
         >
           <div className="w-full flex justify-center">
-            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl !== ""  ? "/profile_sample.svg" : imageUrl} />
+            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null  ? "/profile_sample.svg" : imageUrl} />
             <span className="bg-[#034D87] h-10 w-10 rounded-full absolute mt-32 ml-28 flex justify-center items-center cursor-pointer">
               <img className="absolute cursor-pointer" src="pencil.svg" alt="pencil" />
               <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} />
