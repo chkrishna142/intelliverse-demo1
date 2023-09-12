@@ -1,8 +1,10 @@
 import { useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import RcawaterfallChart from "../../Charts/BF_Charts/RcawaterfallChart";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Siliconpredictor = () => {
+  const size = useWindowSize();
   const [isExpanded1, setIsExpanded1] = useState(true);
   const [isExpanded4, setIsExpanded4] = useState(true);
 
@@ -102,6 +104,7 @@ const Siliconpredictor = () => {
         dashArray: [0, 6],
       },
       legend: {
+        show: false,
         position: "top",
         horizontalAlign: "right",
         floating: true,
@@ -144,10 +147,10 @@ const Siliconpredictor = () => {
           fillColor: "#605D64",
         },
         {
-            x: "PWI",
-            y: [60, 30],
-          },
-         
+          x: "PWI",
+          y: [60, 30],
+        },
+
         // {
         //   x: 'Oxygen Enrichmen', // Second instance of Oxygen Enrichment
         //   y: [45, 30],
@@ -203,7 +206,7 @@ const Siliconpredictor = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[6px] w-full  ">
+    <div className="flex flex-col gap-[6px] w-full h-full ">
       {/* silicn nav bar */}
 
       {/*charts  */}
@@ -214,10 +217,14 @@ const Siliconpredictor = () => {
 
         <div
           id="RCA"
-          className="w-full h-[auto] my-[5px] p-[24px] flex-shrink-0 rounded-[12px] bg-white "
+          className="w-full h-[auto] my-[5px] p-[24px]  rounded-[12px] bg-white   "
         >
-          <div className={`w-[80%] flex   justify-between `}>
-            <div className={`  w-full`}>
+          <div
+            className={`w-full  flex ${
+              size.width < 1024 ? "flex-col gap-5" : ""
+            } justify-between   `}
+          >
+            <div className={`  w-full   `}>
               <div className="flex items-start ">
                 <p className="text-neutral-n-30 font-Roboto text-[22px] text-[#525056] font-medium leading-normal">
                   <p className="!text-base  sm:!text-base md:!text-base lg:!text-[22px] ">
@@ -253,7 +260,7 @@ const Siliconpredictor = () => {
                 </div>
               </div>
             </div>
-            <div className={` w-full  `}>
+            <div className={` w-full    `}>
               <div className="flex items-start ">
                 <p className="text-neutral-n-30 font-Roboto text-[22px] text-[#525056] font-medium leading-normal">
                   <p className="!text-base  sm:!text-base md:!text-base lg:!text-[22px] ">
@@ -261,15 +268,19 @@ const Siliconpredictor = () => {
                   </p>
                 </p>
               </div>
-              <div className={` flex items-start mt-[10px]   gap-2 `}>
+              <div className={` flex items-start mt-[10px]   gap-5 `}>
                 <div className="w-[40%] border-l-[3px] border-blue-400 flex flex-col items-start  ">
                   {" "}
-                  <p className="ml-[16px] text-neutral-n-10 font-Roboto text-[24px] font-semibold leading-normal whitespace-nowrap">
+                  <p
+                    className={`ml-[16px] text-neutral-n-10 font-Roboto text-[24px] font-semibold leading-normal whitespace-nowrap`}
+                  >
                     <p className="!text-base  sm:!text-base md:!text-base lg:!text-[22px] !font-semibold ">
                       1920 kg/tHM
                     </p>
                   </p>
-                  <p className="ml-[16px] text-gray-700 font-roboto text-base font-normal">
+                  <p
+                    className={`ml-[16px]  text-neutral-n-10 font-Roboto text-[24px] font-semibold leading-normal whitespace-nowrap`}
+                  >
                     <p className="!text-xs  sm:!text-xs md:!text-base lg:!text-[16px] ">
                       Current value
                     </p>
@@ -297,9 +308,9 @@ const Siliconpredictor = () => {
         </div>
 
         {/* actual silicon value */}
-        <div className="w-[100%] p-[24px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
+        <div className="w-[100%] h-full p-[22px] flex-shrink-0 rounded-[12px] bg-white   ">
           {/* top */}
-          <div className="flex justify-between items-start w-[100%]">
+          <div className="flex justify-between items-start w-[100%] ">
             {/* actual fuel rate top */}
             <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
               <div className="flex items-center gap-[8px]">
@@ -316,7 +327,11 @@ const Siliconpredictor = () => {
                   </p>
                 </div>
               </div>
-              <div className={`flex items-start gap-[2%] w-[80%] `}>
+              <div
+                className={`flex  ${
+                  size.width <= 768 ? "flex-col" : ""
+                } items-start gap-[2%] w-[80%]  `}
+              >
                 <div className="flex gap-[2px] items-center justify-center">
                   <div className="flex gap-[2px] ">
                     <img src="/Bficons/darkgreendot.svg" alt="" />
@@ -351,9 +366,15 @@ const Siliconpredictor = () => {
           {/* bottom */}
 
           {isExpanded1 && (
-            <div className={`flex gap-[12px] w-full  h-full `}>
+            <div
+              className={`flex ${
+                size.width <= 768 ? "flex-col" : ""
+              }  gap-[12px] w-full  h-[300px] `}
+            >
               <div
-                className={`w-[25%] flex flex-col items-start h-[300px]  p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] bg-blue-100`}
+                class={`  ${
+                  size.width <= 768 ? "w-full" : "w-[25%]"
+                }  flex flex-col items-start h-[300px]  p-[12px] gap-[28px]  flex-shrink-0 rounded-[12px] bg-blue-100`}
               >
                 {/* current fuel rate */}
 
@@ -382,7 +403,9 @@ const Siliconpredictor = () => {
               </div>
               {/* charts */}
               <div
-                className={` w-[75%] flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}
+                class={`  ${
+                  size.width <= 768 ? "w-full" : "w-[75%]"
+                }  flex flex-col  h-full    items-start   p-[12px] gap-[28px]  rounded-[12px] `}
               >
                 <div id="chart" className="h-[100%] w-full">
                   <Linechart chart={fuelchart} />
@@ -394,63 +417,58 @@ const Siliconpredictor = () => {
 
         {/* rcaa2 */}
         <div className="flex flex-col w-full gap-3 bg-white p-4 rounded-xl  shadow-md ">
-      {/* top */}
-      <div class="flex justify-between w-full ">
-        <div class="flex flex-col items-start justify-center gap-[12px] w-full ">
-          <div className="flex items-center gap-[8px]">
-            {" "}
-            <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
-              <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
-              RCA
-              </p>
-            </div>
-            <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
-            <div className="flex justify-center items-center  w-[50px]">
-        
-
-          </div>
-          </div>
-          <div
-            className={`flex items-start gap-[2%] w-[80%]  `}
-          >
-            <div className={`flex items-start gap-[2%] w-[100%] `}>
-                <div className="flex gap-[2px] items-center justify-center">
+          {/* top */}
+          <div class="flex justify-between w-full  ">
+            <div class="flex flex-col items-start justify-center gap-[12px] w-full ">
+              <div className="flex items-center gap-[8px]">
+                {" "}
+                <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
+                  <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
+                    RCA
+                  </p>
+                </div>
+                <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+                <div className="flex justify-center items-center  w-[50px]"></div>
+              </div>
+              <div className={`flex items-start gap-[2%] w-[80%]  `}>
+                <div className={`flex items-start gap-[2%] w-[100%] `}>
+                  <div className="flex gap-[2px] items-center justify-center">
+                    <div className="flex gap-[2px] ">
+                      <img src="/Bficons/darkblue.svg" alt="" />
+                    </div>
+                    <div className="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
+                      {" "}
+                      Controllable
+                    </div>
+                  </div>
                   <div className="flex gap-[2px] ">
-                    <img src="/Bficons/darkblue.svg" alt="" />
+                    <div>
+                      <img src="/Bficons/blackdot.svg" alt="" />
+                    </div>
+                    <div className="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+                      Non-Controllable
+                    </div>
                   </div>
-                  <div className="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
-                    {" "}
-                    Controllable
-                  </div>
-                </div>
-                <div className="flex gap-[2px] ">
-                  <div>
-                    <img src="/Bficons/blackdot.svg" alt="" />
-                  </div>
-                  <div className="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                    Non-Controllable
-                  </div>
-                </div>
-                <div className="flex gap-[2px] ">
-                  <div>
-                    <img src="/Bficons/brightyellowdot.svg" alt="" />
-                  </div>
-                  <div className="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                    Initial/Final values
+                  <div className="flex gap-[2px] ">
+                    <div>
+                      <img src="/Bficons/brightyellowdot.svg" alt="" />
+                    </div>
+                    <div className="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
+                      Initial/Final values
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
+            <div onClick={handleToggle4} className="">
+              <img src="/dropicon.svg" alt="" />
+            </div>
           </div>
-        </div>
-        <div onClick={handleToggle4} className="">
-          <img src="/dropicon.svg" alt="" />
-        </div>
-      </div>
-      {/* bottom */}
-      {isExpanded4 && (
-         
+          {/* bottom */}
+          {isExpanded4 && (
             <div className={`flex gap-[12px] w-full  h-full`}>
-              <div className={`w-[25%] flex flex-col items-start h-[100%]  p-[12px] gap-[28px]  rounded-[12px] bg-blue-100`}
+              <div
+                className={`w-[25%] flex flex-col items-start h-[100%]  p-[12px] gap-[28px]  rounded-[12px] bg-blue-100`}
               >
                 {/* current fuel rate */}
 
@@ -458,10 +476,7 @@ const Siliconpredictor = () => {
                   <p className=" text-[#084298] text-center  text-[18px] font-medium ">
                     3
                   </p>
-                  <p
-                    className=" text-[14px] text-[#938F96] font-normal "
-                   
-                  >
+                  <p className=" text-[14px] text-[#938F96] font-normal ">
                     Controllable instances{" "}
                   </p>
                 </div>
@@ -469,30 +484,22 @@ const Siliconpredictor = () => {
                   <p className=" text-[#084298] text-center  text-[18px] font-medium ">
                     3
                   </p>
-                  <p
-                    className=" text-[#938F96] text-[14px] font-normal "
-
-                  >
+                  <p className=" text-[#938F96] text-[14px] font-normal ">
                     Uncontrollable instances{" "}
                   </p>
                 </div>
               </div>
               {/* charts */}
-              <div class={` w-[75%] flex flex-col  h-full    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
-                
+              <div
+                class={` w-[75%] flex flex-col  h-full    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}
+              >
                 <div id="chart" className="h-[100%] w-full">
-                <RcawaterfallChart series={series} options={options} />
+                  <RcawaterfallChart series={series} options={options} />
                 </div>
               </div>
             </div>
-        
-      )}
-    </div>
-
-        {/* footter */}
-        {/* <div className="mt-[20px] b w-full">
-          <img src="icons/burdenfooter.svg" alt="burdenfooter" className="w-full" />
-        </div> */}
+          )}
+        </div>
       </div>
     </div>
   );

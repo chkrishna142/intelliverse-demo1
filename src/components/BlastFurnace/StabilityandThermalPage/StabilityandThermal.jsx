@@ -5,6 +5,7 @@ import StabilityInd from "./StabilityInd";
 import Rca from "./Rca";
 import ThermalIndicator from "./ThermalIndicator";
 import Recommendations from "./Recommendations";
+import Cohesivezone from "./Cohesivezone";
 
 const StabilityandThermal = () => {
 
@@ -152,6 +153,11 @@ const StabilityandThermal = () => {
   const handleToggle4 = () => {
     setIsExpanded4((prevExpanded) => !prevExpanded);
   };
+  const [isExpanded5, setIsExpanded5] = useState(true);
+  const handleToggle5 = () => {
+    setIsExpanded5((prevExpanded) => !prevExpanded);
+  };
+  
 
 
   return (
@@ -163,11 +169,7 @@ const StabilityandThermal = () => {
       <div className=" flex flex-col w-full gap-5  h-[62vh] overflow-y-auto " >
 
       <div id="StabilityIndicator" className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px ">
-            <StabilityInd
-              isExpanded1={isExpanded1}
-              handleToggle1={handleToggle1}
-            />
-           
+            <StabilityInd isExpanded1={isExpanded1} handleToggle1={handleToggle1}/>
             <Rca isExpanded2={isExpanded2} handleToggle2={handleToggle2} series={series} options={options}/>
       </div>
 
@@ -175,6 +177,7 @@ const StabilityandThermal = () => {
 
      <div id="ThermalIndicator" className="flex flex-col gap-4 w-[100%] h-[auto]  p-2 flex-shrink-0 rounded-[12px] element transition-colors duration-1000 ease-in-out ">
         <ThermalIndicator isExpanded3={isExpanded3} handleToggle3={handleToggle3}/>
+        <Cohesivezone isExpanded5={isExpanded5} handleToggle5={handleToggle5} />
         <Rca isExpanded2={isExpanded21} handleToggle2={handleToggle21} series={series} options={options}/>
 
       </div>
