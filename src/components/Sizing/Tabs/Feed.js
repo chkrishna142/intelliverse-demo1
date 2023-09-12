@@ -1,25 +1,28 @@
 import PlantCard from "../SizingComponents/PlantCard";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { baseURL } from "../../../index";
+import NavContext from "../../NavContext";
 
 const Feed = ({ material, clientId, setPlantCamMap }) => {
   const [plantData, setPlantData] = useState("noPlant");
-
+  const {auth} = useContext(NavContext);
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: clientId,
       material: material,
-      cameraId: 'all',
-      plantName: 'all'
+      cameraId: "all",
+      plantName: "all",
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/sizing/analysis/overview/",
+        baseURL + "vision/v2/sizing/analysis/overview/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            "X-Auth-Token": auth
           },
         }
       )

@@ -1,9 +1,11 @@
 import { Select, Input, Spinner } from "@chakra-ui/react";
 import FloatingInput from "../SizingUtils/FloatingInput";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
+import { baseURL } from "../../../index";
 
 const VideoInputForm = ({
   setIsVideo,
@@ -13,44 +15,52 @@ const VideoInputForm = ({
   plantCamMap,
 }) => {
   const param = useParams();
-  const [selectedPlant, setSelectedPlant] = useState(disable ? plantId : "select plant");
-  const [videoLoading,setVideoLoading] = useState(false);
+  const { auth } = useContext(NavContext);
+  const [selectedPlant, setSelectedPlant] = useState(
+    disable ? plantId : "select plant"
+  );
+  const [videoLoading, setVideoLoading] = useState(false);
   const [selectedCam, setSelectedCam] = useState(cameraId);
   const [date, setDate] = useState(new Date());
-  const [toTime, setToTime] = useState('00-00');
-  const [fromTime, setFromTime] = useState('00-00');
+  const [toTime, setToTime] = useState("00-00");
+  const [fromTime, setFromTime] = useState("00-00");
   const toast = useToast();
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
       plantId: selectedPlant,
       cameraId: selectedCam,
-      startTime: new Date(date + "T" + fromTime).getTime() + 5.5*60*60*1000,
-      endTime: new Date(date + "T" + toTime).getTime() + 5.5*60*60*1000,
+      startTime:
+        new Date(date + "T" + fromTime).getTime() + 5.5 * 60 * 60 * 1000,
+      endTime: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
       clientId: param.clientId.toLowerCase(),
       material: param.material.toLowerCase(),
     });
     const response = await axios
       .post(
-        "https://intelliverse.backend-ripik.com/vision/v1/sizing/getFeedLibrary/video/",
+        baseURL + "vision/v1/sizing/getFeedLibrary/video/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
         }
       )
       .then((response) => {
         setIsVideo(response.data.url);
         toast({
-          position: 'top-right',
-          title: response.data.url === "" ? 'Failed' : 'Video loaded',
-          description: response.data.url === "" ? 'No video in range' : 'Video is ready to play',
-          status: response.data.url === "" ? 'error' : 'success',
+          position: "top-right",
+          title: response.data.url === "" ? "Failed" : "Video loaded",
+          description:
+            response.data.url === ""
+              ? "No video in range"
+              : "Video is ready to play",
+          status: response.data.url === "" ? "error" : "success",
           duration: 3000,
           isClosable: true,
-        })
+        });
         setVideoLoading(false);
       })
       .catch((error) => {
@@ -58,10 +68,10 @@ const VideoInputForm = ({
       });
   };
 
-  const handleSubmit = () =>{
+  const handleSubmit = () => {
     setVideoLoading(true);
     apiCall();
-  }
+  };
 
   return (
     <div className="flex flex-col gap-8 w-[24vw] min-w-[245px] h-full">
@@ -79,7 +89,7 @@ const VideoInputForm = ({
               onChange={(e) => setSelectedPlant(e.target.value)}
               value={selectedPlant}
             >
-              <option value='select plant'>select plant</option>
+              <option value="select plant">select plant</option>
               {!disable &&
                 Object.keys(plantCamMap).map((plant) => {
                   return (
@@ -154,7 +164,7 @@ const VideoInputForm = ({
           className="p-[10px] pl-4 pr-4 text-base font-medium text-white bg-[#084298] rounded-[100px]"
           onClick={handleSubmit}
         >
-          {videoLoading ? <Spinner/> : 'Generate Video'}
+          {videoLoading ? <Spinner /> : "Generate Video"}
         </button>
       </div>
     </div>

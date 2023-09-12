@@ -40,9 +40,6 @@ const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
         <p className="text-[#3E3C42] text-xl font-medium pl-6">Box Plot</p>
         <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw]">
-          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]">
-            {"Apply"}
-          </button>
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
@@ -122,6 +119,9 @@ const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
               />
             </div>
           )}
+          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]">
+            {"Apply"}
+          </button>
         </div>
       </div>
       <div className="h-[60vh]">

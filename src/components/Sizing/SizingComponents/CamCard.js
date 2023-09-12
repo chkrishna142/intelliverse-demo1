@@ -49,7 +49,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
         <div className="flex gap-4 items-center">
           <p className="text-xs text-[#938F96]">Last Update</p>
           <p className="text-sm text-[#79767D]">
-            {data.timestamp.slice(10, 19)}
+            {new Date(data.timestamp).toLocaleDateString() + " " + new Date(data.timestamp).toLocaleTimeString()}
           </p>
         </div>
       </div>
