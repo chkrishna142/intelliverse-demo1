@@ -13,12 +13,15 @@ const Capitalize = (str) => {
 };
 
 const PlantCard = ({ PlantName, CamData }) => {
-  const [openModal,setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
   let totalAlerts = [];
+  let totalData = [];
   Object.keys(CamData).map((cam) => {
-    if(CamData[cam][0].noCoal !== 1)totalAlerts.push(CamData[cam][0]["alertMessages"].length);
+    if (CamData[cam][0].noCoal !== 1)
+      totalAlerts.push(CamData[cam][0]["alertMessages"].length);
     else totalAlerts.push(0);
-  }); 
+    totalData.push(CamData[cam][0]);
+  });
   let sum = totalAlerts.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
   }, 0);
@@ -26,22 +29,39 @@ const PlantCard = ({ PlantName, CamData }) => {
     <div className="flex flex-col bg-white rounded-xl pt-4 gap-1">
       <div className="flex justify-between pl-6 pr-6">
         <p className="text-xl font-medium">{Capitalize(PlantName)}</p>
-        {sum!==0 && (
+        {sum !== 0 && (
           <div className="flex gap-4 items-center">
             <p className="rounded-lg border-2 text-xs border-red-400 pl-2 pr-2 pt-1 pb-1 bg-[#F9DEDC]">
-              {sum}{" "}
-              alerts
+              {sum} alerts
             </p>
-            <p className="text-[#DC362E] text-sm font-medium cursor-pointer" onClick={()=>setOpenModal(true)}>
+            <p
+              className="text-[#DC362E] text-sm font-medium cursor-pointer"
+              onClick={() => setOpenModal(true)}
+            >
               See Detail
             </p>
-            {openModal && <DetailModal openModal={openModal} closeModal={()=>setOpenModal(false)}/>}
+            {openModal && (
+              <DetailModal
+                openModal={openModal}
+                closeModal={() => setOpenModal(false)}
+                data={totalData}
+                index = {0}
+                PlantName = {PlantName}
+              />
+            )}
           </div>
         )}
       </div>
       <div className="grid grid-cols-1  xl:grid-cols-2">
-        {Object.keys(CamData).map((cam,idx) => {
-          return <CamCard plantId={PlantName} cameraName={cam} data={CamData[cam][0]} alert={totalAlerts[idx]}/>;
+        {Object.keys(CamData).map((cam, idx) => {
+          return (
+            <CamCard
+              plantId={PlantName}
+              cameraName={cam}
+              data={CamData[cam][0]}
+              alert={totalAlerts[idx]}
+            />
+          );
         })}
       </div>
     </div>

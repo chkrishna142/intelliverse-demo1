@@ -1,13 +1,16 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import NavContext from "../../NavContext";
 import LineChart from "../../Charts/SizingCharts/LineCharts";
 import DonutChart from "../../Charts/SizingCharts/DonutChart";
 import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
 import { Spinner } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
+import {baseURL} from "../../../index"
 
 const CamFeed = ({ material, cameraId, clientId }) => {
   const size = useWindowSize();
+  const { auth } = useContext(NavContext);
   const [camData, setCamData] = useState("");
   const [bulkData, setBulkData] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -20,12 +23,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
     });
     const response = await axios
       .post(
-        "  https://intelliverse.backend-ripik.com/vision/v2/sizing/analysis/detail/",
+         baseURL + "vision/v2/sizing/analysis/detail/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            "X-Auth-Token": auth
           },
         }
       )
@@ -45,12 +49,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
     });
     const response = await axios
       .post(
-        "https://intelliverse.backend-ripik.com/vision/v1/sizing/getDetailAnalysis/init/",
+        baseURL + "vision/v2/sizing/analysis/list/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            'X-Auth-Token': auth
           },
         }
       )
@@ -165,7 +170,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                 <div
                   className={
                     material === "coal"
-                      ? "flex gap-[64px]"
+                      ? "flex gap-[64px] justify-between overflow-x-auto"
                       : "flex flex-col-reverse gap-4"
                   }
                 >
@@ -176,7 +181,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                     <div
                       className={
                         material === "coal"
-                          ? "w-[30vw] h-[30vh]"
+                          ? "w-[100vw] sm:w-[50vw] lg:w-[40vw] xl:w-[30vw] h-full xl:h-[30vh]"
                           : `w-full min-[1150px]:w-[20vw] h-[50vh]`
                       }
                     >
@@ -188,20 +193,20 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                     </div>
                   </div>
                   {material === "coal" && (
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 min-w-[150px]">
                       <p className="text-base font-medium text-[#605D64]">
                         Color Distribution
                       </p>
-                      <div className="h-full w-[6vw] flex flex-col gap-1">
+                      <div className="h-full w-[16vw] sm:w-[6vw] flex flex-col gap-1">
                         <div
                           style={{ height: `${camData.color.gray}%` }}
-                          className="flex justify-center items-center bg-[#79767D] rounded-tr-lg rounded-tl-lg text-white text-center text-lg font-medium"
+                          className="flex justify-center items-center bg-[#79767D] rounded-tr-lg rounded-tl-lg text-white text-center text-sm lg:text-base xl:text-lg font-medium"
                         >
                           {camData.color.gray.toFixed(2)}%
                         </div>
                         <div
                           style={{ height: `${camData.color.black}%` }}
-                          className="flex justify-center items-center bg-black rounded-br-lg rounded-bl-lg text-white text-center text-lg font-medium"
+                          className="flex justify-center items-center bg-black rounded-br-lg rounded-bl-lg text-white text-center text-sm lg:text-base xl:text-lg font-medium"
                         >
                           {camData.color.black.toFixed(2)}%
                         </div>
@@ -220,8 +225,8 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                   )}
                   <div className="flex flex-col gap-4">
                     <p className="text-base font-medium text-[#605D64]">MPS</p>
-                    <div className="rounded-lg bg-[#f6faff] text-center py-[25px] pl-3 pr-7 text-[#1C56AC] text-2xl">
-                      {material === "coal" ? "12.00" : camData.mps.toFixed(2)}{" "}
+                    <div className="min-w-[150px] rounded-lg bg-[#f6faff] text-center py-[25px] pl-3 pr-7 text-[#1C56AC] text-2xl">
+                      {camData.mps.toFixed(2)}{" "}
                       mm
                     </div>
                   </div>
@@ -246,19 +251,22 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                     <p className="text-[#605D64]">MPS</p>
                     <p> </p>
                   </div>
-                  {camData.hasOwnProperty('mpsAvg') && Object.keys(camData.mpsAvg).map((i) => {
-                    return (
-                      <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
-                        <p className="text-[#1C56AC]">{camData.mpsAvg[i]} mm</p>
-                        <p className="text-[#605D64] text-xs font-normal">
-                          {i}
-                        </p>
-                      </div>
-                    );
-                  })}
+                  {camData.hasOwnProperty("mpsAvg") &&
+                    Object.keys(camData.mpsAvg).map((i) => {
+                      return (
+                        <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[150px]">
+                          <p className="text-[#1C56AC]">
+                            {camData.mpsAvg[i]} mm
+                          </p>
+                          <p className="text-[#605D64] text-xs font-normal">
+                            {i}
+                          </p>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
-              <div className="rounded-xl bg-white flex gap-4 h-full">
+              <div className="rounded-xl bg-white flex flex-col lg:flex-row gap-4 h-full">
                 <div className="flex flex-col flex-1 gap-4">
                   <p className="text-[#605D64] font-medium text-base">
                     Size trend

@@ -1,10 +1,12 @@
 import MaterialCard from "./SizingComponents/MaterialCard";
+import NavContext from "../NavContext";
+import { baseURL, bseURL } from "../../index";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const MaterialSelect = () => {
-
-  const [materialData,setMaterialData] = useState({});
+  const [materialData, setMaterialData] = useState({});
+  const { auth } = useContext(NavContext);
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
@@ -12,16 +14,13 @@ const MaterialSelect = () => {
       category: "sizing",
     });
     const response = await axios
-      .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/product/overview/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/product/overview/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setMaterialData(response.data);
       })
@@ -30,9 +29,9 @@ const MaterialSelect = () => {
       });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     apiCall();
-  },[]);
+  }, []);
 
   return (
     <div className="h-full">

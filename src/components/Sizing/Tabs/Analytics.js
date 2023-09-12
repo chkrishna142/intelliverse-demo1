@@ -1,4 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useContext, type, useRef } from "react";
+import NavContext from "../../NavContext";
+import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import PieChart from "../../Charts/SizingCharts/PieChart";
 import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
@@ -10,10 +12,12 @@ import axios from "axios";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
+  const { auth } = useContext(NavContext);
   let material = param.material.toLowerCase();
   const [sizeData, setSizeData] = useState([]);
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
-  const [selectedBasis, setSelectedBasis] = useState("SIZE");
+  const [selectedBasis, setSelectedBasis] = useState(0);
+  const typeRef = useRef();
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
   const [selectedCam, setSelectedCam] = useState(cameraId);
@@ -27,7 +31,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       .toISOString()
       .slice(0, 10)
   );
-  
+
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
     if (e.target.value == 0) {
@@ -48,23 +52,23 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
       material: param.material.toLowerCase(),
-      cameraId: selectedCam === "All Cams" || selectedPlant === 'All Plants' ? "all" : selectedCam,
+      cameraId:
+        selectedCam === "All Cams" || selectedPlant === "All Plants"
+          ? "all"
+          : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
       startDate: new Date(fromTime).getTime(),
       endDate: new Date(toTime).getTime(),
-      distType: selectedBasis,
+      distType: typeRef.current,
     });
     const response = await axios
-      .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/sizing/analytics/distribution/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/analytics/distribution/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setSizeData(response.data);
         setSizeDataChanging(false);
@@ -75,15 +79,19 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   const handleClick = () => {
+    if (selectedBasis == 0) typeRef.current = 'SIZE';
+    else if (selectedBasis == 1) typeRef.current = 'COLOR';
+    else typeRef.current = 'MOISTURE';
     setSizeDataChanging(true);
     apiCall();
   };
 
   useEffect(() => {
+    typeRef.current = 'SIZE';
     setSizeDataChanging(true);
     apiCall();
   }, []);
-
+  console.log(typeRef.current, "basis");
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
@@ -98,12 +106,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             <div className="flex gap-6 text-[#49454F] text-xs lg:text-base min-w-[445px]">
               <div
                 className={`p-3 flex items-center gap-1 ${
-                  selectedBasis === 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
+                  selectedBasis == 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
                 }`}
               >
                 <input
-                  value="SIZE"
-                  onClick={(e) => setSelectedBasis(e.target.value)}
+                  value={0}
+                  onChange={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
                   className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
@@ -112,12 +120,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               </div>
               <div
                 className={`p-3 flex items-center gap-1 ${
-                  selectedBasis === 1 ? "bg-[#e7effb] rounded-xl" : "bg-white"
+                  selectedBasis == 1 ? "bg-[#e7effb] rounded-xl" : "bg-white"
                 }`}
               >
                 <input
-                  value="COLOR"
-                  onClick={(e) => setSelectedBasis(e.target.value)}
+                  value={1}
+                  onChange={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
                   className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
@@ -126,12 +134,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               </div>
               <div
                 className={`p-3 flex items-center gap-1 ${
-                  selectedBasis === 2 ? "bg-[#e7effb] rounded-xl" : "bg-white"
+                  selectedBasis == 2 ? "bg-[#e7effb] rounded-xl" : "bg-white"
                 }`}
               >
                 <input
-                  value="MOISTURE"
-                  onClick={(e) => setSelectedBasis(e.target.value)}
+                  value={2}
+                  onChange={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
                   className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
@@ -141,12 +149,6 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </div>
           )}
           <div className="flex items-center gap-2">
-            <button
-              className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
-              onClick={handleClick}
-            >
-              {sizeDataChanging ? <Spinner /> : "Apply"}
-            </button>
             <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
@@ -235,19 +237,22 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                 />
               </div>
             )}
+            <button
+              className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+              onClick={handleClick}
+            >
+              {sizeDataChanging ? <Spinner /> : "Apply"}
+            </button>
           </div>
         </div>
         <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
-              <PieChart data={sizeData} type={selectedBasis.toLowerCase()} />
+              <PieChart data={sizeData} type={typeRef.current.toLowerCase()} />
             </div>
             <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
-              <StackBarChart
-                data={sizeData}
-                type={selectedBasis.toLowerCase()}
-              />
+              <StackBarChart data={sizeData} type={typeRef.current.toLowerCase()} />
             </div>
           </div>
         )}

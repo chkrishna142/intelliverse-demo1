@@ -1,8 +1,10 @@
 import FloatingInput from "../SizingUtils/FloatingInput";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ExlCsvDownload from "../SizingUtils/ExlCsvDownload";
+import NavContext from "../../NavContext";
 import {
   Table,
   Td,
@@ -17,6 +19,7 @@ import {
 
 const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
+  const { auth } = useContext(NavContext);
   const [report, setReport] = useState([]);
   const [selectedBasis, setSelectedBasis] = useState(0);
   const [reportChanging, setReportChanging] = useState(false);
@@ -43,18 +46,22 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       material: param.material.toLowerCase(),
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
-      cameraId: selectedCam === "All Cams" || selectedPlant === 'All Plants' ? "all" : selectedCam,
+      cameraId:
+        selectedCam === "All Cams" || selectedPlant === "All Plants"
+          ? "all"
+          : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
       basis: selectedBasis,
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/sizing/report/overview/",
+        baseURL + "vision/v2/sizing/report/overview/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
         }
       )
@@ -207,7 +214,13 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                       {report.order.map((x, idx) => {
                         return (
                           <Td key={idx} className="cursor-pointer">
-                            {x.toLowerCase().includes('time') ? new Date(item[x]).toISOString().split('T').join(' ').slice(0,19) : item[x]}
+                            {x.toLowerCase().includes("time")
+                              ? new Date(item[x])
+                                  .toISOString()
+                                  .split("T")
+                                  .join(" ")
+                                  .slice(0, 19)
+                              : item[x]}
                           </Td>
                         );
                       })}

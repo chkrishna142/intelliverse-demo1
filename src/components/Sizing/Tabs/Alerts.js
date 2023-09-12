@@ -1,7 +1,9 @@
 import FloatingInput from "../SizingUtils/FloatingInput";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import NavContext from "../../NavContext";
+import { baseURL } from "../../../index";
 import {
   Select,
   Table,
@@ -108,14 +110,9 @@ const getReason = (reason) => {
   }
 };
 
-const convertTimeString = (item) => {
-  let date = new Date(item).toISOString().split("T")[0];
-  let time = new Date(item).toTimeString();
-  return date.split("-").reverse().join("/") + " " + time.slice(0, 8);
-};
-
 const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
+  const {auth} = useContext(NavContext);
   let material = param.material.toLowerCase();
   let clientId = param.clientId.toLowerCase();
   const [alerts, setAlerts] = useState([]);
@@ -142,17 +139,21 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       material: material,
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
-      cameraId: selectedCam === "All Cams" || selectedPlant === 'All Plants' ? "all" : selectedCam,
+      cameraId:
+        selectedCam === "All Cams" || selectedPlant === "All Plants"
+          ? "all"
+          : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/sizing/alerts/overview/",
+        baseURL + "vision/v2/sizing/alerts/overview/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            "X-Auth-Token": auth
           },
         }
       )
@@ -264,7 +265,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
             />
           </div> */}
         </div>
-        {alerts.hasOwnProperty('data') && (
+        {alerts.hasOwnProperty("data") && (
           <TableContainer className="!max-h-[80vh] !overflow-y-auto">
             <Table variant="simple">
               <Thead className="bg-[#FAFAFA] !text-xs">

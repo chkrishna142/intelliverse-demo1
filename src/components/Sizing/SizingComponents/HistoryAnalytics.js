@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";
 import FloatingInput from "../SizingUtils/FloatingInput";
-import ExlCsvDownload from "../SizingUtils/ExlCsvDownload";
+import { baseURL } from "../../../index";
 import axios from "axios";
 import {
   Table,
@@ -17,6 +18,7 @@ import {
 
 const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
+  const { auth } = useContext(NavContext);
   const [history, setHistory] = useState([]);
   const [historyChanging, setHistoryChanging] = useState(false);
   const [selectedRange, setSelectedRange] = useState(0);
@@ -44,12 +46,13 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     });
     const response = await axios
       .post(
-        " https://intelliverse.backend-ripik.com/vision/v2/sizing/analytics/history/",
+        baseURL + "vision/v2/sizing/analytics/history/",
         requestData,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
         }
       )
@@ -77,12 +80,6 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
         <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
         <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw]">
-          <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
-            onClick={handleClick}
-          >
-            {historyChanging ? <Spinner /> : "Apply"}
-          </button>
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
@@ -148,9 +145,15 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               />
             </div>
           )}
-          {history.hasOwnProperty("order") && (
+          <button
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+            onClick={handleClick}
+          >
+            {historyChanging ? <Spinner /> : "Apply"}
+          </button>
+          {/* {history.hasOwnProperty("order") && (
             <ExlCsvDownload order={history.order} data={history.data} />
-          )}
+          )} */}
         </div>
       </div>
       {history.hasOwnProperty("data") && (

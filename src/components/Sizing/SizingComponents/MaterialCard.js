@@ -1,5 +1,14 @@
 import { Link } from 'react-router-dom';
 
+const Capitalize = (str) => {
+  const arr = str.split(" ");
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  }
+  const str2 = arr.join(" ");
+  return str2;
+};
+
 const MaterialCard = ({ material, alerts, deployments }) => {
   return (
     <Link
@@ -22,12 +31,12 @@ const MaterialCard = ({ material, alerts, deployments }) => {
         </div>
         <div className="w-full flex justify-center text-[#024D87]  text-xs">
           <div className="bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs">
-            {deployments} Deployments
+            {deployments + " Deployment" + (deployments > 1 ? 's' : '')} 
           </div>
         </div>
       </div>
       <div className="mt-4 flex justify-center h-10 w-28">
-        <p className="font-bold text-[#024D87]">{material}</p>
+        <p className="font-bold text-[#024D87]">{Capitalize(material) + " " + "Sizing"}</p>
       </div>
     </Link>
   );
