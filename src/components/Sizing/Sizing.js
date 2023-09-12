@@ -28,15 +28,16 @@ const Sizing = () => {
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-      
-      { (location.pathname.includes('blastfurnace')?<></>: <div className="flex justify-between mb-3 mt-6">
-        <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-          {Capitalize(page)}
-        </p>
-      </div>) }
-      
-       
-     
+      {location.pathname.includes("blastfurnace") ? (
+        <></>
+      ) : (
+        <div className="flex justify-between mb-3 mt-6">
+          <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
+            {Capitalize(page)}
+          </p>
+        </div>
+      )}
+
       <Tabs>
         <TabList className="!flex !border-0">
           <div className="flex items-center gap-4 overflow-x-auto h-14 md:h-10">
@@ -118,12 +119,14 @@ const Sizing = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Analytics
-              plantId="All Plants"
-              cameraId=""
-              disable={false}
-              plantCamMap={plantCamMap}
-            />
+            {Object.keys(plantCamMap).length != 0 && (
+              <Analytics
+                plantId={Object.keys(plantCamMap)[0]}
+                cameraId={plantCamMap[Object.keys(plantCamMap)[0]][0]}
+                disable={false}
+                plantCamMap={plantCamMap}
+              />
+            )}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Report

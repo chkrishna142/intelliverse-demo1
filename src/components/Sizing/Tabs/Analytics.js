@@ -4,7 +4,8 @@ import PieChart from "../../Charts/SizingCharts/PieChart";
 import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
-import { Select, Skeleton } from "@chakra-ui/react";
+import { Select, Spinner } from "@chakra-ui/react";
+import BoxPlotAnalysis from "../SizingComponents/BoxPlotAnalysis";
 import axios from "axios";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
@@ -14,12 +15,8 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
   const [selectedBasis, setSelectedBasis] = useState("SIZE");
   const [selectedRange, setSelectedRange] = useState(0);
-  const [selectedPlant, setSelectedPlant] = useState(
-    disable ? plantId : "All Plants"
-  );
-  const [selectedCam, setSelectedCam] = useState(
-    disable ? cameraId : "All Cams"
-  );
+  const [selectedPlant, setSelectedPlant] = useState(plantId);
+  const [selectedCam, setSelectedCam] = useState(cameraId);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
       .toISOString()
@@ -30,9 +27,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       .toISOString()
       .slice(0, 10)
   );
-  const prevFromTimeRef = useRef();
-  const prevToTimeRef = useRef();
-
+  
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
     if (e.target.value == 0) {
@@ -53,7 +48,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
       material: param.material.toLowerCase(),
-      cameraId: selectedCam === "All Cams" ? "all" : selectedCam,
+      cameraId: selectedCam === "All Cams" || selectedPlant === 'All Plants' ? "all" : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
       startDate: new Date(fromTime).getTime(),
       endDate: new Date(toTime).getTime(),
@@ -79,31 +74,24 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       });
   };
 
-  useEffect(() => {
+  const handleClick = () => {
+    setSizeDataChanging(true);
     apiCall();
-    prevFromTimeRef.current = fromTime;
-    prevToTimeRef.current = toTime;
-  }, []);
+  };
 
   useEffect(() => {
-    if (
-      prevToTimeRef.current !== toTime &&
-      prevFromTimeRef.current !== fromTime
-    ) {
-      setSizeDataChanging(true);
-      // console.log(fromTime, toTime, "changed");
-      apiCall();
-      prevFromTimeRef.current = fromTime;
-      prevToTimeRef.current = toTime;
-    }
-  }, [toTime, fromTime]);
+    setSizeDataChanging(true);
+    apiCall();
+  }, []);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
         <div
           className={`flex ${
-            material === "coal" ? "justify-between" : "justify-end"
+            material === "coal"
+              ? "justify-between"
+              : "justify-start xl:justify-end"
           } items-center overflow-x-auto h-[60px]`}
         >
           {material === "coal" && (
@@ -153,6 +141,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </div>
           )}
           <div className="flex items-center gap-2">
+            <button
+              className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+              onClick={handleClick}
+            >
+              {sizeDataChanging ? <Spinner /> : "Apply"}
+            </button>
             <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
@@ -244,7 +238,6 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         </div>
         <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
-        {sizeDataChanging && <Skeleton height="20px" />}
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
@@ -259,7 +252,17 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         )}
       </div>
-      {(disable || Object.keys(plantCamMap) != 0) && (
+      {(disable || Object.keys(plantCamMap).length != 0) && (
+        <BoxPlotAnalysis
+          plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
+          cameraId={
+            disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
+          }
+          disable={disable}
+          plantCamMap={plantCamMap}
+        />
+      )}
+      {(disable || Object.keys(plantCamMap).length != 0) && (
         <HistoryAnalytics
           plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
           cameraId={

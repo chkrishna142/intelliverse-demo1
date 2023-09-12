@@ -20,7 +20,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
     });
     const response = await axios
       .post(
-        "  https://intelliverse.backend-ripik.com/vision/v1/sizing/getDetailAnalysis/",
+        "  https://intelliverse.backend-ripik.com/vision/v2/sizing/analysis/detail/",
         requestData,
         {
           credentials: "same-origin",
@@ -152,7 +152,9 @@ const CamFeed = ({ material, cameraId, clientId }) => {
           </div>
           <div
             className={
-              material === "coal" ? "flex flex-col gap-2" : `flex flex-col min-[1150px]:flex-row gap-2`
+              material === "coal"
+                ? "flex flex-col gap-2"
+                : `flex flex-col min-[1150px]:flex-row gap-2`
             }
           >
             <div className="flex flex-col gap-4 rounded-xl p-6 pt-4 bg-white">
@@ -244,30 +246,16 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                     <p className="text-[#605D64]">MPS</p>
                     <p> </p>
                   </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
-                    <p className="text-[#1C56AC]">
-                      7.24 mm
-                    </p>
-                    <p className="text-[#605D64] text-xs font-normal">1hr</p>
-                  </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
-                    <p className="text-[#1C56AC]">
-                      7.24 mm
-                    </p>
-                    <p className="text-[#605D64] text-xs font-normal">4hr</p>
-                  </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
-                    <p className="text-[#1C56AC]">
-                      7.24 mm
-                    </p>
-                    <p className="text-[#605D64] text-xs font-normal">8hr</p>
-                  </div>
-                  <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
-                    <p className="text-[#1C56AC]">
-                      7.24 mm
-                    </p>
-                    <p className="text-[#605D64] text-xs font-normal">24hr</p>
-                  </div>
+                  {camData.hasOwnProperty('mpsAvg') && Object.keys(camData.mpsAvg).map((i) => {
+                    return (
+                      <div className="flex gap-2 px-3 py-[2px] items-baseline min-w-[120px]">
+                        <p className="text-[#1C56AC]">{camData.mpsAvg[i]} mm</p>
+                        <p className="text-[#605D64] text-xs font-normal">
+                          {i}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="rounded-xl bg-white flex gap-4 h-full">
@@ -275,7 +263,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                   <p className="text-[#605D64] font-medium text-base">
                     Size trend
                   </p>
-                  <div className={material === "coal" ? "h-[40vh]" : "h-[40vh] min-[1150px]:h-full"}>
+                  <div
+                    className={
+                      material === "coal"
+                        ? "h-[40vh]"
+                        : "h-[40vh] min-[1150px]:h-full"
+                    }
+                  >
                     <LineChart
                       data={Object.values(camData.size)}
                       timeStamps={new Date(

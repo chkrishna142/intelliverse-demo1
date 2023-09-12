@@ -3,8 +3,8 @@ import ReactApexChart from "react-apexcharts";
 const StackBarChart = ({ data, type }) => {
   let graphData = {};
   let times = [];
-  data.map(i => {
-    times.push(i.timestamp)
+  data.map((i) => {
+    times.push(i.timestamp);
   });
   const labels = Object.keys(data[0][type]);
   labels.map((i) => {
@@ -50,10 +50,28 @@ const StackBarChart = ({ data, type }) => {
         show: true,
         formatter: function (value) {
           const date = new Date(value);
-          const daysOfWeekAbbreviated = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-          const dayOfWeekAbbreviated = daysOfWeekAbbreviated[date.getDay()];
-        
-          return dayOfWeekAbbreviated;
+
+          // Get the day of the month with leading zero
+          const dayOfMonth = String(date.getDate()).padStart(2, "0");
+
+          // Get the abbreviated month name
+          const monthsAbbreviated = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const monthAbbreviated = monthsAbbreviated[date.getMonth()];
+
+          return `${dayOfMonth} ${monthAbbreviated}`;
         },
         style: {
           fontSize: "14px",

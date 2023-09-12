@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FloatingInput from "../SizingUtils/FloatingInput";
+import ExlCsvDownload from "../SizingUtils/ExlCsvDownload";
 import axios from "axios";
 import {
   Table,
@@ -11,7 +12,7 @@ import {
   TableContainer,
   Th,
   Select,
-  Skeleton,
+  Spinner,
 } from "@chakra-ui/react";
 
 const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
@@ -61,16 +62,27 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       });
   };
 
+  const handleClick = () => {
+    setHistoryChanging(true);
+    apiCall();
+  };
+
   useEffect(() => {
     setHistoryChanging(true);
     apiCall();
-  }, [date]);
+  }, []);
 
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
-      <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6 overflow-x-auto">
+      <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
         <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
-        <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0">
+        <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw]">
+          <button
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+            onClick={handleClick}
+          >
+            {historyChanging ? <Spinner /> : "Apply"}
+          </button>
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
@@ -136,22 +148,13 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               />
             </div>
           )}
-          <div className="flex items-baseline text-xs md:text-base text-white font-medium p-[10px] pl-4 pr-4 bg-[#6CA6FC] rounded-[51px]">
-            <p className="cursor-pointer">Download</p>
-            <select
-              name="typeSheet"
-              id="typeSheet"
-              className="focus:outline-none bg-[#6CA6FC]"
-            >
-              <option>Exl</option>
-              <option>Csv</option>
-            </select>
-          </div>
+          {history.hasOwnProperty("order") && (
+            <ExlCsvDownload order={history.order} data={history.data} />
+          )}
         </div>
       </div>
-      {historyChanging && <Skeleton height="20px" />}
       {history.hasOwnProperty("data") && (
-        <TableContainer className="!whitespace-normal !h-[80vh] !overflow-y-auto">
+        <TableContainer className="!max-h-[80vh] !overflow-y-auto">
           <Table variant="simple">
             <Thead className="bg-[#FAFAFA] !text-xs">
               <Tr>

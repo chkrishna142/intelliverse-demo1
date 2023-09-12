@@ -2,25 +2,26 @@ import { useEffect, useState } from "react";
 import LibraryGrid from "./LibraryGrid";
 import { Select } from "@chakra-ui/react";
 import FloatingInput from "../SizingUtils/FloatingInput";
+import axios from "axios";
 
 const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [showType, setShowType] = useState(0);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [selectedPlant, setSelectedPlant] = useState(
-    disable ? plantId : "All Plants"
+    disable ? plantId : "select plant"
   );
-  const [selectedCam, setSelectedCam] = useState(
-    disable ? cameraId : "All Cams"
-  );
-  const handleSelect = (e) =>{
+  const [selectedCam, setSelectedCam] = useState(cameraId);
+  const handleSelect = (e) => {
     let val = e.target.value;
     setShowType(val);
-    if(val == 0){
-      setDate(new Date())
-    }else if(val == 1){
-      setDate(new Date(new Date().getTime() - 24*60*60*1000))
+    if (val == 0) {
+      setDate(new Date().toISOString.slice(0, 10));
+    } else if (val == 1) {
+      setDate(
+        new Date(new Date() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+      );
     }
-  }
+  };
   // useEffect(()=>{
   //   console.log(date,'selected value')
   // },[date])
@@ -31,16 +32,14 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
-            placeholder={disable && plantId}
+            placeholder={disable && selectedPlant}
             variant="outline"
             isDisabled={disable}
             className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
             onChange={(e) => setSelectedPlant(e.target.value)}
             value={selectedPlant}
           >
-            <option key="All Plants" value="All Plants">
-              All Plants
-            </option>
+            <option value="select plant">select plant</option>
             {!disable &&
               Object.keys(plantCamMap).map((plant) => {
                 return (
@@ -51,7 +50,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               })}
           </Select>
         </div>
-        {selectedPlant !== "All Plants" && (
+        {selectedPlant !== "select plant" && (
           <div>
             <Select
               borderColor="#CAC5CD"
@@ -63,7 +62,6 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               onChange={(e) => setSelectedCam(e.target.value)}
               value={selectedCam}
             >
-              {" "}
               <option key="All Cams" value="All Cams">
                 All Cams
               </option>
@@ -94,7 +92,12 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
         </div>
         {showType == 2 && (
           <div>
-            <FloatingInput text="Date" type="date" setDateTime={setDate} />
+            <FloatingInput
+              text="Date"
+              type="date"
+              setDateTime={setDate}
+              value={date}
+            />
           </div>
         )}
       </div>
