@@ -15,7 +15,14 @@ const RangeSlider = ({ overallRange, optimalRange, currentValue }) => {
     return { left: `${leftWidth}%`, width: `${rangeWidth}%` };
   };
 
-  const currentValuePosition = ((currentValue - overallRange[0]) / (overallRange[1] - overallRange[0])) * 100;
+  let currentValuePosition = ((currentValue - overallRange[0]) / (overallRange[1] - overallRange[0])) * 100;
+  if(currentValuePosition<0){
+    currentValuePosition=0;
+  }else if(currentValuePosition>100)
+  {
+    currentValuePosition=100;
+  }
+  console.log("current value of position---",currentValuePosition)
 
   return (
     <div className="flex flex-col items-center space-y-2">

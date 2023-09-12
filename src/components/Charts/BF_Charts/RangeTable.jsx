@@ -40,7 +40,7 @@ const rows = [
     name: "Permeability (Darcy)",
     overallRange: [2.2, 3.2],
     optimalRange: [2.59, 2.7],
-    currentValue: 2.55,
+    currentValue: 3.0,
     impactOnProduction: 6,
   },
   {
@@ -178,93 +178,4 @@ export default function RangeTable() {
     </div>
   );
 
-  //   return (
-  //     <TableContainer  >
-  //       <Table
-  //        __css={{ 'table-layout': 'fixed',
-  //                   width: "100%",
-  //                   padding: 0,
-  //                 //   textAlign: 'center',
-  //                 //  fontSize: 'small',
-  //              }}
-  //       variant='striped' bgColor={tableBackgroundColor}
-  //        border={"2px solid green"}
-  //         // size="medium"
-  //       >
-  //         <Thead >
-  //           <Tr >
-  //             <Th width="100px" sx={{ wordWrap: 'normal', whiteSpace:"normal" , textAlign:"center"}} align="center" fontSize="10px">Parameters</Th>
-  //             <Th wordWrap="break-word" fontSize="10px">
-  //               Range
-  //             </Th>
-  //             <Th width="100px" border="3px solid #000" sx={{ wordWrap: 'normal', whiteSpace:"normal" , textAlign:"center"}} wordWrap="break-word" fontSize="10px">
-  //               Impact on production
-  //             </Th>
-  //           </Tr>
-  //         </Thead>
-
-  //         <Tbody>
-  //           <Tr>
-  //             <Td
-  //               colSpan={3}
-  //               sx={{
-  //                 backgroundColor: "#FFFFF",
-  //               }}
-  //             >
-  //               <div
-  //                 className={`flex items-start gap-[2%] w-[100%] ${
-  //                   windowWidth < 577 ? "flex-col" : ""
-  //                 }  `}
-  //               >
-  //                 <div className="flex gap-[2px] items-center justify-center">
-  //                   <div className="flex gap-[2px] ">
-  //                     <img src="/darkbluedot.svg" alt="" />
-  //                   </div>
-  //                   <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
-  //                     {" "}
-  //                     Overall Range
-  //                   </div>
-  //                 </div>
-  //                 <div className="flex gap-[2px] ">
-  //                   <div>
-  //                     <img src="/lightgreendot.svg" alt="" />
-  //                   </div>
-  //                   <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-  //                     Optimal Range
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             </Td>
-  //           </Tr>
-  //           {rows.map((row) => (
-  //             <Tr key={row.name} >
-  //               <Td
-  //                width="150px"
-  //                height="50px"
-  //                border="3px solid #000"
-  //                sx={{ wordWrap: 'normal', whiteSpace:"normal" }}
-  //             //    wordWrap="break-word"
-  //                fontSize="12px"
-
-  //               >
-  //                 {row.name}
-  //               </Td>
-  //               <Td width="400px" >
-  //                 {/* slider 1 */}
-  //                 {/* <RangeSlider overallRange={row.overallRange} optimalRange={row.optimalRange}  currentValue={row.currentValue}/> */}
-  //                 <RangeSlider
-  //                   overallRange={row.overallRange}
-  //                   optimalRange={row.optimalRange}
-  //                   currentValue={row.currentValue}
-  //                 />
-  //               </Td>
-  //               <Td width="100px" whiteSpace="normal"fontSize="12px">
-  //                 {row.impactOnProduction}
-  //               </Td>
-  //             </Tr>
-  //           ))}
-  //         </Tbody>
-  //       </Table>
-  //     </TableContainer>
-  //   );
-}
+            }

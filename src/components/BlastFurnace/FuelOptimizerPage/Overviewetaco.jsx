@@ -96,7 +96,7 @@ function Overviewetaco({ isExpanded3, handleToggle3 }) {
       stroke: {
         curve: "straight",
         width: [1, 1],
-        // width: [1, 3, 3, 1],
+
         dashArray: [0, 6],
       },
       legend: {
@@ -165,16 +165,17 @@ function Overviewetaco({ isExpanded3, handleToggle3 }) {
             </div>
           ) : (
             <div className="flex   w-full gap-4">
-              <div className="flex  w-full gap-4  justify-center">
-                <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Current ETA CO</p>
-                <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal"> 58%</p>
-              </div>
-              <div className="flex w-[300px] gap-4   justify-center">
-                <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Predictive ETA CO</p>
-                <p className="text-[#16FCD2]  font-[600]  text-center font-roboto text-xs leading-normal"> 79%</p>
-              </div>
+           <div className="flex  w-full  justify-center gap-4">
+             <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Current ETA CO</p>
+             <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal">58%</p>
+           </div>
+           <div className="flex w-full gap-4   justify-center">
+             <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Predictive ETA CO</p>
+             <p className="text-[#16FCD2]  font-[600]  text-center font-roboto text-xs leading-normal">79%</p>
+           </div>
+            
             </div>
-          )}
+            )}
         </div>
         <div onClick={handleToggle3}>
           <img src="/dropicon.svg" alt="" />

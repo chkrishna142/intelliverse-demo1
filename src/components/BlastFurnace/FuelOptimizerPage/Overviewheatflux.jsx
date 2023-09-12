@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import Mymodal from "../BF_Components/Mymodal";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
 
 function Overviewheatflux({  isExpanded3, handleToggle3}) {
-
+  const size=useWindowSize();
     const [fuelchart, setFuelchart] = useState({
         series: [
           {
@@ -104,6 +105,7 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
             dashArray: [0, 6],
           },
           legend: {
+            show:false,
             position: "top",
             horizontalAlign: "right",
             floating: true,
@@ -137,9 +139,9 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
 
           {isExpanded3?
         (  
-         <div
-          className={`flex items-start gap-[2%] w-[80%]  `}
-        >
+          <div className={`flex ${
+            size.width <= 768 ? "flex-col" : ""
+          } items-start gap-[2%] w-[80%]  `}>
           <div className="flex gap-[2px] items-center justify-center">
             <div className="flex gap-[2px] ">
               <img src="/Bficons/orangedot.svg" alt="" />
