@@ -74,7 +74,7 @@ function ThermalIndThermo({ temperature, maxTemperature }) {
         max={maxTemperature}
         steps=""
         format="°C"
-        size="medium"
+        size="normal"
         height="250"
         reverseGradient={true}
       />

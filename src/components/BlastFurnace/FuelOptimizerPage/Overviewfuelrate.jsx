@@ -165,7 +165,7 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
             </div>
           )}
         </div>
-        <div onClick={handleToggle1} className="">
+        <div onClick={handleToggle1} className="w-[40px]  ">
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>
@@ -178,8 +178,8 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
         >
           <div
             class={`  ${
-              size.width <= 768 ? "w-full" : "w-[25%]"
-            }  flex flex-col items-start h-[300px]  p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] bg-blue-100`}
+              size.width <= 768 ? "w-full h-[200px]" : "w-[25%] h-[300px] "
+            }  flex flex-col items-start  p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] bg-blue-100`}
           >
             {/* current fuel rate */}
 
@@ -210,7 +210,7 @@ function Overviewfuelrate({ isExpanded1, handleToggle1 }) {
           <div
             class={`  ${
               size.width <= 768 ? "w-full" : "w-[75%]"
-            }  flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}
+            }  flex flex-col  h-[300px]    items-start   p-[1px] gap-[8px]  `}
           >
             <div id="chart" className="h-[100%] w-full">
               <Linechart chart={fuelchart} />

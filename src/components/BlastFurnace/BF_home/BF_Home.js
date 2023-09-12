@@ -6,8 +6,9 @@ import Averagepar from "./Averagepar";
 import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 import { useWindowSize } from "@uidotdev/usehooks";
 import BFHomeComponent from "../BF_Components/BFHomeComponent";
+import Serverdown from "../BF_Components/Serverdown";
 
-const BF_Home = ({fetcheddata,client,pageshift,handleTabChange}) => {
+const BF_Home = ({fetcheddata,client,pageshift,handleTabChange,workingurl}) => {
   const size = useWindowSize();
 
   const silicon_table_data = [
@@ -37,49 +38,56 @@ const BF_Home = ({fetcheddata,client,pageshift,handleTabChange}) => {
     // },
     
   ];
-  
-  if(fetcheddata){
-    return (
-      <div className="w-full h-full flex flex-col  ">
-        <div class="w-full h-full ">
-          <p
-            style={{
-              color: "#024D87",
-              fontWeight: "600",
-              height: "auto",
-              whiteSpace: "nowrap",
-              fontSize: "20px",
-            }}
-            
-          >
-            AI Alerts and Recommendations
-          </p>
-          <div
-            style={{}}
-            //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"
-            className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 justify-center mb-[10px] w-full p-2 "
-          >
-            <Fuelrate data={fetcheddata?.tools.fuel_rate}  pageshift={pageshift} handleTabChange={handleTabChange} />
-  
-             <Production data={fetcheddata?.tools.burden_production} pageshift={pageshift} handleTabChange={handleTabChange}/> 
-  
-            {/* {
-              client!="sesa"? <Averagepar pageshift={pageshift} handleTabChange={handleTabChange}/>:""
-            } */}
-            <Averagepar pageshift={pageshift} handleTabChange={handleTabChange}/>
-            {/* <BFHomeComponent data={fetcheddata?.tools.fuel_rate} tableData={silicon_table_data} toolname={"Silicon Prediction"} pageshift={pageshift} handleTabChange={handleTabChange}/> */}
-          </div>
-          <div className="flex w-full justify-end  h-[20%]">
-            {/* <Modelaccuracy /> */}
+
+
+    if(fetcheddata){
+      return (
+        <div className="w-full h-full flex flex-col  ">
+          <div class="w-full h-full ">
+            <p
+              style={{
+                color: "#024D87",
+                fontWeight: "600",
+                height: "auto",
+                whiteSpace: "nowrap",
+                fontSize: "20px",
+              }}
+              
+            >
+              AI Alerts and Recommendations
+            </p>
+            <div
+              style={{}}
+              //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"
+              className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 justify-center mb-[10px] w-full p-2 "
+            >
+              <Fuelrate data={fetcheddata?.tools.fuel_rate}  pageshift={pageshift} handleTabChange={handleTabChange} />
+    
+               <Production data={fetcheddata?.tools.burden_production} pageshift={pageshift} handleTabChange={handleTabChange}/> 
+    
+              {/* {
+                client!="sesa"? <Averagepar pageshift={pageshift} handleTabChange={handleTabChange}/>:""
+              } */}
+              <Averagepar pageshift={pageshift} handleTabChange={handleTabChange}/>
+              {/* <BFHomeComponent data={fetcheddata?.tools.fuel_rate} tableData={silicon_table_data} toolname={"Silicon Prediction"} pageshift={pageshift} handleTabChange={handleTabChange}/> */}
+            </div>
+            <div className="flex w-full justify-end  h-[20%]">
+              {/* <Modelaccuracy /> */}
+            </div>
           </div>
         </div>
-      </div>
-    );
-  }
-  else{
-    return <div className=" flex justify-center"><CircularProgress isIndeterminate color='green.300' /></div>
+      );
+    }
+    else{
+      return <div className=" flex justify-center"><CircularProgress isIndeterminate color='green.300' /></div>
+  
+    }
 
-  }
+ 
+     
+
+  
+ 
 
  
 };

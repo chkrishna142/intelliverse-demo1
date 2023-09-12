@@ -480,20 +480,15 @@ const Impacttrackercharts = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[6px] w-full  ">
-      {/* impac tracker nav bar */}
-      
+    <div className="flex flex-col gap-[6px] w-full h-[68vh]  p-[2px] overflow-y-auto  ">
       {/*charts  */}
-     
-
-      <div className="h-[68vh] w-full   p-[2px] overflow-y-auto gap-[16px] ">
-        <div className="w-full h-[auto]  p-[24px]  rounded-[12px] bg-white ">
+      <div className="w-full h-full  p-[12px]  rounded-[12px] bg-white ">
           {/* Fuel rate pie chat */}
           {/* top */}
-          <div className="flex justify-between items-start w-full ">
+          <div className="flex justify-between items-start w-full h-[auto] ">
             {/* actual fuel rate top */}
-            <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
-              <div className="flex items-center gap-[8px]">
+            <div className="flex flex-col items-start justify-center gap-[12px] w-[95%] ">
+              <div className="flex items-center gap-[8px] w-full h-full">
                 {" "}
                 <div className="text-black font-roboto text-[22px] text-[#000] font-medium">
                 <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
@@ -510,215 +505,29 @@ const Impacttrackercharts = () => {
                
               </div>
             </div>
-            <div className="fill-white drop-shadow-md" onClick={handleToggle1}>
+            <div className="fill-white drop-shadow-md w-[30px]" onClick={handleToggle1}>
             <img src="/dropicon.svg" alt="" />
             </div>
           </div>
           {/* bottom */}
 
           {isExpanded1 && (
-            <div className={ ` flex w-[100%]  mt-[20px] p-[2px]  items-center ${windowWidth<1440 ? "overflow-x-scroll":"" } `}>
+            <div className={ ` flex w-full  mt-[10px] p-[2px]  items-center overflow-x-scroll `}>
               {/* pi chart 1 */}
-              {/* <div className={` flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}> */}
-                {/* top text */}
-                {/* <div className="flex flex-col gap-[6px] text-left">
-                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
-                    Non-Ideal conditions (22 hrs)
-                  </div>
-                  <div className="text-[#629CF2] font-roboto font-medium text-base">
-                    43.5%
-                  </div>
-                </div> */}
-                {/* pi chart */}
-                {/* <div className=" w-[full] flex flex-col">
-                  {" "}
-                  <div id="chart">
-                    <ReactApexChart
-                      options={orangechart1.options}
-                      series={orangechart1.series}
-                      type="pie"
-                      width={"110%"}
-                    />
-                  </div>
-                </div> */}
-
-                {/* svg and text */}
-                {/* <div className="flex gap-[8px] text-left w-[80%]"> */}
-                  {/* svg div */}
-                  {/* <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewdiv="0 0 12 12"
-                      fill="none"
-                    >
-                      <circle cx="6" cy="6" r="6" fill="#938F96" />
-                    </svg>
-                  </div> */}
-                  {/* text div */}
-                  {/* <div className="text-start text-left  mt-[-5px]">
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      Ideal conditions (22 hrs)
-                    </div>
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
-                      43.5%
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+            
               <Pichart topText={"Non-Ideal conditions (22 hrs)"} topTextvalue="43.5%" option={orangechart1.options} series={orangechart1.series} bottomText={"Ideal conditions"} bottomTextvalue={"43.5%"} wid="12"/>
               {/* pi chart 2 */}
               
-              {/* <div className={`flex flex-col items-center ${windowWidth<1440 ? " w-[270px] ":"w-[27%]"}    h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}> */}
-                {/* top text */}
-                {/* <div className="flex flex-col gap-[6px] text-left">
-                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
-                    Recommendations given <br /> (16 hrs)
-                  </div>
-                  <div className="text-[#629CF2] font-roboto font-medium text-base">
-                    43.5%
-                  </div>
-                </div> */}
-                {/* pi chart */}
-                {/* <div className=" w-[full] flex flex-col">
-                  {" "}
-                  <div id="chart">
-                    <ReactApexChart
-                      options={orangechart2.options}
-                      series={orangechart2.series}
-                      type="pie"
-                      width={"110%"}
-                    />
-                  </div>
-                </div> */}
-                {/* svg and text */}
-                {/* <div className="flex gap-[8px] text-left w-[80%]"> */}
-                  {/* svg div */}
-                  {/* <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewdiv="0 0 12 12"
-                      fill="none"
-                    >
-                      <circle cx="6" cy="6" r="6" fill="#938F96" />
-                    </svg>
-                  </div> */}
-                  {/* text div */}
-                  {/* <div className="text-start text-left  mt-[-5px]">
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      No recommendation (16 hrs)
-                    </div>
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
-                      43.5%
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+            
               <Pichart topText={"Recommendations given (16 hrs)"} topTextvalue="43.5%" option={orangechart2.options} series={orangechart2.series} bottomText={"No recommendation"} bottomTextvalue={"43.5%"} wid="12"/>
 
               {/* pi chart 3 */}
-              {/* <div className="flex flex-col items-center w-[220px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  "> */}
-                {/* top text */}
-                {/* <div className="flex flex-col gap-[6px] text-left">
-                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
-                    Recommendation <br /> followed (12 hrs)
-                  </div>
-                  <div className="text-[#629CF2] font-roboto font-medium text-base">
-                    43.5%
-                  </div>
-                </div> */}
-                {/* pi chart */}
-                {/* <div className=" w-[full] flex flex-col">
-                  {" "}
-                  <div id="chart">
-                    <ReactApexChart
-                      options={orangechart3.options}
-                      series={orangechart3.series}
-                      type="pie"
-                      width={"110%"}
-                    />
-                  </div>
-                </div> */}
-                {/* svg and text */}
-                {/* <div className="flex gap-[8px] text-left w-[80%]"> */}
-                  {/* svg div */}
-                  {/* <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewdiv="0 0 12 12"
-                      fill="none"
-                    >
-                      <circle cx="6" cy="6" r="6" fill="#938F96" />
-                    </svg>
-                  </div> */}
-                  {/* text div */}
-                  {/* <div className="text-start text-left  mt-[-5px]">
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      Recommendation ignored (12 hrs) 
-                    </div>
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      43.5%
-                    </div>
-                  </div>
-                </div>
-              </div> */}
+             
               <Pichart topText={"Recommendation followed (12 hrs)"} topTextvalue="43.5%" option={orangechart3.options} series={orangechart3.series} bottomText={"No recommendation"} bottomTextvalue={"43.5%"} wid="12"/>
 
               {/* pi chart 4 */}
-              {/* <div className="flex flex-col items-center w-[200px]  h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  "> */}
-                {/* top text */}
-                {/* <div className="flex flex-col gap-[6px] text-left">
-                  <div className="text-neutral-n-30 text-[#525056] text-[16px] font-roboto font-medium text-base">
-                    Ideal state attained <br />
-                    (8 hrs)
-                  </div>
-                  <div className="text-[#629CF2] font-roboto font-medium text-base">
-                    43.5%
-                  </div>
-                </div> */}
-                {/* pi chart */}
-                {/* <div className=" w-[full] flex flex-col">
-                  {" "}
-                  <div id="chart">
-                    <ReactApexChart
-                      options={orangechart4.options}
-                      series={orangechart4.series}
-                      type="pie"
-                      width={"110%"}
-                    />
-                  </div>
-                </div> */}
-                {/* svg and text */}
-                {/* <div className="flex gap-[8px] text-left w-[80%]"> */}
-                  {/* svg div */}
-                  {/* <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewdiv="0 0 12 12"
-                      fill="none"
-                    >
-                      <circle cx="6" cy="6" r="6" fill="#938F96" />
-                    </svg>
-                  </div> */}
-                  {/* text div */}
-                  {/* <div className="text-start text-left  mt-[-5px]">
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
-                      Ideal state not attained (8 hrs)
-                    </div>
-                    <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base font-medium">
-                      43.5%
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-              <Pichart topText={"Ideal state attained (8 hrs)"} topTextvalue="43.5%" option={orangechart4.options} series={orangechart4.series} bottomText={"Ideal state not attained"} bottomTextvalue={"43.5%"} wid="12"/>
+             
+              <Pichart topText={"Recommendation followed (12 hrs)"} topTextvalue="43.5%" option={orangechart3.options} series={orangechart3.series} bottomText={"No recommendation"} bottomTextvalue={"43.5%"} wid="12"/>
 
               {/* pi chart 5 */}
               <div className="flex flex-col items-center w-[180px] h-auto p-[12px] gap-[28px] flex-shrink-0 rounded-[12px]  ">
@@ -1292,7 +1101,7 @@ const Impacttrackercharts = () => {
         </div>
 
        
-      </div>
+      
     </div>
   );
 };

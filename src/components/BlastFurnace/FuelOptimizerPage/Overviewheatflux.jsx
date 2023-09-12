@@ -194,7 +194,7 @@ function Overviewheatflux({  isExpanded3, handleToggle3}) {
             <div className={`flex gap-[12px] w-full  h-full`}>
              
               {/* charts */}
-              <div class={` w-[100%] flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              <div class={` w-[100%] flex flex-col  h-[300px]    items-start   p-[1px] rounded-[12px] `}>
                 
                 <div id="chart" className="h-[100%] w-full">
                 <Linechart  chart={fuelchart}/>
