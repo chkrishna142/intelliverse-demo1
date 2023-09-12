@@ -22,7 +22,7 @@ const RangeSlider = ({ overallRange, optimalRange, currentValue }) => {
   {
     currentValuePosition=100;
   }
-  console.log("current value of position---",currentValuePosition)
+  // console.log("current value of position---",currentValuePosition)
 
   return (
     <div className="flex flex-col items-center space-y-2">

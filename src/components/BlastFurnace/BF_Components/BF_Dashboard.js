@@ -1,6 +1,5 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import { Heading } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BF_Home from "../BF_home/BF_Home";
 import StabilityandThermal from "../StabilityandThermalPage/StabilityandThermal";
 import Fueloptimizercomp from "../FuelOptimizerPage/Fueloptimizercomp";
@@ -9,13 +8,14 @@ import Siliconpredictor from "../Siliconpredictor/Siliconpredictor";
 import HearthChart from "../Hearth/HearthChart";
 import Impacttrackercharts from "../impacttracker/Impacttrackercharts";
 import { useWindowSize } from "@uidotdev/usehooks";
-import MaterialSelectOfBf from "./MaterialSelectOfBf";
 import Particleswitchcomp from "./Particleswitchcomp";
 import { useLocation, useNavigate } from "react-router-dom";
-import Sizing from "../../Sizing/Sizing";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
+
 const BF_Dashboard = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+
   const Capitalize = (str) => {
     const arr = str.split(" ");
     for (var i = 0; i < arr.length; i++) {
@@ -24,10 +24,16 @@ const BF_Dashboard = () => {
     const str2 = arr.join(" ");
     return str2;
   };
+
   const [page, setPage] = useState("dashboard");
+
   const size = useWindowSize();
+
   const [fetcheddata, setFetcheddata] = useState();
+
   const client = "jspl";
+  const [workingurl,setWorkingurl] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,34 +42,72 @@ const BF_Dashboard = () => {
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
-        console.log("fetched data=====>>>",json);
+        // console.log("fetched data=====>>>",json);
         setFetcheddata(json);
+        setWorkingurl(true);
       } catch (error) {
+        setWorkingurl(false);
         console.error("Error fetching data:", error);
       }
     };
     // Fetch data initially
     fetchData();
   }, [client]);
-  const [activeTab, setActiveTab] = useState(0); // 0 for Home, 1 for Data
+
+  // ----------------------------------------------------------------------
+
+    // const { auth } = useContext(NavContext)
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //         try {
+  //             const response = await fetch(
+  //                 `${baseURL}get_fuel_rate_and_production/?client_id=${client}`,
+  //                 {
+  //                     method: 'GET',
+  //                     credentials: 'same-origin',
+  //                     headers: {
+  //                         'Content-Type': 'application/json',
+  //                         'X-Auth-Token': auth
+  //                     }
+  //                 }
+  //             );
+
+  //             const json = await response.json();
+  //             setFetcheddata(json);
+  //         } catch (error) {
+  //             console.error("Error fetching data:", error);
+  //         }
+  //     };
+  //     fetchData();
+  // }, [client, auth, baseURL]);
+
+
+
+  // ----------------------------------------------------------------
+
+  const [activeTab, setActiveTab] = useState(0);
 
   const handleTabChange = (index) => {
     setActiveTab(index);
   };
 
   const pageshift = (pagename) => {
-    setPage(pagename)
+    setPage(pagename);
   };
+
   return (
-    <div className={`mt-5  w-full `} style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}>
-      <div className="flex justify-between mb-3 mt-6">
+    <div
+      className={`  w-full ${size.width<768? "mt-[-5px]": "mt-6 "}`}
+      style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
+    >
+      <div className="flex justify-between mb-3 mt-0 ">
         <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
           {/* {Capitalize(page)} */}
           Blast Furnace
         </p>
       </div>
-      <Tabs index={activeTab} onChange={handleTabChange}>
-        <TabList className={` !flex !border-0 `}>
+      <Tabs index={activeTab} onChange={handleTabChange} >
+        <TabList className={` !flex !border-0 mt-0`}>
           <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
             <Tab
               className={
@@ -165,6 +209,7 @@ const BF_Dashboard = () => {
               client={client}
               pageshift={pageshift}
               handleTabChange={handleTabChange}
+              workingurl={workingurl}
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
@@ -189,7 +234,7 @@ const BF_Dashboard = () => {
         </TabPanels>
       </Tabs>
       <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
-        <Footdisplay client={client}/>
+        <Footdisplay client={client} />
       </div>
     </div>
   );

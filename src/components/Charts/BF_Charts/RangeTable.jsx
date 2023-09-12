@@ -40,7 +40,7 @@ const rows = [
     name: "Permeability (Darcy)",
     overallRange: [2.2, 3.2],
     optimalRange: [2.59, 2.7],
-    currentValue: 3.0,
+    currentValue: 2.5,
     impactOnProduction: 6,
   },
   {

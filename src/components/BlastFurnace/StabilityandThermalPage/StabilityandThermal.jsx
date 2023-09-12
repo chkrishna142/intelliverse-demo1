@@ -24,19 +24,20 @@ const StabilityandThermal = () => {
         },
         {
           x: 'Cold Blast Volume',
-          y: [30, 70]
+          y: [45, 70]
         },
         {
           x: 'Flame Temperature',
-          y: [50, 80]
+          y: [70, 100]
         },
         {
           x: 'Stave Cooling I Heat Loss Total',
-          y: [60, 80]
+          y: [70, 55]
         },
         {
           x: 'Stave Temperature Row 9 (TB)',
-          y: [80, 45]
+          y: [55, 35],
+          fillColor: "#605D64",
         },
         // {
         //   x: 'Oxygen Enrichmen', // Second instance of Oxygen Enrichment
@@ -45,7 +46,7 @@ const StabilityandThermal = () => {
         // },
         {
           x: 'Final Value',
-          y: [30, 15],
+          y: [35, 15],
           fillColor:  "#FFC107",
         }
       ]
@@ -161,12 +162,12 @@ const StabilityandThermal = () => {
 
 
   return (
-    <div className="w-full h-full  flex flex-col   mt-[-15px]  ">
+    <div className="w-full h-[62vh] overflow-y-auto  flex flex-col   mt-[-15px]  ">
       {/* nav */}
      
       
       {/* body */}
-      <div className=" flex flex-col w-full gap-5  h-[62vh] overflow-y-auto " >
+      
 
       <div id="StabilityIndicator" className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px ">
             <StabilityInd isExpanded1={isExpanded1} handleToggle1={handleToggle1}/>
@@ -187,7 +188,7 @@ const StabilityandThermal = () => {
         <Recommendations isExpanded4={isExpanded4} handleToggle4={handleToggle4}/>
         
       </div>
-      </div>
+      
     </div>
   );
 };

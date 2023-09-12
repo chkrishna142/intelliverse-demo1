@@ -14,7 +14,7 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
     <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl  shadow-md ">
       {/* top */}
       <div class="flex justify-between w-full">
-        <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+        <div class="flex flex-col items-start justify-center gap-[12px] w-[95%] ">
           <div className="flex items-center gap-[8px]">
             {" "}
             <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
@@ -24,6 +24,7 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
             </div>
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
           </div>
+          {isExpanded2 && (
           <div
             className={`flex  ${size.width<=768?"flex-col":""} items-start gap-[2%] w-[80%]  `}
           >
@@ -53,8 +54,9 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
               </div>
             </div>
           </div>
+          )}
         </div>
-        <div onClick={handleToggle2}>
+        <div onClick={handleToggle2} className="w-[30px] ">
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>

@@ -101,6 +101,7 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
             dashArray: [0, 6],
           },
           legend: {
+            show:false,
             position: "top",
             horizontalAlign: "right",
             floating: true,
@@ -114,11 +115,11 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
   
 
   return (
-    <div className="flex flex-col w-full h-full bg-white p-4 rounded-xl ">
+    <div className="flex flex-col w-full h-full bg-white p-1 rounded-xl ">
       {/* top */}
       <div class="flex justify-between w-full">
-        <div class="flex flex-col items-start justify-center gap-[12px] w-[572px]">
-          <div className="flex items-center gap-[8px]">
+        <div class="flex flex-col items-start justify-center gap-[12px] w-[90%] ">
+          <div className="flex items-center gap-[8px] ">
             {" "}
             <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
               <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
@@ -163,17 +164,17 @@ function Overviewcokerate({ isExpanded2, handleToggle2 }) {
         )}
          
         </div>
-        <div onClick={handleToggle2}>
+        <div onClick={handleToggle2} className="w-[10%]">
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>
       {/* bottom */}
       {isExpanded2 && (
          
-            <div className={`flex gap-[12px] w-full  h-full`}>
+            <div className={`flex  w-full  h-full `}>
              
               {/* charts */}
-              <div class={` w-[100%] flex flex-col  h-[300px]    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}>
+              <div class={` w-full h-[300px] flex flex-col     items-start   p-[1px]  `}>
                 
                 <div id="chart" className="h-[100%] w-full">
                 <Linechart  chart={fuelchart}/>

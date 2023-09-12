@@ -142,30 +142,18 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         },
       },
       tooltip: {
-        custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+        custom: function({series, seriesIndex, dataPointIndex, w}) {
           var data1 = w.globals.initialSeries[0].data[dataPointIndex];
           var data2 = w.globals.initialSeries[1].data[dataPointIndex];
-
-          return (
-            '<div className="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
-            '<p className="font-bold mb-1"> ' +
-            data1.x +
-            ":" +
-            "</p>" +
-            '<p  className="mb-1"> Optimal Range: ' +
-            "[" +
-            data1.y[0] +
-            "-" +
-            data1.y[1] +
-            "]" +
-            "</p>" +
-            "<p> Current: " +
-            data2.y +
-            "</p>" +
-            "</div>"
-          );
-        },
-      },
+         
+          return '<div class="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
+          '<p class="font-bold mb-1"> ' + data1.x +':'+ '</p>' +
+          '<p  class="mb-1"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
+          '<p> Current: '+  data2.y+'</p>' +
+          
+          '</div>';
+        }
+      }
     },
   });
 

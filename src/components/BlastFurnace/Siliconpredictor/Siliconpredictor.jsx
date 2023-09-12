@@ -129,36 +129,32 @@ const Siliconpredictor = () => {
         },
         {
           x: "Sinter_bf_K₂O",
-          y: [30, 70],
+          y: [45, 60],
           fillColor: "#605D64",
         },
         {
           x: "Sinter_bf_MgO",
-          y: [50, 80],
+          y: [60, 80],
         },
         {
           x: "Coke Moisture",
-          y: [70, 40],
+          y: [60, 40],
           fillColor: "#605D64",
         },
         {
           x: "O₂ Enrichment",
-          y: [60, 30],
+          y: [40, 30],
           fillColor: "#605D64",
         },
         {
           x: "PWI",
-          y: [60, 30],
+          y: [30, 15],
         },
 
-        // {
-        //   x: 'Oxygen Enrichmen', // Second instance of Oxygen Enrichment
-        //   y: [45, 30],
-        //   seriesIndex: 2 // Unique identifier
-        // },
+        
         {
           x: "Final Value",
-          y: [30, 15],
+          y: [15, 5],
           fillColor: "#FFC107",
         },
       ],
@@ -212,7 +208,7 @@ const Siliconpredictor = () => {
       {/*charts  */}
       {/* fuel chart */}
 
-      <div className="flex flex-col w-full h-[67vh]  p-[6px] overflow-y-auto gap-[16px] ">
+      <div className="flex flex-col w-full h-full  p-[6px] overflow-y-auto gap-[16px] ">
         {/* RAFT PCI */}
 
         <div
@@ -369,12 +365,12 @@ const Siliconpredictor = () => {
             <div
               className={`flex ${
                 size.width <= 768 ? "flex-col" : ""
-              }  gap-[12px] w-full  h-[300px] `}
+              }  gap-[8px] w-full  h-full  `}
             >
               <div
-                class={`  ${
-                  size.width <= 768 ? "w-full" : "w-[25%]"
-                }  flex flex-col items-start h-[300px]  p-[12px] gap-[28px]  flex-shrink-0 rounded-[12px] bg-blue-100`}
+                className={`  ${
+                  size.width <= 768 ? "w-full h-[100px]" : "w-[25%] h-[300px]"
+                }  flex flex-col items-start   p-[12px] gap-[28px]  flex-shrink-0 rounded-[12px] bg-blue-100`}
               >
                 {/* current fuel rate */}
 
@@ -402,10 +398,9 @@ const Siliconpredictor = () => {
                 </div>
               </div>
               {/* charts */}
-              <div
-                class={`  ${
+              <div className={`  ${
                   size.width <= 768 ? "w-full" : "w-[75%]"
-                }  flex flex-col  h-full    items-start   p-[12px] gap-[28px]  rounded-[12px] `}
+                }  flex flex-col  h-[300px]    items-start   p-[1px] gap-[8px]   rounded-[12px] `}
               >
                 <div id="chart" className="h-[100%] w-full">
                   <Linechart chart={fuelchart} />
@@ -418,20 +413,24 @@ const Siliconpredictor = () => {
         {/* rcaa2 */}
         <div className="flex flex-col w-full gap-3 bg-white p-4 rounded-xl  shadow-md ">
           {/* top */}
-          <div class="flex justify-between w-full  ">
-            <div class="flex flex-col items-start justify-center gap-[12px] w-full ">
+          <div className="flex justify-between w-full  ">
+            <div className="flex flex-col items-start justify-center gap-[12px] w-full ">
               <div className="flex items-center gap-[8px]">
                 {" "}
-                <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
+                <div className=" font-roboto text-[22px] text-[#3E3C42] font-medium">
                   <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                     RCA
                   </p>
                 </div>
-                <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
+                <div className="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
                 <div className="flex justify-center items-center  w-[50px]"></div>
               </div>
-              <div className={`flex items-start gap-[2%] w-[80%]  `}>
-                <div className={`flex items-start gap-[2%] w-[100%] `}>
+              <div className={`flex items-start gap-[2%] w-[80%] `}>
+              <div
+              className={`flex  ${
+                size.width <= 768 ? "flex-col" : ""
+              } items-start gap-[2%] w-[80%]  `}
+            >
                   <div className="flex gap-[2px] items-center justify-center">
                     <div className="flex gap-[2px] ">
                       <img src="/Bficons/darkblue.svg" alt="" />
@@ -466,9 +465,15 @@ const Siliconpredictor = () => {
           </div>
           {/* bottom */}
           {isExpanded4 && (
-            <div className={`flex gap-[12px] w-full  h-full`}>
+           <div
+           className={`flex ${
+             size.width <= 768 ? "flex-col" : ""
+           }  gap-[12px] w-full  h-full`}
+         >
               <div
-                className={`w-[25%] flex flex-col items-start h-[100%]  p-[12px] gap-[28px]  rounded-[12px] bg-blue-100`}
+                className={`w-[25%]  ${
+                  size.width <= 768 ? "w-full h-[200px]" : "w-[25%] h-[300px] "
+                } flex flex-col items-start   p-[12px] gap-[28px]  rounded-[12px] bg-blue-100`}
               >
                 {/* current fuel rate */}
 
@@ -491,7 +496,9 @@ const Siliconpredictor = () => {
               </div>
               {/* charts */}
               <div
-                class={` w-[75%] flex flex-col  h-full    items-start   p-[12px] gap-[28px] flex-shrink-0 rounded-[12px] `}
+                className={`  ${
+                  size.width <= 768 ? "w-full" : "w-[75%]"
+                }  flex flex-col  h-full    items-start   p-[1px] `}
               >
                 <div id="chart" className="h-[100%] w-full">
                   <RcawaterfallChart series={series} options={options} />
