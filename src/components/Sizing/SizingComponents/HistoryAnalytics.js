@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import { baseURL } from "../../../index";
 import axios from "axios";
+import DetailModal from "./DetailModal";
 import {
   Table,
   Td,
@@ -19,6 +20,8 @@ import {
 const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
+  const indexRef = useRef();
+  const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useState([]);
   const [historyChanging, setHistoryChanging] = useState(false);
   const [selectedRange, setSelectedRange] = useState(0);
@@ -45,17 +48,13 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       startDate: new Date(date).getTime(),
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/analytics/history/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/analytics/history/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setHistory(response.data);
         setHistoryChanging(false);
@@ -68,6 +67,11 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const handleClick = () => {
     setHistoryChanging(true);
     apiCall();
+  };
+
+  const handleDetail = (index) => {
+    indexRef.current = index;
+    setOpenModal(true);
   };
 
   useEffect(() => {
@@ -194,7 +198,10 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                       );
                     })}
                     <Td>
-                      <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
+                      <p
+                        className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]"
+                        onClick={() => handleDetail(index)}
+                      >
                         View Details
                       </p>
                     </Td>
@@ -204,6 +211,15 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </Tbody>
           </Table>
         </TableContainer>
+      )}
+      {openModal && (
+        <DetailModal
+          openModal={openModal}
+          closeModal={() => setOpenModal(false)}
+          data={history.data}
+          index={indexRef.current}
+          PlantName={selectedPlant}
+        />
       )}
     </div>
   );
