@@ -40,10 +40,25 @@ const FeedLibrary = ({ plantId, cameraId, disable, plantCamMap }) => {
           </p>
         </div>
       </div>
-      {page === "photo gallery" && (
-        <PhotoGallery plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap} />
+      {page === "photo gallery" &&
+        (disable || Object.keys(plantCamMap).length != 0) && (
+          <PhotoGallery
+            plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
+            cameraId={
+              disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
+            }
+            disable={disable}
+            plantCamMap={plantCamMap}
+          />
+        )}
+      {page === "video gallery" && (
+        <VideoGallery
+          plantId={plantId}
+          cameraId={cameraId}
+          disable={disable}
+          plantCamMap={plantCamMap}
+        />
       )}
-      {page === "video gallery" && <VideoGallery plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap}/>}
     </div>
   );
 };

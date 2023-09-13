@@ -9,6 +9,8 @@ import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
 import { Select, Spinner } from "@chakra-ui/react";
 import BoxPlotAnalysis from "../SizingComponents/BoxPlotAnalysis";
 import axios from "axios";
+import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
+import MoistureChart from "../../Charts/SizingCharts/MoistureChart";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
@@ -18,6 +20,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
   const [selectedBasis, setSelectedBasis] = useState(0);
   const typeRef = useRef();
+  const avgMoistureRef = useRef();
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
   const [selectedCam, setSelectedCam] = useState(cameraId);
@@ -58,7 +61,8 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
       startDate: new Date(fromTime).getTime(),
-      endDate: new Date(toTime).getTime(),
+      endDate:
+        new Date(toTime).getTime() + 11 * 60 * 60 * 1000 + 59 * 60 * 1000,
       distType: typeRef.current,
     });
     const response = await axios
@@ -79,18 +83,26 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   const handleClick = () => {
-    if (selectedBasis == 0) typeRef.current = 'SIZE';
-    else if (selectedBasis == 1) typeRef.current = 'COLOR';
-    else typeRef.current = 'MOISTURE';
+    if (selectedBasis == 0) typeRef.current = "SIZE";
+    else if (selectedBasis == 1) typeRef.current = "COLOR";
+    else typeRef.current = "MOISTURE";
     setSizeDataChanging(true);
     apiCall();
   };
 
   useEffect(() => {
-    typeRef.current = 'SIZE';
+    typeRef.current = "SIZE";
     setSizeDataChanging(true);
     apiCall();
   }, []);
+
+  useEffect(()=>{
+    let sum = 0;
+    sizeData.map(i=>{
+      sum += i.moisture
+    });
+    avgMoistureRef.current = sum/sizeData.length;
+  },[sizeData])
 
   return (
     <div className="flex flex-col gap-4">
@@ -249,10 +261,24 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
-              <PieChart data={sizeData} type={typeRef.current.toLowerCase()} />
+              {typeRef.current == "MOISTURE" ? (
+                <LiquidGauge moisture={avgMoistureRef.current.toFixed(2)} r={100} />
+              ) : (
+                <PieChart
+                  data={sizeData}
+                  type={typeRef.current.toLowerCase()}
+                />
+              )}
             </div>
             <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
-              <StackBarChart data={sizeData} type={typeRef.current.toLowerCase()} />
+              {typeRef.current == "MOISTURE" ? (
+                <MoistureChart data={sizeData} />
+              ) : (
+                <StackBarChart
+                  data={sizeData}
+                  type={typeRef.current.toLowerCase()}
+                />
+              )}
             </div>
           </div>
         )}

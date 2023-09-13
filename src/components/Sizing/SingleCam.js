@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -23,6 +23,7 @@ const Capitalize = (str) => {
 const SingleCam = () => {
   const size = useWindowSize();
   const param = useParams();
+  const location = useLocation();
   const [page, setPage] = useState("feed");
   let material = param.material.toLowerCase();
   let cameraId = param.cameraId;
@@ -33,19 +34,23 @@ const SingleCam = () => {
       className="pl-5 pr-5 flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-      <div className="flex justify-between mb-3 mt-6">
-        <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-          {Capitalize(page)}
-        </p>
-        <Link
-          to={`/vision/Sizing/${material}/${clientId}`}
-          style={{ textDecoration: "none" }}
-        >
+      {location.pathname.includes("blastfurnace") ? (
+        <></>
+      ) : (
+        <div className="flex justify-between mb-3 mt-6">
           <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-            All View
+            {Capitalize(material + " Sizing")}
           </p>
-        </Link>
-      </div>
+          <Link
+            to={`/vision/Sizing/${material}/${clientId}`}
+            style={{ textDecoration: "none" }}
+          >
+            <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
+              All View
+            </p>
+          </Link>
+        </div>
+      )}
       <Tabs>
         <div className="flex justify-between items-center overflow-x-auto h-14 md:h-10">
           <TabList className="!flex !border-0">
@@ -102,7 +107,11 @@ const SingleCam = () => {
               </Tab>
             </div>
           </TabList>
-          {<div className={`${page==="feed" ? "opacity-100" : "opacity-0"}`}><Timer initialSeconds={30} /></div>}
+          {
+            <div className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}>
+              <Timer initialSeconds={30} />
+            </div>
+          }
         </div>
 
         <TabPanels>

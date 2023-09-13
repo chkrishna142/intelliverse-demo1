@@ -1,9 +1,10 @@
 import FloatingInput from "../SizingUtils/FloatingInput";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
+import DetailModal from "../SizingComponents/DetailModal";
 import {
   Select,
   Table,
@@ -112,9 +113,11 @@ const getReason = (reason) => {
 
 const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
-  const {auth} = useContext(NavContext);
+  const { auth } = useContext(NavContext);
   let material = param.material.toLowerCase();
   let clientId = param.clientId.toLowerCase();
+  const indexRef = useRef();
+  const [openModal, setOpenModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
@@ -146,17 +149,13 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/alerts/overview/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/alerts/overview/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setAlerts(response.data);
         setAlertsChanging(false);
@@ -169,6 +168,11 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const handleClick = () => {
     setAlertsChanging(true);
     apiCall();
+  };
+
+  const handleDetail = (index) => {
+    indexRef.current = index;
+    setOpenModal(true);
   };
 
   useEffect(() => {
@@ -295,7 +299,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       <Td className="cursor-pointer">
                         {String(index + 1).padStart(2, "0")}
                       </Td>
-                      <Td className="cursor-pointer">{item.plantId}</Td>
+                      <Td className="cursor-pointer">{item.plantName}</Td>
                       <Td className="cursor-pointer">{item.cameraId}</Td>
                       <Td className="cursor-pointer">{item.timestamp}</Td>
                       <Td className="cursor-pointer">
@@ -314,7 +318,10 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                         {item.alertMessages.join(" ")}
                       </Td>
                       <Td>
-                        <p className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]">
+                        <p
+                          className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]"
+                          onClick={() => handleDetail(index)}
+                        >
                           View Details
                         </p>
                       </Td>
@@ -326,6 +333,15 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           </TableContainer>
         )}
       </div>
+      {openModal && (
+        <DetailModal
+          openModal={openModal}
+          closeModal={() => setOpenModal(false)}
+          data={alerts.data}
+          index={indexRef.current}
+          PlantName={selectedPlant}
+        />
+      )}
     </div>
   );
 };
