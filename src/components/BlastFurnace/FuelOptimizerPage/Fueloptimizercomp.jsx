@@ -134,10 +134,10 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
 
   if (difftabs) {
     return (
-      <div className="w-full h-full  flex flex-col     ">
+      <div className="w-full h-full  flex flex-col   mt-[-15px]  ">
         <Tabs>
-          <TabList className="!flex !border-0 h-11 rounded-xl w-full">
-            <div className="flex items-center border-2 rounded-sm gap-4 w-[75vw] overflow-x-auto">
+          <TabList className="!flex !border-0 h-11 mb-[15px] rounded-xl w-full">
+            <div className="flex items-center rounded-sm gap-4 w-[75vw] overflow-x-auto">
               <Tab
                 className={
                   page === "Overview"
@@ -166,7 +166,7 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
             </div>
           </TabList>
 
-          <TabPanels>
+          <TabPanels  className="h-[62vh] overflow-x-scroll mt-[-10px]">
             <TabPanel className="w-full flex flex-col !pl-0 !pr-0 gap-3">
               <Overviewfuelrate
                 isExpanded1={isExpanded1}
@@ -175,7 +175,7 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
               <div
                 className={`flex ${
                   size.width < 1400 ? "flex-col" : ""
-                } w-full h-full bg-white p-3 rounded-xl  shadow-md  border-2`}
+                } w-full h-full bg-white p-3 rounded-xl  shadow-md  x`}
               >
                 <Overviewcokerate
                   isExpanded2={isExpanded2}

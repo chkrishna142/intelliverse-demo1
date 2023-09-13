@@ -1,32 +1,36 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { baseURL } from "../..";
-import NavContext from "../NavContext";
+import NavContext from "../../NavContext";
 
-const ClientSelect = () => {
+
+
+const BfClientSelect = () => {
     let param = useParams();
-    const [clients, setClients] = useState([])
+    const [clients, setClients] = useState([
+       "sesa",
+       "jspl",
+    ])
     const {auth}=useContext(NavContext)
-    useEffect(() => {
-        getClients()
-    }, [])
+    // useEffect(() => {
+    //     getClients()
+    // }, [])
 
-    const getClients = async () => {
-        const data = await fetch(baseURL + 'vision/v1/sizing/getClientIdsByUseCase/',  {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-Auth-Token": auth
-            },
-            body: JSON.stringify(
-                {
-                    "material": param.material.toLowerCase()
-                }
-            )
-        })
-        const res = await data.json()
-        setClients(res)
-    }
+    // const getClients = async () => {
+    //     const data = await fetch(baseURL + 'vision/v1/sizing/getClientIdsByUseCase/',  {
+    //         method: 'POST',
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "X-Auth-Token": auth
+    //         },
+    //         body: JSON.stringify(
+    //             {
+    //                 "material": param.material.toLowerCase()
+    //             }
+    //         )
+    //     })
+    //     const res = await data.json()
+    //     setClients(res)
+    // }
 
     return (
         <div className="h-full">
@@ -45,6 +49,7 @@ const ClientSelect = () => {
                                 </Link>
                             )
                         })}
+                        
                     </div>
                 </div>
             </div>
@@ -52,4 +57,4 @@ const ClientSelect = () => {
     );
 };
 
-export default ClientSelect;
+export default BfClientSelect;

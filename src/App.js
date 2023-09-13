@@ -20,6 +20,7 @@ import AskAnExpert from './components/Main/AskAnExpert';
 import ClientSelect from './components/Main/ClientSelect';
 import Messages from './components/Main/Messages/Messages';
 import SingleMessage from './components/Main/Messages/SingleMessage';
+import BfClientSelect from './components/BlastFurnace/BF_Components/BfClientSelect';
 
 function App() {
 
@@ -59,10 +60,10 @@ function App() {
                     {/* Client Select Page */}
                     <Route path="/client_select" element={<ClientSelect />} />
                     {/* Optimus Pages */}
-                    <Route path="/optimus/blastfurnace" element={<BF_Dashboard />} />
-                    <Route path="/optimus/blastfurnace/Sizing/:material" element={<BF_Dashboard><ClientSelect /></BF_Dashboard>} />
-                    <Route path="/optimus/blastfurnace/Sizing/:material/:clientId" element={<BF_Dashboard><Sizing /></BF_Dashboard>} />
-                    <Route path="/optimus/blastfurnace/Sizing/:material/:clientId/:plantId/:cameraId" element={<BF_Dashboard><SingleCam /></BF_Dashboard>} />
+                    <Route path="/optimus/blastfurnace" element={<BfClientSelect />} />
+                    <Route path="/optimus/blastfurnace/:clientId" element={<BF_Dashboard />} />
+                    <Route path="/optimus/blastfurnace/:clientId/:material" element={<BF_Dashboard><Sizing /></BF_Dashboard>} />
+                    <Route path="/optimus/blastfurnace/:clientId/:material/:plantId/:cameraId" element={<BF_Dashboard><SingleCam /></BF_Dashboard>} />
                     {/* Vision Pages */}
                     <Route path="/vision/Sizing" element={<MaterialSelect />} />
                     <Route path="/vision/Sizing/:material" element={<ClientSelect />} />

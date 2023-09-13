@@ -201,7 +201,7 @@ const size=useWindowSize();
           </div>
   
 
-          <div style={{}} className="flex w-full justify-between items-center mt-[20px] ">
+          {/* <div style={{}} className="flex w-full justify-between items-center mt-[20px] ">
             <div
               style={{ width: "50%" }}
               className="flex  text-left items-center gap-8  "
@@ -235,7 +235,7 @@ const size=useWindowSize();
               {formattedTime}
             </p>
             </div>
-          </div>
+          </div> */}
           {/* lowewr part move forward icon */}
           <div
             style={{

@@ -9,7 +9,7 @@ import HearthChart from "../Hearth/HearthChart";
 import Impacttrackercharts from "../impacttracker/Impacttrackercharts";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Particleswitchcomp from "./Particleswitchcomp";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 import Serverdown from "./Serverdown";
@@ -32,7 +32,12 @@ const BF_Dashboard = () => {
 
   const [fetcheddata, setFetcheddata] = useState();
 
-  const [client,setClient ]= useState("jspl")
+  let param = useParams();
+
+  
+
+  const [client,setClient ]= useState(param.clientId);
+
   const [workingurl, setWorkingurl] = useState(true);
 
 
@@ -46,7 +51,7 @@ const BF_Dashboard = () => {
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
-        // console.log("fetched data ===>>>", json);
+        console.log("fetched data ===>>>", json);
         setWorkingurl(true);
         setFetcheddata(json);
       } catch (error) {
@@ -118,7 +123,7 @@ const BF_Dashboard = () => {
         </p>
       </div>
       <Tabs index={activeTab} onChange={handleTabChange}>
-        <TabList className={` !flex !border-0 mt-0`}>
+        <TabList className={` !flex !border-0 mt-0 mb-2`}>
           <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
             <Tab
               className={
@@ -128,7 +133,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("dashboard");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Dashboard
@@ -141,7 +146,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("fuel optimizer");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Fuel Optimizer
@@ -154,7 +159,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Stability & Thermal Performance");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Stability & Thermal Performance
@@ -167,7 +172,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Silicon Prediction");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Silicon Prediction
@@ -180,7 +185,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Avg. particle size");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Avg. particle size
@@ -193,7 +198,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Hearth Liquid Level");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Hearth Liquid Level
@@ -206,7 +211,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Impact Tracker");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Impact Tracker
@@ -236,7 +241,7 @@ const BF_Dashboard = () => {
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Siliconpredictor />
           </TabPanel>
-          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+          <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
             <Particleswitchcomp />
             {/* <MaterialSelectOfBf/> */}
           </TabPanel>

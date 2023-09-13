@@ -468,31 +468,25 @@ const size= useWindowSize();
   return (
     <div className="flex flex-col gap-[6px] w-full h-[68vh]  p-[2px] overflow-y-auto  ">
       {/*charts  */}
-      <div className="w-full h-full  p-[12px]  rounded-[12px] bg-white ">
+      <div className="w-full h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
 
           {/* Fuel rate pie chat */}
           {/* top */}
-          <div className="flex justify-between items-start w-full h-[auto] ">
-            {/* actual fuel rate top */}
-            <div className="flex flex-col items-start justify-center gap-[12px] w-[95%] ">
-              <div className="flex items-center gap-[8px] w-full h-full">
+          <div className="flex justify-between items-start w-[100%]">
+            {/* si top */}
+            <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
+              <div className="flex items-center gap-[8px]">
                 {" "}
                 <div className="text-black font-roboto text-[22px] text-[#000] font-medium">
-                <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
-                Fuel Rate
-                  </p>
-                  
+                 Fuel Rate
                 </div>
                 <div className="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
               </div>
               <div className="flex text-[#605D64] text-[18px] font-medium items-start gap-[32px] ">
-              <p className="!text-xs  sm:!text-sm md:!text-base lg:!text-[20px] ">
-              Total time: 24 hrs
-                  </p>
-               
+                Total time: 24 hrs
               </div>
             </div>
-            <div className="fill-white drop-shadow-md w-[30px]" onClick={handleToggle1}>
+            <div className="fill-white drop-shadow-md" onClick={handleToggle1}>
             <img src="/dropicon.svg" alt="" />
             </div>
           </div>
@@ -739,11 +733,11 @@ const size= useWindowSize();
         </div>
 
         {/* throughtput*/}
-        <div className="w-[100%] h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
+        <div className="w-full h-[auto] p-[24px] mt-[10px] flex-shrink-0 rounded-[12px] bg-white element transition-colors duration-1000 ease-in-out ">
           {/* through pie chat */}
           {/* top */}
           <div className="flex justify-between items-start w-[100%]">
-            {/* thruogh top */}
+            {/* si top */}
             <div className="flex flex-col items-start justify-center gap-[12px] w-[572px]">
               <div className="flex items-center gap-[8px]">
                 {" "}

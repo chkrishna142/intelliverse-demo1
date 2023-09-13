@@ -12,7 +12,7 @@ function Particleswitchcomp() {
   const { material, clientId ,plantId,cameraId} = useParams();
   // Define a function to determine which component to render based on the URL
   const renderComponentBasedOnURL = () => {
-    if (location.pathname === '/optimus/blastfurnace') {
+    if (location.pathname === `/optimus/blastfurnace/${clientId}`) {
       return <MaterialSelectOfBf />;
     } 
     else if(material && clientId && plantId && cameraId) {  
@@ -21,9 +21,9 @@ function Particleswitchcomp() {
     else if(material && clientId)  {
       return <Sizing />;
     }
-       else if(material)  {
-      return <ClientSelect />;
-    }
+    //    else if(material)  {
+    //   return <ClientSelect />;
+    // }
     //  else {
     //   // Return a default component or null if needed
     //   return <>hello </>;
@@ -31,11 +31,11 @@ function Particleswitchcomp() {
   };
 
   return (
-   <>
+   <div className='w-full   h-full'>
      
         {renderComponentBasedOnURL()}
      
-        </>
+        </div>
   );
 }
 

@@ -45,7 +45,7 @@ const BF_Home = ({fetcheddata,client,pageshift,handleTabChange,workingurl}) => {
       return (
         <div className="w-full h-full flex flex-col  ">
           <div class="w-full h-full ">
-            <div className="w-full h-full flex justify-between">
+            <div className={`w-full h-full flex ${size.width<768? "flex-col gap-4" :"" } justify-between`}>
             <p
               style={{
                 color: "#024D87",
