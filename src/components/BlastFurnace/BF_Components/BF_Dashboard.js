@@ -12,6 +12,7 @@ import Particleswitchcomp from "./Particleswitchcomp";
 import { useLocation, useNavigate } from "react-router-dom";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
+import Serverdown from "./Serverdown";
 
 const BF_Dashboard = () => {
   const navigate = useNavigate();
@@ -31,8 +32,11 @@ const BF_Dashboard = () => {
 
   const [fetcheddata, setFetcheddata] = useState();
 
-  const client = "jspl";
-  const [workingurl,setWorkingurl] = useState(false);
+  const [client,setClient ]= useState("jspl")
+  const [workingurl, setWorkingurl] = useState(true);
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,21 +46,30 @@ const BF_Dashboard = () => {
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
-        // console.log("fetched data=====>>>",json);
-        setFetcheddata(json);
+        // console.log("fetched data ===>>>", json);
         setWorkingurl(true);
+        setFetcheddata(json);
       } catch (error) {
         setWorkingurl(false);
+        setFetcheddata();
         console.error("Error fetching data:", error);
       }
     };
-    // Fetch data initially
-    fetchData();
-  }, [client]);
+
+    fetchData(); 
+
+    const interval = setInterval(() => {
+      fetchData(); 
+    }, 10000);
+
+    return () => {
+      clearInterval(interval); 
+    };
+  },[client, workingurl]);
 
   // ----------------------------------------------------------------------
 
-    // const { auth } = useContext(NavContext)
+  // const { auth } = useContext(NavContext)
   //   useEffect(() => {
   //     const fetchData = async () => {
   //         try {
@@ -81,8 +94,6 @@ const BF_Dashboard = () => {
   //     fetchData();
   // }, [client, auth, baseURL]);
 
-
-
   // ----------------------------------------------------------------
 
   const [activeTab, setActiveTab] = useState(0);
@@ -97,7 +108,7 @@ const BF_Dashboard = () => {
 
   return (
     <div
-      className={`  w-full ${size.width<768? "mt-[-5px]": "mt-6 "}`}
+      className={`  w-full ${size.width < 768 ? "mt-[-5px]" : "mt-6 "}`}
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
       <div className="flex justify-between mb-3 mt-0 ">
@@ -106,7 +117,7 @@ const BF_Dashboard = () => {
           Blast Furnace
         </p>
       </div>
-      <Tabs index={activeTab} onChange={handleTabChange} >
+      <Tabs index={activeTab} onChange={handleTabChange}>
         <TabList className={` !flex !border-0 mt-0`}>
           <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
             <Tab
@@ -204,13 +215,17 @@ const BF_Dashboard = () => {
         </TabList>
         <TabPanels className="">
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-            <BF_Home
-              fetcheddata={fetcheddata}
-              client={client}
-              pageshift={pageshift}
-              handleTabChange={handleTabChange}
-              workingurl={workingurl}
-            />
+            {!workingurl ? (
+              <Serverdown />
+            ) : (
+              <BF_Home
+                fetcheddata={fetcheddata}
+                client={client}
+                pageshift={pageshift}
+                handleTabChange={handleTabChange}
+                workingurl={workingurl}
+              />
+            )}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Fueloptimizercomp fetcheddata={fetcheddata} />
