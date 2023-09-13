@@ -91,7 +91,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     setSizeDataChanging(true);
     apiCall();
   }, []);
-  console.log(typeRef.current, "basis");
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
