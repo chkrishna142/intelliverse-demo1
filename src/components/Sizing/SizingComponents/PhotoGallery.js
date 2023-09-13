@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { useParams } from "react-router-dom";
+import NavContext from "../../NavContext";
 import LibraryGrid from "./LibraryGrid";
-import { Select } from "@chakra-ui/react";
+import { Select, Spinner } from "@chakra-ui/react";
+import { baseURL } from "../../../index";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import axios from "axios";
 
 const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
+  const { auth } = useContext(NavContext);
+  let param = useParams();
+  const [imgData, setImgData] = useState([]);
+  const [imgDataChanging, setImgDataChanging] = useState(false);
   const [showType, setShowType] = useState(0);
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [selectedPlant, setSelectedPlant] = useState(
     disable ? plantId : "select plant"
   );
-  const [selectedCam, setSelectedCam] = useState(cameraId);
+  const [selectedCam, setSelectedCam] = useState(disable ? cameraId : "All Cams");
   const handleSelect = (e) => {
     let val = e.target.value;
     setShowType(val);
@@ -22,9 +29,37 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
       );
     }
   };
-  // useEffect(()=>{
-  //   console.log(date,'selected value')
-  // },[date])
+
+  const apiCall = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      material: param.material.toLowerCase(),
+      plantName: selectedPlant,
+      cameraId: selectedCam == 'All Cams' ? 'all' : selectedCam,
+      startDate: new Date(date).getTime(),
+    });
+    const response = await axios
+      .post(baseURL + "vision/v2/sizing/feedLibrary/images/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
+      .then((response) => {
+        setImgData(response.data);
+        setImgDataChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleClick = () => {
+    setImgDataChanging(true);
+    apiCall();
+  };
+
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
       <div className="flex pt-5 gap-4 items-start">
@@ -100,8 +135,14 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
             />
           </div>
         )}
+        <button
+          className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+          onClick={handleClick}
+        >
+          {imgDataChanging ? <Spinner /> : "Apply"}
+        </button>
       </div>
-      <LibraryGrid />
+      <LibraryGrid plantName={selectedPlant} img={imgData}/>
     </div>
   );
 };

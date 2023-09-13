@@ -170,7 +170,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                 <div
                   className={
                     material === "coal"
-                      ? "flex gap-[64px] justify-between overflow-x-auto"
+                      ? "flex gap-[64px] justify-between overflow-x-auto overflow-y-hidden"
                       : "flex flex-col-reverse gap-4"
                   }
                 >
