@@ -5,7 +5,6 @@ const Typewriter = ({ text, delay }) => {
     const [currentText, setCurrentText] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
 
-
     useEffect(() => {
         if (currentIndex < text.length) {
           const timeout = setTimeout(() => {
