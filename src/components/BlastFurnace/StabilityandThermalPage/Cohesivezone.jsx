@@ -87,64 +87,23 @@ function Cohesivezone({ isExpanded5, handleToggle5 }) {
       {/* top */}
       <div class="flex justify-between w-full ">
         <div class="flex flex-col items-start justify-center gap-[12px] w-[90%] ">
-          <div className="flex items-center gap-[8px]">
+          <div className="flex items-center gap-[2px] ">
             {" "}
-            <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium">
+            <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium ">
               <p className="!text-base  sm:!text-base md:!text-base lg:!text-[24px] ">
                 Cohesive Zone
               </p>
             </div>
-            <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">
-              {/* kg/tHM */}
-            </div>
-            <div className="flex justify-center items-center  w-[50px]">
+            {/* <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal">
+             
+            </div> */}
+            <div className="flex justify-center items-center  w-[40px] ">
               <Mymodal imageone={"/Bficons/cohesiveTop.svg"} imageTwo={"/Bficons/cohesiveBottom.svg"} />
             </div>
           </div>
-          {/* {isExpanded5 ? (
-            <div
-              className={`flex  ${
-                size.width <= 768 ? "flex-col" : ""
-              } items-start gap-[2%] w-[80%]  `}
-            >
-              <div className="flex gap-[2px] items-center justify-center">
-                <div className="flex gap-[2px] ">
-                  <img src="/Bficons/darkgreendot.svg" alt="" />
-                </div>
-                <div class="text-gray-600 mt-[-9px] text-center font-roboto text-xs font-normal leading-normal">
-                  {" "}
-                  Actual fuel rate
-                </div>
-              </div>
-              <div className="flex gap-[2px] ">
-                <div>
-                  <img src="/Bficons/blackdot.svg" alt="" />
-                </div>
-                <div class="text-gray-600 text-center font-roboto text-xs font-normal leading-normal">
-                  Baseline fuel rate
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="flex   justify-center w-full gap-4">
-              <div className="flex   w-full gap-4  justify-center">
-                <p className=" text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Current fuel rate</p>
-                <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal">
-                  {" "}
-                  537 kg/tHM
-                </p>
-              </div>
-              <div className="flex w-full gap-4   justify-center">
-                <p className="text-[#938F96]   text-center font-roboto text-xs font-normal leading-normal">Baseline fuel rate</p>
-                <p className="text-[#084298] font-[600]  text-center font-roboto text-xs leading-normal">
-                  {" "}
-                  537 kg/tHM
-                </p>
-              </div>
-            </div>
-          )} */}
+          
         </div>
-        <div onClick={handleToggle5} className="">
+        <div onClick={handleToggle5} className=" w-[10%]">
           <img src="/dropicon.svg" alt="" />
         </div>
       </div>
@@ -153,19 +112,19 @@ function Cohesivezone({ isExpanded5, handleToggle5 }) {
         <div
           className={`flex ${
             size.width <= 768 ? "flex-col" : ""
-          }  gap-[12px] w-full  h-full`}
+          }  gap-[12px] w-full  h-full mt-2`}
         >
           <div className={`  ${
               size.width <= 768 ? "w-full" : "w-[22%]"
-            }  flex flex-col items-start h-full  p-[12px]   rounded-[12px] bg-blue-50 ;
+            }  flex flex-col items-start h-full  p-[14px]   rounded-[12px] bg-blue-50 ;
            `}>
             <div className="w-full h-full flex flex-col gap-3">
               <div className="w-full flex  justify-evenly items-center">
-                <div className="w-[50px] text-center text-[#CAC5CD]">
+                <div className="w-[50px] text-center text-[#CAC5CD] text-[14px] ">
                   Stave Index
                 </div>
-                <div className="w-[100px] text-center text-[#CAC5CD]">TB</div>
-                <div className="w-[100px] text-center text-[#CAC5CD]">
+                <div className="w-[100px] text-center text-[#CAC5CD] text-[14px] ">TB</div>
+                <div className="w-[100px] text-center text-[#CAC5CD] text-[14px] ">
                   Cohesive zone shape
                 </div>
               </div>

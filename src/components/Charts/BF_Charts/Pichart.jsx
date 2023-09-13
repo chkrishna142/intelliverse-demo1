@@ -10,28 +10,16 @@ const Pichart = ({
   bottomTextvalue,
   wid,
 }) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
 
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const flexDirection = windowWidth < 980 ? "flex-col" : "flex-row";
 
   return (
     <div
-      className={` flex flex-col items-center  w-[18vw]   h-auto  gap-[28px] flex-shrink-0 rounded-[12px] `}
+      className={` flex flex-col items-center  w-full p-1   h-full  gap-[8px] rounded-[12px] `}
     >
       {/* top text */}
-      <div className="flex flex-col gap-[6px] text-left">
+      <div className="flex flex-col gap-[6px]  text-left ">
         <div className=" text-[#525056] text-[16px]  font-medium  ">
           {topText}
         </div>
@@ -44,14 +32,14 @@ const Pichart = ({
           options={option}
           series={series}
           type="pie"
-          width={"110%"}
+          width={"100%"}
         />
       </div>
 
       {/* svg and text */}
       <div className="flex gap-[8px] text-left w-[80%]">
         {/* svg div */}
-        <div>
+        <div className=" ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="12"
@@ -63,7 +51,7 @@ const Pichart = ({
           </svg>
         </div>
         {/* text div */}
-        <div className="text-start text-left  mt-[-5px]">
+        <div className="text-left   mt-[-5px]">
           <div className="text-[#938F96] text-neutral-n-60 font-roboto text-base">
             {bottomText}
           </div>

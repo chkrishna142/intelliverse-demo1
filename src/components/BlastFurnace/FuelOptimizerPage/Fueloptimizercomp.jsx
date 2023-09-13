@@ -79,11 +79,11 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
         },
         {
           x: "Oxygen Enrichment",
-          y: [110, 97],
+          y: [100, 87],
         },
         {
           x: "Cold Blast Volume",
-          y: [97, 64],
+          y: [87, 64],
           fillColor: "#605D64",
         },
         // {
@@ -175,7 +175,7 @@ const Fueloptimizercomp = ({ fetcheddata }) => {
               <div
                 className={`flex ${
                   size.width < 1400 ? "flex-col" : ""
-                } w-full h-full bg-white p-4 rounded-xl  shadow-md `}
+                } w-full h-full bg-white p-3 rounded-xl  shadow-md  border-2`}
               >
                 <Overviewcokerate
                   isExpanded2={isExpanded2}
