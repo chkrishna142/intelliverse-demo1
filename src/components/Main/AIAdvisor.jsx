@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { baseURL } from '../..';
 import NavContext from '../NavContext';
 import Typewriter from './Typewriter';
@@ -8,12 +8,14 @@ const AiAdvisor = () => {
 
     const [send, setSend] = useState(false)
     const { auth } = useContext(NavContext)
+    const ref = useRef(null)
 
-    const [question, setQuestion] = useState([])
     const [response, setResponse] = useState([])
+    const [typing, setTyping] = useState(false)
     const [text, setText] = useState("")
 
     const callChatGpt = async (ask) => {
+        setTyping(true)
         setText("")
         setResponse(current => [...current, ask])
         const data = await fetch(baseURL + 'chat', {
@@ -28,12 +30,22 @@ const AiAdvisor = () => {
         })
         const res = await data.json()
         setSend(true)
+        setTyping(false)
         setResponse(current => [...current, res?.data?.reply])
-
     }
+
+    useEffect(() => {
+        if (response.length) {
+            ref?.current?.scrollIntoView({
+                behaviour: "smooth",
+                block: "end"
+            })
+        }
+    }, [response.length])
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
+            setSend(true)
             callChatGpt(text)
         }
     }
@@ -57,18 +69,19 @@ const AiAdvisor = () => {
                         </div>
                     </div>
                 </div> :
-                    <div className='w-full h-[65vh] overflow-y-scroll'>
+                    <div className='w-full h-[60vh] overflow-y-scroll'>
                         {response?.map((item, index) => {
-                            return (<div className='mt-[2vh] overflow-y-scroll border rounded-md'>
+                            return (<div className='mt-[1vh] overflow-y-scroll border rounded-md'>
                                 <div className='grid grid-cols-12'>
                                     {index % 2 !== 0 ? <div className='col-span-1'>
-                                        <img className='h-[10vh] w-[3vw] ml-4' src="/doc.svg" />
+                                        <img className='md:h-[8vh] md:w-[3vw] md:mt-0 mt-4 ml-4' src="/doc.svg" />
                                     </div> : <div className='col-span-1'>
-                                        <div className='ml-4 mt-3 h-10 w-10 px-4 py-4 border bg-[#FAFAFA] flex justify-center items-center font-bold rounded-md'>A</div>
+                                        <div className='ml-4 mt-3 h-[5vh] w-[3vw]  px-4 py-4 border bg-[#FAFAFA] flex justify-center items-center font-bold rounded-md'>A</div>
                                     </div>}
-                                    {index % 2 !== 0 ? <div key={index} className=' col-span-11 mt-[3vh] mb-[3vh] -ml-8 mr-6 text-gray-500 text-sm'>
+                                    {index % 2 !== 0 ? <div key={index} className=' col-span-11 mt-[3vh] mb-[3vh] md:-ml-8 ml-8 mr-6 text-gray-500 text-sm'>
                                         <Typewriter text={item} delay={10} infinite />
-                                    </div> : <div key={index} className='col-span-10 mt-[3vh] mb-[3vh] -ml-8 mr-6 text-gray-500 text-sm'>
+                                        {/* <div ref={ref} lassName='h-4 border'></div> */}
+                                    </div> : <div key={index} className='col-span-10 mt-[3vh] mb-[3vh] md:-ml-8 ml-8 mr-6 text-gray-500 text-sm'>
                                         {item}
                                     </div>}
                                     {index % 2 === 0 ? <div key={index} className='col-span-1'>
@@ -76,12 +89,18 @@ const AiAdvisor = () => {
                                     </div> : null}
                                 </div>
                             </div>)
-                        })}
-                        <div>
+                        })}     
+                        <div className='h-4' ref={ref}>
                         </div>
                     </div>}
+                {typing === true && send === true ? <div className="chat-bubble">
+                    <div className="typing">
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                        <div className="dot"></div>
+                    </div>
+                </div> : null}
                 {send === false ? <div className='md:visible invisible'>
-
                     <div className='fixed bottom-32 ml-4 text-xs'>
                         <div style={{ width: '85.5vw' }} className='flex gap-4' >
                             <div onClick={() => { callChatGpt("What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?"); setSend(true) }} className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
