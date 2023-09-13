@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { baseURL } from '../..';
 import NavContext from '../NavContext';
 import Typewriter from './Typewriter';
@@ -8,6 +8,7 @@ const AiAdvisor = () => {
 
     const [send, setSend] = useState(false)
     const { auth } = useContext(NavContext)
+    const ref = useRef(null)
 
     const [response, setResponse] = useState([])
     const [typing, setTyping] = useState(false)
@@ -33,8 +34,18 @@ const AiAdvisor = () => {
         setResponse(current => [...current, res?.data?.reply])
     }
 
+    useEffect(() => {
+        if (response.length) {
+            ref?.current?.scrollIntoView({
+                behaviour: "smooth",
+                block: "end"
+            })
+        }
+    }, [response.length])
+
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
+            setSend(true)
             callChatGpt(text)
         }
     }
@@ -69,6 +80,7 @@ const AiAdvisor = () => {
                                     </div>}
                                     {index % 2 !== 0 ? <div key={index} className=' col-span-11 mt-[3vh] mb-[3vh] md:-ml-8 ml-8 mr-6 text-gray-500 text-sm'>
                                         <Typewriter text={item} delay={10} infinite />
+                                        {/* <div ref={ref} lassName='h-4 border'></div> */}
                                     </div> : <div key={index} className='col-span-10 mt-[3vh] mb-[3vh] md:-ml-8 ml-8 mr-6 text-gray-500 text-sm'>
                                         {item}
                                     </div>}
@@ -77,8 +89,8 @@ const AiAdvisor = () => {
                                     </div> : null}
                                 </div>
                             </div>)
-                        })}
-                        <div>
+                        })}     
+                        <div className='h-4' ref={ref}>
                         </div>
                     </div>}
                 {typing === true && send === true ? <div className="chat-bubble">
