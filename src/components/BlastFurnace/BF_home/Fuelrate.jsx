@@ -51,11 +51,11 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
 
   const optimalValue = Math.floor(data.chart.optimal_value);
   let current_values = data.chart.values;
-  if(current_values.length<=5){
-     current_values=[530,540,533,555,568,550,];
-  // console.log("current valuess--->", current_values.length);
+  // if(current_values.length<=5){
+  //    current_values=[530,540,533,555,568,550,];
+  // // console.log("current valuess--->", current_values.length);
      
-  }
+  // }
 
   const timeArray = data.chart.times;
 
@@ -67,8 +67,8 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
       },
       {
         name: "optimal",
-        // data: Array(data.chart.values.length).fill(optimalValue),
-        data: Array(6).fill(optimalValue),
+        data: Array(data.chart.values.length).fill(optimalValue),
+        // data: Array(6).fill(optimalValue),
       },
     ],
 

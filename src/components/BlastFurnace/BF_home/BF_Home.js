@@ -59,7 +59,7 @@ const BF_Home = ({fetcheddata,client,pageshift,handleTabChange,workingurl}) => {
             >
               AI Alerts and Recommendations
             </p>
-            {<div className="" ><Timer initialSeconds={10} /></div>}
+            {<div className="w-full h-full flex justify-end" ><Timer initialSeconds={30} /></div>}
             </div>
             {/* className={`${page==="feed" ? "opacity-100" : "opacity-0"}`} */}
             <div

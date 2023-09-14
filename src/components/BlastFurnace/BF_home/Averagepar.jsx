@@ -71,7 +71,7 @@ const size=useWindowSize();
             </p>
           </div>
   
-          <div className={` flex p-6 px-8 items-center gap-1  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
+          {/* <div className={` flex p-6 px-8 items-center gap-1  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
               <CheckCircleOutlineIcon
                 // style={{ width: "38px", height: "38px", color: "#FFF" }}
                 style={{ width: `${size.width < 420 ? '28px' : '30px'}`,
@@ -79,7 +79,7 @@ const size=useWindowSize();
             
               />
               <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">Optimal</p>
-            </div>
+            </div> */}
         </div>
   
         {/* mid part of box */}
