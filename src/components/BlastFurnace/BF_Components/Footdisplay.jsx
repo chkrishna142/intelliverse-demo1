@@ -37,16 +37,16 @@ const Footdisplay = ({ client }) => {
       <div className="w-full  flex justify-evenly items-center ">
         {
           // comment this when using client server
-          fetcheddata?.map(({ name, value }) => {
-            let unit = "";
+          fetcheddata?.map(({ name, value, unit }) => {
+            // let unit = "";
 
-            if (name === "Current Fule Rate" || name === "Coke Rate" || name === "PCI") {
-              unit = "kg/tHM";
-            } else if (name === "RAFT" || name === "Hot Metal") {
-              unit = "°C";
-            } else if (name === "Actual Si HM") {
-              unit = "%";
-            }
+            // if (name === "Current Fule Rate" || name === "Coke Rate" || name === "PCI") {
+            //   unit = "kg/tHM";
+            // } else if (name === "RAFT" || name === "Hot Metal") {
+            //   unit = "°C";
+            // } else if (name === "Actual Si HM") {
+            //   unit = "%";
+            // }
 
             return (
               <div className="flex gap-4 justify-center items-center" key={name}>

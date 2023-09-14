@@ -202,13 +202,13 @@ const Siliconpredictor = () => {
   };
 
   return (
-    <div className="flex flex-col gap-[6px] w-full h-full ">
+    <div className="flex flex-col gap-[6px] w-full h-[64vh] ">
       {/* silicn nav bar */}
 
       {/*charts  */}
       {/* fuel chart */}
 
-      <div className="flex flex-col w-full h-full  p-[6px] overflow-y-auto gap-[16px] ">
+      <div className="flex flex-col w-full h-full  p-[6px] overflow-y-auto gap-[8px] ">
         {/* RAFT PCI */}
 
         <div

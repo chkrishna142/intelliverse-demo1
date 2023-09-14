@@ -162,7 +162,7 @@ const StabilityandThermal = () => {
 
 
   return (
-    <div className="w-full h-[62vh] overflow-y-auto  flex flex-col   mt-[-15px]  ">
+    <div className="w-full h-[62vh] overflow-y-auto  flex flex-col    ">
       {/* nav */}
      
       

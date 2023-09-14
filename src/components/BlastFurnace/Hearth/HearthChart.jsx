@@ -4,9 +4,9 @@ import LiquidGauge from "./LiquidGuage";
 
 const HearthChart = () => {
   return (
-    <div className="flex  flex-col ml-1 pt-2 pl-2 m-auto ml-1 mt-3 w-[98%]">
+    <div className="flex  flex-col   w-full h-full">
       
-      <div className="flex flex-col md:flex-row gap-1 bg-white shadow-md p-5 items-center rounded">
+      <div className="flex flex-col md:flex-row gap-1 bg-white shadow-md p-1 items-center rounded">
         <div className="w-full md:w-[50%] border-r mt-3 mb-3">
           <img
             src="/Bficons/HearthLL.png"

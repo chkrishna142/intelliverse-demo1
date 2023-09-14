@@ -7,6 +7,7 @@ import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 import { useWindowSize } from "@uidotdev/usehooks";
 import BFHomeComponent from "../BF_Components/BFHomeComponent";
 import Serverdown from "../BF_Components/Serverdown";
+import Timer from "../../Sizing/SizingUtils/Timer";
 
 const BF_Home = ({fetcheddata,client,pageshift,handleTabChange,workingurl}) => {
   const size = useWindowSize();
@@ -44,6 +45,7 @@ const BF_Home = ({fetcheddata,client,pageshift,handleTabChange,workingurl}) => {
       return (
         <div className="w-full h-full flex flex-col  ">
           <div class="w-full h-full ">
+            <div className={`w-full h-full flex ${size.width<768? "flex-col gap-4" :"" } justify-between`}>
             <p
               style={{
                 color: "#024D87",
@@ -51,11 +53,15 @@ const BF_Home = ({fetcheddata,client,pageshift,handleTabChange,workingurl}) => {
                 height: "auto",
                 whiteSpace: "nowrap",
                 fontSize: "20px",
+               
               }}
               
             >
               AI Alerts and Recommendations
             </p>
+            {<div className="" ><Timer initialSeconds={10} /></div>}
+            </div>
+            {/* className={`${page==="feed" ? "opacity-100" : "opacity-0"}`} */}
             <div
               style={{}}
               //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"

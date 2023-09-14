@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Linechart from "../../Charts/BF_Charts/Linechart";
 import Splinechart from "../../Charts/BF_Charts/Splinechart";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 
 const Flametemp = ({name,current,min,max,impact}) => {
+
+  const size=useWindowSize();
   const [isExpanded1, setIsExpanded1] = useState(true);
   const handleToggle1 = () => {
     setIsExpanded1((prevExpanded) => !prevExpanded);
@@ -273,7 +276,7 @@ const Flametemp = ({name,current,min,max,impact}) => {
     {/* top */}
     <div class="flex justify-between w-full ">
       <div class="flex flex-col items-start justify-center gap-[12px] w-[100%] ">
-        <div className="flex   items-center gap-[8px] w-[90%] justify-between ">
+        <div className={`flex  ${size.width<768? "flex-col":""} items-center gap-[8px] w-[90%] justify-between `}>
           {" "}
           {/* top */}
           <div className="flex w-full ">
@@ -339,7 +342,7 @@ const Flametemp = ({name,current,min,max,impact}) => {
           <div className={`flex gap-[12px] w-full  h-full `}>
             
             {/* charts */}
-            <div class={` w-[100%] flex flex-col  h-full    items-start   p-[12px] gap-[100px] flex-shrink-0 rounded-[12px] `}>
+            <div class={` w-[100%] flex flex-col  h-full    items-start   p-[1px] gap-[100px] flex-shrink-0 rounded-[12px] `}>
               
               <div  className="h-[300px] w-full  ">
               <Linechart  chart={flametemp}/>

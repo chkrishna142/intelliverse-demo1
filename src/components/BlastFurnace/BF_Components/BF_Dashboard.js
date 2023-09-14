@@ -9,9 +9,10 @@ import HearthChart from "../Hearth/HearthChart";
 import Impacttrackercharts from "../impacttracker/Impacttrackercharts";
 import { useWindowSize } from "@uidotdev/usehooks";
 import Particleswitchcomp from "./Particleswitchcomp";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
+import Serverdown from "./Serverdown";
 
 const BF_Dashboard = () => {
   const navigate = useNavigate();
@@ -31,8 +32,16 @@ const BF_Dashboard = () => {
 
   const [fetcheddata, setFetcheddata] = useState();
 
-  const client = "jspl";
-  const [workingurl,setWorkingurl] = useState(false);
+  let param = useParams();
+
+  
+
+  const [client,setClient ]= useState(param.clientId);
+
+  const [workingurl, setWorkingurl] = useState(true);
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,21 +51,30 @@ const BF_Dashboard = () => {
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
-        // console.log("fetched data=====>>>",json);
-        setFetcheddata(json);
+        console.log("fetched data ===>>>", json);
         setWorkingurl(true);
+        setFetcheddata(json);
       } catch (error) {
         setWorkingurl(false);
+        setFetcheddata();
         console.error("Error fetching data:", error);
       }
     };
-    // Fetch data initially
-    fetchData();
-  }, [client]);
+
+    fetchData(); 
+
+    const interval = setInterval(() => {
+      fetchData(); 
+    }, 10000);
+
+    return () => {
+      clearInterval(interval); 
+    };
+  },[client, workingurl]);
 
   // ----------------------------------------------------------------------
 
-    // const { auth } = useContext(NavContext)
+  // const { auth } = useContext(NavContext)
   //   useEffect(() => {
   //     const fetchData = async () => {
   //         try {
@@ -81,8 +99,6 @@ const BF_Dashboard = () => {
   //     fetchData();
   // }, [client, auth, baseURL]);
 
-
-
   // ----------------------------------------------------------------
 
   const [activeTab, setActiveTab] = useState(0);
@@ -97,7 +113,7 @@ const BF_Dashboard = () => {
 
   return (
     <div
-      className={`  w-full ${size.width<768? "mt-[-5px]": "mt-6 "}`}
+      className={`  w-full ${size.width < 768 ? "mt-[-5px]" : "mt-6 "}`}
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
       <div className="flex justify-between mb-3 mt-0 ">
@@ -106,8 +122,8 @@ const BF_Dashboard = () => {
           Blast Furnace
         </p>
       </div>
-      <Tabs index={activeTab} onChange={handleTabChange} >
-        <TabList className={` !flex !border-0 mt-0`}>
+      <Tabs index={activeTab} onChange={handleTabChange}>
+        <TabList className={` !flex !border-0 mt-0 mb-2`}>
           <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
             <Tab
               className={
@@ -117,7 +133,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("dashboard");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Dashboard
@@ -130,7 +146,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("fuel optimizer");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Fuel Optimizer
@@ -143,7 +159,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Stability & Thermal Performance");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Stability & Thermal Performance
@@ -156,7 +172,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Silicon Prediction");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Silicon Prediction
@@ -169,7 +185,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Avg. particle size");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Avg. particle size
@@ -182,7 +198,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Hearth Liquid Level");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Hearth Liquid Level
@@ -195,7 +211,7 @@ const BF_Dashboard = () => {
               }
               onClick={() => {
                 setPage("Impact Tracker");
-                navigate("/optimus/blastfurnace");
+                navigate(`/optimus/blastfurnace/${client}`);
               }}
             >
               Impact Tracker
@@ -204,13 +220,17 @@ const BF_Dashboard = () => {
         </TabList>
         <TabPanels className="">
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
-            <BF_Home
-              fetcheddata={fetcheddata}
-              client={client}
-              pageshift={pageshift}
-              handleTabChange={handleTabChange}
-              workingurl={workingurl}
-            />
+            {!workingurl ? (
+              <Serverdown />
+            ) : (
+              <BF_Home
+                fetcheddata={fetcheddata}
+                client={client}
+                pageshift={pageshift}
+                handleTabChange={handleTabChange}
+                workingurl={workingurl}
+              />
+            )}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Fueloptimizercomp fetcheddata={fetcheddata} />
@@ -221,7 +241,7 @@ const BF_Dashboard = () => {
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Siliconpredictor />
           </TabPanel>
-          <TabPanel className="!pl-0 !pr-0 mb-[10px]">
+          <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
             <Particleswitchcomp />
             {/* <MaterialSelectOfBf/> */}
           </TabPanel>
