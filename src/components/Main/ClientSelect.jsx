@@ -1,22 +1,22 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { baseURL } from "../../index";
 import NavContext from "../NavContext";
+import { baseURL } from "../..";
 
 const ClientSelect = () => {
     let param = useParams();
-    const {auth} = useContext(NavContext);
     const [clients, setClients] = useState([])
+
+    const { auth } = useContext(NavContext)
 
     useEffect(() => {
         getClients()
     }, [])
 
     const getClients = async () => {
-        const data = await fetch(baseURL + 'vision/v1/sizing/getClientIdsByUseCase/', {
+        const data = await fetch(`${baseURL}vision/v1/sizing/getClientIdsByUseCase/`, {
             method: 'POST',
             headers: {
-
                 "Content-Type": "application/json",
                 "X-Auth-Token": auth
             },
