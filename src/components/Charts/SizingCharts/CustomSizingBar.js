@@ -6,11 +6,11 @@ const CustomSizingBar = ({ size }) => {
   let vals = [];
   let binSizes = Object.keys(size);
   let labels = [];
-  binData.map((item,idx) => {
+  binData.map((item, idx) => {
     let x = (item / sum) * 100;
     if (x !== 0) {
       vals.push(x.toFixed(2));
-      labels.push(binSizes[idx])
+      labels.push(binSizes[idx]);
     }
   });
   const colors = [
@@ -27,7 +27,7 @@ const CustomSizingBar = ({ size }) => {
     else isSmall = true;
   }
   return (
-    <div className='flex flex-col gap-4 min-w-[15vw]'>
+    <div className="flex flex-col gap-4 min-w-[15vw]">
       {/* <p className="text-base text-black">Size Distribution</p> */}
       <div className="flex flex-col h-[30vh]">
         {vals.map((x, idx) => {
@@ -43,19 +43,26 @@ const CustomSizingBar = ({ size }) => {
               >
                 {isSmall ? `${x}%` : ""}
               </div>
-              {!isSmall && (x>4) && (
-                <div className="flex gap-2 items-center min-w-[115px]">
-                  <p className="font-medium " style={{ color: colors[idx] }}>
-                    {x}%
-                  </p>
-                  <div className="flex gap-1 items-center">
+              {x > 4 &&
+                (!isSmall ? (
+                  <div className="flex gap-2 items-center min-w-[115px]">
+                    <p className="font-medium " style={{ color: colors[idx] }}>
+                      {x}%
+                    </p>
+                    <div className="flex gap-1 items-center">
+                      <p className="text-black font-medium text-xs">
+                        {labels[idx]}
+                      </p>
+                      {/* <p className="text-gray-300 text-xs">0-6mm</p> */}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center whitespace-nowrap mr-[-50px]">
                     <p className="text-black font-medium text-xs">
                       {labels[idx]}
                     </p>
-                    {/* <p className="text-gray-300 text-xs">0-6mm</p> */}
                   </div>
-                </div>
-              )}
+                ))}
             </div>
           );
         })}

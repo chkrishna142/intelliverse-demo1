@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const Paginator = ({ data, limit, setDisplayData }) => {
   const [selected, setSelected] = useState(1);
   let page = 1;
+  let idx = 0;
   const perPageData = {};
   let dummy = [];
   data.forEach((item) => {
@@ -12,7 +13,9 @@ const Paginator = ({ data, limit, setDisplayData }) => {
       page++;
       dummy = [];
     }
+    item['idx'] = idx; 
     dummy.push(item);
+    idx++;
   });
   perPageData[page] = dummy;
 

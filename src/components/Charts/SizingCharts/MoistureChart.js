@@ -5,9 +5,16 @@ const MoistureChart = ({ data }) => {
   //manging x axis and y axis values
   const series = [];
   const times = [];
-  data.map(i=>{
-    series.push(i.moisture);
+  let dummy = [];
+  data.map((i) => {
+    if(i.moisture != 0){
+      dummy.push(i.moisture)
+    }else dummy.push(null);
     times.push(i.timestamp);
+  });
+  series.push({
+    name: "Moisture",
+    data: dummy,
   });
   //chart options
   const options = {
@@ -23,6 +30,12 @@ const MoistureChart = ({ data }) => {
       fillSeriesColor: true,
       style: {
         fontSize: "16px",
+      },
+      fixed: {
+        enabled: true,
+        position: "topLeft",
+        offsetX: 0,
+        offsetY: 0,
       },
     },
     chart: {
@@ -44,40 +57,42 @@ const MoistureChart = ({ data }) => {
       animations: {
         enabled: false,
       },
-      //   events: {
-      //     markerClick: function (
-      //       event,
-      //       chartContext,
-      //       { seriesIndex, dataPointIndex, config }
-      //     ) {
-      //       // console.log(props.idData, dataPointIndex, "data point values");
-      //       setUseIndex(props.idData[dataPointIndex]);
-      //       const requestData = JSON.stringify({
-      //         id: props.idData[dataPointIndex],
-      //         clientId: clientId,
-      //       });
-      //       apiCallDataPoint(props.idData[dataPointIndex], requestData);
-      //       setModalIsOpen(true);
-      //     },
-      //   },
     },
     xaxis: {
       categories: times,
-      type: "datetime",
       labels: {
         show: true,
         formatter: function (value) {
           const date = new Date(value);
-          const hours = date.getHours();
-          const minutes = date.getMinutes().toString().padStart(2, "0");
-          const ampm = hours >= 12 ? "PM" : "AM";
-          const formattedHours = hours === 0 || hours === 12 ? 12 : hours % 12;
 
-          return `${formattedHours}:${minutes} ${ampm}`;
+          // Get the day of the month with leading zero
+          const dayOfMonth = String(date.getDate()).padStart(2, "0");
+
+          // Get the abbreviated month name
+          const monthsAbbreviated = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const monthAbbreviated = monthsAbbreviated[date.getMonth()];
+
+          return `${dayOfMonth} ${monthAbbreviated}`;
         },
         style: {
           fontSize: "14px",
         },
+      },
+      tooltip: {
+        enabled: false,
       },
     },
     yaxis: {
@@ -99,7 +114,7 @@ const MoistureChart = ({ data }) => {
     colors: ["#084298"],
     stroke: {
       curve: "smooth",
-      width: [3, 3],
+      width: [3, 3, 3, 3, 3, 3],
     },
     grid: {
       borderColor: "#e7e7e7",
@@ -107,13 +122,6 @@ const MoistureChart = ({ data }) => {
         colors: ["#FAFAFA", "transparent"],
         opacity: 1,
       },
-    },
-    legend: {
-      show: true,
-      offsetY: 15,
-      offsetX: 0,
-      position: "top",
-      fontSize: "12px",
     },
   };
 
@@ -123,7 +131,6 @@ const MoistureChart = ({ data }) => {
       series={series}
       type="line"
       height="100%"
-      width="100%"
     />
   );
 };

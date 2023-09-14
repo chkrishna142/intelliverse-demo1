@@ -1,5 +1,19 @@
 import ReactApexChart from "react-apexcharts";
 
+let color = {
+  'size': [
+    "#ffc107",
+    "#5193f6",
+    "#ef6f12",
+    "#1c56ac",
+    "#e91e63",
+    "#00bcd4",
+    "#8bc34a",
+    "#9c27b0",
+  ],
+  'color' : ["#000000","#79767D"]
+}
+
 const PieChart = ({ data, type }) => {
   const graphData = {};
   const labels = Object.keys(data[0][type]);
@@ -28,16 +42,7 @@ const PieChart = ({ data, type }) => {
     chart: {
       type: "pie",
     },
-    colors: [
-      "#ffc107",
-      "#5193f6",
-      "#ef6f12",
-      "#1c56ac",
-      "#e91e63",
-      "#00bcd4",
-      "#8bc34a",
-      "#9c27b0",
-    ],
+    colors: color[type],
     labels: labels,
     legend: {
       show: false,

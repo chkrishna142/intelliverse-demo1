@@ -25,6 +25,8 @@ const SingleCam = () => {
   const param = useParams();
   const location = useLocation();
   const [page, setPage] = useState("feed");
+  const [callApi, setCallApi] = useState(false);
+  const [initialRender, setInitialRender] = useState(true);
   let material = param.material.toLowerCase();
   let cameraId = param.cameraId;
   let clientId = param.clientId;
@@ -109,7 +111,12 @@ const SingleCam = () => {
           </TabList>
           {
             <div className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}>
-              <Timer initialSeconds={30} />
+              <Timer
+                initialSeconds={30}
+                callFunc={setCallApi}
+                initialRender={initialRender}
+                setInitialRender={setInitialRender}
+              />
             </div>
           }
         </div>
@@ -120,6 +127,8 @@ const SingleCam = () => {
               material={material}
               cameraId={cameraId}
               clientId={clientId}
+              callApi={callApi}
+              initialRender={initialRender}
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">

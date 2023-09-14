@@ -46,9 +46,9 @@ const LibraryGrid = ({ plantName, img }) => {
               </div>
               <img className="rounded-lg" src={x.originalImage} />
               <div className="flex gap-4 absolute bottom-2 right-2 opacity-0 hover:opacity-75">
-                <img src="/SizingIcons/ShareIcon.svg" alt="" />
+                {/* <img src="/SizingIcons/ShareIcon.svg" alt="" /> */}
                 <img
-                  className="cursor-pointer"
+                  className="cursor-pointer rounded-full"
                   src="/SizingIcons/DownloadIcon.svg"
                   alt=""
                   onClick={() => ImgDownload(x.originalImage, x.id)}
