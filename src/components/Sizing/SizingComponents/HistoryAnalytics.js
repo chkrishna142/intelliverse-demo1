@@ -83,7 +83,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
         <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
-        <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw]">
+        <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw] h-[60px]">
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"

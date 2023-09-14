@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import NavContext from "../../NavContext";
+import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import FloatingInput from "../SizingUtils/FloatingInput";
 import BoxPlotChart from "../../Charts/SizingCharts/BoxPlotChart";
@@ -6,6 +8,10 @@ import axios from "axios";
 import { Select, Spinner } from "@chakra-ui/react";
 
 const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
+  const { auth } = useContext(NavContext);
+  let param = useParams();
+  const [plotData, setPlotData] = useState({});
+  const [plotDataChanging,setPlotDataChanging] = useState(false);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
   const [selectedCam, setSelectedCam] = useState(cameraId);
@@ -21,7 +27,7 @@ const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
   );
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
-    if (e.target.value === 0) {
+    if (e.target.value == 0) {
       setFromTime(
         new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
           .toISOString()
@@ -35,11 +41,47 @@ const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
     }
   };
 
+  const apiCall = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      material: param.material.toLowerCase(),
+      plantName: selectedPlant,
+      startDate: new Date(fromTime).getTime(),
+      endDate: new Date(toTime).getTime() + 11*60*60*1000 + 59*60*1000,
+      cameraId: selectedCam,
+      plotParam: "MPS",
+    });
+    const response = await axios
+      .post(baseURL + "vision/v2/sizing/analytics/plot/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
+      .then((response) => {
+        setPlotData(response.data);
+        setPlotDataChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleClick = () =>{
+    setPlotDataChanging(true);
+    apiCall();
+  }
+
+  useEffect(()=>{
+    handleClick();
+  },[]);
+
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
         <p className="text-[#3E3C42] text-xl font-medium pl-6">Box Plot</p>
-        <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw]">
+        <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw] h-[60px]">
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
@@ -119,13 +161,18 @@ const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
               />
             </div>
           )}
-          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]">
-            {"Apply"}
+          <button
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+            onClick={handleClick}
+          >
+            {plotDataChanging ? <Spinner /> : "Apply"}
           </button>
         </div>
       </div>
       <div className="h-[60vh]">
-        <BoxPlotChart />
+        {plotData.hasOwnProperty("data") && (
+          <BoxPlotChart data={plotData.data} />
+        )}
       </div>
     </div>
   );

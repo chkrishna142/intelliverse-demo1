@@ -1,62 +1,31 @@
 import ReactApexChart from "react-apexcharts";
 
-const BoxPlotChart = () => {
+const BoxPlotChart = ({ data }) => {
+  let boxData = [];
+  let outliersData = [];
+  data.map((i) => {
+    boxData.push({
+      x: i.timestamp,
+      y: i.plot,
+    });
+    i.outliers.map((j) => {
+      outliersData.push({
+        x: i.timestamp,
+        y: j,
+      });
+    });
+  });
+
   const series = [
     {
       name: "box",
       type: "boxPlot",
-      data: [
-        {
-          x: new Date("2017-01-01").getTime(),
-          y: [54, 66, 69, 75, 88],
-        },
-        {
-          x: new Date("2018-01-01").getTime(),
-          y: [43, 65, 69, 76, 81],
-        },
-        {
-          x: new Date("2019-01-01").getTime(),
-          y: [31, 39, 45, 51, 59],
-        },
-        {
-          x: new Date("2020-01-01").getTime(),
-          y: [39, 46, 55, 65, 71],
-        },
-        {
-          x: new Date("2021-01-01").getTime(),
-          y: [29, 31, 35, 39, 44],
-        },
-      ],
+      data: boxData,
     },
     {
       name: "outliers",
       type: "scatter",
-      data: [
-        {
-          x: new Date("2017-01-01").getTime(),
-          y: 32,
-        },
-        {
-          x: new Date("2018-01-01").getTime(),
-          y: 25,
-        },
-        {
-          x: new Date("2019-01-01").getTime(),
-          y: 64,
-        },
-        {
-          x: new Date("2020-01-01").getTime(),
-          y: 27,
-        },
-        {
-          x: new Date("2020-01-01").getTime(),
-          y: 78,
-        },
-        {
-          x: new Date("2021-01-01").getTime(),
-          y: 15,
-        },
-      ],
+      data: outliersData,
     },
   ];
   const options = {
@@ -69,10 +38,35 @@ const BoxPlotChart = () => {
       align: "left",
     },
     xaxis: {
-      type: "datetime",
-      tooltip: {
-        formatter: function (val) {
-          return new Date(val).getFullYear();
+      labels: {
+        show: true,
+        formatter: function (value) {
+          const date = new Date(value);
+
+          // Get the day of the month with leading zero
+          const dayOfMonth = String(date.getDate()).padStart(2, "0");
+
+          // Get the abbreviated month name
+          const monthsAbbreviated = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const monthAbbreviated = monthsAbbreviated[date.getMonth()];
+
+          return `${dayOfMonth} ${monthAbbreviated}`;
+        },
+        style: {
+          fontSize: "14px",
         },
       },
     },
@@ -83,7 +77,13 @@ const BoxPlotChart = () => {
   };
 
   return (
-    <ReactApexChart series={series} options={options} type="boxPlot" height="100%" width="100%" />
+    <ReactApexChart
+      series={series}
+      options={options}
+      type="boxPlot"
+      height="100%"
+      width="100%"
+    />
   );
 };
 

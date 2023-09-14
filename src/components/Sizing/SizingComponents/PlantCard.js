@@ -17,10 +17,11 @@ const PlantCard = ({ PlantName, CamData }) => {
   let totalAlerts = [];
   let totalData = [];
   Object.keys(CamData).map((cam) => {
-    if (CamData[cam][0].noCoal !== 1)
+    if (CamData[cam][0].noCoal !== 1){
       totalAlerts.push(CamData[cam][0]["alertMessages"].length);
+      if(CamData[cam][0]["alertMessages"].length > 0)totalData.push(CamData[cam][0]);
+    }
     else totalAlerts.push(0);
-    totalData.push(CamData[cam][0]);
   });
   let sum = totalAlerts.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
@@ -46,7 +47,6 @@ const PlantCard = ({ PlantName, CamData }) => {
                 closeModal={() => setOpenModal(false)}
                 data={totalData}
                 index = {0}
-                PlantName = {PlantName}
               />
             )}
           </div>
