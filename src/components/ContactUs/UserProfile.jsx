@@ -81,7 +81,7 @@ const UserProfile = () => {
   const imageUpload = async () => {
     const data = new FormData();
     data.append("image", sendImage);
-    const call = await fetch('https://intelliverse.backend-ripik.com/api/user/uploadimage', {
+    const call = await fetch(`${baseURL}user/uploadimage`, {
       method: "POST",
       headers: {
         "X-Auth-Token": auth

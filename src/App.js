@@ -34,7 +34,7 @@ function App() {
     } else {
       setLogin(false);
     }
-  }, []);
+  }, [login]);
 
   return (
     <>
