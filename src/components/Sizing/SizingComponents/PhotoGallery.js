@@ -14,15 +14,13 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [imgDataChanging, setImgDataChanging] = useState(false);
   const [showType, setShowType] = useState(0);
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
-  const [selectedPlant, setSelectedPlant] = useState(
-    disable ? plantId : "select plant"
-  );
-  const [selectedCam, setSelectedCam] = useState(disable ? cameraId : "All Cams");
+  const [selectedPlant, setSelectedPlant] = useState(plantId);
+  const [selectedCam, setSelectedCam] = useState(cameraId);
   const handleSelect = (e) => {
     let val = e.target.value;
     setShowType(val);
     if (val == 0) {
-      setDate(new Date().toISOString.slice(0, 10));
+      setDate(new Date().toISOString().slice(0, 10));
     } else if (val == 1) {
       setDate(
         new Date(new Date() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
@@ -35,7 +33,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
       clientId: param.clientId.toLowerCase(),
       material: param.material.toLowerCase(),
       plantName: selectedPlant,
-      cameraId: selectedCam == 'All Cams' ? 'all' : selectedCam,
+      cameraId: selectedCam,
       startDate: new Date(date).getTime(),
     });
     const response = await axios
@@ -60,6 +58,10 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
     apiCall();
   };
 
+  useEffect(() => {
+    handleClick();
+  }, []);
+
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
       <div className="flex pt-5 gap-4 items-start">
@@ -74,7 +76,6 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
             onChange={(e) => setSelectedPlant(e.target.value)}
             value={selectedPlant}
           >
-            <option value="select plant">select plant</option>
             {!disable &&
               Object.keys(plantCamMap).map((plant) => {
                 return (
@@ -85,32 +86,27 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               })}
           </Select>
         </div>
-        {selectedPlant !== "select plant" && (
-          <div>
-            <Select
-              borderColor="#CAC5CD"
-              color="#605D64"
-              placeholder={disable && cameraId}
-              variant="outline"
-              isDisabled={disable}
-              className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
-              onChange={(e) => setSelectedCam(e.target.value)}
-              value={selectedCam}
-            >
-              <option key="All Cams" value="All Cams">
-                All Cams
-              </option>
-              {!disable &&
-                plantCamMap[selectedPlant].map((cam) => {
-                  return (
-                    <option key={cam} value={cam}>
-                      {cam}
-                    </option>
-                  );
-                })}
-            </Select>
-          </div>
-        )}
+        <div>
+          <Select
+            borderColor="#CAC5CD"
+            color="#605D64"
+            placeholder={disable && selectedCam}
+            variant="outline"
+            isDisabled={disable}
+            className="!rounded-2xl !text-sm !font-medium text-[#605D64]"
+            onChange={(e) => setSelectedCam(e.target.value)}
+            value={selectedCam}
+          >
+            {!disable &&
+              plantCamMap[selectedPlant].map((cam) => {
+                return (
+                  <option key={cam} value={cam}>
+                    {cam}
+                  </option>
+                );
+              })}
+          </Select>
+        </div>
         <div>
           <Select
             borderColor="#CAC5CD"
@@ -142,7 +138,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
           {imgDataChanging ? <Spinner /> : "Apply"}
         </button>
       </div>
-      <LibraryGrid plantName={selectedPlant} img={imgData}/>
+      <LibraryGrid plantName={selectedPlant} img={imgData} />
     </div>
   );
 };

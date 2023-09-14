@@ -14,7 +14,7 @@ import { baseURL } from "../../../index";
 import NavContext from "../../NavContext";
 import { useState, useContext, useRef, useEffect } from "react";
 
-const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
+const DetailModal = ({ openModal, closeModal, data, index }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
   let material = param.material.toLowerCase();
@@ -22,28 +22,25 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
   const indexRef = useRef();
   const idRef = useRef();
   const cameraRef = useRef();
+  const plantRef = useRef();
   const [modalData, setModalData] = useState({});
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: clientId,
       material: material,
-      plantName: plantName,
+      plantName: plantRef.current,
       cameraId: cameraRef.current,
       recordId: idRef.current,
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/analytics/history/single/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/history/single/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setModalData(response.data);
       })
@@ -56,6 +53,7 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
     indexRef.current = index;
     idRef.current = data[index].id;
     cameraRef.current = data[index].cameraId;
+    plantRef.current = data[index].plantName;
     apiCall();
   }, []);
 
@@ -73,6 +71,7 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
     let idx = indexRef.current;
     cameraRef.current = data[idx].cameraId;
     idRef.current = data[idx].id;
+    plantRef.current = data[idx].plantName;
     apiCall();
   };
 
@@ -86,7 +85,11 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
               <div className="flex gap-3 items-center">
                 <img src="/SizingIcons/Clock.svg" />
                 <p className="text-black font-semibold text-sm">
-                  {new Date(modalData.timestamp).toLocaleDateString() +
+                  {new Date(modalData.timestamp).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  }) +
                     " " +
                     new Date(modalData.timestamp).toLocaleTimeString()}
                 </p>
@@ -113,7 +116,7 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
                     className={
                       material === "coal"
                         ? "flex-1 flex flex-col gap-4 p-5 w-[290px]"
-                        : "flex-1 grid grid-cols-2 gap-4"
+                        : "flex-1 grid grid-cols-2 gap-4 p-5"
                     }
                   >
                     <div className="flex flex-col gap-2 items-center">
@@ -150,7 +153,7 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
                       </div>
                     </div>
                     {material !== "coal" && (
-                      <div className="flex flex-col gap-6">
+                      <div className="flex flex-col gap-2">
                         <p className="text-black text-base font-medium">
                           Size Distribution
                         </p>
@@ -187,13 +190,13 @@ const DetailModal = ({ openModal, closeModal, data, index, plantName }) => {
                             style={{ width: `${modalData.color.gray}%` }}
                             className="bg-[#79767D] rounded-lg text-white text-center h-full flex items-center justify-center"
                           >
-                            {modalData.color.gray}%
+                            {modalData.color.gray.toFixed(2)}%
                           </div>
                           <div
                             style={{ width: `${modalData.color.black}%` }}
                             className="bg-black rounded-lg text-white text-center h-full flex items-center justify-center"
                           >
-                            {modalData.color.black}%
+                            {modalData.color.black.toFixed(2)}%
                           </div>
                         </div>
                       </div>
