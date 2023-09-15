@@ -81,11 +81,11 @@ const Production = ({ data, pageshift, handleTabChange }) => {
   // console.log("table====>", data.chart);
   const optimalValue =  Math.floor(data.chart.optimal_value);
   let current_values = data.chart.values;
-  if(current_values.length<=5){
-    current_values=[5500, 5000, 6500, 5500, 4000,7500];
-    // console.log("current valuess--->", current_values.length);
+//   if(current_values.length<=5){
+//     current_values=[5500, 5000, 6500, 5500, 4000,7500];
+//     // console.log("current valuess--->", current_values.length);
     
- }
+//  }
   const timeArray = data.chart.times;
 
   const [chart, setChart] = useState({

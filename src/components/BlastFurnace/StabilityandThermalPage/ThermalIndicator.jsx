@@ -4,185 +4,14 @@ import Thermalareachart from "../BF_Components/Thermalareachart";
 import Thermalheatmap from "../BF_Components/Thermalheatmap";
 import Mymodal from "../BF_Components/Mymodal";
 
-function ThermalIndicator({ isExpanded3, handleToggle3 }) {
-  const [Lineareachart, setLineareachart] = useState({
-    series: [
-      {
-        type: "rangeArea",
-        name: "Optimal Range Area",
+function ThermalIndicator({ isExpanded3, handleToggle3 ,fetcheddata,client}) {
+ 
 
-        data: [
-          {
-            x: "PMStack Press1",
-            y: [2.6, 3.0],
-          },
-          {
-            x: "PMStack Press2",
-            y: [2.5, 2.6],
-          },
-          {
-            x: "PMStack Press3",
-            y: [2.7, 2.9],
-          },
-          {
-            x: "PMStack Press5",
-            y: [2.0, 3.0],
-          },
-        ],
-      },
-      {
-        type: "line",
-        name: "Current Stack Pressure",
-        data: [
-          {
-            x: "PMStack Press1",
-            y: 2.8,
-          },
-          {
-            x: "PMStack Press2",
-            y: 2.7,
-          },
-          {
-            x: "PMStack Press3",
-            y: 2.9,
-          },
-          {
-            x: "PMStack Press5",
-            y: 2.9,
-          },
-        ],
-      },
-    ],
-    options: {
-      chart: {
-        toolbar: {
-          show: false,
-        },
-        // height: 350,
-        type: "rangeArea",
-        animations: {
-          speed: 100,
-        },
-      },
-      colors: ["rgba(105, 176, 75, 0.28)", "#3A74CA"],
-      dataLabels: {
-        enabled: false,
-      },
-
-      fill: {
-        // opacity: [0.24, 0.24, 1, 1],
-      },
-      forecastDataPoints: {
-        count: 0,
-      },
-      stroke: {
-        show: true,
-        curve: "smooth",
-        lineCap: "butt",
-        width: [0, 2], // Width for the rangeArea and line series
-      },
-      legend: {
-        show: false,
-        customLegendItems: ["Team B", "Team A"],
-        inverseOrder: true,
-      },
-
-      markers: {
-        hover: {
-          sizeOffset: 5,
-        },
-      },
-    },
-  });
-
-  const dummyHeatData = [
-    {
-      name: "T18 +41807 R15",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R14",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R13",
-      temperature1: 28,
-      temperature2: 32,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R12",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R11",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R11",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R11",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R11",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R10",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R10",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R9",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    {
-      name: "T18 +41807 R19",
-      temperature1: 28,
-      temperature2: 28,
-      temperature3: 28,
-      temperature4: 28,
-    },
-    // ... and so on
-  ];
-
+const [stateTempData,setStavetempData]=useState(fetcheddata.target_ranges_for_stave_temp.reverse());
+const [heapMapData,setHeatMapData]=useState(fetcheddata.thermal_heat_map.reverse());
+const [thermometerData,SetThermometerData]=useState(fetcheddata.thermal_indicator_chart[0]);
+  console.log(heapMapData);
+ 
   return (
     <div className="flex flex-col  h-full bg-white p-4 rounded-xl  shadow-md  ">
       {/* top */}
@@ -231,7 +60,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
                 Last 1 Hour
               </p>
               <div className="w-[200px] h-full">
-                <ThermalIndThermo maxTemperature={100} temperature={140} />
+                <ThermalIndThermo maxTemperature={thermometerData.max_temperature} temperature={thermometerData.temperature} />
               </div>
             </div>
 
@@ -277,14 +106,16 @@ function ThermalIndicator({ isExpanded3, handleToggle3 }) {
               </div>
               {/* chart */}
               <div class="w-full h-full">
-                <Thermalareachart />
+                <Thermalareachart  fetcheddata={stateTempData}/>
               </div>
             </div>
 
             {/* Range bar */}
             <div class="w-[280px] flex h-[420px]   ">
               <div class="w-[350px] h-[100%] mt-[27px] ml-[-55px]">
-                <Thermalheatmap />
+                <Thermalheatmap  
+                // fetcheddata={fetcheddata.target_ranges_for_stave_temp}
+                />
               </div>
             </div>
 

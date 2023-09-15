@@ -1,13 +1,50 @@
 import { useEffect, useRef, useState } from "react";
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, CircularProgress } from "@chakra-ui/react";
 import Modelaccuracy from "../BF_Components/Modelaccuracy";
 import StabilityInd from "./StabilityInd";
 import Rca from "./Rca";
 import ThermalIndicator from "./ThermalIndicator";
 import Recommendations from "./Recommendations";
 import Cohesivezone from "./Cohesivezone";
+import { useParams } from "react-router-dom";
+import Timer from "../../Sizing/SizingUtils/Timer";
 
 const StabilityandThermal = () => {
+  let param = useParams();
+   const [client,setClient ]= useState(param.clientId);
+   const [fetcheddata, setFetcheddata] = useState();
+  const [stabilityIndData,setStabilityIndData]=useState();
+  const [thermalIndData,setThermalIndData]=useState();
+
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+         ` https://15.206.88.112.nip.io:443/api/stability_and_thermal/?client_id=${client}`
+        );
+        const json = await response.json();
+        // console.log("fetched data ===>>>", json);
+       
+        setFetcheddata(json);
+        setStabilityIndData(json.stability_indicator)
+        setThermalIndData(json.thermal_indicator)
+      } catch (error) {
+       
+        setFetcheddata();
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); 
+
+    const interval = setInterval(() => {
+      fetchData(); 
+    }, 30000);
+
+    return () => {
+      clearInterval(interval); 
+    };
+  },[client]);
 
   const series = [
     {
@@ -162,22 +199,30 @@ const StabilityandThermal = () => {
 
 
   return (
-    <div className="w-full h-[62vh] overflow-y-auto  flex flex-col    ">
+    <div className="w-full h-full gap-2 flex flex-col  ">
       {/* nav */}
      
+            <div className={`w-full h-full  flex justify-end`}>
+              <Timer initialSeconds={30} />
+            </div>
+        
       
       {/* body */}
       
-
+      <div className="w-full h-[64vh] flex flex-col overflow-y-auto ">
       <div id="StabilityIndicator" className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px ">
-            <StabilityInd isExpanded1={isExpanded1} handleToggle1={handleToggle1}/>
+          {stabilityIndData && <StabilityInd isExpanded1={isExpanded1} handleToggle1={handleToggle1} fetcheddata={stabilityIndData} client={client}/> } 
+          {!stabilityIndData && <div className=" flex justify-center"><CircularProgress isIndeterminate color='green.300' /></div>} 
+           
             <Rca isExpanded2={isExpanded2} handleToggle2={handleToggle2} series={series} options={options}/>
       </div>
 
      
 
      <div id="ThermalIndicator" className="flex flex-col gap-4 w-[100%] h-[auto]  p-2 flex-shrink-0 rounded-[12px] element transition-colors duration-1000 ease-in-out ">
-        <ThermalIndicator isExpanded3={isExpanded3} handleToggle3={handleToggle3}/>
+     {thermalIndData &&  <ThermalIndicator isExpanded3={isExpanded3} handleToggle3={handleToggle3}  fetcheddata={thermalIndData} client={client}/>}
+     {!thermalIndData && <div className=" flex justify-center"><CircularProgress isIndeterminate color='green.300' /></div>} 
+
         <Cohesivezone isExpanded5={isExpanded5} handleToggle5={handleToggle5} />
         <Rca isExpanded2={isExpanded21} handleToggle2={handleToggle21} series={series} options={options}/>
 
@@ -188,7 +233,7 @@ const StabilityandThermal = () => {
         <Recommendations isExpanded4={isExpanded4} handleToggle4={handleToggle4}/>
         
       </div>
-      
+      </div>      
     </div>
   );
 };
