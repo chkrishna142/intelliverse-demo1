@@ -21,6 +21,8 @@ import ClientSelect from './components/Main/ClientSelect';
 import Messages from './components/Main/Messages/Messages';
 import SingleMessage from './components/Main/Messages/SingleMessage';
 import BfClientSelect from './components/BlastFurnace/BF_Components/BfClientSelect';
+import Redirect from './components/Main/Redirect';
+import Expert from './components/Main/Expert';
 
 function App() {
 
@@ -57,6 +59,7 @@ function App() {
                     <Route path="/community" element={<Home state={"community"} />} />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
                     <Route path="/community/askanexpert" element={<AskAnExpert />} />
+                    <Route path="/community/expert" element={<Expert />} />
                     {/* Client Select Page */}
                     <Route path="/client_select" element={<ClientSelect />} />
                     {/* Optimus Pages */}
@@ -77,6 +80,8 @@ function App() {
                     {/* Notification Pages */}
                     <Route path="/notifications" element={<Messages />} />
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
+
+                    <Route path="/redirect" element={<Redirect />} />
                   </Routes>
                 </div>
               </div>
