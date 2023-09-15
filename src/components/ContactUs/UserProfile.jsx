@@ -70,7 +70,7 @@ const UserProfile = () => {
       body: raw,
       redirect: 'follow'
     };
-    const data = await fetch("https://backend-ripik.com/api/user", requestOptions)
+    const data = await fetch(`${baseURL}user`, requestOptions)
     await imageUpload()
     const res = await data.json()
     setSpinner(false)
