@@ -11,7 +11,7 @@ let color = {
     "#8bc34a",
     "#9c27b0",
   ],
-  'color' : ["#000000","#79767D"]
+  'color' : ["#79767D","#000000"]
 }
 
 const PieChart = ({ data, type }) => {

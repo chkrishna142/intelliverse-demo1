@@ -45,7 +45,7 @@ const CustomSizingBar = ({ size }) => {
               </div>
               {x > 4 &&
                 (!isSmall ? (
-                  <div className="flex gap-2 items-center min-w-[115px]">
+                  <div className="flex gap-2 items-center min-w-[125px]">
                     <p className="font-medium " style={{ color: colors[idx] }}>
                       {x}%
                     </p>
