@@ -1,7 +1,7 @@
 import ReactApexCharts from "react-apexcharts";
 import { useState, useEffect } from "react";
 
-const LineChart = ({ data, timeStamps, labels, noCoal }) => {
+const LineChart = ({ data, timeStamps, labels, noCoal, color }) => {
   //manging x axis and y axis values
   const [times, setTimes] = useState([]);
   const [series, setSeries] = useState([]);
@@ -123,16 +123,7 @@ const LineChart = ({ data, timeStamps, labels, noCoal }) => {
         },
       },
     },
-    colors: [
-      "#084298",
-      "#ffc107",
-      "#4adcdc",
-      "#5193F6",
-      "#e91e63",
-      "#00bcd4",
-      "#8bc34a",
-      "#9c27b0",
-    ],
+    colors: color,
     stroke: {
       curve: "smooth",
       width: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3],

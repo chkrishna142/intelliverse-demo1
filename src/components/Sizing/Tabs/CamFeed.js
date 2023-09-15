@@ -6,9 +6,24 @@ import DonutChart from "../../Charts/SizingCharts/DonutChart";
 import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
 import { Spinner } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
-import {baseURL} from "../../../index"
+import { baseURL } from "../../../index";
 
-const CamFeed = ({ material, cameraId, clientId }) => {
+let color = {
+  'size': [
+    "#ffc107",
+    "#5193f6",
+    "#ef6f12",
+    "#1c56ac",
+    "#e91e63",
+    "#00bcd4",
+    "#8bc34a",
+    "#9c27b0",
+  ],
+  'color' : ["#79767D","#000000"],
+  'moisture' : ["#084298"]
+}
+
+const CamFeed = ({ material, cameraId, clientId, callApi, initialRender }) => {
   const size = useWindowSize();
   const { auth } = useContext(NavContext);
   const [camData, setCamData] = useState("");
@@ -22,17 +37,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
       cameraId: cameraId,
     });
     const response = await axios
-      .post(
-         baseURL + "vision/v2/sizing/analysis/detail/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/analysis/detail/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setCamData(response.data);
       })
@@ -48,17 +59,13 @@ const CamFeed = ({ material, cameraId, clientId }) => {
       cameraId: cameraId,
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/analysis/list/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            'X-Auth-Token': auth
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/analysis/list/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setBulkData(response.data.reverse());
       })
@@ -90,13 +97,20 @@ const CamFeed = ({ material, cameraId, clientId }) => {
 
   useEffect(() => {
     apiCallPopulate();
-    const intervalId = setInterval(() => {
-      apiCall();
-    }, 30000);
-    return () => {
-      clearInterval(intervalId);
-    };
+    // const intervalId = setInterval(() => {
+    //   apiCall();
+    // }, 30000);
+    // return () => {
+    //   clearInterval(intervalId);
+    // };
   }, []);
+
+  useEffect(() => {
+    if (!initialRender) {
+      console.log("calling...");
+      apiCall();
+    }
+  }, [callApi]);
 
   return (
     <>
@@ -226,8 +240,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                   <div className="flex flex-col gap-4">
                     <p className="text-base font-medium text-[#605D64]">MPS</p>
                     <div className="min-w-[150px] rounded-lg bg-[#f6faff] text-center py-[25px] pl-3 pr-7 text-[#1C56AC] text-2xl">
-                      {camData.mps.toFixed(2)}{" "}
-                      mm
+                      {camData.mps.toFixed(2)} mm
                     </div>
                   </div>
                 </div>
@@ -285,6 +298,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                       ).getTime()}
                       labels={Object.keys(camData.size)}
                       noCoal={camData.noCoal}
+                      color={color['size']}
                     />
                   </div>
                 </div>
@@ -302,6 +316,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                           ).getTime()}
                           labels={Object.keys(camData.color)}
                           noCoal={camData.noCoal}
+                          color={color['color']}
                         />
                       </div>
                     </div>
@@ -317,6 +332,7 @@ const CamFeed = ({ material, cameraId, clientId }) => {
                           ).getTime()}
                           labels={["Moisture"]}
                           noCoal={camData.noCoal}
+                          color={color['moisture']}
                         />
                       </div>
                     </div>

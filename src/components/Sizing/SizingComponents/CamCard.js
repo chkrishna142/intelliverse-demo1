@@ -8,7 +8,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
   return (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6">
       {alert !== 0 && (
-        <p className="absolute top-0 right-[50%] lg:right-8 p-1 pl-2 pr-2 text-sm text-[#DC362E]">
+        <p className="absolute top-0 right-[50%] min-[1040px]:right-8 p-1 pl-2 pr-2 text-sm text-[#DC362E]">
           {alert} alert
         </p>
       )}

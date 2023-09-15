@@ -5,6 +5,7 @@ import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import DetailModal from "../SizingComponents/DetailModal";
+import Paginator from "../SizingUtils/Paginator";
 import {
   Select,
   Table,
@@ -119,6 +120,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const indexRef = useRef();
   const [openModal, setOpenModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
+  const [displayData,setDisplayData] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
@@ -147,6 +149,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           ? "all"
           : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
+      maxLimit: 8000
     });
     const response = await axios
       .post(baseURL + "vision/v2/sizing/alerts/overview/", requestData, {
@@ -268,6 +271,13 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
             />
           </div> */}
+          {alerts.hasOwnProperty("data") && (
+            <Paginator
+              data={alerts.data}
+              limit={30}
+              setDisplayData={setDisplayData}
+            />
+          )}
         </div>
         {alerts.hasOwnProperty("data") && (
           <TableContainer className="!max-h-[80vh] !overflow-y-auto">
@@ -290,14 +300,14 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                 </Tr>
               </Thead>
               <Tbody>
-                {alerts.data.map((item, index) => {
+                {displayData.map((item, index) => {
                   return (
                     <Tr
                       key={index}
                       className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                     >
                       <Td className="cursor-pointer">
-                        {String(index + 1).padStart(2, "0")}
+                        {String(item['idx']).padStart(2, "0")}
                       </Td>
                       <Td className="cursor-pointer">{item.plantName}</Td>
                       <Td className="cursor-pointer">{item.cameraId}</Td>
@@ -319,7 +329,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       </Td>
                       <Td>
                         <p
-                          className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]"
+                          className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[80px]"
                           onClick={() => handleDetail(index)}
                         >
                           View Details
@@ -337,7 +347,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
         <DetailModal
           openModal={openModal}
           closeModal={() => setOpenModal(false)}
-          data={alerts.data}
+          data={displayData}
           index={indexRef.current}
           PlantName={selectedPlant}
         />

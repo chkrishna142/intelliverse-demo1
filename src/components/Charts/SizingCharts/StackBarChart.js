@@ -1,5 +1,19 @@
 import ReactApexChart from "react-apexcharts";
 
+let color = {
+  'size': [
+    "#ffc107",
+    "#5193f6",
+    "#ef6f12",
+    "#1c56ac",
+    "#e91e63",
+    "#00bcd4",
+    "#8bc34a",
+    "#9c27b0",
+  ],
+  'color' : ["#000000","#79767D"]
+}
+
 const StackBarChart = ({ data, type }) => {
   let graphData = {};
   let times = [];
@@ -34,16 +48,7 @@ const StackBarChart = ({ data, type }) => {
       stacked: true,
       stackType: "100%",
     },
-    colors: [
-      "#ffc107",
-      "#5193f6",
-      "#ef6f12",
-      "#1c56ac",
-      "#e91e63",
-      "#00bcd4",
-      "#8bc34a",
-      "#9c27b0",
-    ],
+    colors: color[type],
     xaxis: {
       categories: times,
       labels: {
@@ -83,7 +88,7 @@ const StackBarChart = ({ data, type }) => {
     },
     legend: {
       position: "right",
-      offsetX: -40,
+      offsetX: -30,
       offsetY: 0,
       fontSize: "14px",
       labels: {

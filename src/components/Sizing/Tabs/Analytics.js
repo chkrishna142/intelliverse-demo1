@@ -11,10 +11,12 @@ import BoxPlotAnalysis from "../SizingComponents/BoxPlotAnalysis";
 import axios from "axios";
 import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
 import MoistureChart from "../../Charts/SizingCharts/MoistureChart";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
+  const size = useWindowSize();
   let material = param.material.toLowerCase();
   const [sizeData, setSizeData] = useState([]);
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
@@ -92,17 +94,23 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
 
   useEffect(() => {
     typeRef.current = "SIZE";
+    setSelectedBasis(0);
+    avgMoistureRef.current = 0;
     setSizeDataChanging(true);
     apiCall();
   }, []);
 
-  useEffect(()=>{
-    let sum = 0;
-    sizeData.map(i=>{
-      sum += i.moisture
-    });
-    avgMoistureRef.current = sum/sizeData.length;
-  },[sizeData])
+  useEffect(() => {
+    if (typeRef.current == "MOISTURE") {
+      let sum = 0;
+      sizeData.map((i) => {
+        sum += i.moisture;
+      });
+      avgMoistureRef.current = sum / sizeData.length;
+    }
+  }, [typeRef.current]);
+
+  console.log(Math.ceil((size.width*25)/200),'value')
 
   return (
     <div className="flex flex-col gap-4">
@@ -262,7 +270,10 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
               {typeRef.current == "MOISTURE" ? (
-                <LiquidGauge moisture={avgMoistureRef.current.toFixed(2)} r={100} />
+                <LiquidGauge
+                  moisture={avgMoistureRef.current}
+                  r={Math.max(Math.ceil((size.width*20)/200),80)}
+                />
               ) : (
                 <PieChart
                   data={sizeData}

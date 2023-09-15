@@ -5,6 +5,7 @@ import FloatingInput from "../SizingUtils/FloatingInput";
 import { baseURL } from "../../../index";
 import axios from "axios";
 import DetailModal from "./DetailModal";
+import Paginator from "../SizingUtils/Paginator";
 import {
   Table,
   Td,
@@ -23,6 +24,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const indexRef = useRef();
   const [openModal, setOpenModal] = useState(false);
   const [history, setHistory] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
   const [historyChanging, setHistoryChanging] = useState(false);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
@@ -46,6 +48,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       cameraId: selectedCam,
       plantName: selectedPlant,
       startDate: new Date(date).getTime(),
+      maxLimit: 8000,
     });
     const response = await axios
       .post(baseURL + "vision/v2/sizing/analytics/history/", requestData, {
@@ -82,7 +85,16 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
-        <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
+        <div className="flex gap-2">
+          <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
+          {history.hasOwnProperty("data") && (
+            <Paginator
+              data={history.data}
+              limit={30}
+              setDisplayData={setDisplayData}
+            />
+          )}
+        </div>
         <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw] h-[60px]">
           <div className="min-w-[110px]">
             <Select
@@ -181,14 +193,14 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {history.data.map((item, index) => {
+              {displayData.map((item, index) => {
                 return (
                   <Tr
                     key={index}
                     className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                   >
                     <Td className="cursor-pointer">
-                      {String(index + 1).padStart(2, "0")}
+                      {String(item['idx']).padStart(2, "0")}
                     </Td>
                     {history.order.map((x, idx) => {
                       return (
@@ -199,7 +211,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                     })}
                     <Td>
                       <p
-                        className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[150px]"
+                        className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[80px]"
                         onClick={() => handleDetail(index)}
                       >
                         View Details
@@ -216,7 +228,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
         <DetailModal
           openModal={openModal}
           closeModal={() => setOpenModal(false)}
-          data={history.data}
+          data={displayData}
           index={indexRef.current}
           PlantName={selectedPlant}
         />
