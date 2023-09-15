@@ -51,7 +51,7 @@ const BF_Dashboard = () => {
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
-        console.log("fetched data ===>>>", json);
+        // console.log("fetched data ===>>>", json);
         setWorkingurl(true);
         setFetcheddata(json);
       } catch (error) {
