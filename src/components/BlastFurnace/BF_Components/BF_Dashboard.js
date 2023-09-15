@@ -47,7 +47,7 @@ const BF_Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          // `http://10.36.0.105:8000/api/get_fuel_rate_and_production/?client_id=jspl`
+          // `http://10.36.0.105:8000/api/get_fuel_rate_and_production/?client_id=${client}`
           `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
         );
         const json = await response.json();
@@ -65,7 +65,7 @@ const BF_Dashboard = () => {
 
     const interval = setInterval(() => {
       fetchData(); 
-    }, 10000);
+    }, 30000);
 
     return () => {
       clearInterval(interval); 

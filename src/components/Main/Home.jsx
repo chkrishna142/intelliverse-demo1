@@ -4,6 +4,7 @@ import NewUseCaseModal from './NewUseCaseModal';
 import { useWindowSize } from "@uidotdev/usehooks";
 import { baseURL } from '../..';
 import NavContext from '../NavContext';
+import subscription from "../../util/subscription"
 
 const Home = ({ state }) => {
 
@@ -11,6 +12,7 @@ const Home = ({ state }) => {
     const [isOpen, setIsOpen] = useState(false)
     const size = useWindowSize();
     const { auth } = useContext(NavContext)
+
 
 
     return (
@@ -169,14 +171,16 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>AI Advisor </p></div>
                                     </Link>
-                                    <div>
-                                        <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
-                                            {/* <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">1</div></div> */}
-                                            <div className='w-full flex justify-center items-center '><img className='object-fit' src="/people.svg" /></div>
-                                            {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div> */}
+                                    <a href="https://community.ripikintelliverse.com/" target="_blank">
+                                        <div>
+                                            <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
+                                                {/* <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">1</div></div> */}
+                                                <div className='w-full flex justify-center items-center '><img className='object-fit' src="/people.svg" /></div>
+                                                {/* <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>5 Deployments</div></div> */}
+                                            </div>
+                                            <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Community</p></div>
                                         </div>
-                                        <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Community</p></div>
-                                    </div>
+                                    </a>
                                     <div className='invisible'>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             {/* <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">1</div></div> */}

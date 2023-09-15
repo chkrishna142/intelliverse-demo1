@@ -6,7 +6,7 @@ import { InfoOutlineIcon } from "@chakra-ui/icons";
 import Mymodal from "../BF_Components/Mymodal";
 import { useWindowSize } from "@uidotdev/usehooks";
 
-function StabilityInd({ isExpanded1, handleToggle1 }) {
+function StabilityInd({ isExpanded1, handleToggle1 ,fetcheddata,client}) {
   const size = useWindowSize();
 
   const [Lineareachart, setLineareachart] = useState({
@@ -15,24 +15,25 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
         type: "rangeArea",
         name: "Optimal Range Area",
 
-        data: [
-          {
-            x: "PMStack Press1",
-            y: [2.6, 3.0],
-          },
-          {
-            x: "PMStack Press2",
-            y: [2.5, 2.6],
-          },
-          {
-            x: "PMStack Press3",
-            y: [2.7, 2.9],
-          },
-          {
-            x: "PMStack Press5",
-            y: [2.0, 3.0],
-          },
-        ],
+        data:fetcheddata.stack_pressure 
+        //  [
+        //   {
+        //     x: "PMStack Press1",
+        //     y: [2.6, 3.0],
+        //   },
+        //   {
+        //     x: "PMStack Press2",
+        //     y: [2.5, 2.6],
+        //   },
+        //   {
+        //     x: "PMStack Press3",
+        //     y: [2.7, 2.9],
+        //   },
+        //   {
+        //     x: "PMStack Press5",
+        //     y: [2.0, 3.0],
+        //   },
+        // ],
       },
       {
         type: "line",
@@ -157,7 +158,8 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
     },
   });
 
-  const guagepercent=66
+
+  const [guagepercent,setGuagepercent]=useState(fetcheddata.stability_indicator_chart[0].value)
 
   return (
     <div className="flex flex-col w-full h-full  bg-white p-4 rounded-xl  shadow-md ">
@@ -279,7 +281,7 @@ function StabilityInd({ isExpanded1, handleToggle1 }) {
            ${size.width>1440? "w-full": "w-[380px]"} 
            
             h-full shadow-md p-2    `}>
-            <RangeTable />
+            <RangeTable  fetcheddata={fetcheddata.stack_parameters}/>
           </div>
           </div>
         </div>

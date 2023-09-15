@@ -23,7 +23,7 @@ const Footdisplay = ({ client }) => {
 
     const interval = setInterval(() => {
       fetchData(); 
-    }, 10000);
+    }, 30000);
 
     return () => {
       clearInterval(interval); 

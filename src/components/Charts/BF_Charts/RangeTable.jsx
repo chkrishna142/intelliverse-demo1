@@ -13,6 +13,7 @@ import * as React from "react";
 // } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import RangeSlider from "./RangeSlider";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 // const StyledTableCell = styled(TableCell)(({ theme }) => ({
 //   [`&.${tableCellClasses.head}`]: {
@@ -35,56 +36,42 @@ import RangeSlider from "./RangeSlider";
 //   },
 // }));
 
-const rows = [
-  {
-    name: "Permeability (Darcy)",
-    overallRange: [2.2, 3.2],
-    optimalRange: [2.59, 2.7],
-    currentValue: 2.5,
-    impactOnProduction: 6,
-  },
-  {
-    name: "Top differential pressure (bar)",
-    overallRange: [0.18, 0.38],
-    optimalRange: [0.24, 0.28],
-    currentValue: 0.26,
-    impactOnProduction: 0,
-  },
-  {
-    name: "Middle differential pressure (bar)",
-    overallRange: [2.2, 3.2],
-    optimalRange: [2.59, 2.7],
-    currentValue: 2.55,
-    impactOnProduction: 2,
-  },
-  {
-    name: "Bottom differential pressure (bar)",
+// const rows = [
+//   {
+//     name: "Permeability (Darcy)",
+//     overallRange: [2.2, 3.2],
+//     optimalRange: [2.59, 2.7],
+//     currentValue: 2.5,
+//     impactOnProduction: 6,
+//   },
+//   {
+//     name: "Top differential pressure (bar)",
+//     overallRange: [0.18, 0.38],
+//     optimalRange: [0.24, 0.28],
+//     currentValue: 0.26,
+//     impactOnProduction: 0,
+//   },
+//   {
+//     name: "Middle differential pressure (bar)",
+//     overallRange: [2.2, 3.2],
+//     optimalRange: [2.59, 2.7],
+//     currentValue: 2.55,
+//     impactOnProduction: 2,
+//   },
+//   {
+//     name: "Bottom differential pressure (bar)",
 
-    overallRange: [0.8, 1.4],
-    optimalRange: [1.2, 1.3],
-    currentValue: 1.33,
-    impactOnProduction: 4,
-  },
-];
+//     overallRange: [0.8, 1.4],
+//     optimalRange: [1.2, 1.3],
+//     currentValue: 1.33,
+//     impactOnProduction: 4,
+//   },
+// ];
 
-export default function RangeTable() {
-  // const tableBackgroundColor = useColorModeValue("white", "#F4F8FF"); // Light mode and dark mode background colors
+export default function RangeTable({fetcheddata}) {
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const size= useWindowSize();
 
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const flexDirection = windowWidth < 1200 ? "flex-col" : "flex-row";
 
   return (
     <div className="w-full">
@@ -121,7 +108,7 @@ export default function RangeTable() {
           >
             <div
               className={`flex items-start gap-[2%] w-[100%] ${
-                windowWidth < 577 ? "flex-col" : ""
+                size.width < 577 ? "flex-col" : ""
               }  `}
             >
               <div className="flex gap-[2px] items-center justify-center">
@@ -144,8 +131,10 @@ export default function RangeTable() {
             </div>
           </td>
         </tr>
-
-        {rows.map((row) => (
+     
+        { 
+        // fetcheddata.length>0?(
+        fetcheddata.map((row) => (
           <tr key={row.name} style={{ height: "90px" }}>
             <td
               style={{
@@ -173,7 +162,14 @@ export default function RangeTable() {
               {row.impactOnProduction}
             </td>
           </tr>
-        ))}
+        ))
+        // ):(
+        //   <tr>
+        //     <td colSpan="3">No data available</td>
+        //   </tr>
+        // )
+        }
+      
       </table>
     </div>
   );
