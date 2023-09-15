@@ -3,7 +3,7 @@ import ReactApexChart from "react-apexcharts";
 
 const Thermalareachart = ({fetcheddata}) => {
 
-
+// console.log("thermal area-->",fetcheddata)
 const [rangeAreaData,setRangeAreaData]=useState( fetcheddata.map((item) => ({
   x: item.x,
   y: item.y,
@@ -268,6 +268,9 @@ const [lineAreaData,setLineAreaData]=useState(fetcheddata.map((item) => ({
 
 
         },
+        tooltip: {
+          enabled: false,
+        },
         
       },
       
@@ -319,13 +322,19 @@ const [lineAreaData,setLineAreaData]=useState(fetcheddata.map((item) => ({
           var data1 = w.globals.initialSeries[0].data[dataPointIndex];
           var data2 = w.globals.initialSeries[1].data[dataPointIndex];
          
-          return '<div class="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
-          '<p class="font-bold mb-1"> ' + data1.x +':'+ '</p>' +
-          '<p  class="mb-1"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
-          '<p> Current: '+  data2.y+'</p>' +
+          return '<div class="relative bg-white border border-gray-300  shadow-md rounded-md flex p-9 flex-col gap-[15px] h-[200px] w-[120px]" >' +
+          '<p class="absolute bottom-[29%] left-[-40px] font-bold mb-2 rotate-[-90deg] mt-4"> ' + data1.x +':'+ '</p>' + 
+          '<p  class="absolute bottom-[43%] left-[14px] font-normal rotate-[-90deg]"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
+          '<p class="absolute bottom-[20%] left-[7px] font-normal mb-2 rotate-[-90deg] bg-green-200 p-2"> Current: '+  data2.y+'</p>' +
           
           '</div>';
-        }
+        },
+        fixed: {
+          enabled: true,
+          position: "bottomLeft",
+          offsetX: 0,
+          offsetY: 0,
+        },
       }
       
         

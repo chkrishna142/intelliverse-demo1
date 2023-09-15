@@ -15,10 +15,11 @@ const BF_Home = ({
   pageshift,
   handleTabChange,
   workingurl,
+  setInitialRender,
+  initialRender,
+  callFunc
 }) => {
   const size = useWindowSize();
-  const [callApi, setCallApi] = useState(false);
-  const [initialRender, setInitialRender] = useState(false);
 
   const silicon_table_data = [
     {
@@ -69,12 +70,12 @@ const BF_Home = ({
             </p>
             {
               <div className="w-full h-full flex justify-end">
-                {/* <Timer
+                <Timer
                   initialSeconds={30}
-                  callFunc={setCallApi}
+                  callFunc={callFunc}
                   initialRender={initialRender}
                   setInitialRender={setInitialRender}
-                /> */}
+                />
               </div>
             }
           </div>
@@ -115,6 +116,8 @@ const BF_Home = ({
     return (
       <div className=" flex justify-center">
         <CircularProgress isIndeterminate color="green.300" />
+        {/* return '<div class="relative bg-white border border-gray-300 p-4 shadow-md rounded-md flex flex-col gap-[30px] h-[180px] w-[100px]" >' +
+          '<p class="absolute bottom-[30%] left-[-40px] font-bold mb-1 rotate-[-90deg]"> ' + data1.x +':'+ '</p>' +  */}
       </div>
     );
   }
