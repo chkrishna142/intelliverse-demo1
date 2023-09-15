@@ -6,12 +6,11 @@ import Mymodal from "../BF_Components/Mymodal";
 
 function ThermalIndicator({ isExpanded3, handleToggle3 ,fetcheddata,client}) {
  
-
+  const [thermometerData,SetThermometerData]=useState(fetcheddata.thermal_indicator_chart[0]);
 const [stateTempData,setStavetempData]=useState(fetcheddata.target_ranges_for_stave_temp.reverse());
 const [heapMapData,setHeatMapData]=useState(fetcheddata.thermal_heat_map.reverse());
-const [thermometerData,SetThermometerData]=useState(fetcheddata.thermal_indicator_chart[0]);
-  console.log(heapMapData);
- 
+
+  
   return (
     <div className="flex flex-col  h-full bg-white p-4 rounded-xl  shadow-md  ">
       {/* top */}
@@ -114,7 +113,7 @@ const [thermometerData,SetThermometerData]=useState(fetcheddata.thermal_indicato
             <div class="w-[280px] flex h-[420px]   ">
               <div class="w-[350px] h-[100%] mt-[27px] ml-[-55px]">
                 <Thermalheatmap  
-                // fetcheddata={fetcheddata.target_ranges_for_stave_temp}
+                fetcheddata={heapMapData}
                 />
               </div>
             </div>
