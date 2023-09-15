@@ -13,9 +13,11 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 import Serverdown from "./Serverdown";
-
+import { BASE_URL_FOR_BF } from "./urlforbf";
 const BF_Dashboard = () => {
   const navigate = useNavigate();
+  const [callApi, setCallApi] = useState(false);
+  const [initialRender, setInitialRender] = useState(true);
 
   const Capitalize = (str) => {
     const arr = str.split(" ");
@@ -34,43 +36,29 @@ const BF_Dashboard = () => {
 
   let param = useParams();
 
-  
-
-  const [client,setClient ]= useState(param.clientId);
+  const [client, setClient] = useState(param.clientId);
 
   const [workingurl, setWorkingurl] = useState(true);
 
-
-
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL_FOR_BF}/get_fuel_rate_and_production/?client_id=${client}`
+      );
+      const json = await response.json();
+      console.log("fetched data of dashboard===>>>", json);
+      setWorkingurl(true);
+      setFetcheddata(json);
+    } catch (error) {
+      setWorkingurl(false);
+      setFetcheddata();
+      console.error("Error fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          // `http://10.36.0.105:8000/api/get_fuel_rate_and_production/?client_id=${client}`
-          `https://15.206.88.112.nip.io:443/api/get_fuel_rate_and_production/?client_id=${client}`
-        );
-        const json = await response.json();
-        // console.log("fetched data ===>>>", json);
-        setWorkingurl(true);
-        setFetcheddata(json);
-      } catch (error) {
-        setWorkingurl(false);
-        setFetcheddata();
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData(); 
-
-    const interval = setInterval(() => {
-      fetchData(); 
-    }, 30000);
-
-    return () => {
-      clearInterval(interval); 
-    };
-  },[client, workingurl]);
+    fetchData();
+  }, [callApi]);
 
   // ----------------------------------------------------------------------
 
@@ -229,6 +217,9 @@ const BF_Dashboard = () => {
                 pageshift={pageshift}
                 handleTabChange={handleTabChange}
                 workingurl={workingurl}
+                callFunc={setCallApi}
+                initialRender={initialRender}
+                setInitialRender={setInitialRender}
               />
             )}
           </TabPanel>

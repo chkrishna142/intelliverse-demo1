@@ -1,36 +1,34 @@
 import { useEffect, useState } from "react";
+import { BASE_URL_FOR_BF } from "./urlforbf";
 
 const Footdisplay = ({ client }) => {
   const [fetcheddata, setFetcheddata] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://15.206.88.112.nip.io:443/api/get_footer_details/?client_id=${client}`
-          // `http://10.36.0.105:8000/api/get_footer_details/?client_id=${client}`
-        );
-        const json = await response.json();
-        // console.log("fetched data ===>>>", json);
-        setFetcheddata(json);
-      } catch (error) {
-        setFetcheddata();
-        console.error("Error fetching data:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${BASE_URL_FOR_BF}/get_footer_details/?client_id=${client}`
+      );
+      const json = await response.json();
+      // console.log("fetched data ===>>>", json);
+      setFetcheddata(json);
+    } catch (error) {
+      setFetcheddata();
+      console.error("Error fetching data:", error);
+    }
+  };
 
-    fetchData(); 
+  useEffect(() => {
+    fetchData();
 
     const interval = setInterval(() => {
-      fetchData(); 
+      fetchData();
     }, 30000);
 
     return () => {
-      clearInterval(interval); 
+      clearInterval(interval);
     };
   }, [client]);
-
-
 
   if (fetcheddata) {
     return (
@@ -49,15 +47,20 @@ const Footdisplay = ({ client }) => {
             // }
 
             return (
-              <div className="flex gap-4 justify-center items-center" key={name}>
-                <p className="text-[#79767D] text-[12px] font-semibold">{name}</p>
+              <div
+                className="flex gap-4 justify-center items-center"
+                key={name}
+              >
+                <p className="text-[#79767D] text-[12px] font-semibold">
+                  {name}
+                </p>
                 <p className="text-[#084298] text-[16px] font-bold">
                   {value} {unit}
                 </p>
               </div>
             );
           })
-        //  comment this when using dummy server
+          //  comment this when using dummy server
           // Object.keys(fetcheddata).map((ele) => {
           //   const keysofobj = fetcheddata[ele];
           //   const { name, value } = keysofobj;
@@ -92,7 +95,6 @@ const Footdisplay = ({ client }) => {
           //   );
           // })
         }
-
       </div>
     );
   } else {

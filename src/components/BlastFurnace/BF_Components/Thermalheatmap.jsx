@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 function Thermalheatmap({fetcheddata}) {
-  console.log("heatmap data",fetcheddata)
+
 
 
   const [heatMapDataWithoutName,setheatMapDataWithoutName]=useState( fetcheddata.map((item) => ({

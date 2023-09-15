@@ -8,14 +8,23 @@ import { useWindowSize } from "@uidotdev/usehooks";
 
 function StabilityInd({ isExpanded1, handleToggle1 ,fetcheddata,client}) {
   const size = useWindowSize();
-
+ 
+  const [rangeAreaData,setRangeAreaData]=useState( fetcheddata.stack_pressure.map((item) => ({
+    x: item.x,
+    y: item.y,
+  })))
+  const [lineAreaData,setLineAreaData]=useState(fetcheddata.stack_pressure.map((item) => ({
+    x: item.x,
+    y: item.z,
+  })))
+ 
   const [Lineareachart, setLineareachart] = useState({
     series: [
       {
         type: "rangeArea",
         name: "Optimal Range Area",
 
-        data:fetcheddata.stack_pressure 
+        data:rangeAreaData
         //  [
         //   {
         //     x: "PMStack Press1",
@@ -38,24 +47,25 @@ function StabilityInd({ isExpanded1, handleToggle1 ,fetcheddata,client}) {
       {
         type: "line",
         name: "Current Stack Pressure",
-        data: [
-          {
-            x: "PMStack Press1",
-            y: 2.8,
-          },
-          {
-            x: "PMStack Press2",
-            y: 2.7,
-          },
-          {
-            x: "PMStack Press3",
-            y: 2.9,
-          },
-          {
-            x: "PMStack Press5",
-            y: 2.9,
-          },
-        ],
+        data:lineAreaData,
+        //  [
+        //   {
+        //     x: "PMStack Press1",
+        //     y: 2.8,
+        //   },
+        //   {
+        //     x: "PMStack Press2",
+        //     y: 2.7,
+        //   },
+        //   {
+        //     x: "PMStack Press3",
+        //     y: 2.9,
+        //   },
+        //   {
+        //     x: "PMStack Press5",
+        //     y: 2.9,
+        //   },
+        // ],
       },
     ],
     options: {
@@ -100,6 +110,9 @@ function StabilityInd({ isExpanded1, handleToggle1 ,fetcheddata,client}) {
             fontSize: "10px",
           },
         },
+         tooltip: {
+          enabled: false,
+        },
       },
 
       yaxis: {
@@ -143,17 +156,24 @@ function StabilityInd({ isExpanded1, handleToggle1 ,fetcheddata,client}) {
         },
       },
       tooltip: {
+
         custom: function({series, seriesIndex, dataPointIndex, w}) {
           var data1 = w.globals.initialSeries[0].data[dataPointIndex];
           var data2 = w.globals.initialSeries[1].data[dataPointIndex];
          
-          return '<div class="bg-white border border-gray-300 p-4 shadow-md rounded-md h-[100px] rotate-[-45]" >' +
-          '<p class="font-bold mb-1"> ' + data1.x +':'+ '</p>' +
-          '<p  class="mb-1"> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
-          '<p> Current: '+  data2.y+'</p>' +
+          return '<div class=" relative bg-white border border-gray-300 shadow-md rounded-md  flex p-9 flex-col gap-[25px] h-[200px] w-[120px]" >' +
+          '<p class="absolute bottom-[29%] left-[-40px] font-bold mb-2 rotate-[-90deg] mt-4"> ' + data1.x +':'+ '</p>' +
+          '<p  class="absolute bottom-[45%] left-[13px] font-normal rotate-[-90deg] "> Optimal Range: '+"[" + data1.y[0]+"-"+ data1.y[1]+ "]"+'</p>' +
+          '<p class="absolute bottom-[20%] left-[5px] font-normal mt-4 mb-2 rotate-[-90deg] p-2 bg-green-200"> Current: '+  data2.y+'</p>' +
           
           '</div>';
-        }
+        },
+        fixed: {
+          enabled: true,
+          position: "leftCenter",
+          offsetX: 0,
+          offsetY: 0,
+        },
       }
     },
   });
