@@ -8,7 +8,7 @@ const BfClientSelect = () => {
     let param = useParams();
     const [clients, setClients] = useState([
        "sesa",
-       "jspl",
+       "jindalsteel",
     ])
     const {auth}=useContext(NavContext)
     // useEffect(() => {
