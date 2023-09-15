@@ -170,23 +170,16 @@ const size=useWindowSize();
               className="flex  text-left items-center gap-8  "
             >
               <p
-                style={{
-                  color: " var(--neutral-n-50, #79767D)",
-    
-                  fontStyle: "normal",
-                  fontWeight: 500,
-                  width: "100%",
-                  lineHeight: "normal",
-                }}
+               
                 // className="text-neutral-n-60 font-roboto  text-base font-normal"
-                class="text-xs md:text-xs lg:text-xs xl:text-xs">
+                class="text-xs md:text-xs lg:text-xs xl:text-xs whitespace-nowrap w-full font-semibold text-[#79767D]"> 
                 Avg. Sinter size
               </p>
   
               <p
                 className={`font-semibold w-[100%] Current text-xs md:text-xs lg:text-xs xl:text-[12px]  `}
               >
-                16 mm
+                {/* 16 mm */}
               </p>
             </div>
   

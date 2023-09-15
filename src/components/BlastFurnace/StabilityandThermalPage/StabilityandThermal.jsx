@@ -203,7 +203,7 @@ const StabilityandThermal = () => {
       {/* nav */}
      
             <div className={`w-full h-full  flex justify-end`}>
-              <Timer initialSeconds={30} />
+              {/* <Timer initialSeconds={30} /> */}
             </div>
         
       
