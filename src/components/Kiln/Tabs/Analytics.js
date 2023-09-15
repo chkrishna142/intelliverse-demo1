@@ -2,15 +2,12 @@ import { useEffect, useState, useContext, type, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
-import PieChart from "../../Charts/SizingCharts/PieChart";
-import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
+import PieChart from "../../Charts/KilnCharts/PieChart";
+import StackBarChart from "../../Charts/KilnCharts/StackBarChart";
 import FloatingInput from "../SizingUtils/FloatingInput";
-import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
+import HistoryAnalytics from "../KilnComponents/HistoryAnalytics";
 import { Select, Spinner } from "@chakra-ui/react";
-import BoxPlotAnalysis from "../SizingComponents/BoxPlotAnalysis";
 import axios from "axios";
-import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
-import MoistureChart from "../../Charts/SizingCharts/MoistureChart";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
@@ -271,41 +268,17 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
-              {typeRef.current == "MOISTURE" ? (
-                <LiquidGauge
-                  moisture={avgMoisture}
-                  r={Math.max(Math.ceil((size.width * 20) / 200), 80)}
-                />
-              ) : (
-                <PieChart
-                  data={sizeData}
-                  type={typeRef.current.toLowerCase()}
-                />
-              )}
+              <PieChart data={sizeData} type={typeRef.current.toLowerCase()} />
             </div>
             <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
-              {typeRef.current == "MOISTURE" ? (
-                <MoistureChart data={sizeData} />
-              ) : (
-                <StackBarChart
-                  data={sizeData}
-                  type={typeRef.current.toLowerCase()}
-                />
-              )}
+              <StackBarChart
+                data={sizeData}
+                type={typeRef.current.toLowerCase()}
+              />
             </div>
           </div>
         )}
       </div>
-      {(disable || Object.keys(plantCamMap).length != 0) && (
-        <BoxPlotAnalysis
-          plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
-          cameraId={
-            disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
-          }
-          disable={disable}
-          plantCamMap={plantCamMap}
-        />
-      )}
       {(disable || Object.keys(plantCamMap).length != 0) && (
         <HistoryAnalytics
           plantId={disable ? plantId : Object.keys(plantCamMap)[0]}

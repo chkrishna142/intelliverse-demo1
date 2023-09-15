@@ -1,13 +1,11 @@
 import { useLocation, useParams } from "react-router-dom";
 import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
-import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import Alerts from "./Tabs/Alerts";
 import FeedLibrary from "./Tabs/FeedLibrary";
 import Report from "./Tabs/Report";
-import CamFeed from "./Tabs/CamFeed";
+import KilnCamFeed from "./Tabs/KilnCamFeed";
 import Analytics from "./Tabs/Analytics";
 import Timer from "./SizingUtils/Timer";
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -40,24 +38,18 @@ const SingleCam = () => {
       {location.pathname.includes("blastfurnace") ? (
         <></>
       ) : (
-        <div className="flex justify-between mb-3 mt-6 items-center">
-          <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='#024D87'/>}>
-            <BreadcrumbItem>
-              <Link
-                to={`/vision/Sizing/${material}/${clientId}`}
-                style={{ textDecoration: "none" }}
-              >
-                <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
-                  {Capitalize(material + " Sizing")}
-                </p>
-              </Link>
-            </BreadcrumbItem>
-            <BreadcrumbItem>
-              <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
-                {Capitalize(param.cameraId)}
-              </p>
-            </BreadcrumbItem>
-          </Breadcrumb>
+        <div className="flex justify-between mb-3 mt-6">
+          <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
+            {Capitalize(material + " Sizing")}
+          </p>
+          <Link
+            to={`/vision/Sizing/${material}/${clientId}`}
+            style={{ textDecoration: "none" }}
+          >
+            <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
+              All View
+            </p>
+          </Link>
         </div>
       )}
       <Tabs>
@@ -130,7 +122,7 @@ const SingleCam = () => {
 
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0 ">
-            <CamFeed
+            <KilnCamFeed
               material={material}
               cameraId={cameraId}
               clientId={clientId}

@@ -6,6 +6,7 @@ import Home from './components/Main/Home';
 import Sizing from "./components/Sizing/Sizing"
 import MaterialSelect from './components/Sizing/MaterialSelect';
 import SingleCam from './components/Sizing/SingleCam';
+import Kiln from "./components/Kiln/Kiln";
 import Login from './components/Auth/Login';
 import Sidebar from './components/Sidebar/Sidebar';
 import AiAdvisor from './components/Main/AIAdvisor';
@@ -68,10 +69,14 @@ function App() {
                     <Route path="/optimus/blastfurnace/:clientId/:material" element={<BF_Dashboard><Sizing /></BF_Dashboard>} />
                     <Route path="/optimus/blastfurnace/:clientId/:material/:plantId/:cameraId" element={<BF_Dashboard><SingleCam /></BF_Dashboard>} />
                     {/* Vision Pages */}
-                    <Route path="/vision/Sizing" element={<MaterialSelect />} />
+                    <Route path="/vision/:category" element={<MaterialSelect />} />
+                    {/*Sizing pages */}
                     <Route path="/vision/Sizing/:material" element={<ClientSelect />} />
                     <Route path="/vision/Sizing/:material/:clientId" element={<Sizing />} />
                     <Route path="/vision/Sizing/:material/:clientId/:plantId/:cameraId" element={<SingleCam />} />
+                    {/*Process and Kiln Pages */}
+                    <Route path="/vision/ProcessMonitoring/:material" element={<ClientSelect />} />
+                    <Route path="/vision/ProcessMonitoring/:material/:clientId" element={<Kiln />} />
                     {/* Profile Pages */}
                     <Route path="/contactus" element={<ConatctUs />} />
                     <Route path="/settings" element={<Setting />} />

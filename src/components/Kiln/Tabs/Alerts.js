@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
-import DetailModal from "../SizingComponents/DetailModal";
+import KilnModal from "../KilnComponents/KilnModal";
 import Paginator from "../SizingUtils/Paginator";
 import {
   Select,
@@ -20,7 +20,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-// const alerts = [
+
 //   {
 //     Plant: "Plant 1",
 //     Camera: "Camera 1",
@@ -120,7 +120,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const indexRef = useRef();
   const [openModal, setOpenModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
-  const [displayData, setDisplayData] = useState([]);
+  const [displayData,setDisplayData] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
@@ -149,7 +149,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           ? "all"
           : selectedCam,
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
-      maxLimit: 8000,
+      maxLimit: 8000
     });
     const response = await axios
       .post(baseURL + "vision/v2/sizing/alerts/overview/", requestData, {
@@ -307,15 +307,11 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                     >
                       <Td className="cursor-pointer">
-                        {String(item["idx"]).padStart(2, "0")}
+                        {String(item['idx']).padStart(2, "0")}
                       </Td>
                       <Td className="cursor-pointer">{item.plantName}</Td>
                       <Td className="cursor-pointer">{item.cameraId}</Td>
-                      <Td className="cursor-pointer">
-                        {new Date(item.timestamp).toLocaleDateString() +
-                          " " +
-                          new Date(item.timestamp).toLocaleTimeString().slice(0,5)}
-                      </Td>
+                      <Td className="cursor-pointer">{item.timestamp}</Td>
                       <Td className="cursor-pointer">
                         <Flex gap="1rem" align="center">
                           <div className="flex flex-col justify-center items-center">
@@ -348,7 +344,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
         )}
       </div>
       {openModal && (
-        <DetailModal
+        <KilnModal
           openModal={openModal}
           closeModal={() => setOpenModal(false)}
           data={displayData}

@@ -1,6 +1,6 @@
 import CamCard from "./CamCard";
-import DetailModal from "./DetailModal";
 import { useState } from "react";
+import KilnModal from "./KilnModal";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -41,7 +41,7 @@ const PlantCard = ({ PlantName, CamData }) => {
               See Detail
             </p>
             {openModal && (
-              <DetailModal
+              <KilnModal
                 openModal={openModal}
                 closeModal={() => setOpenModal(false)}
                 data={totalData}

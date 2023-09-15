@@ -22,10 +22,10 @@ const DonutChart = ({ data, labels, position }) => {
       type: "donut",
     },
     colors: [
-      "#084298",
       "#ffc107",
-      "#4adcdc",
-      "#5193F6",
+      "#5193f6",
+      "#ef6f12",
+      "#1c56ac",
       "#e91e63",
       "#00bcd4",
       "#8bc34a",
