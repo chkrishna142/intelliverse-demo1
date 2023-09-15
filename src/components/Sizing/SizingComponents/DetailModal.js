@@ -93,7 +93,10 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
           <ModalHeader padding="0px">
             <div className="py-3 pr-2 pl-6 flex justify-between items-center bg-[#F5F5F5] rounded-tr-xl rounded-tl-xl">
               <div className="flex gap-3 items-center">
-                <img src="/SizingIcons/Clock.svg" />
+                <p className="text-black font-semibold text-sm">
+                  {data[indexRef.current].hasOwnProperty("idx") &&
+                    data[indexRef.current]["idx"]}
+                </p>
                 <p className="text-black font-semibold text-sm">
                   {new Date(modalData.timestamp).toLocaleDateString("en-US", {
                     year: "numeric",
@@ -281,7 +284,9 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
           <DrawerHeader padding="0px">
             <div className="py-3 pr-2 pl-6 flex justify-between items-center bg-[#F5F5F5] rounded-tr-xl rounded-tl-xl">
               <div className="flex gap-3 items-center">
-                <img src="/SizingIcons/Clock.svg" />
+                <p className="text-black font-semibold text-sm">
+                  {data[indexRef.current]["idx"]}
+                </p>
                 <p className="text-black font-semibold text-sm">
                   {new Date(modalData.timestamp).toLocaleDateString("en-US", {
                     year: "numeric",

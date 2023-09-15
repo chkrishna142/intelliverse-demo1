@@ -22,8 +22,8 @@ const VideoInputForm = ({
   const [videoLoading, setVideoLoading] = useState(false);
   const [selectedCam, setSelectedCam] = useState(cameraId);
   const [date, setDate] = useState(new Date());
-  const [toTime, setToTime] = useState("00:00");
-  const [fromTime, setFromTime] = useState("00:00");
+  const [toTime, setToTime] = useState("00-00");
+  const [fromTime, setFromTime] = useState("00-00");
   const toast = useToast();
 
   const apiCall = async () => {

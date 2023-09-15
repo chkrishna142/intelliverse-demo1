@@ -25,7 +25,7 @@ const Paginator = ({ data, limit, setDisplayData }) => {
   },[data]);
 
   return (
-    <div className="self-center flex gap-1 overflow-x-auto max-w-[40vw]">
+    <div className="self-center flex gap-1 overflow-x-auto max-w-[35vw]">
       {Object.keys(perPageData).map((i) => {
         return (
           <Button

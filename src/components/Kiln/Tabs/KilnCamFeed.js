@@ -1,9 +1,9 @@
-import LineChart from "../../Charts/SizingCharts/LineCharts";
+import LineChart from "../../Charts/KilnCharts/LineChart"
 import WaterfallChart from "../../Charts/KilnCharts/WaterfallChart";
 import GaugeChart from "react-gauge-chart";
 import { useState,useEffect } from "react";
 
-const KilnFeed = () => {
+const KilnCamFeed = () => {
   const [val,setVal] = useState(Math.ceil(Math.random()*10)/10);
   let a = 16,
     b = 18;
@@ -189,4 +189,4 @@ const KilnFeed = () => {
   );
 };
 
-export default KilnFeed;
+export default KilnCamFeed;

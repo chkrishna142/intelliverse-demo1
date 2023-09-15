@@ -1,17 +1,19 @@
 import MaterialCard from "./SizingComponents/MaterialCard";
 import NavContext from "../NavContext";
 import { baseURL, bseURL } from "../../index";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
 const MaterialSelect = () => {
+  let param = useParams();
   const [materialData, setMaterialData] = useState({});
   const { auth } = useContext(NavContext);
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
       email: "aman@ripik.in",
-      category: "sizing",
+      category: param.category.toLowerCase(),
     });
     const response = await axios
       .post(baseURL + "vision/v2/product/overview/", requestData, {

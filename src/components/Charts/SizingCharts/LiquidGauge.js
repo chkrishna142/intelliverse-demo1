@@ -29,7 +29,7 @@ const LiquidGauge = ({moisture,r}) => {
       offset: "100%",
     },
   ];
-
+  console.log(moisture,'moisture RECEIVED')
   return (
     <LiquidFillGauge
       style={{ margin: "0 auto" }}

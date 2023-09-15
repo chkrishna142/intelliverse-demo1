@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -9,10 +10,17 @@ const Capitalize = (str) => {
   return str2;
 };
 
+const useCase = {
+  'Sizing': 'Sizing',
+  'ProcessMonitoring': ''
+}
+
 const MaterialCard = ({ material, alerts, deployments }) => {
+  let param = useParams();
+  let category = param.category;
   return (
     <Link
-      to={`/vision/Sizing/${material?.split(' ')[0]}`}
+      to={`/vision/${category}/${material?.split(' ')[0]}`}
       style={{ textDecoration: 'none' }}
     >
       <div className="w-28 h-[115px] relative rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer">
@@ -36,7 +44,7 @@ const MaterialCard = ({ material, alerts, deployments }) => {
         </div>
       </div>
       <div className="mt-4 flex justify-center h-10 w-28">
-        <p className="font-bold text-[#024D87]">{Capitalize(material) + " " + "Sizing"}</p>
+        <p className="font-bold text-[#024D87]">{Capitalize(material) + " " + useCase[category]}</p>
       </div>
     </Link>
   );

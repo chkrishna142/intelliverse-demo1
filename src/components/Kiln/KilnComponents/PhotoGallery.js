@@ -64,8 +64,8 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
 
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
-      <div className="flex pt-5 gap-4 items-start overflow-x-auto">
-        <div className="min-w-[110px]">
+      <div className="flex pt-5 gap-4 items-start">
+        <div>
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -86,7 +86,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               })}
           </Select>
         </div>
-        <div className="min-w-[110px]">
+        <div>
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -107,7 +107,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               })}
           </Select>
         </div>
-        <div className="min-w-[110px]">
+        <div>
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -122,7 +122,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
           </Select>
         </div>
         {showType == 2 && (
-          <div className="min-w-[110px]">
+          <div>
             <FloatingInput
               text="Date"
               type="date"
