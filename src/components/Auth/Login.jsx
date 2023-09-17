@@ -210,11 +210,11 @@ const Login = () => {
                     }}
                   />
                 </span>
-             
                   <OTPInput
                     // className="w-[200px]"
                     value={password}
                     onChange={setPassword}
+                    type="number"
                     numInputs={6}
                     renderSeparator={<span>{'  '}</span>}
                     renderInput={(props) => <input {...props} />}

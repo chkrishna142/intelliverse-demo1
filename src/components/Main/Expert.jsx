@@ -6,16 +6,12 @@ import ExpertReadMore from './ExpertReadMore';
 const Expert = () => {
 
     const [submitted, setSubmitted] = useState(false)
-    const [selected, setSelected] = useState(false)
-    const [isOpen, setIsOpen] = useState(false)
-    const [onClose, setOnClose] = useState(false)
-    const [expert, setExpert] = useState(0)
-
-  
+    const [reply, setReply] = useState("")
+    const [review, setReview] = useState(false)
 
     return (
         <div className='mt-6'>
-            <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
+            {submitted === false ? <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
                 <p className='mt-6 ml-5 text-black text-xl font-semibold'>Ask An Expert</p>
                 <div>
                     <p className='mt-5 ml-7 font-bold'>Hello [Expert's Name],</p>
@@ -43,17 +39,47 @@ const Expert = () => {
                             </div>
                         </div>
                     </div>
+                    {review === false ? <div className='w-full mt-4'>
+                        <textarea value={reply} onChange={(e) => setReply(e.target.value)} placeholder='Enter your reply here...' className='w-full h-24 border rounded-md px-2 py-2' />
 
-                    <div className='w-full mt-4'>
-                        <textarea placeholder='Enter your reply here...' className='w-full h-20 border rounded-md px-2 py-2' />
-                    </div>
+                            <div className='relative w-full -mt-12 h-10 px-2 py-2 flex items-center gap-2'>
+                                <img className='cursor-pointer -mr-2' src="/abc.svg" alt="abc"/>
+                                <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
+                                <img className='cursor-pointer' src="/sharing.svg" alt="abc"/>
+                                <img className='cursor-pointer' src="/emoji.svg" alt="attach" />
+                                <img className='cursor-pointer' src="/drive.svg" alt="attach" />
+                                <img className='cursor-pointer' src="/image.svg" alt="attach" />
+                                <img className='cursor-pointer' src="/pen.svg" alt="attach" />
+                            </div>
+                        
+                    </div> : null}
+                    {review === true ? <div className='w-full mt-4'>
+                        <p className='text-[#034C85]'>Your Reply</p>
+                        <div className='w-full h-20  rounded-md px-0 py-2'>
+                            {reply}
+                        </div>
+                    </div> : null}
                     <div className='w-full flex justify-start items-center gap-6 mt-5 mb-5'>
-                        <button onClick={() => setSubmitted(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Save Answer</button>
-                        <button onClick={() => setSubmitted(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Review Answer</button>
+                        {review === false ? <button className='text-white px-6 py-3 bg-[#084298] rounded-md'>Save Answer</button> : <button onClick={() => setReview(false)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Back To Editing</button>}
+                        {review === false ? <button onClick={() => setReview(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Review Answer</button> : <button onClick={() => setSubmitted(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Submit Answer</button>}
                     </div>
                 </div>
-            </div>
-            <ExpertReadMore isOpen={isOpen} onClose={() => setIsOpen(false)} expert={expert} />
+            </div> :
+                <div className='mt-40'>
+                    <div className='w-full flex justify-center mt-10'>
+                        <img src="/query.svg" />
+                    </div>
+                    <div className='w-full flex justify-center'>
+                        <p className='font-semibold text-2xl mt-4'>Thank You for Your Query!</p>
+                    </div>
+                    <div className='mt-5 w-full flex justify-center'>
+                        <p className='px-10 font-light'>Your insights and expertise are greatly appreciated.</p>
+                    </div>
+                    <div className='mt-5 w-full flex justify-center'>
+                        <p className='px-10 font-light'>If any further updates or clarifications are required, you will be contacted directly. You can close this tab now.</p>
+                    </div>
+                </div>
+            }
         </div>
     );
 };
