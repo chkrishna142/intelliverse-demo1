@@ -76,17 +76,16 @@ function Cohesivezone({ isExpanded5, handleToggle5 }) {
           "10 pm",
           "11 pm",
           "12 am",
-        
         ], // Set the time labels for X-axis
       },
     },
   });
 
   return (
-    <div className="flex flex-col  w-full h-full bg-white p-4 rounded-xl  shadow-md ">
+    <div className="flex flex-col  w-full h-full bg-white p-4 rounded-xl  shadow-md">
       {/* top */}
-      <div class="flex justify-between w-full ">
-        <div class="flex flex-col items-start justify-center gap-[12px] w-[90%] ">
+      <div class="flex justify-between w-full">
+        <div class="flex flex-col items-start justify-center gap-[12px] w-[90%]">
           <div className="flex items-center gap-[2px] ">
             {" "}
             <div class=" font-roboto text-[22px] text-[#3E3C42] font-medium ">
@@ -98,13 +97,21 @@ function Cohesivezone({ isExpanded5, handleToggle5 }) {
              
             </div> */}
             <div className="flex justify-center items-center  w-[40px] ">
-              <Mymodal imageone={"/Bficons/cohesiveTop.svg"} imageTwo={"/Bficons/cohesiveBottom.svg"} />
+              <Mymodal
+                imageone={"/Bficons/cohesiveTop.svg"}
+                imageTwo={"/Bficons/cohesiveBottom.svg"}
+              />
             </div>
           </div>
-          
         </div>
-        <div onClick={handleToggle5} className=" w-[10%]">
-          <img src="/dropicon.svg" alt="" />
+        <div className=" w-[10%] flex justify-end ">
+          <img
+            src="/dropicon.svg"
+            alt=""
+            onClick={handleToggle5}
+            style={{ cursor: "pointer" }}
+            className="shadow:md"
+          />
         </div>
       </div>
       {/* bottom */}
@@ -114,16 +121,20 @@ function Cohesivezone({ isExpanded5, handleToggle5 }) {
             size.width <= 768 ? "flex-col" : ""
           }  gap-[12px] w-full  h-full mt-2`}
         >
-          <div className={`  ${
+          <div
+            className={`  ${
               size.width <= 768 ? "w-full" : "w-[22%]"
             }  flex flex-col items-start h-full  p-[14px]   rounded-[12px] bg-blue-50 ;
-           `}>
+           `}
+          >
             <div className="w-full h-full flex flex-col gap-3">
               <div className="w-full flex  justify-evenly items-center">
                 <div className="w-[50px] text-center text-[#CAC5CD] text-[14px] ">
                   Stave Index
                 </div>
-                <div className="w-[100px] text-center text-[#CAC5CD] text-[14px] ">TB</div>
+                <div className="w-[100px] text-center text-[#CAC5CD] text-[14px] ">
+                  TB
+                </div>
                 <div className="w-[100px] text-center text-[#CAC5CD] text-[14px] ">
                   Cohesive zone shape
                 </div>
