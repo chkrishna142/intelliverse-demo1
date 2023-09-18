@@ -28,17 +28,17 @@ const VideoInputForm = ({
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
-      plantId: selectedPlant,
+      plantName: selectedPlant,
       cameraId: selectedCam,
-      startTime:
+      startDate:
         new Date(date + "T" + fromTime).getTime() + 5.5 * 60 * 60 * 1000,
-      endTime: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
+      endDate: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
       clientId: param.clientId.toLowerCase(),
       material: param.material.toLowerCase(),
     });
     const response = await axios
       .post(
-        baseURL + "vision/v1/sizing/getFeedLibrary/video/",
+        baseURL + "vision/v2/sizing/feedLibrary/video/",
         requestData,
         {
           credentials: "same-origin",

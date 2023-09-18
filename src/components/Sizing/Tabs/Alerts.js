@@ -314,7 +314,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       <Td className="cursor-pointer">
                         {new Date(item.timestamp).toLocaleDateString() +
                           " " +
-                          new Date(item.timestamp).toLocaleTimeString().slice(0,5)}
+                          new Date(item.timestamp).toLocaleTimeString()}
                       </Td>
                       <Td className="cursor-pointer">
                         <Flex gap="1rem" align="center">

@@ -9,8 +9,10 @@ const VideoGallery = ({plantId, cameraId, disable, plantCamMap}) => {
   // const closeDrawer = () => {
   //   setIsDrawerOpen(false);
   // };
-  const VidDownload = ( url, idx ) => {
-    saveAs(url, `video-${idx}`);
+  const VidDownload = async ( url, idx ) => {
+    const response = await fetch(url);
+    const videoData = await response.blob();
+    saveAs(videoData, `video-${idx}.mp4`);
   };
   return (
     <div className="bg-white relative flex flex-col xl:flex-row p-10 rounded-xl gap-8 items-center justify-between">
