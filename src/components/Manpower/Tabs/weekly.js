@@ -11,6 +11,7 @@ import {
   Image,
   Avatar,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 const dummyData = [
   {
@@ -57,17 +58,97 @@ const dummyData = [
   },
 ];
 
-const ColorDot = ({ color }) => {
-  const dotStyle = {
-    backgroundColor: color,
-    width: "10px",
-    height: "10px",
-    borderRadius: "50%",
-    display: "inline-block",
-    marginRight: "5px", // Adjust as needed for spacing
-  };
-
-  return <span style={dotStyle}></span>;
+const dummyData2 = {
+  0: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  1: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  2: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  3: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  4: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  5: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  6: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  7: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  8: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
+  9: [
+    "F0122",
+    "on Leave",
+    "plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+    "F0122 on Leave",
+    "F0122 plant Holiday",
+  ],
 };
 
 function formatDateToCustomString(date) {
@@ -85,17 +166,58 @@ function formatDateToCustomString(date) {
     "Nov",
     "Dec",
   ];
-
-  const day = "01"; // Fixed to '01' as per the format
+  const day = ("0" + date.getDate()).slice(-2); // Fixed to '01' as per the format
   const month = months[date.getMonth()]; // Get the month abbreviation
   const year = date.getFullYear(); // Get the full year
 
   return `${day} ${month} ${year}`;
 }
 
+const dots = {
+  Available: (
+    <svg
+      width="9"
+      height="9"
+      viewBox="0 0 9 9"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="1"
+        y="1"
+        width="7"
+        height="7"
+        rx="3.5"
+        fill="#7AC958"
+        stroke="#69B04B"
+      />
+    </svg>
+  ),
+  "On leave": (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 13 13"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="1"
+        y="1"
+        width="11"
+        height="11"
+        rx="5.5"
+        fill="#E46962"
+        stroke="#DC362E"
+      />
+    </svg>
+  ),
+};
+
 const Weekly = () => {
+  const [submitted, setSubmitted] = useState(false);
   let headers = ["Employee Name"];
-  for (let i = 1; i <= 6; i++) {
+  for (let i = 1; i <= 7; i++) {
     headers.push(
       formatDateToCustomString(
         new Date(new Date().getTime() + i * 24 * 60 * 60 * 1000)
@@ -112,9 +234,14 @@ const Weekly = () => {
             <option value="C">Block C</option>
           </Select>
         </div>
-        <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
-          Generate Schedule
-        </button>
+        {!submitted && (
+          <button
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+            onClick={() => setSubmitted(true)}
+          >
+            Generate Schedule
+          </button>
+        )}
       </div>
       <TableContainer className="!max-h-[80vh] !overflow-y-auto">
         <Table variant="simple">
@@ -125,10 +252,9 @@ const Weekly = () => {
                   <Th
                     color="#605D64"
                     fontWeight={500}
-                    pl={i == 0 ? "12px" : ""}
-                    px="8px"
+                    pl={i == 0 ? "12px" : "8px"}
                     py="12px"
-                    pr={i == 7 ? "12px" : ""}
+                    pr={i == 7 ? "12px" : "8px"}
                   >
                     {item.toUpperCase()}
                   </Th>
@@ -145,27 +271,42 @@ const Weekly = () => {
                 >
                   <Td pl="12px" py="12px" pr="8px">
                     <div className="flex gap-2 items-center">
-                      <Avatar name={item.name} src={item.url} />
+                      <Avatar name={item.name} src={item.url}/>
                       <p>{item.name}</p>
                     </div>
                   </Td>
-                  {[...Array(6)].map((_, i) => (
-                    <Td key={i} px="8px" py="12px" pr={i == 5 ? "12px" : ""}>
-                      <Select
-                        id={item.name}
-                        defaultValue="Available"
-                        border="0px"
-                        icon={false}
+                  {!submitted &&
+                    [...Array(7)].map((_, i) => (
+                      <Td
+                        key={i}
+                        pl="8px"
+                        py="12px"
+                        pr={i == 5 ? "12px" : "8px"}
                       >
-                        <option value="A">
-                          {<ColorDot color="#69B04B" />} Available
-                        </option>
-                        <option value="B">
-                          {<ColorDot color="#DC362E" />} On Leave
-                        </option>
-                      </Select>
-                    </Td>
-                  ))}
+                        <Select
+                          id={item.name}
+                          defaultValue="A"
+                          border="0px"
+                          icon={false}
+                        >
+                          <option value="A">Available</option>
+                          <option value="B">On Leave</option>
+                        </Select>
+                      </Td>
+                    ))}
+                  {submitted &&
+                    dummyData2[index].map((j, i) => {
+                      return (
+                        <Td
+                          key={i}
+                          pl="8px"
+                          py="12px"
+                          pr={i == 6 ? "12px" : "8px"}
+                        >
+                          {j}
+                        </Td>
+                      );
+                    })}
                 </Tr>
               );
             })}

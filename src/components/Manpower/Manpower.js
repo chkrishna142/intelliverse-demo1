@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Weekly from "./Tabs/weekly";
+import ManpowerMngmt from "./Tabs/ManpowerMngmt";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Manpower = () => {
+  const size = useWindowSize();
   const [page, setPage] = useState("weekly schedule");
   return (
-    <div className="flex flex-col gap-0 w-full mt-8">
+    <div
+      className="flex flex-col gap-0 w-full mt-8"
+      style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
+    >
       <Tabs>
         <TabList className="!flex !gap-0 !w-full !border-0">
           <Tab className="!flex-1 !p-0 !border-0">
@@ -86,7 +92,9 @@ const Manpower = () => {
           <TabPanel className="!p-0">
             <Weekly />
           </TabPanel>
-          <TabPanel className="!p-0"></TabPanel>
+          <TabPanel className="!p-0">
+            <ManpowerMngmt />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </div>
