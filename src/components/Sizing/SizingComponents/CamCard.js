@@ -38,7 +38,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           </div>
         )}
       </div>
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-4 min-[400px]:flex-row justify-between">
         <Link
           to={`./${plantId}/${cameraName}`}
           style={{ textDecoration: "none" }}
@@ -51,7 +51,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
         </Link>
         <div className="flex gap-4 items-center">
           <p className="text-xs text-[#938F96]">Last Updated</p>
-          <p className="text-sm text-[#79767D]">
+          <p className="text-xs md:text-sm text-[#79767D]">
             {new Date(data.timestamp).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",

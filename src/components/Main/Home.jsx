@@ -107,6 +107,7 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>QC Scheduling </p></div>
                                     </div>
+                                    <Link to="/Optimus/Manpower" style={{ textDecoration: 'none' }}>
                                     <div>
                                         <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             <div className='flex justify-end -mt-5'><div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">1</div></div>
@@ -115,6 +116,7 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-center text-[#024D87]'>Manpower Scheduling</p></div>
                                     </div>
+                                    </Link>
                                 </div>
                             </div>
                             <div>

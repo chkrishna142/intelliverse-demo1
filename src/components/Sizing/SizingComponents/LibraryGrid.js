@@ -14,7 +14,8 @@ const Capitalize = (str) => {
 const LibraryGrid = ({ plantName, img }) => {
   const [displayData,setDisplayData] = useState([]);
   const ImgDownload = (url, idx) => {
-    saveAs(url, `image-${idx}`);
+    const blob = new Blob([url], { type: 'image/jpeg' });
+    saveAs(url, `image-${idx}.jpg`);
   };
   return (
     <div className="flex flex-col gap-3">

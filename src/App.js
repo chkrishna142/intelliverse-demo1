@@ -7,6 +7,7 @@ import Sizing from "./components/Sizing/Sizing"
 import MaterialSelect from './components/Sizing/MaterialSelect';
 import SingleCam from './components/Sizing/SingleCam';
 import Kiln from "./components/Kiln/Kiln";
+import Manpower from './components/Manpower/Manpower';
 import Login from './components/Auth/Login';
 import Sidebar from './components/Sidebar/Sidebar';
 import AiAdvisor from './components/Main/AIAdvisor';
@@ -77,6 +78,8 @@ function App() {
                     {/*Process and Kiln Pages */}
                     <Route path="/vision/ProcessMonitoring/:material" element={<ClientSelect />} />
                     <Route path="/vision/ProcessMonitoring/:material/:clientId" element={<Kiln />} />
+                    {/*Sizing pages */}
+                    <Route path="/Optimus/Manpower" element={<Manpower />} />
                     {/* Profile Pages */}
                     <Route path="/contactus" element={<ConatctUs />} />
                     <Route path="/settings" element={<Setting />} />

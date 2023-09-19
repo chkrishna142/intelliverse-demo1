@@ -54,17 +54,13 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       basis: selectedBasis,
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/report/overview/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/report/overview/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setReport(response.data);
         setReportChanging(false);
@@ -215,11 +211,9 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                         return (
                           <Td key={idx} className="cursor-pointer">
                             {x.toLowerCase().includes("time")
-                              ? new Date(item[x])
-                                  .toISOString()
-                                  .split("T")
-                                  .join(" ")
-                                  .slice(0, 19)
+                              ? new Date(item[x]).toLocaleDateString() +
+                                " " +
+                                new Date(item[x]).toLocaleTimeString()
                               : item[x]}
                           </Td>
                         );
