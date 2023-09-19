@@ -8,16 +8,17 @@ const Redirect = () => {
     const sso = queryParams.get("sso")
     const sig = queryParams.get("sig")
 
-    const { auth } = useContext(NavContext)
+    //const { auth } = useContext(NavContext)
 
 
     useEffect(() => {
         if (sso && sig) {
-            redirect()
+            const auth = localStorage.getItem('auth_token')
+            redirect(auth)
         }
     }, [])
 
-    const redirect = async () => {
+    const redirect = async (auth) => {
         try {
             const data = await fetch(baseURL + `community/sso?sso=${sso}&sig=${sig}`, {
                 method: "GET",
