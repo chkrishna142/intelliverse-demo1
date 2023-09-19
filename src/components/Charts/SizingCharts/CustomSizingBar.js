@@ -14,12 +14,18 @@ const CustomSizingBar = ({ size }) => {
     }
   });
   const colors = [
-    "#ef6f12",
-    "#5193f6",
     "#ffc107",
-    "#27ae60",
-    "#e74c3c",
-    "#8e44ad",
+    "#5193f6",
+    "#ef6f12",
+    "#1c56ac",
+    "#e91e63",
+    "#00bcd4",
+    "#8bc34a",
+    "#9c27b0",
+    "#673ab7",
+    "#ff9800",
+    "#4caf50",
+    "#795548",
   ];
   let isSmall;
   if (typeof window !== "undefined") {

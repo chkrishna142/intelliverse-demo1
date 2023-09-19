@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 
 let color = {
-  'size': [
+  size: [
     "#ffc107",
     "#5193f6",
     "#ef6f12",
@@ -10,9 +10,13 @@ let color = {
     "#00bcd4",
     "#8bc34a",
     "#9c27b0",
+    "#673ab7",
+    "#ff9800",
+    "#4caf50",
+    "#795548",
   ],
-  'color' : ["#79767D","#000000"]
-}
+  color: ["#79767D", "#000000"],
+};
 
 const StackBarChart = ({ data, type }) => {
   let graphData = {};

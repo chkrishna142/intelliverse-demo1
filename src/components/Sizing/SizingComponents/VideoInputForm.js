@@ -70,6 +70,7 @@ const VideoInputForm = ({
 
   const handleSubmit = () => {
     setVideoLoading(true);
+    setIsVideo("");
     apiCall();
   };
 
