@@ -89,7 +89,7 @@ function App() {
                     <Route path="/notifications" element={<Messages />} />
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
 
-                    <Route path="/redirect" element={<Redirect />} />
+                    <Route path="/community/sso" element={<Redirect />} />
                   </Routes>
                 </div>
               </div>
