@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ExpertReadMore from './ExpertReadMore';
 import NavContext from '../NavContext';
 import { baseURL } from '../..';
+import { Spinner } from '@chakra-ui/react';
 
 
 const AskAnExpert = () => {
@@ -16,11 +17,14 @@ const AskAnExpert = () => {
 
     const [expertDetails, setExpertDetails] = useState([])
     const [question, setQuestion] = useState("")
+    const [loader, setLoader] = useState(false)
 
     const [val1, setVal1] = useState(false)
     const [val2, setVal2] = useState(false)
     const [val3, setVal3] = useState(false)
     const [val4, setVal4] = useState(false)
+
+    const [expertId, setExpertId] = useState("") // expert id
 
     const getData = async () => {
         const data = await fetch(baseURL + 'experts', {
@@ -31,7 +35,27 @@ const AskAnExpert = () => {
             },
         })
         const res = await data.json()
-        setExpertDetails(res)
+        if (res.status === 200) {
+            setExpertDetails(res)
+            setLoader(false)
+        } else {
+            setLoader(false)
+        }
+    }
+
+    const postQuestion = async () => {
+        const data = await fetch(baseURL + 'questions', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": auth
+            },
+            body: JSON.stringify({
+                question: question,
+                expertId: expertId
+            })
+        })
+        setSubmitted(true)
     }
 
     useEffect(() => {
@@ -92,7 +116,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700 w-5/6 mb-7'>Speciality: Chemistry, Data, Al, Technology</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(0) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val1} onChange={() => setVal1(!val1)} className='mr-5' type='radio' />
+                                        <input name="firstchoice" value={val1} onChange={() => { setVal1(!val1); setExpertId(1) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -106,7 +130,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3'>Speciality: Automobile, Food & Beverage, Apparel</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(1) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val2} onChange={() => setVal2(!val2)} className='mr-5' type='radio' />
+                                        <input name="firstchoice" value={val2} onChange={() => { setVal2(!val2); setExpertId(3) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +144,7 @@ const AskAnExpert = () => {
                                     <p className='w-full text-sm mt-2 text-gray-700 w-5/6 md:ml-0 ml-3'>Speciality: Maintenance methodology, Ironmaking & Steel, Cape & Opex modeling</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(2) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val3} onChange={() => setVal3(!val3)} className='mr-5' type='radio' />
+                                        <input name="firstchoice" value={val3} onChange={() => { setVal3(!val3); setExpertId(2) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +158,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3'>Speciality: Pharma, Lifescience</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(3) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val4} onChange={() => setVal4(!val4)} className='mr-5' type='radio' />
+                                        <input name="firstchoice" value={val4} onChange={() => { setVal4(!val4); setExpertId(4) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -148,7 +172,7 @@ const AskAnExpert = () => {
                                 <textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder='Type your query here...' className='w-full h-20 border rounded-md px-2 py-2' />
                             </div>
                             <div className='w-full flex justify-end mt-5'>
-                                <button onClick={() => setSubmitted(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Submit</button>
+                                <button onClick={() => { postQuestion(); setLoader(true) }} disabled={question === ""} className={question === "" ? 'text-white px-6 py-3 bg-gray-400 rounded-md' : 'text-white px-6 py-3 bg-[#084298] rounded-md'}>{loader === false ? <span>Submit</span> : <Spinner />}</button>
                             </div>
                         </div> : null}
                     </div> : null}

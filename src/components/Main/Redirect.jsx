@@ -10,7 +10,6 @@ const Redirect = () => {
 
     //const { auth } = useContext(NavContext)
 
-
     useEffect(() => {
         if (sso && sig) {
             const auth = localStorage.getItem('auth_token')
