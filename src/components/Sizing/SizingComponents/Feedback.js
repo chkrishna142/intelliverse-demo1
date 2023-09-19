@@ -134,24 +134,30 @@ const Feedback = ({
                   />
                   <p className="text-[#605D64] text-base">Size distribution</p>
                 </div>
-                <div className="flex gap-3 items-center">
-                  <input
-                    type="checkbox"
-                    name="color"
-                    className="h-4 w-4"
-                    onChange={(e) => changeHandler(e.target.name)}
-                  />
-                  <p className="text-[#605D64] text-base">Color distribution</p>
-                </div>
-                <div className="flex gap-3 items-center">
-                  <input
-                    type="checkbox"
-                    name="moisture"
-                    className="h-4 w-4"
-                    onChange={(e) => changeHandler(e.target.name)}
-                  />
-                  <p className="text-[#605D64] text-base">Moisture</p>
-                </div>
+                {material === "coal" && (
+                  <>
+                    <div className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        name="color"
+                        className="h-4 w-4"
+                        onChange={(e) => changeHandler(e.target.name)}
+                      />
+                      <p className="text-[#605D64] text-base">
+                        Color distribution
+                      </p>
+                    </div>
+                    <div className="flex gap-3 items-center">
+                      <input
+                        type="checkbox"
+                        name="moisture"
+                        className="h-4 w-4"
+                        onChange={(e) => changeHandler(e.target.name)}
+                      />
+                      <p className="text-[#605D64] text-base">Moisture</p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
             <div className="flex flex-col relative">

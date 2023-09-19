@@ -94,11 +94,11 @@ import {
 // ];
 const getImage = (reason) => {
   if (reason === 0) {
-    return "https://img.icons8.com/color/96/null/dew-point.png";
+    return "/SizingIcons/moisture.svg";
   } else if (reason === 2) {
-    return "https://cdn-icons-png.flaticon.com/512/5098/5098724.png";
+    return "/SizingIcons/sizing.svg";
   } else if (reason === 1) {
-    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5yzFWdE5SK3P50mbWltF_3ZLLAEHzai5VuDl9NgQD_SIcG6sztUZueLJQekHEmEFNjkE&usqp=CAU";
+    return "/SizingIcons/color.svg";
   }
 };
 
