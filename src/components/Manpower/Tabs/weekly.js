@@ -10,163 +10,163 @@ import {
   Flex,
   Image,
   Avatar,
-} from "@chakra-ui/react";
-import { useState } from "react";
+} from '@chakra-ui/react';
+import { useState } from 'react';
 
 const dummyData = [
   {
-    name: "Dan Abrahmov",
-    url: "https://bit.ly/dan-abramov",
+    name: 'Uday Ratan',
+    url: 'https://bit.ly/dan-abramov',
   },
   {
-    name: "Kola Tioluwani",
-    url: "https://bit.ly/tioluwani-kolawole",
+    name: 'Ram Singh',
+    url: 'https://bit.ly/tioluwani-kolawole',
   },
   {
-    name: "Kent Dodds",
-    url: "https://bit.ly/kent-c-dodds",
+    name: 'Suresh Nath',
+    url: 'https://bit.ly/kent-c-dodds',
   },
   {
-    name: "Ryan Florence",
-    url: "https://bit.ly/ryan-florence",
+    name: 'Rishabh Singh',
+    url: 'https://bit.ly/ryan-florence',
   },
   {
-    name: "Prosper Otemuyiwa",
-    url: "https://bit.ly/prosper-baba",
+    name: 'Praveen Kumar',
+    url: 'https://bit.ly/prosper-baba',
   },
   {
-    name: "Christian Nwamba",
-    url: "https://bit.ly/code-beast",
+    name: 'Dinesh Rathi',
+    url: 'https://bit.ly/code-beast',
   },
   {
-    name: "Segun Adebayo",
-    url: "https://bit.ly/sage-adebayo",
+    name: 'Sahil Ansari',
+    url: 'https://bit.ly/sage-adebayo',
   },
   // Repeat the same entries to have a total of 10
   // Feel free to add more unique entries if needed
   {
-    name: "Dan Abrahmov",
-    url: "https://bit.ly/dan-abramov",
+    name: 'Rahul Verma',
+    url: 'https://bit.ly/dan-abramov',
   },
   {
-    name: "Kola Tioluwani",
-    url: "https://bit.ly/tioluwani-kolawole",
+    name: 'Jatin Bansal',
+    url: 'https://bit.ly/tioluwani-kolawole',
   },
   {
-    name: "Kent Dodds",
-    url: "https://bit.ly/kent-c-dodds",
+    name: 'Prateek Kumar',
+    url: 'https://bit.ly/kent-c-dodds',
   },
 ];
 
 const dummyData2 = {
   0: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   1: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   2: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   3: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   4: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   5: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   6: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   7: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   8: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
   9: [
-    "F0122",
-    "on Leave",
-    "plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
-    "F0122 on Leave",
-    "F0122 plant Holiday",
+    'F0122',
+    'on Leave',
+    'plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
+    'F0122 on Leave',
+    'F0122 plant Holiday',
   ],
 };
 
 function formatDateToCustomString(date) {
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec",
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
-  const day = ("0" + date.getDate()).slice(-2); // Fixed to '01' as per the format
+  const day = ('0' + date.getDate()).slice(-2); // Fixed to '01' as per the format
   const month = months[date.getMonth()]; // Get the month abbreviation
   const year = date.getFullYear(); // Get the full year
 
@@ -193,7 +193,7 @@ const dots = {
       />
     </svg>
   ),
-  "On leave": (
+  'On leave': (
     <svg
       width="13"
       height="13"
@@ -216,7 +216,7 @@ const dots = {
 
 const Weekly = () => {
   const [submitted, setSubmitted] = useState(false);
-  let headers = ["Employee Name"];
+  let headers = ['Employee Name'];
   for (let i = 1; i <= 7; i++) {
     headers.push(
       formatDateToCustomString(
@@ -252,9 +252,9 @@ const Weekly = () => {
                   <Th
                     color="#605D64"
                     fontWeight={500}
-                    pl={i == 0 ? "12px" : "8px"}
+                    pl={i == 0 ? '12px' : '8px'}
                     py="12px"
-                    pr={i == 7 ? "12px" : "8px"}
+                    pr={i == 7 ? '12px' : '8px'}
                   >
                     {item.toUpperCase()}
                   </Th>
@@ -271,7 +271,7 @@ const Weekly = () => {
                 >
                   <Td pl="12px" py="12px" pr="8px">
                     <div className="flex gap-2 items-center">
-                      <Avatar name={item.name} src={item.url}/>
+                      <Avatar name={item.name} src={item.url} />
                       <p>{item.name}</p>
                     </div>
                   </Td>
@@ -281,7 +281,7 @@ const Weekly = () => {
                         key={i}
                         pl="8px"
                         py="12px"
-                        pr={i == 5 ? "12px" : "8px"}
+                        pr={i == 5 ? '12px' : '8px'}
                       >
                         <Select
                           id={item.name}
@@ -301,7 +301,7 @@ const Weekly = () => {
                           key={i}
                           pl="8px"
                           py="12px"
-                          pr={i == 6 ? "12px" : "8px"}
+                          pr={i == 6 ? '12px' : '8px'}
                         >
                           {j}
                         </Td>
