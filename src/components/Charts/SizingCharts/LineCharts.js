@@ -43,7 +43,7 @@ const LineChart = ({ data, timeStamps, labels, noCoal, color }) => {
       intersect: false,
       y: {
         formatter: function (y) {
-          return y;
+          return y + '%';
         },
       },
       theme: "dark",
@@ -121,6 +121,9 @@ const LineChart = ({ data, timeStamps, labels, noCoal, color }) => {
         style: {
           fontSize: "14px",
         },
+        formatter: function (value) {
+          return value + "%";
+        }
       },
     },
     colors: color,

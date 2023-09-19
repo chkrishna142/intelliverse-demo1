@@ -1,7 +1,7 @@
 import ReactApexChart from "react-apexcharts";
 
 let color = {
-  'size': [
+  size: [
     "#ffc107",
     "#5193f6",
     "#ef6f12",
@@ -10,21 +10,25 @@ let color = {
     "#00bcd4",
     "#8bc34a",
     "#9c27b0",
+    "#673ab7",
+    "#ff9800",
+    "#4caf50",
+    "#795548",
   ],
-  'color' : ["#79767D","#000000"]
-}
+  color: ["#79767D", "#000000"],
+};
 
-const avgCal = (list) =>{
+const avgCal = (list) => {
   let sum = 0;
   let count = 0;
-  list.map(i=>{
-      if(i != 0){
-          count++;
-          sum += i;
-      }
-  })
-  return count==0 ? 0 : sum/count;
-}
+  list.map((i) => {
+    if (i != 0) {
+      count++;
+      sum += i;
+    }
+  });
+  return count == 0 ? 0 : sum / count;
+};
 
 const PieChart = ({ data, type }) => {
   const graphData = {};
@@ -41,9 +45,7 @@ const PieChart = ({ data, type }) => {
 
   const series = [];
   labels.map((i) => {
-    series.push(
-      parseFloat(avgCal(graphData[i]).toFixed(2))
-    );
+    series.push(parseFloat(avgCal(graphData[i]).toFixed(2)));
   });
 
   const options = {

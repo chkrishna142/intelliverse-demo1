@@ -9,7 +9,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { baseURL } from "../../../index";
 
 let color = {
-  'size': [
+  size: [
     "#ffc107",
     "#5193f6",
     "#ef6f12",
@@ -18,10 +18,14 @@ let color = {
     "#00bcd4",
     "#8bc34a",
     "#9c27b0",
+    "#673ab7",
+    "#ff9800",
+    "#4caf50",
+    "#795548",
   ],
-  'color' : ["#79767D","#000000"],
-  'moisture' : ["#084298"]
-}
+  color: ["#79767D", "#000000"],
+  moisture: ["#084298"],
+};
 
 const CamFeed = ({ material, cameraId, clientId, callApi, initialRender }) => {
   const size = useWindowSize();
@@ -298,7 +302,7 @@ const CamFeed = ({ material, cameraId, clientId, callApi, initialRender }) => {
                       ).getTime()}
                       labels={Object.keys(camData.size)}
                       noCoal={camData.noCoal}
-                      color={color['size']}
+                      color={color["size"]}
                     />
                   </div>
                 </div>
@@ -316,7 +320,7 @@ const CamFeed = ({ material, cameraId, clientId, callApi, initialRender }) => {
                           ).getTime()}
                           labels={Object.keys(camData.color)}
                           noCoal={camData.noCoal}
-                          color={color['color']}
+                          color={color["color"]}
                         />
                       </div>
                     </div>
@@ -332,7 +336,7 @@ const CamFeed = ({ material, cameraId, clientId, callApi, initialRender }) => {
                           ).getTime()}
                           labels={["Moisture"]}
                           noCoal={camData.noCoal}
-                          color={color['moisture']}
+                          color={color["moisture"]}
                         />
                       </div>
                     </div>

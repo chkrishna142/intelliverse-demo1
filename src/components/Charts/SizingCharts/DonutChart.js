@@ -30,6 +30,10 @@ const DonutChart = ({ data, labels, position }) => {
       "#00bcd4",
       "#8bc34a",
       "#9c27b0",
+      "#673ab7",
+      "#ff9800",
+      "#4caf50",
+      "#795548",
     ],
     labels: customLabels,
     legend: {
@@ -52,7 +56,15 @@ const DonutChart = ({ data, labels, position }) => {
     },
   };
 
-  return <ReactApexChart options={options} series={series} type="donut" height="100%" width="100%"/>;
+  return (
+    <ReactApexChart
+      options={options}
+      series={series}
+      type="donut"
+      height="100%"
+      width="100%"
+    />
+  );
 };
 
 export default DonutChart;
