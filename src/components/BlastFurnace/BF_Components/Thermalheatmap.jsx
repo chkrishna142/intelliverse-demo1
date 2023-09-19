@@ -13,7 +13,7 @@ function Thermalheatmap({fetcheddata}) {
 
   })))
 
-
+console.log(heatMapDataWithoutName)
   const [state, setState] = useState({
     series: heatMapDataWithoutName
     // [
