@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Navbar from '../Navbar';
 import { useParams } from 'react-router-dom';
 import { baseURL } from '../..';
 import { Spinner } from '@chakra-ui/react';
+import NavContext from '../NavContext';
 
 
 const Expert = () => {
@@ -14,6 +15,8 @@ const Expert = () => {
 
     const [spinner, setSpinner] = useState(false)
     const [question, setQuestion] = useState([])
+
+    const { login } = useContext(NavContext)
 
     useEffect(() => {
         getData()
@@ -64,15 +67,15 @@ const Expert = () => {
         }
     }
 
-    // useEffect(() => {
-    //     console.log(question)
-    // })
+    useEffect(() => {
+        console.log(login)
+    })
 
 
     return (
         <>
             <Navbar />
-            <div className='mt-20 mx-10'>
+            <div className={login === false? 'mt-20 mx-10' :"mt-10"}>
                 {submitted === false ? <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
                     <p className='mt-6 ml-5 text-black text-xl font-semibold'>Ask An Expert</p>
                     <div>
