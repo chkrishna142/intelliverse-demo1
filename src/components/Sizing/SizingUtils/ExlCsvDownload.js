@@ -58,8 +58,8 @@ const ExlCsvDownload = ({ order, data }) => {
         value={selectedOption}
         onChange={(e) => setSelectedOption(e.target.value)}
       >
-        <option value={0}>Exl</option>
-        <option value={1}>Csv</option>
+        <option value={0}>.xlsx</option>
+        <option value={1}>.csv</option>
       </select>
     </div>
   );

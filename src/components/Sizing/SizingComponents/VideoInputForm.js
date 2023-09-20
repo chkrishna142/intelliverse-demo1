@@ -52,12 +52,12 @@ const VideoInputForm = ({
         setIsVideo(response.data.url);
         toast({
           position: "top-right",
-          title: response.data.url === "" ? "Failed" : "Video loaded",
+          title: !response.data.success ? "Failed" : "Video loaded",
           description:
-            response.data.url === ""
+            !response.data.success
               ? "No video in range"
               : "Video is ready to play",
-          status: response.data.url === "" ? "error" : "success",
+          status: !response.data.success ? "error" : "success",
           duration: 3000,
           isClosable: true,
         });

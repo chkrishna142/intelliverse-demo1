@@ -64,7 +64,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
 
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
-      <div className="flex pt-5 gap-4 items-start overflow-x-auto">
+      <div className="flex pt-5 gap-4 items-center overflow-x-auto">
         <div className="min-w-[110px]">
           <Select
             borderColor="#CAC5CD"
@@ -132,7 +132,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         )}
         <button
-          className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+          className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
           onClick={handleClick}
         >
           {imgDataChanging ? <Spinner /> : "Apply"}

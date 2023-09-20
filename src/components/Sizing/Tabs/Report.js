@@ -175,6 +175,12 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                 <option value={2}>Hourly Basis</option>
               </Select>
             </div>
+            <button
+              className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
+              onClick={handleClick}
+            >
+              {reportChanging ? <Spinner /> : "Apply"}
+            </button>
           </div>
           {report.hasOwnProperty("order") && (
             <ExlCsvDownload order={report.order} data={report.data} />
