@@ -61,6 +61,7 @@ function App() {
                     <Route path="/community" element={<Home state={"community"} />} />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
                     <Route path="/community/askanexpert" element={<AskAnExpert />} />
+                    <Route path="/community/expert/:questionId" element={<Expert />} />
 
                     {/* Client Select Page */}
                     <Route path="/client_select" element={<ClientSelect />} />
@@ -88,7 +89,6 @@ function App() {
                     {/* Notification Pages */}
                     <Route path="/notifications" element={<Messages />} />
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
-
                     <Route path="/community/sso" element={<Redirect />} />
                   </Routes>
                 </div>

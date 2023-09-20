@@ -48,7 +48,6 @@ const Expert = () => {
             redirect: 'follow'
         };
         const data = await fetch(`${baseURL}questions/answer/${param.questionId}`, requestOptions)
-
         setSpinner(false)
         setSubmitted(true)
     }
@@ -83,7 +82,6 @@ const Expert = () => {
                         <div className='w-full font-light mt-2'>
                             You can see the user's question and reply using the text box below. Feel free to request additional information from the user if necessary, but aim to resolve the query in your initial
                             Remember to save your work by clicking 'Save' if you need to leave temporarily. Your response will be sent after you click 'Review Answer' and then 'Submit Answer.'
-
                             <p className='text-[#034C85] font-bold mt-3'>User’s Query</p>
                             <div>
                                 <p className='mt-2 font-bold'>Dear {expertName(question[0]?.expertId)},</p>
