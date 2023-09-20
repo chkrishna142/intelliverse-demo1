@@ -97,7 +97,7 @@ function App() {
           ) : (
             <Routes>
               <Route path="*" element={<Login />} />
-              <Route path="/community/expert" element={<Expert />} />
+              <Route path="/community/expert/:questionId" element={<Expert />} />
             </Routes>
           )}
         </div>

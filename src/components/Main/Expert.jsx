@@ -1,7 +1,8 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import ExpertReadMore from './ExpertReadMore';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar';
+import { useParams } from 'react-router-dom';
+import { baseURL } from '../..';
+import { Spinner } from '@chakra-ui/react';
 
 
 const Expert = () => {
@@ -9,6 +10,64 @@ const Expert = () => {
     const [submitted, setSubmitted] = useState(false)
     const [reply, setReply] = useState("")
     const [review, setReview] = useState(false)
+    let param = useParams();
+
+    const [spinner, setSpinner] = useState(false)
+    const [question, setQuestion] = useState([])
+
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const getData = async () => {
+        const data = await fetch(baseURL + 'questions', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        const res = await data.json()
+        setQuestion(res?.filter((item) => {
+            return item.questionId.toLowerCase().includes(param.questionId)
+        }))
+    }
+
+    const postAnswer = async () => {
+        setSpinner(true)
+        var myHeaders = new Headers();
+        //myHeaders.append("X-Auth-Token", auth);
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({
+            answer: reply
+        });
+        var requestOptions = {
+            credentials: 'same-origin',
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        const data = await fetch(`${baseURL}questions/answer/${param.questionId}`, requestOptions)
+
+        setSpinner(false)
+        setSubmitted(true)
+    }
+
+    function expertName(id) {
+        if (id === 1) {
+            return "Florian Budde"
+        } else if (id === 2) {
+            return "Luc Bonte"
+        } else if (id === 3) {
+            return "Shripad Nadkarni"
+        } else {
+            return "Sujesh Vasudevan"
+        }
+    }
+
+    // useEffect(() => {
+    //     console.log(question)
+    // })
 
 
     return (
@@ -18,7 +77,7 @@ const Expert = () => {
                 {submitted === false ? <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
                     <p className='mt-6 ml-5 text-black text-xl font-semibold'>Ask An Expert</p>
                     <div>
-                        <p className='mt-5 ml-7 font-bold'>Hello [Expert's Name],</p>
+                        <p className='mt-5 ml-7 font-bold'>Hello {expertName(question[0]?.expertId)},</p>
                     </div>
                     <div className='mx-7'>
                         <div className='w-full font-light mt-2'>
@@ -27,8 +86,8 @@ const Expert = () => {
 
                             <p className='text-[#034C85] font-bold mt-3'>User’s Query</p>
                             <div>
-                                <p className='mt-2 font-bold'>Dear [Expert's Name],</p>
-                                <p className='w-full font-light mt-2'>I hope this email finds you well. I am writing to seek your expertise regarding a specific issue we've encountered in our steel plant's blast furnace operation. We are currently facing irregular temperature fluctuations. Despite our efforts, we have not been able to pinpoint the exact cause or find an effective solution. Given your extensive experience in [mention the expert's area of expertise, e.g., metallurgy, blast furnace operations], I believe your insights could be invaluable in helping us troubleshoot and resolve this issue.</p>
+                                <p className='mt-2 font-bold'>Dear {expertName(question[0]?.expertId)},</p>
+                                <p className='w-full font-light mt-2'>{question[0]?.question}</p>
                             </div>
                             <p className='font-light mt-5'>Here's a summary of the information you provided:</p>
                             <p className='mt-2 text-[#034C85] font-bold'>Attached Files:</p>
@@ -65,7 +124,7 @@ const Expert = () => {
                         </div> : null}
                         <div className='w-full flex justify-start items-center gap-6 mt-5 mb-5'>
                             {review === false ? <button className='text-white px-6 py-3 bg-[#084298] rounded-md'>Save Answer</button> : <button onClick={() => setReview(false)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Back To Editing</button>}
-                            {review === false ? <button onClick={() => setReview(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Review Answer</button> : <button onClick={() => setSubmitted(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Submit Answer</button>}
+                            {review === false ? <button onClick={() => setReview(true)} className='text-white px-6 py-3 bg-[#084298] rounded-md'>Review Answer</button> : <button onClick={() => postAnswer()} className='text-white px-6 py-3 bg-[#084298] rounded-md'>{spinner === false ? <span>Submit Answer</span> : <Spinner />}</button>}
                         </div>
                     </div>
                 </div> :
