@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect, useContext, useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ExpertReadMore from './ExpertReadMore';
 import NavContext from '../NavContext';
@@ -25,6 +25,7 @@ const AskAnExpert = () => {
     const [val4, setVal4] = useState(false)
 
     const [expertId, setExpertId] = useState("") // expert id
+
 
     const getData = async () => {
         const data = await fetch(baseURL + 'experts', {
@@ -169,7 +170,7 @@ const AskAnExpert = () => {
                                 Please provide a detailed description of your question or issue. Include relevant background information, any steps you've already taken to address the problem, and any specific challenges you're facing. If your question involves measurements, specifications, or technical details please include them in your description. This will help our experts provide you with a more accurate response. Feel free to attach relevant files, images or diagrams that can provide additional context to your question.
                             </div>
                             <div className='w-full mt-4'>
-                                <textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder='Type your query here...' className='w-full h-20 border rounded-md px-2 py-2' />
+                                <textarea value={question} onChange={(e) => {setQuestion(e.target.value)}} placeholder='Type your query here...' className='w-full h-32 border rounded-md px-2 py-2' />
                             </div>
                             <div className='w-full flex justify-end mt-5'>
                                 <button onClick={() => { postQuestion(); setLoader(true) }} disabled={question === ""} className={question === "" ? 'text-white px-6 py-3 bg-gray-400 rounded-md' : 'text-white px-6 py-3 bg-[#084298] rounded-md'}>{loader === false ? <span>Submit</span> : <Spinner />}</button>

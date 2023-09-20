@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect, useRef } from 'react';
 import Navbar from '../Navbar';
 import { useParams } from 'react-router-dom';
 import { baseURL } from '../..';
@@ -17,6 +17,20 @@ const Expert = () => {
     const [question, setQuestion] = useState([])
 
     const { login } = useContext(NavContext)
+
+    const textbox = useRef(null);
+
+    function adjustHeight() {
+        textbox.current.style.height = "inherit";
+        textbox.current.style.height = `${textbox.current.scrollHeight + 50}px`;
+    }
+
+    useLayoutEffect(adjustHeight, []);
+
+    function handleKeyDown(e) {
+        adjustHeight();
+    }
+
 
     useEffect(() => {
         getData()
@@ -75,7 +89,7 @@ const Expert = () => {
     return (
         <>
             <Navbar />
-            <div className={login === false? 'mt-20 mx-10' :"mt-10"}>
+            <div className={login === false ? 'mt-20 mx-10' : "mt-10"}>
                 {submitted === false ? <div className='w-full border shadow-md bg-white rounded-md mb-5 '>
                     <p className='mt-6 ml-5 text-black text-xl font-semibold'>Ask An Expert</p>
                     <div>
@@ -104,9 +118,9 @@ const Expert = () => {
                             </div>
                         </div>
                         {review === false ? <div className='w-full mt-4'>
-                            <textarea value={reply} onChange={(e) => setReply(e.target.value)} placeholder='Enter your reply here...' className='w-full h-24 border rounded-md px-2 py-2' />
+                            <textarea ref={textbox} value={reply} onChange={(e) => { setReply(e.target.value); handleKeyDown() }} placeholder='Enter your reply here...' className='w-full border rounded-md px-2 py-2' />
 
-                            <div className='relative w-full -mt-12 h-10 px-2 py-2 flex items-center gap-2'>
+                            <div className='mx-2'><div className='relative w-full bg-white -mt-12 h-10 px-2 py-2 flex items-center gap-2'>
                                 <img className='cursor-pointer -mr-2' src="/abc.svg" alt="abc" />
                                 <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
                                 <img className='cursor-pointer' src="/sharing.svg" alt="abc" />
@@ -114,7 +128,7 @@ const Expert = () => {
                                 <img className='cursor-pointer' src="/drive.svg" alt="attach" />
                                 <img className='cursor-pointer' src="/image.svg" alt="attach" />
                                 <img className='cursor-pointer' src="/pen.svg" alt="attach" />
-                            </div>
+                            </div></div>
 
                         </div> : null}
                         {review === true ? <div className='w-full mt-4'>

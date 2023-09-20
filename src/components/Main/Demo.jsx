@@ -1,34 +1,31 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Demo = () => {
 
     const [details, setDetails] = useState([])
+    let param = useParams()
 
-    // useEffect(() => {
-    //     getDemo()
-        
-    // }, [])
+    useEffect(() => {
+        getDemo()
+    }, [])
 
-    // const getDemo = async () => {
-    //     const data = await fetch('https://backend-ripik.com/demo/get/' + 'particlesizing', {
-    //        // credentials: 'same-origin',
-    //         method: "GET",
-            
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //            // "X-Auth-Token": auth
-    //         }
-    //     })
-    //     const res = await data.json()
-    //     console.log(res)
-    //     //setDetails(res)
-    // }
+    const getDemo = async () => {
+        const data = await fetch(`https://backend-ripik.com/api/demo/get/${param.product}`, {
+            method: "GET",
+
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        const res = await data?.json()
+        setDetails(res)
+    }
 
     return (
         <div className='w-full bg-white rounded-xl pb-10 border mt-6'>
             <div className='text-[#024D87] text-lg m-5 font-bold'>
-                Sizing Tool Demo
+                {details?.toolName} Tool Demo
             </div>
             <div className='mt-2 grid grid-cols-2 w-full gap-4'>
                 <div className='ml-5 mr-2'><div className='w-full h-80 '>
@@ -36,16 +33,16 @@ const Demo = () => {
                 </div>
                 </div>
                 <div className='ml-2 mr-10'><div className='w-full rounded-md h-80 flex justify-center '>
-                    <img className='w-full' src="test_new.svg" />
+                    <img className='w-full' src="/test_new.svg" />
                 </div>
                 </div>
             </div>
             <div className='mt-5 grid grid-cols-2 w-full gap-4'>
                 <div className='flex w-full justify-end'>
-                    <button className='px-4 py-2 rounded-full text-sm text-white bg-[#084298] flex gap-4 items-center'>
+                    <a href={details?.demoLink} target='_blank' className='px-4 py-2 rounded-full text-sm text-white bg-[#084298] flex gap-4 items-center'>
                         Watch Demo
                         <img src="/play.svg" />
-                    </button>
+                    </a>
                 </div>
                 <div className='flex w-full justify-end '>
                     <button className='px-4 py-2 rounded-full text-sm text-white bg-[#084298] flex gap-4 items-center mr-12'>
@@ -55,7 +52,7 @@ const Demo = () => {
                 </div>
             </div>
             <div className='mt-10 font-bold text-black text-base flex justify-center mx-10'>
-                Our Particle Sizing tool has helped some of the largest manufacturers in the world observe the particle size of Sinter, Coal, Coke, etc. in real time. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.
+                {details?.toolDescription}
             </div>
             <div className='mt-12 w-full flex justify-center'>
                 <Link to="/contactus"><button className='px-6 py-2 rounded-md text-lg text-white bg-[#084298] flex  items-center'>

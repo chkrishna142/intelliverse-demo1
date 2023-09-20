@@ -85,7 +85,7 @@ function App() {
                     <Route path="/contactus" element={<ConatctUs />} />
                     <Route path="/settings" element={<Setting />} />
                     <Route path="/profile" element={<UserProfile />} />
-                    <Route path="/bookdemo" element={<Demo />} />
+                    <Route path="/bookdemo/:product" element={<Demo />} />
                     {/* Notification Pages */}
                     <Route path="/notifications" element={<Messages />} />
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
