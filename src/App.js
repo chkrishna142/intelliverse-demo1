@@ -61,7 +61,8 @@ function App() {
                     <Route path="/community" element={<Home state={"community"} />} />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
                     <Route path="/community/askanexpert" element={<AskAnExpert />} />
-                    <Route path="/community/expert" element={<Expert />} />
+                    <Route path="/community/expert/:questionId" element={<Expert />} />
+
                     {/* Client Select Page */}
                     <Route path="/client_select" element={<ClientSelect />} />
                     {/* Optimus Pages */}
@@ -88,14 +89,16 @@ function App() {
                     {/* Notification Pages */}
                     <Route path="/notifications" element={<Messages />} />
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
-
                     <Route path="/community/sso" element={<Redirect />} />
                   </Routes>
                 </div>
               </div>
             </>
           ) : (
-            <Login />
+            <Routes>
+              <Route path="*" element={<Login />} />
+              <Route path="/community/expert/:questionId" element={<Expert />} />
+            </Routes>
           )}
         </div>
       </NavContext.Provider>

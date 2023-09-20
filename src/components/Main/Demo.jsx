@@ -1,7 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 const Demo = () => {
+
+    const [details, setDetails] = useState([])
+
+    // useEffect(() => {
+    //     getDemo()
+        
+    // }, [])
+
+    // const getDemo = async () => {
+    //     const data = await fetch('https://backend-ripik.com/demo/get/' + 'particlesizing', {
+    //        // credentials: 'same-origin',
+    //         method: "GET",
+            
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //            // "X-Auth-Token": auth
+    //         }
+    //     })
+    //     const res = await data.json()
+    //     console.log(res)
+    //     //setDetails(res)
+    // }
 
     return (
         <div className='w-full bg-white rounded-xl pb-10 border mt-6'>
@@ -33,20 +55,14 @@ const Demo = () => {
                 </div>
             </div>
             <div className='mt-10 font-bold text-black text-base flex justify-center mx-10'>
-            Our Particle Sizing tool has helped some of the largest manufacturers in the world observe the particle size of Sinter, Coal, Coke, etc. in real time. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.
-
+                Our Particle Sizing tool has helped some of the largest manufacturers in the world observe the particle size of Sinter, Coal, Coke, etc. in real time. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.
             </div>
             <div className='mt-12 w-full flex justify-center'>
                 <Link to="/contactus"><button className='px-6 py-2 rounded-md text-lg text-white bg-[#084298] flex  items-center'>
                     Book Live Demo
-
                 </button>
                 </Link>
-
-
             </div>
-
-
         </div>
     );
 };

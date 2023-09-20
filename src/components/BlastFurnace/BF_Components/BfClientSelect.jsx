@@ -49,7 +49,6 @@ const BfClientSelect = () => {
                                 </Link>
                             )
                         })}
-                        
                     </div>
                 </div>
             </div>
