@@ -27,14 +27,14 @@ const KilnCamFeed = () => {
               {new Date().toTimeString()}
             </p>
           </div>
-          <div className="flex flex-col gap-4 w-full h-[40vh] min-[1350px]:h-full">
-            <div className="w-full h-[60%] bg-black flex justify-center items-center rounded-lg">
+          <div className="flex flex-col gap-4 w-full h-[60vh] sm:h-[40vh]">
+            <div className="w-full h-[50%] sm:h-[60%] bg-black flex justify-center items-center rounded-lg">
               <img
                 className="rounded-xl w-auto h-[80%]"
                 src="https://media.istockphoto.com/id/1442909982/photo/closeup-of-a-rotary-kiln-for-clinker-production-in-a-cement-plant.jpg?s=612x612&w=0&k=20&c=nLwOPUSNyuYTBHKK5Rqq6-rLWrK0XBo9p7JjRF9kQdk="
               />
             </div>
-            <div className="h-[40%] pt-5 pl-4 pr-6 pb-6 gap-4 flex flex-col sm:flex-row rounded bg-[#fffcf2] w-full items-start sm:items-center justify-between">
+            <div className="h-[50%] sm:h-[40%] py-5 px-5 gap-4 flex flex-col sm:flex-row rounded bg-[#fffcf2] w-full items-start sm:items-center justify-between">
               <div className="flex flex-col gap-[30px] w-[70vw] sm:w-[45vw] xl:w-[28vw] h-full justify-center">
                 <IndexChart type="Dusty" value={value} />
                 <IndexChart type="Hot" value={value} />
