@@ -56,9 +56,9 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
               year: "numeric",
               month: "short",
               day: "2-digit",
-            }) +
-              " " +
-              new Date(data.timestamp).toLocaleTimeString()}
+            })}
+              &nbsp;&nbsp;&nbsp;
+              {new Date(data.timestamp).toLocaleTimeString()}
           </p>
         </div>
       </div>

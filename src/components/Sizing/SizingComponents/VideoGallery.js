@@ -3,13 +3,13 @@ import { useState, useRef } from "react";
 import VideoHistoryDrawer from "./VideoHistoryDrawer";
 import saveAs from "file-saver";
 
-const VideoGallery = ({plantId, cameraId, disable, plantCamMap}) => {
+const VideoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   // const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isVideo, setIsVideo] = useState("");
   // const closeDrawer = () => {
   //   setIsDrawerOpen(false);
   // };
-  const VidDownload = async ( url, idx ) => {
+  const VidDownload = async (url, idx) => {
     const response = await fetch(url);
     const videoData = await response.blob();
     saveAs(videoData, `video-${idx}.mp4`);
@@ -45,18 +45,26 @@ const VideoGallery = ({plantId, cameraId, disable, plantCamMap}) => {
             autoPlay
             className="rounded-lg w-[45vw]"
           >
-            <source
-              src={isVideo}
-              type="video/mp4"
-            />
+            <source src={isVideo} type="video/mp4" />
           </video>
           <div className="flex gap-4 absolute top-2 right-2 opacity-40 hover:opacity-90">
             {/* <img src="/SizingIcons/ShareIcon.svg" alt="" /> */}
-            <img className = "cursor-pointer rounded-full" src="/SizingIcons/DownloadIcon.svg" alt="" onClick={()=>VidDownload(isVideo,'sample')}/>
+            <img
+              className="cursor-pointer rounded-full"
+              src="/SizingIcons/DownloadIcon.svg"
+              alt=""
+              onClick={() => VidDownload(isVideo, "sample")}
+            />
           </div>
         </div>
       )}
-      <VideoInputForm setIsVideo={setIsVideo} plantId={plantId} cameraId={cameraId} disable={disable} plantCamMap={plantCamMap}/>
+      <VideoInputForm
+        setIsVideo={setIsVideo}
+        plantId={plantId}
+        cameraId={cameraId}
+        disable={disable}
+        plantCamMap={plantCamMap}
+      />
     </div>
   );
 };

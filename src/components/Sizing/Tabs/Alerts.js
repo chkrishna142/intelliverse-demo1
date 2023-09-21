@@ -210,8 +210,8 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
         </div>
       </div>
       <div className="flex flex-col gap-4 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
-        <div className="flex gap-2 ml-6">
-          <div>
+        <div className="flex gap-2 ml-6 overflow-x-auto">
+          <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
               color="#605D64"
@@ -236,7 +236,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
             </Select>
           </div>
           {selectedPlant !== "All Plants" && (
-            <div>
+            <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
                 color="#605D64"
@@ -262,15 +262,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               </Select>
             </div>
           )}
-          {/* <div>
-            <Select
-              borderColor="#CAC5CD"
-              color="#605D64"
-              placeholder="Reason"
-              variant="outline"
-              className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
-            />
-          </div> */}
           {alerts.hasOwnProperty("data") && (
             <Paginator
               data={alerts.data}
@@ -278,6 +269,12 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               setDisplayData={setDisplayData}
             />
           )}
+          <button
+            className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
+            onClick={handleClick}
+          >
+            {alertsChanging ? <Spinner /> : "Apply"}
+          </button>
         </div>
         {alerts.hasOwnProperty("data") && (
           <TableContainer className="!max-h-[80vh] !overflow-y-auto">
