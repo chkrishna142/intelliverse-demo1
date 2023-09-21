@@ -1,5 +1,6 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useWindowSize } from "@uidotdev/usehooks";
 import KilnFeed from "./Tabs/KilnFeed";
 import KilnCamFeed from "./Tabs/KilnCamFeed";
@@ -15,17 +16,19 @@ const Capitalize = (str) => {
 
 const Kiln = () => {
   const size = useWindowSize();
+  let param = useParams();
+  const [plantCamMap,setPlantCamMap] = useState({});
   const [page, setPage] = useState("feed");
   return (
     <div
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-        <div className="flex justify-between mb-3 mt-6">
-          <p className="text-3xl sm:text-4xl font-semibold text-[#024D87]">
-            {Capitalize(page)}
-          </p>
-        </div>
+      <div className="flex justify-between mb-3 mt-6">
+        <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
+          {Capitalize('kiln Vision')}
+        </p>
+      </div>
 
       <Tabs>
         <TabList className="!flex !border-0">
@@ -85,17 +88,17 @@ const Kiln = () => {
 
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <KilnFeed/> */}
-            <KilnCamFeed/>
+            <KilnFeed
+              material={param.material.toLowerCase()}
+              clientId={param.clientId.toLowerCase()}
+              setPlantCamMap={setPlantCamMap}
+            />
+            {/* <KilnCamFeed/> */}
           </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-          </TabPanel>
-          <TabPanel className="!pl-0 !pr-0">
-          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0"></TabPanel>
+          <TabPanel className="!pl-0 !pr-0"></TabPanel>
+          <TabPanel className="!pl-0 !pr-0"></TabPanel>
+          <TabPanel className="!pl-0 !pr-0"></TabPanel>
         </TabPanels>
       </Tabs>
     </div>
