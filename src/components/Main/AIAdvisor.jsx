@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { baseURL } from '../..';
 import NavContext from '../NavContext';
 import Typewriter from './Typewriter';
+import { Link } from 'react-router-dom';
 
 
 const AiAdvisor = () => {
@@ -53,7 +54,7 @@ const AiAdvisor = () => {
 
     return (
         <div className=''>
-            <div className='mt-[4vh] bg-white'>
+            <div className='mt-[3vh] bg-white'>
                 {send === false ? <div className='rounded-md border border-[#3A74CA] pb-5 w-full'>
                     <div className='grid grid-cols-8'>
                         <div className='col-span-1 m-10'>
@@ -124,7 +125,7 @@ const AiAdvisor = () => {
                         <p className='pt-1 text-[10px] ml-2 text-gray-500'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p>
                         <div className='flex items-center gap-4 text-xs mt-1 mr-5'>
                             <p className={credits <= 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credit Remaining</p>
-                            <div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div>
+                            <Link to="/community/advisor/buycredits"><div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div></Link>
                         </div>
                     </div>
                 </div>

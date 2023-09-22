@@ -25,6 +25,7 @@ import SingleMessage from './components/Main/Messages/SingleMessage';
 import BfClientSelect from './components/BlastFurnace/BF_Components/BfClientSelect';
 import Redirect from './components/Main/Redirect';
 import Expert from './components/Main/Expert';
+import CreditBuy from './components/Main/CreditBuy';
 
 function App() {
 
@@ -60,6 +61,7 @@ function App() {
                     {/* Community Pages */}
                     <Route path="/community" element={<Home state={"community"} />} />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
+                    <Route path="/community/advisor/buycredits" element={<CreditBuy />} />
                     <Route path="/community/askanexpert" element={<AskAnExpert />} />
                     <Route path="/community/expert/:questionId" element={<Expert />} />
 
