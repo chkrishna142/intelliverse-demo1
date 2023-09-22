@@ -31,7 +31,6 @@ const Expert = () => {
         adjustHeight();
     }
 
-
     useEffect(() => {
         getData()
     }, [])

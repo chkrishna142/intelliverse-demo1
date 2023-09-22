@@ -52,9 +52,9 @@ const CreditBuy = () => {
                             <button onClick={() => setSelector(2)} className={selector === 2 ? selected : non_selected}>Request Administrator</button>
                         </div>
                     </div>
-                    {selector === 2 ? <div className='flex justify-center mt-2'>
-                        <div className='text-black mt-4 md:text-base text-xs'>
-                            Send a request to your enterprise Intelliverse admin to purchase credits
+                    {selector === 2 ? <div className='flex justify-center mt-2 '>
+                        <div className='text-black mt-4 md:text-base text-xs w-[60%]'>
+                            Send a request to your enterprise Intelliverse admin to purchase credits.
                         </div>
                     </div> : null}
                     {selector === 1 ?

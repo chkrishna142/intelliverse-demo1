@@ -122,7 +122,7 @@ const AiAdvisor = () => {
                         </div>
                     </div>
                     <div className='flex justify-between items-center'>
-                        <p className='pt-1 text-[10px] ml-2 text-gray-500'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p>
+                        <p className='pt-1 text-[10px] ml-2 text-gray-500 md:mr-0 mr-2'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p>
                         <div className='flex items-center gap-4 text-xs mt-1 mr-5'>
                             <p className={credits <= 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credit Remaining</p>
                             <Link to="/community/advisor/buycredits"><div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div></Link>
