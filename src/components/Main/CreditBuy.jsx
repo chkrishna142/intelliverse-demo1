@@ -9,13 +9,14 @@ const CreditBuy = () => {
 
     const [selector, setSelector] = useState(1)
     const [submitted, setSubmitted] = useState(false)
+    const [amount, setAmount] = useState(5)
 
     return (
         <div className='w-full flex justify-center items-center'>
             <div className=' border border-[#3A74CA] rounded-md bg-white shadow-md w-[90%] mt-[5vh]'>
                 {submitted === false ? <div className='mb-16'>
                     <div className='flex justify-center '>
-                        <p className='text-[#024D87] text-xl font-semibold mt-10'>Intellidoc Credit Portal</p>
+                        <p className='text-[#024D87] text-2xl font-semibold mt-10'>Intellidoc Credit Portal</p>
                     </div>
                     <div className='flex justify-center mt-10 '>
                         <div className='md:w-[60%] w-[92%]'>
@@ -37,11 +38,11 @@ const CreditBuy = () => {
                         <div className='md:w-[60%] w-[92%]'>
                             <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Add Credits</div>
                             <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
-                                <select className="w-full focus:outline-none pl-2 font-semibold">
-                                    <option className='font-bold'>$5 (~2.5 Mn input words or 1.9 Mn output Words)</option>
-                                    <option className='font-bold'>$20 (~10 Mn input words or 7.5 Mn output Words)</option>
-                                    <option className='font-bold'>$$50 (~25 Mn input words or 19 Mn output Words)</option>
-                                    <option className='font-bold'>$100 (~50 Mn input words or 38 Mn output Words)</option>
+                                <select onChange={(e) => setAmount(e.target.value)} className="w-full focus:outline-none pl-2 font-semibold">
+                                    <option className='font-bold' value={5} >$5 (~2.5 Mn input words or 1.9 Mn output Words)</option>
+                                    <option className='font-bold' value={20}>$20 (~10 Mn input words or 7.5 Mn output Words)</option>
+                                    <option className='font-bold' value={50}>$50 (~25 Mn input words or 19 Mn output Words)</option>
+                                    <option className='font-bold' value={100}>$100 (~50 Mn input words or 38 Mn output Words)</option>
                                 </select>
                             </div>
                         </div>
@@ -116,7 +117,6 @@ const CreditBuy = () => {
                         <button onClick={() => setSubmitted(true)} className='px-6 py-2 bg-[#084298] text-white rounded-md'>
                             Submit
                         </button>
-
                     </div>
                 </div> : <div>
                     <div className='w-full flex justify-center mt-10'>
@@ -127,7 +127,7 @@ const CreditBuy = () => {
                     </div>
 
                     <div className='mt-5 w-full flex justify-center'>
-                        <p className='px-10 font-light'>$5 has been added to your account!</p>
+                        <p className='px-10 font-light'>${amount} has been added to your account!</p>
                     </div>
                     <div className='mt-10 w-full flex justify-center mb-40'>
                         <p className='px-10'>Return to <Link to="/community/advisor"><span className='text-blue-600 font-bold'>IntelliDoc</span></Link></p>
