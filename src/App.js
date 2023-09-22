@@ -29,16 +29,20 @@ import CreditBuy from './components/Main/CreditBuy';
 
 function App() {
 
-  const [login, setLogin] = useState(false);  // used on Login.jsx to set login provider to true
-  const [auth, setAuth] = useState("") // used on Login.jsx to set auth provider to true
+  const [login, setLogin] = useState(localStorage.getItem("logged_in"));  // used on Login.jsx to set login provider to true
+  const [auth, setAuth] = useState(localStorage.getItem('auth_token')) // used on Login.jsx to set auth provider to true
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("logged_in") && localStorage.getItem('auth_token')) {
+  //     setLogin(true);
+  //     setAuth(localStorage.getItem('auth_token'))
+  //   } else {
+  //     setLogin(false);
+  //   }
+  // }, [login]);
 
   useEffect(() => {
-    if (localStorage.getItem("logged_in") && localStorage.getItem('auth_token')) {
-      setLogin(true);
-      setAuth(localStorage.getItem('auth_token'))
-    } else {
-      setLogin(false);
-    }
+    setAuth(localStorage.getItem('auth_token'))
   }, [login]);
 
   return (
