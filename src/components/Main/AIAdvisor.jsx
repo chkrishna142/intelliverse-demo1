@@ -13,6 +13,7 @@ const AiAdvisor = () => {
     const [response, setResponse] = useState([])
     const [typing, setTyping] = useState(false)
     const [text, setText] = useState("")
+    const [credits, setCredits] = useState(0)
 
     const callChatGpt = async (ask) => {
         setTyping(true)
@@ -89,7 +90,7 @@ const AiAdvisor = () => {
                                     </div> : null}
                                 </div>
                             </div>)
-                        })}     
+                        })}
                         <div className='h-4' ref={ref}>
                         </div>
                     </div>}
@@ -112,14 +113,20 @@ const AiAdvisor = () => {
                         </div>
                     </div>
                 </div> : null}
-                <div className='fixed bottom-8'>
+                <div className='fixed md:bottom-8 bottom-20'>
                     <div style={{ width: '88.5vw' }} className='rounded-md border border-[#3A74CA] h-16 bg-white w-full px-5 py-2 flex gap-2 items-center'>
                         <input value={text} onKeyDown={handleKeyDown} onChange={(e) => setText(e.target.value)} className='w-full px-2 py-2 select-none' placeholder='Send a message' />
                         <div className='cursor-pointer' onClick={() => callChatGpt(text)}>
                             <img src="/send.svg" />
                         </div>
                     </div>
-                    <p className='pt-1 text-[10px] ml-2 text-gray-500'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p>
+                    <div className='flex justify-between items-center'>
+                        <p className='pt-1 text-[10px] ml-2 text-gray-500'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p>
+                        <div className='flex items-center gap-4 text-xs mt-1 mr-5'>
+                            <p className={credits <= 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credit Remaining</p>
+                            <div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
