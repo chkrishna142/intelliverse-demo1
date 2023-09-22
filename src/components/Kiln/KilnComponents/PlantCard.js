@@ -57,7 +57,7 @@ const PlantCard = ({ PlantName, CamData }) => {
         )}
       </div>
       <div
-        className={`grid grid-cols-1  xl:grid-cols-${
+        className={`grid grid-cols-1 xl:grid-cols-${
           Object.keys(CamData).length > 1 ? "2" : "1"
         }`}
       >

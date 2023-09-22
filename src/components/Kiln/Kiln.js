@@ -92,6 +92,7 @@ const Kiln = () => {
               material={param.material.toLowerCase()}
               clientId={param.clientId.toLowerCase()}
               setPlantCamMap={setPlantCamMap}
+              Map = {plantCamMap}
             />
             {/* <KilnCamFeed/> */}
           </TabPanel>

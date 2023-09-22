@@ -11,25 +11,25 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           {alert} alert
         </p>
       )}
-      <div className="flex gap-6 items-center">
-        <div className="flex flex-col h-full w-[65vw] xl:w-full items-center gap-4">
+      <div className="flex flex-col sm:flex-row gap-6 items-center">
+        <div className="flex flex-col h-full w-full items-center gap-4">
           <p className="self-start p-1 pl-2 pr-2 text-sm text-[#525056] font-medium ">
             {cameraName}
           </p>
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
             <img
-              className="h-[20vh] sm:h-[30vh] rounded-lg"
+              className="h-[30vh] sm:h-[30vh] rounded-lg"
               src={data.image_url}
               alt="no Support"
             />
           </div>
         </div>
         {data.noCoal !== 1 ? (
-          <div className="flex flex-col h-full items-center gap-4">
+          <div className="flex flex-col h-full w-full sm:w-min items-center gap-4">
             <p className="text-xs sm:text-base text-black self-start">
               Health Status
             </p>
-            <KilnHealthCard index={data.index} health={data.tag}/>
+            <KilnHealthCard index={data.index} health={data.tag.toLowerCase()}/>
           </div>
         ) : (
           <div className="h-full flex flex-col gap-8 items-center justify-center text-black font-bold text-center text-2xl min-w-[15vw]">

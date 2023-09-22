@@ -85,7 +85,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
-        <div className="flex gap-2">
+        <div className="flex gap-3 items-baseline">
           <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
           {history.hasOwnProperty("data") && (
             <Paginator
@@ -175,7 +175,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       {history.hasOwnProperty("data") && (
         <TableContainer className="!max-h-[80vh] !overflow-y-auto">
           <Table variant="simple">
-            <Thead className="bg-[#FAFAFA] !text-xs">
+            <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
               <Tr>
                 <Th color="#79767D" fontWeight={400}>
                   SR. NO.
