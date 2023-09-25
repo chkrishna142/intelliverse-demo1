@@ -26,6 +26,7 @@ import BfClientSelect from './components/BlastFurnace/BF_Components/BfClientSele
 import Redirect from './components/Main/Redirect';
 import Expert from './components/Main/Expert';
 import CreditBuy from './components/Main/CreditBuy';
+import AdminHome from './components/Admin/Home';
 
 function App() {
 
@@ -95,6 +96,8 @@ function App() {
                     <Route path="/notifications" element={<Messages />} />
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
                     <Route path="/community/sso" element={<Redirect />} />
+                    {/* Admin Pages */}
+                    <Route path="/admin/home" element={<AdminHome />} />
                   </Routes>
                 </div>
               </div>
