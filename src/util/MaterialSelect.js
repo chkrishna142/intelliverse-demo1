@@ -1,6 +1,6 @@
-import MaterialCard from "./SizingComponents/MaterialCard";
-import NavContext from "../NavContext";
-import { baseURL, bseURL } from "../../index";
+import MaterialCard from "./MaterialCard";
+import NavContext from "../components/NavContext";
+import { baseURL, bseURL } from "../index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";

@@ -4,10 +4,11 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Home from './components/Main/Home';
 import Sizing from "./components/Sizing/Sizing"
-import MaterialSelect from './components/Sizing/MaterialSelect';
+import MaterialSelect from './util/MaterialSelect';
 import SingleCam from './components/Sizing/SingleCam';
 import Kiln from "./components/Kiln/Kiln";
 import Manpower from './components/Manpower/Manpower';
+import Quality from './components/QualityTracking/Quality';
 import Login from './components/Auth/Login';
 import Sidebar from './components/Sidebar/Sidebar';
 import AiAdvisor from './components/Main/AIAdvisor';
@@ -84,7 +85,10 @@ function App() {
                     {/*Process and Kiln Pages */}
                     <Route path="/vision/ProcessMonitoring/:material" element={<ClientSelect />} />
                     <Route path="/vision/ProcessMonitoring/:material/:clientId" element={<Kiln />} />
-                    {/*Sizing pages */}
+                    {/*Quality Tracking pages */}
+                    <Route path="/vision/qualityTracking/:material" element={<ClientSelect />} />
+                    <Route path="/vision/qualityTracking/:material/:clientId" element={<Quality />} />
+                    {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
                     {/* Profile Pages */}
                     <Route path="/contactus" element={<ConatctUs />} />

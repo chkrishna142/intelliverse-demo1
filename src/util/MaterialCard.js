@@ -12,7 +12,8 @@ const Capitalize = (str) => {
 
 const useCase = {
   'Sizing': 'Sizing',
-  'ProcessMonitoring': ''
+  'ProcessMonitoring': '',
+  'qualityTracking': ''
 }
 
 const MaterialCard = ({ material, alerts, deployments }) => {
