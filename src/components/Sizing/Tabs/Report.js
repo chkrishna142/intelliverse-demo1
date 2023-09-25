@@ -189,7 +189,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
         {report.hasOwnProperty("data") && (
           <TableContainer className="!max-h-[80vh] !overflow-y-auto">
             <Table variant="simple">
-              <Thead className="bg-[#FAFAFA] !text-xs">
+              <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
                 <Tr>
                   <Th color="#79767D" fontWeight={400}>
                     SR. NO.

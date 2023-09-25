@@ -255,7 +255,7 @@ const dummyData = {
   },
 };
 
-const KilnFeed = ({ material, clientId, setPlantCamMap }) => {
+const KilnFeed = ({ material, clientId, setPlantCamMap, Map }) => {
   const [plantData, setPlantData] = useState("noPlant");
   const { auth } = useContext(NavContext);
   const apiCall = async () => {
@@ -286,7 +286,13 @@ const KilnFeed = ({ material, clientId, setPlantCamMap }) => {
       Object.keys(plantData).map((plant) => {
         plantCamMap[plant] = Object.keys(plantData[plant]);
       });
-      setPlantCamMap(plantCamMap);
+      const sortedData = Object.entries(plantCamMap)
+        .sort((a, b) => b[1].length - a[1].length)
+        .reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+      setPlantCamMap(sortedData);
     }
   }, [plantData]);
 
@@ -298,14 +304,14 @@ const KilnFeed = ({ material, clientId, setPlantCamMap }) => {
     // return () => {
     //   clearInterval(intervalId);
     // };
-    setPlantData(dummyData)
+    setPlantData(dummyData);
   }, []);
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      {plantData &&
+      {plantData && Map &&
         plantData !== "noPlant" &&
-        Object.keys(plantData).map((plant) => {
+        Object.keys(Map).map((plant) => {
           return <PlantCard PlantName={plant} CamData={plantData[plant]} />;
         })}
     </div>

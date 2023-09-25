@@ -10,11 +10,11 @@ const IndexChart = ({ type, value }) => {
   return (
     <div className="flex gap-4 items-center justify-center">
       <p className="text-sm text-[#605D64] font-medium w-[30%]">{type} index: </p>
-      <div className="flex gap-2 w-[80%]">
+      <div className="flex gap-1 w-[80%]">
         {vals.map((i) => {
           return (
             <div
-              className="h-4 w-full rounded relative"
+              className="h-3 w-full rounded-xl relative"
               style={{
                 backgroundColor: i<= value ? color[type]: '',
                 border: `2px solid ${color[type]}`

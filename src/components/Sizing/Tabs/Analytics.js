@@ -13,6 +13,12 @@ import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
 import MoistureChart from "../../Charts/SizingCharts/MoistureChart";
 import { useWindowSize } from "@uidotdev/usehooks";
 
+const analysisType = {
+  0: "Size Disribution",
+  1: "Color Analysis",
+  2: "Moisture Analysis",
+};
+
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
@@ -96,12 +102,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     apiCall();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (selectedBasis == 0) typeRef.current = "SIZE";
     else if (selectedBasis == 1) typeRef.current = "COLOR";
     else typeRef.current = "MOISTURE";
     handleClick();
-  },[selectedBasis])
+  }, [selectedBasis]);
 
   useEffect(() => {
     if (typeRef.current == "MOISTURE") {
@@ -137,6 +143,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               >
                 <input
                   value={0}
+                  checked = {selectedBasis == 0}
                   onChange={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
@@ -151,6 +158,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               >
                 <input
                   value={1}
+                  checked = {selectedBasis == 1}
                   onChange={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
@@ -165,6 +173,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               >
                 <input
                   value={2}
+                  checked = {selectedBasis == 2}
                   onChange={(e) => setSelectedBasis(e.target.value)}
                   type="radio"
                   name="freq"
@@ -271,7 +280,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </button>
           </div>
         </div>
-        <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
+        <p className="text-[#3E3C42] font-medium text-xl">{analysisType[selectedBasis]}</p>
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
