@@ -97,7 +97,7 @@ function App() {
                     <Route path="/notifications/singleMessage" element={<SingleMessage />} />
                     <Route path="/community/sso" element={<Redirect />} />
                     {/* Admin Pages */}
-                    <Route path="/admin/home" element={<AdminHome />} />
+                    <Route path="/admin/usermanagement" element={<AdminHome />} />
                   </Routes>
                 </div>
               </div>

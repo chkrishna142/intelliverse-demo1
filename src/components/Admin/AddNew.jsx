@@ -1,33 +1,19 @@
 import React, { useState } from 'react'
 import {
     Flex,
-    HStack,
-    Heading,
-    Icon,
-    Text,
-    Input,
     Button,
-    FormControl,
-    FormLabel,
-    VStack,
-    Select,
-    Box,
-    Img,
-    Textarea,
+    FormControl,   
 } from "@chakra-ui/react";
 
 const AddNew = () => {
 
     const [contact, setContact] = useState("")
-
     const [whatsapp, setWhatsapp] = useState(false)
     const [emailInvitation, setEmailInvitation] = useState(false)
 
     return (
-        <div className="p-[30px] pt-[40px] flex flex-col gap-[60px] md:w-[60vw] w-full"
-        >
+        <div className="p-[30px] pt-[40px] flex flex-col gap-[60px] md:w-[60vw] w-full">
             <Flex flexDirection={"column"} gap={"30px"}>
-
                 <FormControl>
                     <div>
                         <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Full Name</div>
@@ -46,8 +32,6 @@ const AddNew = () => {
                     </div>
                     {/* <Input placeholder="Enter Your Official Email Id" /> */}
                 </FormControl>
-
-
                 <FormControl>
                     <div>
                         <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Phone Number</div>
@@ -58,7 +42,6 @@ const AddNew = () => {
                     {/* <Input placeholder="Enter Your Name" /> */}
                 </FormControl>
                 <FormControl>
-
                     <div>
                         <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Role</div>
                         <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
@@ -70,7 +53,6 @@ const AddNew = () => {
                         </div>
                     </div>
                     {/* <Input placeholder="Enter Your Name" /> */}
-
                 </FormControl>
                 <div className='flex items-center gap-6 font-light'>
                     <div className='flex items-center gap-2'>

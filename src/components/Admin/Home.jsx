@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import UserRolesTable from './UserRolesTable'
 import UserLogs from './UserLogs'
 import AddNew from './AddNew'
@@ -8,7 +7,6 @@ const AdminHome = () => {
 
     const selected = "w-1/2 py-4 border-b-2 border-[#084298] text-[#084298] font-bold md:text-base text-xs"
     const non_selected = "w-1/2 py-4 border-b border-gray-600 text-gray-600 md:text-base text-xs"
-
     const [selector, setSelector] = useState(1)
 
     return (
@@ -18,8 +16,6 @@ const AdminHome = () => {
             </p>
             <div className='mt-4 bg-white border rounded-md shadow-md'>
                 <div className=''>
-
-
                     <div className='flex items-center justify-between md:w-[60%] w-[92%] ml-2'>
                         <button onClick={() => setSelector(1)} className={selector === 1 ? selected : non_selected}>User Roles Table</button>
                         <button onClick={() => setSelector(2)} className={selector === 2 ? selected : non_selected}>Add New User</button>
@@ -44,7 +40,6 @@ const AdminHome = () => {
                         :
                         null}
                 </div>
-
             </div>
         </>
     )
