@@ -27,6 +27,7 @@ import Redirect from './components/Main/Redirect';
 import Expert from './components/Main/Expert';
 import CreditBuy from './components/Main/CreditBuy';
 import AdminHome from './components/Admin/Home';
+import BillingHome from './components/Billing/Home';
 
 function App() {
 
@@ -98,6 +99,7 @@ function App() {
                     <Route path="/community/sso" element={<Redirect />} />
                     {/* Admin Pages */}
                     <Route path="/admin/usermanagement" element={<AdminHome />} />
+                    <Route path="/admin/billing" element={<BillingHome />} />
                   </Routes>
                 </div>
               </div>
