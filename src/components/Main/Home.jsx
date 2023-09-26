@@ -49,7 +49,7 @@ const Home = ({ state }) => {
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Process Monitoring</p></div>
                             </div>
                             </Link>
-                            <Link to="/bookdemo/qualitymonitoring"><div>
+                            <Link to="/vision/qualityTracking" style={{ textDecoration: 'none' }}><div>
                                 <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer '>
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 p-2' src="/pm.svg" /></div>
                                     <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
