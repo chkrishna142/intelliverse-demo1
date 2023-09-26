@@ -4,7 +4,7 @@ import ExpertReadMore from './ExpertReadMore';
 import NavContext from '../NavContext';
 import { baseURL } from '../..';
 import { Spinner } from '@chakra-ui/react';
-
+import axios from 'axios';
 
 const AskAnExpert = () => {
 
@@ -27,6 +27,14 @@ const AskAnExpert = () => {
     const [expertId, setExpertId] = useState("") // expert id
 
 
+    const [send, setSend] = useState([])
+
+    const selectPicture = (event) => {
+        setSend([...send, event.target.files[0]])
+        console.log('send', send)
+    }
+
+
     const getData = async () => {
         const data = await fetch(baseURL + 'experts', {
             method: "GET",
@@ -45,18 +53,55 @@ const AskAnExpert = () => {
     }
 
     const postQuestion = async () => {
-        const data = await fetch(baseURL + 'questions', {
-            method: "POST",
+        // const send = JSON.stringify({
+        //     question: question,
+        //     expertId: expertId
+        // })
+        // var formdata = new FormData()
+        // formdata.append("json", send)
+        // const data = await fetch(baseURL + 'questions', {
+        //     method: "POST",
+        //     headers: {
+
+        //         "X-Auth-Token": auth
+        //     },
+        //     body: formdata
+        // })
+        setLoader(true)
+        const cap = {
+            expertId: expertId,
+            question: question
+
+        }
+        const json = JSON.stringify(cap);
+        const blob = new Blob([json], {
+            type: 'application/json'
+        });
+        const FormData = require('form-data');
+        let data = new FormData();
+        data.append('json', blob);
+        data.append('files', send[0])
+        data.append('files', send[1])
+        data.append('files', send[2])
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'https://backend-ripik.com/api/questions',
             headers: {
-                "Content-Type": "application/json",
-                "X-Auth-Token": auth
+                'X-Auth-Token': auth,
             },
-            body: JSON.stringify({
-                question: question,
-                expertId: expertId
+            data: data
+        };
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                setSubmitted(true)
+                setLoader(false)
             })
-        })
-        setSubmitted(true)
+            .catch((error) => {
+                console.log(error);
+            });
+
     }
 
     useEffect(() => {
@@ -169,8 +214,22 @@ const AskAnExpert = () => {
                             <div className='w-full font-light mt-6'>
                                 Please provide a detailed description of your question or issue. Include relevant background information, any steps you've already taken to address the problem, and any specific challenges you're facing. If your question involves measurements, specifications, or technical details please include them in your description. This will help our experts provide you with a more accurate response. Feel free to attach relevant files, images or diagrams that can provide additional context to your question.
                             </div>
-                            <div className='w-full mt-4'>
-                                <textarea value={question} onChange={(e) => {setQuestion(e.target.value)}} placeholder='Type your query here...' className='w-full h-32 border rounded-md px-2 py-2' />
+                            <div className='w-full mt-4 w-full border rounded-md px-2 py-2'>
+                                {/* <p>{file ? `File name: ${file[0].name}` : null}</p> */}
+                                <textarea value={question} onChange={(e) => { setQuestion(e.target.value) }} placeholder='Type your query here...' className='w-full px-2 py-2' />
+                                <div className='flex items-center gap-2'>
+                                    
+                                    <label for="image">
+                                        <input onChange={(e) => selectPicture(e)} type="file" name="image" id="image" style={{ display: "none" }} />
+                                        <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
+                                    </label>
+                                    {send?.map((item, index) => {
+                                        return (
+                                            <div key={index} className='flex items-center gap-2 cursor-pointer'>
+                                                <p className='font-light text-[#AEA9B1]'>{item.name}</p>
+                                            </div>)
+                                    })}
+                                </div>
                             </div>
                             <div className='w-full flex justify-end mt-5'>
                                 <button onClick={() => { postQuestion(); setLoader(true) }} disabled={question === ""} className={question === "" ? 'text-white px-6 py-3 bg-gray-400 rounded-md' : 'text-white px-6 py-3 bg-[#084298] rounded-md'}>{loader === false ? <span>Submit</span> : <Spinner />}</button>

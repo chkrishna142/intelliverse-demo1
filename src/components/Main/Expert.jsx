@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { baseURL } from '../..';
 import { Spinner } from '@chakra-ui/react';
 import NavContext from '../NavContext';
+import axios from 'axios';
 
 
 const Expert = () => {
@@ -15,6 +16,8 @@ const Expert = () => {
 
     const [spinner, setSpinner] = useState(false)
     const [question, setQuestion] = useState([])
+    const [attachments, setAttachments] = useState([])
+    const [send, setSend] = useState([])
 
     const { login } = useContext(NavContext)
 
@@ -27,13 +30,29 @@ const Expert = () => {
 
     useLayoutEffect(adjustHeight, []);
 
+    const selectPicture = (event) => {
+        setSend([...send,event.target.files[0]])
+        console.log('send', send)
+    }
+
     function handleKeyDown(e) {
         adjustHeight();
     }
 
     useEffect(() => {
         getData()
+        getAttachments()
     }, [])
+
+    const getAttachments = async () => {
+        const data = await fetch(baseURL + `attachment/expert/${param.questionId}`, {
+            method: "GET",
+
+        })
+        const res = await data.json()
+        setAttachments(res)
+        console.log(res)
+    }
 
     const getData = async () => {
         const data = await fetch(baseURL + 'questions', {
@@ -50,22 +69,77 @@ const Expert = () => {
 
     const postAnswer = async () => {
         setSpinner(true)
-        var myHeaders = new Headers();
-        //myHeaders.append("X-Auth-Token", auth);
-        myHeaders.append("Content-Type", "application/json");
-        var raw = JSON.stringify({
-            answer: reply
+        // var myHeaders = new Headers();
+        // //myHeaders.append("X-Auth-Token", auth);
+        // myHeaders.append("Content-Type", "application/json");
+        // var raw = JSON.stringify({
+        //     answer: reply
+        // });
+        // var requestOptions = {
+        //     credentials: 'same-origin',
+        //     method: 'PATCH',
+        //     headers: myHeaders,
+        //     body: raw,
+        //     redirect: 'follow'
+        // };
+        // const data = await fetch(`${baseURL}questions/answer/${param.questionId}`, requestOptions)
+        // setSpinner(false)
+        // setSubmitted(true)
+
+        
+        const cap = {
+            answer: reply,
+        }
+        const json = JSON.stringify(cap);
+        const blob = new Blob([json], {
+            type: 'application/json'
         });
-        var requestOptions = {
+        const FormData = require('form-data');
+        let data = new FormData();
+        data.append('json', blob);
+        data.append('files', send[0])
+        data.append('files', send[1])
+        data.append('files', send[2])
+        let config = {
+            method: 'post',
             credentials: 'same-origin',
-            method: 'PATCH',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
+            maxBodyLength: Infinity,
+            redirect: 'follow',
+            url: `https://backend-ripik.com/api/questions/answer/${param.questionId}`,    
+            data: data
         };
-        const data = await fetch(`${baseURL}questions/answer/${param.questionId}`, requestOptions)
-        setSpinner(false)
-        setSubmitted(true)
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                setSpinner(false)
+                setSubmitted(true)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
+    const downloadAsset = async (asset) => {
+        axios({
+            url: `https://backend-ripik.com/api/attachment/download?key=${asset}`, //your url
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+
+            // create file link in browser's memory
+            const href = URL.createObjectURL(response.data);
+
+            // create "a" HTML element with href to file & click
+            const link = document.createElement('a');
+            link.href = href;
+            link.setAttribute('download', removeExtension(asset)); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            // clean up "a" element & remove ObjectURL
+            document.body.removeChild(link);
+            URL.revokeObjectURL(href);
+        });;
+        //setDownloadLoader(false)
     }
 
     function expertName(id) {
@@ -80,10 +154,11 @@ const Expert = () => {
         }
     }
 
-    useEffect(() => {
-        console.log(login)
-    })
-
+    function removeExtension(filename) {
+        return (
+            filename.substring(filename.lastIndexOf('/') + 1, filename.length) || filename
+        );
+    }
 
     return (
         <>
@@ -98,22 +173,31 @@ const Expert = () => {
                         <div className='w-full font-light mt-2'>
                             You can see the user's question and reply using the text box below. Feel free to request additional information from the user if necessary, but aim to resolve the query in your initial
                             Remember to save your work by clicking 'Save' if you need to leave temporarily. Your response will be sent after you click 'Review Answer' and then 'Submit Answer.'
-                            <p className='text-[#034C85] font-bold mt-3'>User’s Query</p>
                             <div>
-                                <p className='mt-2 font-bold'>Dear {expertName(question[0]?.expertId)},</p>
-                                <p className='w-full font-light mt-2'>{question[0]?.question}</p>
+                                <p className='text-[#034C85] font-bold mt-4'>User’s Query</p>
+                                <div>
+                                    <p className='mt-2 font-bold'>Dear {expertName(question[0]?.expertId)},</p>
+                                    <p className='w-full font-light mt-2'>{question[0]?.question}</p>
+                                    <div className='mt-2 flex items-center gap-2'>
+                                        <p className='font-semibold'>User Attachments: </p>
+                                        {attachments?.map((item, index) => {
+                                            return (
+                                                <p onClick={() => downloadAsset(item)} className='font-light text-[#034C85] underline cursor-pointer text-sm' key={index}>{removeExtension(item)}</p>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
                             </div>
                             <p className='font-light mt-5'>Here's a summary of the information you provided:</p>
                             <p className='mt-2 text-[#034C85] font-bold'>Attached Files:</p>
                             <div className='mt-3 flex gap-3 items-center'>
-                                <div className='flex items-center gap-2 cursor-pointer'>
-                                    <img src="/pdf.svg" alt="pdf" />
-                                    <p className='font-light text-[#AEA9B1]'>12 Sep BF Report.pdf</p>
-                                </div>
-                                <div className='flex items-center gap-2 ursor-pointer'>
-                                    <img src="/pdf.svg" alt="pdf" />
-                                    <p className='font-light text-[#AEA9B1]'>11 Sep BF Report.pdf</p>
-                                </div>
+                                {send?.map((item, index) => {
+                                    return (
+                                        <div key={index} className='flex items-center gap-2 cursor-pointer'>
+                                            <img src="/pdf.svg" alt="pdf" />
+                                            <p className='font-light text-[#AEA9B1]'>{item.name}</p>
+                                        </div>)
+                                })}
                             </div>
                         </div>
                         {review === false ? <div className='w-full mt-4'>
@@ -121,7 +205,12 @@ const Expert = () => {
 
                             <div className='mx-2'><div className='relative w-full bg-white -mt-12 h-10 px-2 py-2 flex items-center gap-2'>
                                 <img className='cursor-pointer -mr-2' src="/abc.svg" alt="abc" />
-                                <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
+                                {/* <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
+                                <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} /> */}
+                                <label for="image">
+                                    <input onChange={(e) => selectPicture(e)} type="file" name="image" id="image" style={{ display: "none" }} />
+                                    <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
+                                </label>
                                 <img className='cursor-pointer' src="/sharing.svg" alt="abc" />
                                 <img className='cursor-pointer' src="/emoji.svg" alt="attach" />
                                 <img className='cursor-pointer' src="/drive.svg" alt="attach" />
