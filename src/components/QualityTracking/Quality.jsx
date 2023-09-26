@@ -2,9 +2,9 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Feed from "./Tabs/Feed";
-// import FeedLibrary from "./Tabs/FeedLibrary";
-// import Alerts from "./Tabs/Alerts";
-// import Report from "./Tabs/Report";
+import FeedLibrary from "./Tabs/FeedLibrary";
+import Alerts from "./Tabs/Alerts";
+import Report from "./Tabs/Report";
 // import Analytics from "./Tabs/Analytics";
 import { useWindowSize } from "@uidotdev/usehooks";
 
@@ -28,15 +28,11 @@ const Quality = () => {
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-      {location.pathname.includes("blastfurnace") ? (
-        <></>
-      ) : (
-        <div className="flex justify-between mb-3 mt-6">
-          <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
+      <div className="flex justify-between mb-3 mt-6">
+        <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
           {Capitalize(param.material.toLowerCase() + " Tracking")}
-          </p>
-        </div>
-      )}
+        </p>
+      </div>
 
       <Tabs>
         <TabList className="!flex !border-0">
@@ -103,20 +99,20 @@ const Quality = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <Alerts
+            <Alerts
               plantId="All Plants"
               cameraId=""
               disable={false}
               plantCamMap={plantCamMap}
-            /> */}
+            />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <FeedLibrary
+            <FeedLibrary
               plantId="All Plants"
               cameraId=""
               disable={false}
               plantCamMap={plantCamMap}
-            /> */}
+            />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             {/* {Object.keys(plantCamMap).length != 0 && (
@@ -129,12 +125,12 @@ const Quality = () => {
             )} */}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <Report
+            <Report
               plantId="All Plants"
               cameraId=""
               disable={false}
               plantCamMap={plantCamMap}
-            /> */}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>
