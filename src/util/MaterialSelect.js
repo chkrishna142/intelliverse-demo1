@@ -9,13 +9,15 @@ const useCase = {
   Sizing: ["Particle Sizing"],
   ProcessMonitoring: ["Colour scheme analysis"],
   qualityTracking: ["Counting and Tracking", "Quality Check"],
+  workforce: ["Object Monitoring"],
+  datadigitization: ["Automated Data Digitization"],
 };
 
 const categoryChecker = (val, match) => {
-  let found = false
+  let found = false;
   match.map((item) => {
     if (item == val) {
-      found = true
+      found = true;
     }
   });
   return found;

@@ -14,7 +14,9 @@ const Capitalize = (str) => {
 const useCase = {
   Sizing: "Sizing",
   ProcessMonitoring: "Analysis",
-  qualityTracking: "",
+  qualityTracking: "Tracking",
+  workforce: "Monitoring",
+  datadigitization: "",
 };
 
 const MaterialCard = ({ material, alerts, deployments }) => {
@@ -22,7 +24,7 @@ const MaterialCard = ({ material, alerts, deployments }) => {
   let category = param.category;
   return (
     <Link
-      to={`/vision/${category}/${material?.split(" ").join('').toLowerCase()}`}
+      to={`/vision/${category}/${material?.split(" ").join("").toLowerCase()}`}
       style={{
         textDecoration: "none",
         pointerEvents: deployments == 0 ? "none" : "",
