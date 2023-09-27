@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { Tooltip } from "@chakra-ui/react";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -11,20 +12,29 @@ const Capitalize = (str) => {
 };
 
 const useCase = {
-  'Sizing': 'Sizing',
-  'ProcessMonitoring': '',
-  'qualityTracking': ''
-}
+  Sizing: "Sizing",
+  ProcessMonitoring: "Analysis",
+  qualityTracking: "Tracking",
+  workforce: "Monitoring",
+  datadigitization: "",
+};
 
 const MaterialCard = ({ material, alerts, deployments }) => {
   let param = useParams();
   let category = param.category;
   return (
     <Link
-      to={`/vision/${category}/${material?.split(' ')[0]}`}
-      style={{ textDecoration: 'none' }}
+      to={`/vision/${category}/${material?.split(" ").join("").toLowerCase()}`}
+      style={{
+        textDecoration: "none",
+        pointerEvents: deployments == 0 ? "none" : "",
+      }}
     >
-      <div className="w-28 h-[115px] relative rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer">
+      <div
+        className={`w-28 h-[115px] relative rounded-xl shadow-md ${
+          deployments == 0 ? "bg-gray-200" : "bg-white"
+        } border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer`}
+      >
         <div className="absolute top-[-15px] right-[-15px]">
           {alerts !== 0 && (
             <div className="h-8 w-8 rounded-full bg-orange-500 flex justify-center items-center text-lg text-white">
@@ -38,14 +48,43 @@ const MaterialCard = ({ material, alerts, deployments }) => {
             src="/SizingIcons/MaterialIcon.svg"
           />
         </div>
-        <div className="w-full flex justify-center text-[#024D87]  text-xs">
-          <div className="bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs">
-            {deployments + " Deployment" + (deployments > 1 ? 's' : '')} 
+        <div
+          className={`w-full flex justify-center ${
+            deployments == 0 ? "text-white" : "text-[#024D87]"
+          }  text-xs`}
+        >
+          <div
+            className={`${
+              deployments == 0 ? "bg-[#79767d]" : "bg-[#CCEAFF]"
+            } px-2 py-1 w-full font-bold text-xs whitespace-nowrap`}
+          >
+            {deployments == 0
+              ? "Not Subscribed"
+              : deployments + " Deployment" + (deployments > 1 ? "s" : "")}
           </div>
         </div>
       </div>
-      <div className="mt-4 flex justify-center h-10 w-28">
-        <p className="font-bold text-[#024D87]">{Capitalize(material) + " " + useCase[category]}</p>
+      <div className="mt-4 flex justify-center h-10 w-28 text-center">
+        <Tooltip
+          label={Capitalize(material) + " " + useCase[category]}
+          placement="top"
+        >
+          <p
+            className="font-bold text-[#024D87]"
+            style={{ pointerEvents: "all" }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            {(Capitalize(material) + " " + useCase[category]).split(" ")
+              .length > 2
+              ? (Capitalize(material) + " " + useCase[category])
+                  .split(" ")
+                  .slice(0, 2)
+                  .join(" ") + "..."
+              : Capitalize(material) + " " + useCase[category]}
+          </p>
+        </Tooltip>
       </div>
     </Link>
   );
