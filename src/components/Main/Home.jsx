@@ -99,7 +99,7 @@ const Home = ({ state }) => {
                 processCount = processCount + 1
                 setProcess({ active: true, deployments: processCount })
             }
-            if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Counting and Tracking") {
+            if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Counting and Tracking" || res?.relSubscriptionServices[i]?.serv?.servCategory === "Quality Check") {
                 qualityCount = qualityCount + 1
                 setQuality({ active: true, deployments: qualityCount })
             }
