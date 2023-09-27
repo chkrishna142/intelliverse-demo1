@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import NewUseCaseModal from './NewUseCaseModal';
 import { useWindowSize } from "@uidotdev/usehooks";
@@ -82,7 +82,7 @@ const Home = ({ state }) => {
             }
         })
         const res = await data.json()
-        console.log(res)
+        console.log("home", res)
         setServices(res?.relSubscriptionServices)
         let visionCount = 0
         let processCount = 0
