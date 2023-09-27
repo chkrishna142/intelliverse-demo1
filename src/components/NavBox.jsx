@@ -35,7 +35,7 @@ const NavBox = () => {
                 >
                     <div className="bg-white w-[75vw] px-3 py-2 h-10 rounded-md shadow-md border flex items-center gap-2" >
                         <img className="h-5" src="/search.svg" />
-                        <input className="w-full focus:outline-none " placeholder="Search Intelliverse" />
+                        <input className="w-full focus:outline-none" placeholder="Search Intelliverse" />
                     </div>
                     <div className="flex gap-5 items-center ml-5">
                         <AppNav />

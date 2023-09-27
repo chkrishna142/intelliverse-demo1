@@ -43,7 +43,7 @@ const AppNav = () => {
                                     <div onClick={() => setBar(false)}>
                                         <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
-                                            <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/wm.svg" /></div>
+                                            <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/workforce_new.svg" /></div>
 
                                         </div>
                                         <div className='mt-4 flex text-[10px] justify-center h-10 w-20 '><p className='font-bold text-[#024D87] text-center'>Workforce Monitoring</p></div>
