@@ -29,6 +29,11 @@ const Home = ({ state }) => {
         deployments: 0
     })
 
+    const [workforce, setWorkforce] = useState({
+        active: false,
+        deployments: 0
+    })
+
     const [ocr, setOcr] = useState({
         active: false,
         deployments: 0
@@ -89,6 +94,7 @@ const Home = ({ state }) => {
         let bfCount = 0
         let potCount = 0
         let kilnCount = 0
+        let workforce_count = 0
         for (let i = 0; i <= res?.relSubscriptionServices.length; i++) {
             //Vision
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Particle Sizing") {
@@ -98,6 +104,10 @@ const Home = ({ state }) => {
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Colour scheme analysis") {
                 processCount = processCount + 1
                 setProcess({ active: true, deployments: processCount })
+            }
+            if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Object Monitoring") {
+                workforce_count = workforce_count + 1
+                setWorkforce({ active: true, deployments: workforce_count })
             }
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Counting and Tracking" || res?.relSubscriptionServices[i]?.serv?.servCategory === "Quality Check") {
                 qualityCount = qualityCount + 1
@@ -128,7 +138,7 @@ const Home = ({ state }) => {
                 potCount = potCount + 1
                 setPotline({ active: true, deployments: potCount })
             }
-            if (res?.relSubscriptionServices[i]?.serv?.servName === "Kiln Health Analysis" && res?.relSubscriptionServices[i]?.serv?.servParent === "Optimus") {
+            if (res?.relSubscriptionServices[i]?.serv?.servName === "Kiln Health" && res?.relSubscriptionServices[i]?.serv?.servParent === "Optimus") {
                 kilnCount = kilnCount + 1
                 setKiln({ active: true, deployments: kilnCount })
             }
@@ -177,9 +187,9 @@ const Home = ({ state }) => {
                             </div>
                             </Link>
                             <Link to="/bookdemo/workforce"><div>
-                                <div className='w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer '>
+                                <div className={workforce.active === true ? subscribed : not_subscribed}>
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/workforce_new.svg" /></div>
-                                    <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>
+                                    {workforce.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{workforce?.deployments} Services</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Workforce Monitoring</p></div>
                             </div>
