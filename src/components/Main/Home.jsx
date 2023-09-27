@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import NewUseCaseModal from './NewUseCaseModal';
 import { useWindowSize } from "@uidotdev/usehooks";
 import { baseURL } from '../..';
-import NavContext from '../NavContext';
 
 const Home = ({ state }) => {
 
     const [alert, setAlert] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const size = useWindowSize();
-    const { auth } = useContext(NavContext)
     const [services, setServices] = useState([])
 
     const subscribed = "w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer"
@@ -98,7 +96,7 @@ const Home = ({ state }) => {
                 setParticleSizing({ active: true, deployments: visionCount })
             }
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Colour scheme analysis") {
-                processCount = processCount + 1           
+                processCount = processCount + 1
                 setProcess({ active: true, deployments: processCount })
             }
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Counting and Tracking") {
@@ -112,7 +110,7 @@ const Home = ({ state }) => {
             //Optimus
             if (res?.relSubscriptionServices[i]?.serv?.servName === "Line balancing") {
                 prodCount = prodCount + 1
-                setProduction({ active: true, deployments: prodCount})
+                setProduction({ active: true, deployments: prodCount })
             }
             if (res?.relSubscriptionServices[i]?.serv?.servName === "QC Scheduling") {
                 qcCount = qcCount + 1
@@ -120,7 +118,7 @@ const Home = ({ state }) => {
             }
             if (res?.relSubscriptionServices[i]?.serv?.servName === "Manpower") {
                 manCount = manCount + 1
-                setManpower({ active: true, deployments: manCount})
+                setManpower({ active: true, deployments: manCount })
             }
             if (res?.relSubscriptionServices[i]?.serv?.servName === "Blast Furnace") {
                 bfCount = bfCount + 1
@@ -130,7 +128,7 @@ const Home = ({ state }) => {
                 potCount = potCount + 1
                 setPotline({ active: true, deployments: potCount })
             }
-            if (res?.relSubscriptionServices[i]?.serv?.servName === "Kiln Health Analysis" && res?.relSubscriptionServices[i]?.serv?.servParent === "Optimus" ) {
+            if (res?.relSubscriptionServices[i]?.serv?.servName === "Kiln Health Analysis" && res?.relSubscriptionServices[i]?.serv?.servParent === "Optimus") {
                 kilnCount = kilnCount + 1
                 setKiln({ active: true, deployments: kilnCount })
             }
@@ -153,7 +151,7 @@ const Home = ({ state }) => {
                     </div>
                     <div className=' w-full h-full mb-5'>
                         <div className='mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-8 text-sm items-center'>
-                            <Link to="/vision/Sizing" style={{ textDecoration: 'none' }}>
+                            <Link to={particleSizing.active === true ? "/vision/Sizing" : "/bookdemo/particlesizing"} style={{ textDecoration: 'none' }}>
                                 <div>
                                     <div className={particleSizing.active === true ? subscribed : not_subscribed}>
                                         <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/sizing1.svg" /></div>
@@ -162,7 +160,7 @@ const Home = ({ state }) => {
                                     <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87]'>Sizing Tool</p></div>
                                 </div>
                             </Link>
-                            <Link to="/vision/ProcessMonitoring"><div>
+                            <Link to={process.active === true ? "/vision/ProcessMonitoring" : "/bookdemo/processmonitoring"}><div>
                                 <div className={process.active === true ? subscribed : not_subscribed}>
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24  p-2' src="/qty.svg" /></div>
                                     {process.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{process?.deployments} Services</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
@@ -170,7 +168,7 @@ const Home = ({ state }) => {
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Process Monitoring</p></div>
                             </div>
                             </Link>
-                            <Link to="/vision/qualityTracking" style={{ textDecoration: 'none' }}><div>
+                            <Link to={quality.active === true ? "/vision/qualityTracking" : "/bookdemo/qualitymonitoring"} style={{ textDecoration: 'none' }}><div>
                                 <div className={quality.active === true ? subscribed : not_subscribed}>
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 p-2' src="/pm.svg" /></div>
                                     {quality.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{quality?.deployments} Services</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
@@ -227,7 +225,7 @@ const Home = ({ state }) => {
                                         </div>
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>QC Scheduling </p></div>
                                     </div>
-                                    <Link to="/Optimus/Manpower" style={{ textDecoration: 'none' }}>
+                                    <Link to={manpower.active === true ? "/Optimus/Manpower" : "/bookdemo/manpowerscheduling"} style={{ textDecoration: 'none' }}>
                                         <div>
                                             <div className={manpower.active === true ? subscribed : not_subscribed}>
                                                 <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/mp.svg" /></div>
@@ -241,7 +239,7 @@ const Home = ({ state }) => {
                             <div>
                                 <div className='mt-2 flex flex-wrap gap-8 items-center ml-4'>
                                     <div className='w-full flex justify-start text-gray-500 font-bold'>Process Optimization</div>
-                                    <Link to="/optimus/blastfurnace" style={{ textDecoration: 'none' }}>
+                                    <Link to={bf.active === true ? "/optimus/blastfurnace" : '/bookdemo/blastfurnacetool'} style={{ textDecoration: 'none' }}>
                                         <div>
                                             <div className={bf.active === true ? subscribed : not_subscribed}>
                                                 <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-0' src="/bf.svg" /></div>
@@ -250,7 +248,7 @@ const Home = ({ state }) => {
                                             <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Blast Furnace </p></div>
                                         </div>
                                     </Link>
-                                    <Link to="/bookdemo/kilntool"><div>
+                                    <Link to={kiln.active === true ? "/bookdemo/kilntool" : "/bookdemo/kilntool"}><div>
                                         <div className={kiln.active === true ? subscribed : not_subscribed}>
                                             <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-1' src="/cement_kiln.svg" /></div>
                                             {kiln.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{kiln?.deployments} Service</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
@@ -260,7 +258,7 @@ const Home = ({ state }) => {
                                     </Link>
                                     <Link to="/bookdemo/potlinetool">
                                         <div>
-                                        <div className={potline.active === true ? subscribed : not_subscribed}>
+                                            <div className={potline.active === true ? subscribed : not_subscribed}>
                                                 <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/pot.svg" /></div>
                                                 {potline.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{potline?.deployments} Service</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
                                             </div>
