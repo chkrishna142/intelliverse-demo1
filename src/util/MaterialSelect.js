@@ -5,9 +5,26 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
+const useCase = {
+  Sizing: ["Particle Sizing"],
+  ProcessMonitoring: ["Colour scheme analysis"],
+  qualityTracking: ["Counting and Tracking", "Quality Check"],
+};
+
+const categoryChecker = (val, match) => {
+  let found = false
+  match.map((item) => {
+    if (item == val) {
+      found = true
+    }
+  });
+  return found;
+};
+
 const MaterialSelect = () => {
   let param = useParams();
   const [materialData, setMaterialData] = useState({});
+  const [materials, setMaterials] = useState([]);
   const { auth } = useContext(NavContext);
 
   const apiCall = async () => {
@@ -24,7 +41,6 @@ const MaterialSelect = () => {
         },
       })
       .then((response) => {
-        
         setMaterialData(response.data);
       })
       .catch((error) => {
@@ -32,7 +48,35 @@ const MaterialSelect = () => {
       });
   };
 
+  const apiCallinit = async () => {
+    const response = await axios
+      .get(baseURL + "service/getallServ", {
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
+      .then((response) => {
+        if (response.data && response.data.length > 0) {
+          const dummy = [];
+          response.data.map((service) => {
+            if (
+              service.isActive &&
+              categoryChecker(service.servCategory, useCase[param.category])
+            ) {
+              dummy.push(service.servName.toLowerCase());
+            }
+          });
+          setMaterials(dummy);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
+    apiCallinit();
     apiCall();
   }, []);
 
@@ -43,13 +87,21 @@ const MaterialSelect = () => {
           <div className="flex justify-start mt-2 ml-3 mr-3 mb-3">
             <img className="h-6" src="/vision.svg" />
           </div>
-          <div className="flex flex-auto flex-col sm:flex-row gap-8 items-center ml-3 mb-5">
-            {Object.keys(materialData).map((x, idx) => {
+          <div className="flex flex-wrap gap-8 items-center ml-3 mb-5">
+            {materials.map((x, idx) => {
               return (
                 <MaterialCard
                   material={x}
-                  alerts={materialData[x].alerts}
-                  deployments={materialData[x].deployments}
+                  alerts={0}
+                  deployments={
+                    materialData.hasOwnProperty(
+                      x.split(" ").slice(0, 2).join("").toLowerCase()
+                    )
+                      ? materialData[
+                          x.split(" ").slice(0, 2).join("").toLowerCase()
+                        ].deployments
+                      : 0
+                  }
                 />
               );
             })}
