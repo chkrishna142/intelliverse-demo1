@@ -14,7 +14,7 @@ import MoistureChart from "../../Charts/SizingCharts/MoistureChart";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const analysisType = {
-  0: "Size Disribution",
+  0: "Size Distribution",
   1: "Color Analysis",
   2: "Moisture Analysis",
 };

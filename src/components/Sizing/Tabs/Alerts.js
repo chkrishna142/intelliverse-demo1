@@ -94,21 +94,21 @@ import {
 // ];
 const getImage = (reason) => {
   if (reason === 0) {
-    return "/SizingIcons/moisture.svg";
+    return "/SizingIcons/sizing.svg";
   } else if (reason === 2) {
     return "/SizingIcons/sizing.svg";
   } else if (reason === 1) {
-    return "/SizingIcons/color.svg";
+    return "/SizingIcons/sizing.svg";
   }
 };
 
 const getReason = (reason) => {
   if (reason === 0) {
-    return "Moisture";
+    return "Size";
   } else if (reason === 2) {
     return "Size";
   } else if (reason === 1) {
-    return "Gray";
+    return "Size";
   }
 };
 
