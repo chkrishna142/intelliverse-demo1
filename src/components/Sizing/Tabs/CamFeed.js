@@ -181,9 +181,12 @@ const CamFeed = ({ material, cameraId, clientId, callApi, initialRender }) => {
             }
           >
             <div className="flex flex-col gap-4 rounded-xl p-6 pt-4 bg-white">
-              <p className="text-[#3E3C42] text-xl font-medium">
-                Current analysis
-              </p>
+              <div className="flex justify-between items-baseline">
+                <p className="text-[#3E3C42] text-xl font-medium">
+                  Current analysis
+                </p>
+                <p className="text-[#938F96] text-xs">Last updated {new Date(camData.timestamp).toLocaleTimeString()}</p>
+              </div>
               {camData.noCoal === 0 ? (
                 <div
                   className={

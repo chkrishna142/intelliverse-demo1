@@ -2,35 +2,21 @@ import { useEffect, useState, useContext, type, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
-import PieChart from "../../Charts/SizingCharts/PieChart";
-import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
-import FloatingInput from "../SizingUtils/FloatingInput";
-import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
+// import PieChart from "../../Charts/SizingCharts/PieChart";
+import GapWidthChart from "../../Charts/QualityCharts/GapWidthChart";
+import FloatingInput from "../utils/FloatingInput";
+import HistoryAnalytics from "../Components/HistoryAnalytics";
 import { Select, Spinner } from "@chakra-ui/react";
-import BoxPlotAnalysis from "../SizingComponents/BoxPlotAnalysis";
 import axios from "axios";
-import LiquidGauge from "../../Charts/SizingCharts/LiquidGauge";
-import MoistureChart from "../../Charts/SizingCharts/MoistureChart";
-import { useWindowSize } from "@uidotdev/usehooks";
-
-const analysisType = {
-  0: "Size Distribution",
-  1: "Color Analysis",
-  2: "Moisture Analysis",
-};
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
-  const size = useWindowSize();
-  let material = param.material.toLowerCase();
-  const [sizeData, setSizeData] = useState([]);
+  const [gapData, setGapData] = useState([]);
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
-  const [selectedBasis, setSelectedBasis] = useState(0);
-  const typeRef = useRef();
-  const [avgMoisture, setAvgMoisture] = useState(0);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
+  const [avgMgw, setAvgMgw] = useState(0);
   const [selectedCam, setSelectedCam] = useState(cameraId);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
@@ -62,7 +48,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: param.material.toLowerCase(),
+      useCase: param.material.toUpperCase(),
       cameraId:
         selectedCam === "All Cams" || selectedPlant === "All Plants"
           ? "all"
@@ -71,18 +57,22 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       startDate: new Date(fromTime).getTime(),
       endDate:
         new Date(toTime).getTime() + 11 * 60 * 60 * 1000 + 59 * 60 * 1000,
-      distType: typeRef.current,
+      distType: "MGW",
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/analytics/distribution/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/qualityTracking/analytics/distribution/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
-        setSizeData(response.data);
+        setGapData(response.data);
         setSizeDataChanging(false);
       })
       .catch((error) => {
@@ -96,93 +86,25 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   useEffect(() => {
-    typeRef.current = "SIZE";
-    setSelectedBasis(0);
-    setSizeDataChanging(true);
-    apiCall();
+    handleClick();
   }, []);
 
   useEffect(() => {
-    if (selectedBasis == 0) typeRef.current = "SIZE";
-    else if (selectedBasis == 1) typeRef.current = "COLOR";
-    else typeRef.current = "MOISTURE";
-    handleClick();
-  }, [selectedBasis]);
-
-  useEffect(() => {
-    if (typeRef.current == "MOISTURE") {
-      let sum = 0;
-      let count = 0;
-      sizeData.map((i) => {
-        if (i.moisture != 0) {
-          sum += i.moisture;
-          count++;
-        }
-      });
-      let avgSum = count == 0 ? 0 : sum / count;
-      setAvgMoisture(avgSum);
-    }
-  }, [typeRef.current, sizeData]);
+    let gap = 0;
+    let count = 0;
+    gapData.map((i) => {
+      if (i.mgw != 0) {
+        gap += i.mgw;
+        count++;
+      }
+    });
+    setAvgMgw(count == 0 ? 0 : (gap / count).toFixed(2));
+  }, [gapData]);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
-        <div
-          className={`flex ${
-            material === "coal"
-              ? "justify-between"
-              : "justify-start xl:justify-end"
-          } items-center overflow-x-auto h-[60px]`}
-        >
-          {material === "coal" && (
-            <div className="flex gap-6 text-[#49454F] text-xs lg:text-base min-w-[445px]">
-              <div
-                className={`p-3 flex items-center gap-1 ${
-                  selectedBasis == 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-                }`}
-              >
-                <input
-                  value={0}
-                  checked = {selectedBasis == 0}
-                  onChange={(e) => setSelectedBasis(e.target.value)}
-                  type="radio"
-                  name="freq"
-                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-                />
-                <p>Size distribution</p>
-              </div>
-              <div
-                className={`p-3 flex items-center gap-1 ${
-                  selectedBasis == 1 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-                }`}
-              >
-                <input
-                  value={1}
-                  checked = {selectedBasis == 1}
-                  onChange={(e) => setSelectedBasis(e.target.value)}
-                  type="radio"
-                  name="freq"
-                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-                />
-                <p>Colour Analysis</p>
-              </div>
-              <div
-                className={`p-3 flex items-center gap-1 ${
-                  selectedBasis == 2 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-                }`}
-              >
-                <input
-                  value={2}
-                  checked = {selectedBasis == 2}
-                  onChange={(e) => setSelectedBasis(e.target.value)}
-                  type="radio"
-                  name="freq"
-                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-                />
-                <p>Moisture analysis</p>
-              </div>
-            </div>
-          )}
+        <div className="flex justify-start xl:justify-end items-center overflow-x-auto h-[60px]">
           <div className="flex items-center gap-2">
             <div className="min-w-[110px]">
               <Select
@@ -280,45 +202,20 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </button>
           </div>
         </div>
-        <p className="text-[#3E3C42] font-medium text-xl">{analysisType[selectedBasis]}</p>
-        {sizeData.length != 0 && (
+        <p className="text-[#3E3C42] font-medium text-xl">Mean gap widths</p>
+        {gapData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
-            <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
-              {typeRef.current == "MOISTURE" ? (
-                <LiquidGauge
-                  moisture={avgMoisture}
-                  r={Math.max(Math.ceil((size.width * 20) / 200), 80)}
-                />
-              ) : (
-                <PieChart
-                  data={sizeData}
-                  type={typeRef.current.toLowerCase()}
-                />
-              )}
+            <div className="min-w-[240px] w-[25vw]">
+              <div className="p-1 flex items-center text-center justify-center text-2xl text-blue-800 font-bold w-full h-[25vh] bg-blue-100 rounded-xl shadow-md">
+                Avg mean gap width: {avgMgw}
+              </div>
             </div>
-            <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
-              {typeRef.current == "MOISTURE" ? (
-                <MoistureChart data={sizeData} />
-              ) : (
-                <StackBarChart
-                  data={sizeData}
-                  type={typeRef.current.toLowerCase()}
-                />
-              )}
+            <div className="h-[35vh] min-w-[680px] flex-grow">
+              <GapWidthChart data={gapData} />
             </div>
           </div>
         )}
       </div>
-      {(disable || Object.keys(plantCamMap).length != 0) && (
-        <BoxPlotAnalysis
-          plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
-          cameraId={
-            disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
-          }
-          disable={disable}
-          plantCamMap={plantCamMap}
-        />
-      )}
       {(disable || Object.keys(plantCamMap).length != 0) && (
         <HistoryAnalytics
           plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
