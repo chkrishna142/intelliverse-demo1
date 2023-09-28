@@ -16,7 +16,7 @@ const AiAdvisor = () => {
     const [response, setResponse] = useState([])
     const [typing, setTyping] = useState(false)
     const [text, setText] = useState("")
-    const [credits, setCredits] = useState(0)
+    const [credits, setCredits] = useState(5)
 
     const callChatGpt = async (ask) => {
         setTyping(true)
@@ -80,7 +80,7 @@ const AiAdvisor = () => {
                                     {index % 2 !== 0 ? <div className='col-span-1'>
                                         <img className='md:h-[8vh] md:w-[3vw] md:mt-0 mt-4 ml-4' src="/doc.svg" />
                                     </div> : <div className='col-span-1'>
-                                        <div className='ml-4 mt-3 h-[5vh] w-[3vw]  px-4 py-4 border bg-[#FAFAFA] flex justify-center items-center font-bold rounded-md'>A</div>
+                                        <div className='ml-4 mt-3 h-[5vh] w-[3vw]  px-4 py-4 border bg-[#FAFAFA] flex justify-center items-center font-bold rounded-md'>Q</div>
                                     </div>}
                                     {index % 2 !== 0 ? <div key={index} className=' col-span-11 mt-[3vh] mb-[3vh] md:-ml-8 ml-8 mr-6 text-gray-500 text-sm'>
                                         <Typewriter text={item} delay={10} infinite />
@@ -126,7 +126,7 @@ const AiAdvisor = () => {
                     <div className='flex justify-between items-center'>
                         {size.width > 420 ? <p className='pt-1 text-[10px] ml-2 text-gray-500 md:mr-0 mr-2'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p> : null}
                         <div className='flex items-center gap-4 text-xs mt-1 mr-5'>
-                            <p className={credits <= 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credit Remaining</p>
+                            <p className={credits < 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credits Remaining</p>
                             <Link to="/community/advisor/buycredits"><div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div></Link>
                         </div>
                     </div>
