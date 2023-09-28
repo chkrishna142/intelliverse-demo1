@@ -25,7 +25,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           </div>
         </div>
         {data.noCoal !== 1 ? (
-          <div className="flex flex-col h-full w-[30vw] items-center gap-4">
+          <div className="flex flex-col h-full w-full sm:w-[60vw] md:w-[40vw] lg:w-[30vw] items-center gap-4">
             <p className="text-xs sm:text-base text-black self-start">
               Vertical Gaps
             </p>

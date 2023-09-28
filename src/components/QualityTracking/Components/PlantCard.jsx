@@ -1,5 +1,6 @@
 import CamCard from "./CamCard";
 import { useState } from "react";
+import DetailModal from "./DetailModal";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -25,8 +26,8 @@ const PlantCard = ({ PlantName, CamData }) => {
   }, 0);
   return (
     <div
-      className={`flex flex-col bg-white rounded-xl pt-4 gap-1 col-span-${
-        Object.keys(CamData).length > 1 ? "2" : "1"
+      className={`flex flex-col bg-white rounded-xl pt-4 gap-1 col-span-2 ${
+        Object.keys(CamData).length > 1 ? "xl:col-span-2" : "xl:col-span-1"
       }`}
     >
       <div className="flex justify-between pl-6 pr-6">
@@ -42,8 +43,14 @@ const PlantCard = ({ PlantName, CamData }) => {
             >
               See Detail
             </p>
-            {/* {openModal && (
-            )} */}
+            {openModal && (
+              <DetailModal
+                openModal={openModal}
+                closeModal={() => setOpenModal(false)}
+                data={totalData}
+                index = {0}
+              />
+            )}
           </div>
         )}
       </div>

@@ -5,6 +5,7 @@ import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import Paginator from "../utils/Paginator";
+import DetailModal from "../Components/DetailModal";
 
 import {
   Select,
@@ -348,7 +349,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           </TableContainer>
         )}
       </div>
-      {/* {openModal && (
+      {openModal && (
         <DetailModal
           openModal={openModal}
           closeModal={() => setOpenModal(false)}
@@ -356,7 +357,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           index={indexRef.current}
           PlantName={selectedPlant}
         />
-      )} */}
+      )}
     </div>
   );
 };
