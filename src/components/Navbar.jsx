@@ -1,8 +1,7 @@
-import { Flex, Heading, Image } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import React from "react";
 import { useQuery } from "../util/util";
 import { useWindowSize } from "@uidotdev/usehooks";
-import Vision from "./Navbar.svg";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {

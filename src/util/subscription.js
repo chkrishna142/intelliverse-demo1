@@ -1,7 +1,7 @@
 const subscription = {
     vision:{
         process:{
-            textt: "Our Process Monitoring tool has helped some of the largest manufacturers in the world optimize operations and improve quality. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.",
+            text: "Our Process Monitoring tool has helped some of the largest manufacturers in the world optimize operations and improve quality. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.",
             demo: "https://www.youtube.com/watch?v=3e-WzFAcTGE"
         },
         quality:{
@@ -11,7 +11,6 @@ const subscription = {
         particle:{
             text: "Our Workforce Monitoring tool has helped some of the largest manufacturers in the world monitor worker safety and improve protocol compliance. Book a call with our team for an in-depth demo, customisation plans, and answer to your questions.",
             demo:'https://drive.google.com/file/d/1Iv1HML4Jsoos9eOzXQ1JXPzZQA4Wo2cl/view'
-
         }
     }
 

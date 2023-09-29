@@ -10,7 +10,6 @@ import AppNav from "./Main/AppNav";
 
 const NavBox = () => {
     const size = useWindowSize();
-    //const plant_name = query.get("plant_name");
     const { setLogin } = useContext(NavContext)
 
     return (

@@ -97,10 +97,16 @@ const Sidebar = () => {
                   </div>
                   </Link>
                   <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-12 flex items-center  font-light">
-                    Tracking Tool
+                    Process Monitoring
+                  </div>
+                  <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
+                    Quality Tracking / Monitoring
                   </div>
                   <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-12 flex items-center  font-light">
                     Workforce Monitoring
+                  </div>
+                  <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
+                    Automate Data Digitization
                   </div>
                 </AccordionPanel>
               </AccordionItem>
@@ -128,7 +134,6 @@ const Sidebar = () => {
                     Blast Furnace
                   </div>
                   </Link>
-
                   <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Kiln
                   </div>
@@ -140,14 +145,14 @@ const Sidebar = () => {
               <AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/community"><AccordionButton _hover={false} className="flex justify-center items-center ">
-                  <div className={location.pathname.includes("/community") ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
-                    <div className="w-full flex justify-center"><img className={location.pathname.includes("/community") ? "w-7 pb-2" : "w-7 pb-2"} src={location.pathname.includes("/community") ? "/comm_selected.svg" : "/comm.svg"} alt="home logo" /></div>
-                    <p className={location.pathname.includes("/community") ? "font-bold text-xs text-[#024D87] -mt-1" : "font-light text-xs -mt-1"}>Community</p>
+                    <div className={location.pathname.includes("/community") ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]" : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"}>
+                      <div className="w-full flex justify-center"><img className={location.pathname.includes("/community") ? "w-7 pb-2" : "w-7 pb-2"} src={location.pathname.includes("/community") ? "/comm_selected.svg" : "/comm.svg"} alt="home logo" /></div>
+                      <p className={location.pathname.includes("/community") ? "font-bold text-xs text-[#024D87] -mt-1" : "font-light text-xs -mt-1"}>Community</p>
                     </div>
                   </AccordionButton>
                   </Link>
                 </h2>
-                <AccordionPanel pb={0} className="-mt-2">     
+                <AccordionPanel pb={0} className="-mt-2">
                   <Link to="/community/askanexpert"><div className={location.pathname.includes("/askanexpert") ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md" : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"}>
                     Ask An Expert
                   </div>
@@ -159,7 +164,7 @@ const Sidebar = () => {
                   <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Community
                   </div>
-                  </AccordionPanel>
+                </AccordionPanel>
               </AccordionItem>
             </Accordion>
             {/* <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
