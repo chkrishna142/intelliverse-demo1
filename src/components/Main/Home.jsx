@@ -248,7 +248,7 @@ const Home = ({ state }) => {
                                             <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Blast Furnace </p></div>
                                         </div>
                                     </Link>
-                                    <Link to={kiln.active === true ? "/bookdemo/kilntool" : "/bookdemo/kilntool"}><div>
+                                    <Link to={kiln.active === true ? "" : "/bookdemo/kilntool"}><div>
                                         <div className={kiln.active === true ? subscribed : not_subscribed}>
                                             <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-1' src="/cement_kiln.svg" /></div>
                                             {kiln.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{kiln?.deployments} Service</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
@@ -256,7 +256,7 @@ const Home = ({ state }) => {
                                         <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Kiln </p></div>
                                     </div>
                                     </Link>
-                                    <Link to="/bookdemo/potlinetool">
+                                    <Link to={potline.active === true ? "":"/bookdemo/potlinetool"}>
                                         <div>
                                             <div className={potline.active === true ? subscribed : not_subscribed}>
                                                 <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/pot.svg" /></div>
