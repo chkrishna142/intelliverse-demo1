@@ -16,7 +16,6 @@ const Typewriter = ({ text, delay }) => {
         }
       }, [currentIndex, delay, text]);
 
-
     return (
         <span>{currentText}</span>
     )

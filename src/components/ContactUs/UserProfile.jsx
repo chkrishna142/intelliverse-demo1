@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 import { baseURL } from "../..";
 const UserProfile = () => {
 
-  const [auth, setAuth] = useState()
   //Update states
   const [fullName, setFullName] = useState()
   const [jobTitle, setJobTitle] = useState()
@@ -26,17 +25,16 @@ const UserProfile = () => {
   const [success, setSuccess] = useState(false)
 
   useEffect(() => {
-    setAuth(localStorage.getItem('auth_token'))
-    getProducts(localStorage.getItem('auth_token'))
+    getProducts()
   }, [])
 
-  const getProducts = async (auth) => {
+  const getProducts = async () => {
     try {
       const data = await fetch(baseURL + 'user', {
         method: 'GET',
         headers: {
           "Content-Type": "application/json",
-          "X-Auth-Token": auth
+          "X-Auth-Token": localStorage.getItem('auth_token')
         },
       })
       const res = await data.json()
@@ -54,7 +52,7 @@ const UserProfile = () => {
   const updateProfile = async () => {
     setSpinner(true)
     var myHeaders = new Headers();
-    myHeaders.append("X-Auth-Token", auth);
+    myHeaders.append("X-Auth-Token", localStorage.getItem('auth_token'));
     myHeaders.append("Content-Type", "application/json");
     var raw = JSON.stringify({
       "fullname": fullName,
@@ -75,7 +73,7 @@ const UserProfile = () => {
     const res = await data.json()
     setSpinner(false)
     setSuccess(true)
-    getProducts(auth)
+    getProducts()
   }
 
   const imageUpload = async () => {
@@ -84,7 +82,7 @@ const UserProfile = () => {
     const call = await fetch(`${baseURL}user/uploadimage`, {
       method: "POST",
       headers: {
-        "X-Auth-Token": auth
+        "X-Auth-Token": localStorage.getItem('auth_token')
       },
       body: data
     })
@@ -92,7 +90,7 @@ const UserProfile = () => {
   }
 
   const selectPicture = (event) => {
-    console.log(event.target.files[0])
+    // console.log(event.target.files[0])
     var profile = event.target.files[0]
     setSendImage(profile)
     setImageUrl(URL.createObjectURL(profile))
@@ -106,12 +104,11 @@ const UserProfile = () => {
     }
   }, [success])
 
-
   return (
     <>
       <Flex
         padding={"5px"}
-        marginTop={"10px"}
+        marginTop={"3vh"}
         className="shadow-lg mt-4 border rounded-xl"
         bg="#FFFFFF"
       >
@@ -132,7 +129,7 @@ const UserProfile = () => {
             Profile Management
           </Heading>
           <Box position={"absolute"} top={"30%"} left={"15%"}>
-            <Img src="/profile_management.svg" />
+            <Img src="/profile_management.svg" alt='profile' />
           </Box>
         </VStack>
 
@@ -145,7 +142,7 @@ const UserProfile = () => {
           flexDirection={"column"}
         >
           <div className="w-full flex justify-center">
-            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null  ? "/profile_sample.svg" : imageUrl} />
+            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null  ? "/profile_sample.svg" : imageUrl}  />
             <span className="bg-[#034D87] h-10 w-10 rounded-full absolute mt-32 ml-28 flex justify-center items-center cursor-pointer">
               <img className="absolute cursor-pointer" src="pencil.svg" alt="pencil" />
               <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} />
@@ -179,7 +176,6 @@ const UserProfile = () => {
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Department</div>
                   <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
                     <input value={department} onChange={(e) => setDepartment(e.target.value)} className="w-full focus:outline-none pl-2" placeholder="Enter Your Department" />
-
                   </div>
                 </div>
                 {/* <Input placeholder="Enter Your Name" /> */}
@@ -189,12 +185,10 @@ const UserProfile = () => {
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Location</div>
                   <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
                     <input value={location} onChange={(e) => setLocation(e.target.value)} className="w-full focus:outline-none pl-2" placeholder="Enter Your Location" />
-
                   </div>
                 </div>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
-
             </Flex>
             <div className="grid grid-cols-2 gap-9">
               <FormControl>
@@ -202,7 +196,6 @@ const UserProfile = () => {
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Email</div>
                   <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center bg-gray-100">
                     <input disabled value={email} className="w-full focus:outline-none pl-2" placeholder="abc@email.com" />
-
                   </div>
                 </div>
                 {/* <Input placeholder="Enter Your Name" /> */}

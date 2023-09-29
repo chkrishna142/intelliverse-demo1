@@ -35,15 +35,6 @@ function App() {
   const [login, setLogin] = useState(localStorage.getItem("logged_in"));  // used on Login.jsx to set login provider to true
   const [auth, setAuth] = useState(localStorage.getItem('auth_token')) // used on Login.jsx to set auth provider to true
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("logged_in") && localStorage.getItem('auth_token')) {
-  //     setLogin(true);
-  //     setAuth(localStorage.getItem('auth_token'))
-  //   } else {
-  //     setLogin(false);
-  //   }
-  // }, [login]);
-
   useEffect(() => {
     setAuth(localStorage.getItem('auth_token'))
   }, [login]);

@@ -10,7 +10,7 @@ const Home = ({ state }) => {
     const [isOpen, setIsOpen] = useState(false)
     const size = useWindowSize();
     const [services, setServices] = useState([])
-
+    
     const subscribed = "w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer"
     const not_subscribed = "w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer"
 
@@ -82,19 +82,9 @@ const Home = ({ state }) => {
             }
         })
         const res = await data.json()
-        console.log("home", res)
         setServices(res?.relSubscriptionServices)
-        let visionCount = 0
-        let processCount = 0
-        let qualityCount = 0
-        let ocrCount = 0
-        let prodCount = 0
-        let qcCount = 0
-        let manCount = 0
-        let bfCount = 0
-        let potCount = 0
-        let kilnCount = 0
-        let workforce_count = 0
+        let visionCount, processCount, qualityCount, ocrCount, prodCount, qcCount, manCount, bfCount, potCount, kilnCount, workforce_count;
+        visionCount = processCount = qualityCount = ocrCount = prodCount = qcCount = manCount = bfCount = potCount = kilnCount = workforce_count = 0; 
         for (let i = 0; i <= res?.relSubscriptionServices.length; i++) {
             //Vision
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Particle Sizing") {
