@@ -9,6 +9,7 @@ import SingleCam from './components/Sizing/SingleCam';
 import Kiln from "./components/Kiln/Kiln";
 import Manpower from './components/Manpower/Manpower';
 import Quality from './components/QualityTracking/Quality';
+import QualitySingleCam from './components/QualityTracking/QualitySingleCam';
 import Login from './components/Auth/Login';
 import Sidebar from './components/Sidebar/Sidebar';
 import AiAdvisor from './components/Main/AIAdvisor';
@@ -81,6 +82,7 @@ function App() {
                     {/*Quality Tracking pages */}
                     <Route path="/vision/qualityTracking/:material" element={<ClientSelect />} />
                     <Route path="/vision/qualityTracking/:material/:clientId" element={<Quality />} />
+                    <Route path="/vision/qualityTracking/:material/:clientId/:plantId/:cameraId" element={<QualitySingleCam />} />
                     {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
                     {/* Profile Pages */}

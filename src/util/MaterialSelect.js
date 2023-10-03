@@ -80,7 +80,7 @@ const MaterialSelect = () => {
   useEffect(() => {
     apiCallinit();
     apiCall();
-  }, []);
+  }, [param.category]);
 
   return (
     <div className="h-full">

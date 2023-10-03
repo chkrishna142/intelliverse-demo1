@@ -205,7 +205,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
         <p className="text-[#3E3C42] font-medium text-xl">Mean gap widths</p>
         {gapData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
-            <div className="min-w-[240px] w-[25vw]">
+            <div className="min-w-[190px] w-[15vw]">
               <div className="p-1 flex items-center text-center justify-center text-2xl text-blue-800 font-bold w-full h-[25vh] bg-blue-100 rounded-xl shadow-md">
                 Avg mean gap width: {avgMgw}
               </div>
