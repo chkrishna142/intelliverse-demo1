@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";
-import FloatingInput from "../utils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { baseURL } from "../../../index";
 import axios from "axios";
 import DetailModal from "./DetailModal";
-import Paginator from "../utils/Paginator";
+import Paginator from "../../../util/VisionUtils/Paginator";
 import {
   Table,
   Td,

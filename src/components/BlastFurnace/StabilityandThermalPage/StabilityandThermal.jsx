@@ -14,7 +14,7 @@ import ThermalIndicator from "./ThermalIndicator";
 import Recommendations from "./Recommendations";
 import Cohesivezone from "./Cohesivezone";
 import { useParams } from "react-router-dom";
-import Timer from "../../Sizing/SizingUtils/Timer";
+import Timer from "../../../util/VisionUtils/Timer";
 import { BASE_URL_FOR_BF } from "../BF_Components/urlforbf";
 
 const StabilityandThermal = () => {

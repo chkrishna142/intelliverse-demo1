@@ -1,5 +1,5 @@
 import { Select, Input, Spinner } from "@chakra-ui/react";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { useState, useContext } from "react";
 import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";

@@ -1,5 +1,5 @@
 import { saveAs } from "file-saver";
-import Paginator from "../SizingUtils/Paginator";
+import Paginator from "../../../util/VisionUtils/Paginator";
 import { useState } from "react";
 
 const Capitalize = (str) => {

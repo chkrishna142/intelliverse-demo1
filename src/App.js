@@ -7,6 +7,7 @@ import Sizing from "./components/Sizing/Sizing"
 import MaterialSelect from './util/MaterialSelect';
 import SingleCam from './components/Sizing/SingleCam';
 import Kiln from "./components/Kiln/Kiln";
+import KilnSingleCam from './components/Kiln/KilnSingleCam';
 import Manpower from './components/Manpower/Manpower';
 import Quality from './components/QualityTracking/Quality';
 import QualitySingleCam from './components/QualityTracking/QualitySingleCam';
@@ -79,6 +80,7 @@ function App() {
                     {/*Process and Kiln Pages */}
                     <Route path="/vision/ProcessMonitoring/:material" element={<ClientSelect />} />
                     <Route path="/vision/ProcessMonitoring/:material/:clientId" element={<Kiln />} />
+                    <Route path="/vision/ProcessMonitoring/:material/:clientId/:plantId/:cameraId" element={<KilnSingleCam />} />
                     {/*Quality Tracking pages */}
                     <Route path="/vision/qualityTracking/:material" element={<ClientSelect />} />
                     <Route path="/vision/qualityTracking/:material/:clientId" element={<Quality />} />

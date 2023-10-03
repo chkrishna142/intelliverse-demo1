@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import BoxPlotChart from "../../Charts/SizingCharts/BoxPlotChart";
 import axios from "axios";
 import { Select, Spinner } from "@chakra-ui/react";
