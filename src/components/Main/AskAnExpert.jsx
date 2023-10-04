@@ -5,15 +5,20 @@ import NavContext from '../NavContext';
 import { baseURL } from '../..';
 import { Spinner } from '@chakra-ui/react';
 import axios from 'axios';
+import { useWindowSize } from "@uidotdev/usehooks";
+import { getQuestionsCredit } from '../../util/utilFunctions';
 
 const AskAnExpert = () => {
 
     const { auth } = useContext(NavContext)
+    const size = useWindowSize()
 
     const [submitted, setSubmitted] = useState(false)
     const [selected, setSelected] = useState(false)
     const [isOpen, setIsOpen] = useState(false)
     const [expert, setExpert] = useState(0)
+    const [credits, setCredits] = useState()
+    const [disabled, setDisabled] = useState(true)
 
     const [expertDetails, setExpertDetails] = useState([])
     const [question, setQuestion] = useState("")
@@ -49,6 +54,28 @@ const AskAnExpert = () => {
             setLoader(false)
         } else {
             setLoader(false)
+        }
+    }
+
+    const getBalance = async () => {
+        try {
+            const data = await fetch(baseURL + 'user/balance/expert', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-Token": auth
+                },
+            })
+            const res = await data.json()
+            if (data.status !== 400) {
+                setCredits(getQuestionsCredit(res, setDisabled))
+            }
+            else if (data.status === 400) {
+                setCredits(0)
+                setDisabled(true)
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -106,6 +133,7 @@ const AskAnExpert = () => {
 
     useEffect(() => {
         getData()
+        getBalance()
     }, [])
 
     useEffect(() => {
@@ -162,7 +190,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700 w-5/6 mb-7'>Speciality: Chemistry, Data, Al, Technology</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(0) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val1} onChange={() => { setVal1(!val1); setExpertId(1) }} className='mr-5' type='radio' />
+                                        <input disabled={disabled} name="firstchoice" value={val1} onChange={() => { setVal1(!val1); setExpertId(1) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +204,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3'>Speciality: Automobile, Food & Beverage, Apparel</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(1) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val2} onChange={() => { setVal2(!val2); setExpertId(3) }} className='mr-5' type='radio' />
+                                        <input disabled={disabled} name="firstchoice" value={val2} onChange={() => { setVal2(!val2); setExpertId(3) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +218,7 @@ const AskAnExpert = () => {
                                     <p className='w-full text-sm mt-2 text-gray-700 w-5/6 md:ml-0 ml-3'>Speciality: Maintenance methodology, Ironmaking & Steel, Cape & Opex modeling</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(2) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val3} onChange={() => { setVal3(!val3); setExpertId(2) }} className='mr-5' type='radio' />
+                                        <input disabled={disabled} name="firstchoice" value={val3} onChange={() => { setVal3(!val3); setExpertId(2) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +232,7 @@ const AskAnExpert = () => {
                                     <p className='w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3'>Speciality: Pharma, Lifescience</p>
                                     <div className='w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between'>
                                         <p onClick={() => { setIsOpen(true); setExpert(3) }} className='cursor-pointer text-sm md:ml-0 ml-3'>Read More</p>
-                                        <input name="firstchoice" value={val4} onChange={() => { setVal4(!val4); setExpertId(4) }} className='mr-5' type='radio' />
+                                        <input disabled={disabled} name="firstchoice" value={val4} onChange={() => { setVal4(!val4); setExpertId(4) }} className='mr-5' type='radio' />
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +246,7 @@ const AskAnExpert = () => {
                                 {/* <p>{file ? `File name: ${file[0].name}` : null}</p> */}
                                 <textarea value={question} onChange={(e) => { setQuestion(e.target.value) }} placeholder='Type your query here...' className='w-full px-2 py-2' />
                                 <div className='flex items-center gap-2'>
-                                    
+
                                     <label for="image">
                                         <input onChange={(e) => selectPicture(e)} type="file" name="image" id="image" style={{ display: "none" }} />
                                         <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
@@ -238,6 +266,13 @@ const AskAnExpert = () => {
                     </div> : null}
             </div>
             <ExpertReadMore isOpen={isOpen} onClose={() => setIsOpen(false)} expert={expert} />
+            <div className='flex justify-between items-center'>
+                <div></div>
+                <div className='flex items-center gap-4 text-xs mt-0 mr-2'>
+                    <p className={credits < 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credits Remaining</p>
+                    <Link to="/community/advisor/buycredits"><div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div></Link>
+                </div>
+            </div>
         </div>
     );
 };

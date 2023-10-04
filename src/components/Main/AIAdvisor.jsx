@@ -4,6 +4,7 @@ import NavContext from '../NavContext';
 import Typewriter from './Typewriter';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from "@uidotdev/usehooks";
+import { getCreditsRemaining } from '../../util/utilFunctions';
 
 
 const AiAdvisor = () => {
@@ -16,7 +17,28 @@ const AiAdvisor = () => {
     const [response, setResponse] = useState([])
     const [typing, setTyping] = useState(false)
     const [text, setText] = useState("")
-    const [credits, setCredits] = useState(5)
+    const [credits, setCredits] = useState()
+
+    useEffect(() => {
+        getBalance()
+    }, [])
+
+    const getBalance = async () => {
+        try {
+            const data = await fetch(baseURL + 'user/balance/gpt', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-Token": auth
+                },
+            })
+            const res = await data.json()
+            setCredits(getCreditsRemaining(res))
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const callChatGpt = async (ask) => {
         setTyping(true)
