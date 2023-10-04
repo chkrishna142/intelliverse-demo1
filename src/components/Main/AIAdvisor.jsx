@@ -34,7 +34,6 @@ const AiAdvisor = () => {
             })
             const res = await data.json()
             setCredits(getCreditsRemaining(res))
-
         } catch (error) {
             console.log(error)
         }
@@ -95,7 +94,7 @@ const AiAdvisor = () => {
                         </div>
                     </div>
                 </div> :
-                    <div className='w-full h-[60vh] overflow-y-scroll'>
+                    <div className='w-full md:h-[60vh] h-[55vh] overflow-y-scroll'>
                         {response?.map((item, index) => {
                             return (<div className='mt-[1vh] overflow-y-scroll border rounded-md'>
                                 <div className='grid grid-cols-12'>
@@ -139,7 +138,7 @@ const AiAdvisor = () => {
                     </div>
                 </div> : null}
                 <div className='fixed md:bottom-8 bottom-20'>
-                    <div className='rounded-md border border-[#3A74CA] md:w-[88.5vw] w-[95.5vw] h-16 bg-white w-full px-5 py-2 flex gap-2 items-center'>
+                    <div className='rounded-md border border-[#3A74CA] md:w-[88.5vw] w-[96vw] h-16 bg-white w-full px-5 py-2 flex gap-2 items-center'>
                         <input value={text} onKeyDown={handleKeyDown} onChange={(e) => setText(e.target.value)} className='w-full px-2 py-2 select-none' placeholder='Send a message' />
                         <div className='cursor-pointer' onClick={() => callChatGpt(text)}>
                             <img src="/send.svg" />
@@ -147,7 +146,7 @@ const AiAdvisor = () => {
                     </div>
                     <div className='flex justify-between items-center'>
                         {size.width > 420 ? <p className='pt-1 text-[10px] ml-2 text-gray-500 md:mr-0 mr-2'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p> : null}
-                        <div className='flex items-center gap-4 text-xs mt-1 mr-5'>
+                        <div className='flex items-center gap-4 text-xs mt-3 mr-5 mb-4'>
                             <p className={credits < 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credits Remaining</p>
                             <Link to="/community/advisor/buycredits"><div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div></Link>
                         </div>

@@ -266,7 +266,7 @@ const AskAnExpert = () => {
                     </div> : null}
             </div>
             <ExpertReadMore isOpen={isOpen} onClose={() => setIsOpen(false)} expert={expert} />
-            <div className='flex justify-between items-center'>
+            <div className='flex justify-between items-center md:mb-0 mb-20'>
                 <div></div>
                 <div className='flex items-center gap-4 text-xs mt-0 mr-2'>
                     <p className={credits < 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credits Remaining</p>

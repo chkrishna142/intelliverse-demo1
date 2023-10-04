@@ -43,6 +43,7 @@ body {
   display: flex;
   height: 17px;
 }
+
 .typing .dot {
   animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
   background-color: #024D87 ;
