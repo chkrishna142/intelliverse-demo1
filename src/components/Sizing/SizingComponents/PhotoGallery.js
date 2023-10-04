@@ -4,7 +4,7 @@ import NavContext from "../../NavContext";
 import LibraryGrid from "./LibraryGrid";
 import { Select, Spinner } from "@chakra-ui/react";
 import { baseURL } from "../../../index";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import axios from "axios";
 
 const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {

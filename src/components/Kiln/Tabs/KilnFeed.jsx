@@ -264,7 +264,7 @@ const KilnFeed = ({ material, clientId, setPlantCamMap, Map }) => {
       material: material,
     });
     const response = await axios
-      .get(baseURL + "vision/processMonitoring/clientPlants/", {
+      .get(baseURL + "vision/processMonitoring/feed/overview/", {
         params: requestData,
         credentials: "same-origin",
         headers: {

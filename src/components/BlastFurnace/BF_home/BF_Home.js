@@ -7,7 +7,7 @@ import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import BFHomeComponent from "../BF_Components/BFHomeComponent";
 import Serverdown from "../BF_Components/Serverdown";
-import Timer from "../../Sizing/SizingUtils/Timer";
+import Timer from "../../../util/VisionUtils/Timer";
 
 const BF_Home = ({
   fetcheddata,

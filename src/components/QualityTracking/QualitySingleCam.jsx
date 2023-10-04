@@ -9,7 +9,7 @@ import FeedLibrary from "./Tabs/FeedLibrary";
 import Report from "./Tabs/Report";
 import CamFeed from "./Tabs/CamFeed";
 import Analytics from "./Tabs/Analytics";
-import Timer from "./utils/Timer";
+import Timer from "../../util/VisionUtils/Timer";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const Capitalize = (str) => {

@@ -7,7 +7,7 @@ const GapWidthChart = ({ data }) => {
   const times = [];
   let dummy = [];
   data.map((i) => {
-    if(i.moisture != 0){
+    if(i.mgw != 0){
       dummy.push(i.mgw)
     }else dummy.push(null);
     times.push(i.timestamp);

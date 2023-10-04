@@ -1,16 +1,28 @@
 import ReactApexChart from "react-apexcharts";
 
-const SpiderChart = ({points,labels}) => {
-
+const SpiderChart = ({ points, labels }) => {
   const series = [
     {
-      name: "Series 1",
+      name: "Gap width",
       data: points,
     },
   ];
   const options = {
     chart: {
       type: "radar",
+    },
+    tooltip: {
+      x: {
+        show: true,
+        formatter: function (value) {
+          return "Partition " + value;
+        },
+      },
+      theme: "dark",
+      fillSeriesColor: true,
+      style: {
+        fontSize: "16px",
+      },
     },
     xaxis: {
       categories: labels,

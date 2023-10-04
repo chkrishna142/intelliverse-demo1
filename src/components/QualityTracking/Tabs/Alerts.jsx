@@ -1,10 +1,10 @@
-import FloatingInput from "../utils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
-import Paginator from "../utils/Paginator";
+import Paginator from "../../../util/VisionUtils/Paginator";
 import DetailModal from "../Components/DetailModal";
 
 import {
@@ -304,17 +304,17 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       key={index}
                       className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                     >
-                      <Td className="cursor-pointer">
+                      <Td className="">
                         {String(item["idx"]).padStart(2, "0")}
                       </Td>
-                      <Td className="cursor-pointer">{item.plantName}</Td>
-                      <Td className="cursor-pointer">{item.cameraId}</Td>
-                      <Td className="cursor-pointer">
+                      <Td className="">{item.plantName}</Td>
+                      <Td className="">{item.cameraId}</Td>
+                      <Td className="">
                         {new Date(item.timestamp).toLocaleDateString() +
                           " " +
                           new Date(item.timestamp).toLocaleTimeString()}
                       </Td>
-                      <Td className="cursor-pointer">
+                      <Td className="">
                         {/* <Flex gap="1rem" align="center">
                           <div className="flex flex-col justify-center items-center">
                             <Image
@@ -327,10 +327,10 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                         </Flex>{" "} */}
                         {item.type}
                       </Td>
-                      <Td className="cursor-pointer">
+                      <Td className="">
                         {item.mgw}
                       </Td>
-                      <Td className="cursor-pointer">
+                      <Td className="">
                         {String(item.avgGapWidths)}
                       </Td>
                       <Td>

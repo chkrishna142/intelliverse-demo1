@@ -1,9 +1,9 @@
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { useState, useEffect, useContext } from "react";
 import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ExlCsvDownload from "../SizingUtils/ExlCsvDownload";
+import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import NavContext from "../../NavContext";
 import {
   Table,

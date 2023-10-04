@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useWindowSize } from "@uidotdev/usehooks";
 import KilnFeed from "./Tabs/KilnFeed";
-import KilnCamFeed from "./Tabs/KilnCamFeed";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -94,7 +93,6 @@ const Kiln = () => {
               setPlantCamMap={setPlantCamMap}
               Map = {plantCamMap}
             />
-            {/* <KilnCamFeed/> */}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0"></TabPanel>
           <TabPanel className="!pl-0 !pr-0"></TabPanel>

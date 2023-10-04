@@ -4,7 +4,7 @@ import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import PieChart from "../../Charts/SizingCharts/PieChart";
 import StackBarChart from "../../Charts/SizingCharts/StackBarChart";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import HistoryAnalytics from "../SizingComponents/HistoryAnalytics";
 import { Select, Spinner } from "@chakra-ui/react";
 import BoxPlotAnalysis from "../SizingComponents/BoxPlotAnalysis";
