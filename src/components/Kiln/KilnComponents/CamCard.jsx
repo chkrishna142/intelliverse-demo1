@@ -4,6 +4,7 @@ import KilnHealthCard from "../../Charts/KilnCharts/kilnHealthCard";
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();
   let material = param.material.toLowerCase();
+  // console.log(data,'cam data')
   return (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6">
       {alert !== 0 && (
@@ -29,7 +30,11 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
             <p className="text-xs sm:text-base text-black self-start">
               Health Status
             </p>
-            <KilnHealthCard index={data.index} health={data.tag.toLowerCase()}/>
+            <KilnHealthCard
+              dusty={data.dusty}
+              hot={data.hot}
+              health={data.tag.toLowerCase()}
+            />
           </div>
         ) : (
           <div className="h-full flex flex-col gap-8 items-center justify-center text-black font-bold text-center text-2xl min-w-[15vw]">
@@ -43,22 +48,20 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           to={`./${plantId}/${cameraName}`}
           style={{ textDecoration: "none" }}
         >
-          <button
-            className="hover:opacity-70 text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
-          >
+          <button className="hover:opacity-70 text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
             View detail
           </button>
         </Link>
         <div className="flex gap-4 items-center">
           <p className="text-xs text-[#938F96]">Last Updated</p>
           <p className="text-xs md:text-sm text-[#79767D]">
-            {new Date(data.dateTime.$date).toLocaleDateString("en-US", {
+            {new Date(data._id.timestamp).toLocaleDateString("en-US", {
               year: "numeric",
               month: "short",
               day: "2-digit",
             })}
-              &nbsp;&nbsp;&nbsp;
-              {new Date(data.dateTime.$date).toLocaleTimeString()}
+            &nbsp;&nbsp;&nbsp;
+            {new Date(data._id.timestamp).toLocaleTimeString()}
           </p>
         </div>
       </div>

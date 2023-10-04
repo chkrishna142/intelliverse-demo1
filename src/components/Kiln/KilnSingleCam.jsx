@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 // import Report from "./Tabs/Report";
 import KilnCamFeed from "./Tabs/KilnCamFeed";
 // import Analytics from "./Tabs/Analytics";
-// import Timer from "./SizingUtils/Timer";
+import Timer from "../../util/VisionUtils/Timer";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const Capitalize = (str) => {
@@ -115,7 +115,7 @@ const KilnSingleCam = () => {
               </Tab>
             </div>
           </TabList>
-          {/* {
+          {
             <div className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}>
               <Timer
                 initialSeconds={30}
@@ -124,7 +124,7 @@ const KilnSingleCam = () => {
                 setInitialRender={setInitialRender}
               />
             </div>
-          } */}
+          }
         </div>
 
         <TabPanels>
@@ -134,6 +134,7 @@ const KilnSingleCam = () => {
               cameraId={cameraId}
               clientId={clientId}
               callApi={callApi}
+              plantName={plantId}
               initialRender={initialRender}
             />
           </TabPanel>
