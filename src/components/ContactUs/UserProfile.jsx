@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { baseURL } from "../..";
+import { useWindowSize } from "@uidotdev/usehooks";
 const UserProfile = () => {
 
   //Update states
@@ -23,6 +24,8 @@ const UserProfile = () => {
   //Spinner State
   const [spinner, setSpinner] = useState(false)
   const [success, setSuccess] = useState(false)
+
+  const size = useWindowSize()
 
   useEffect(() => {
     getProducts()
@@ -113,7 +116,7 @@ const UserProfile = () => {
         bg="#FFFFFF"
       >
         {/* left container */}
-        <VStack
+        {size.width > 420 ? <VStack
           height={"80vh"}
           color={"white"}
           justifyContent={"flex-start"}
@@ -131,18 +134,18 @@ const UserProfile = () => {
           <Box position={"absolute"} top={"30%"} left={"15%"}>
             <Img src="/profile_management.svg" alt='profile' />
           </Box>
-        </VStack>
+        </VStack> : null}
 
         {/* right conatiner */}
         <Flex
-          width={"65%"}
+          width={size.width > 420 ? "65%" : "100%"}
           padding={"30px"}
           paddingTop={"40px"}
           gap={"60px"}
           flexDirection={"column"}
         >
           <div className="w-full flex justify-center">
-            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null  ? "/profile_sample.svg" : imageUrl}  />
+            <img className={imageUrl !== null ? "h-44" : null} src={imageUrl === null ? "/profile_sample.svg" : imageUrl} />
             <span className="bg-[#034D87] h-10 w-10 rounded-full absolute mt-32 ml-28 flex justify-center items-center cursor-pointer">
               <img className="absolute cursor-pointer" src="pencil.svg" alt="pencil" />
               <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} />
