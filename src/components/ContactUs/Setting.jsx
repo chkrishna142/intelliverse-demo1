@@ -1,7 +1,5 @@
-import { IoMdMail } from "react-icons/io";
-import { CgPhone } from "react-icons/cg";
-import { FaLocationDot } from "react-icons/fa6";
-import { TEInput } from "tw-elements-react";
+import { useWindowSize } from "@uidotdev/usehooks";
+
 import {
   Flex,
   HStack,
@@ -19,6 +17,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 const Setting = () => {
+  const size = useWindowSize()
   // handling button submit
   const handleSubmit = () => {
     console.log("click");
@@ -32,7 +31,7 @@ const Setting = () => {
         bg="#FFFFFF"
       >
         {/* left container */}
-        <VStack
+        {size.width > 420 ? <VStack
           height={"80vh"}
           color={"white"}
           justifyContent={"flex-start"}
@@ -46,22 +45,22 @@ const Setting = () => {
         >
           <Heading fontSize={"30px"} fontWeight={"semibold"}>
             Settings
-          </Heading> 
-          <Box position={"absolute"}  top={"30%"} left={"15%"}>
+          </Heading>
+          <Box position={"absolute"} top={"30%"} left={"15%"}>
             <Img src="/Settings.svg" />
           </Box>
-        </VStack>
+        </VStack> : null}
 
         {/* right conatiner */}
         <Flex
-          width={"65%"}
+          width={size.width > 420 ? "65%" : '100%'}
           padding={"30px"}
           paddingTop={"40px"}
           gap={"60px"}
           flexDirection={"column"}
         >
           <Flex flexDirection={"column"} gap={"30px"}>
-            <Flex gap={"35px"}>
+            <Flex flexDirection={"column"} gap={"35px"}>
               <FormControl>
                 <div>
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Language Preference</div>
