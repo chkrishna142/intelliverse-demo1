@@ -53,9 +53,10 @@ const KilnCamFeed = ({
       clientId: clientId,
       material: material,
       cameraId: cameraId,
+      plantName: plantName,
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/analysis/detail/", requestData, {
+      .post(baseURL + "vision/processMonitoring/feed/detail/", requestData, {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +64,7 @@ const KilnCamFeed = ({
         },
       })
       .then((response) => {
-        setCamData(response.data);
+        setCamData(response.data[cameraId]);
       })
       .catch((error) => {
         console.log(error);
@@ -78,7 +79,7 @@ const KilnCamFeed = ({
       plantName: plantName,
     });
     const response = await axios
-      .post(baseURL + "vision/processMonitoring/feed/detail/", requestData, {
+      .post(baseURL + "vision/processMonitoring/feed/list/", requestData, {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +122,7 @@ const KilnCamFeed = ({
   useEffect(() => {
     if (!initialRender) {
       console.log("calling...");
-      // apiCall();
+      apiCall();
     }
   }, [callApi]);
 
@@ -140,9 +141,13 @@ const KilnCamFeed = ({
                   Kiln live image
                 </p>
                 <p className="text-sm text-[#79767D]">
-                  {new Date(camData._id.timestamp).toLocaleDateString()}
+                  {new Date(camData.created).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  })}
                   &nbsp;&nbsp;&nbsp;
-                  {new Date(camData._id.timestamp).toLocaleTimeString()}
+                  {new Date(camData.created).toLocaleTimeString()}
                 </p>
               </div>
               <div className="flex flex-col gap-4 w-full h-[80vh] sm:h-[60vh]">
@@ -191,7 +196,7 @@ const KilnCamFeed = ({
               <div className="h-[60vh]">
                 <LineChart
                   data={[camData.dusty, camData.hot]}
-                  timeStamps={new Date(camData?._id.timestamp).getTime()}
+                  timeStamps={new Date(camData?.created).getTime()}
                   labels={["Dusty", "Hot"]}
                   color={["#fee179", "#ff6460"]}
                 />
