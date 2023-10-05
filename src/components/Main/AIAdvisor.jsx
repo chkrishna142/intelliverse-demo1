@@ -126,7 +126,7 @@ const AiAdvisor = () => {
                     </div>
                 </div> : null}
                 {send === false ? <div className='md:visible invisible'>
-                    <div className='fixed bottom-32 ml-4 text-xs'>
+                    <div className='fixed bottom-32 ml-4 text-xs mb-3'>
                         <div style={{ width: '85.5vw' }} className='flex gap-4' >
                             <div onClick={() => { callChatGpt("What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?"); setSend(true) }} className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
                                 What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?
@@ -137,8 +137,8 @@ const AiAdvisor = () => {
                         </div>
                     </div>
                 </div> : null}
-                <div className='fixed md:bottom-8 bottom-20'>
-                    <div className='rounded-md border border-[#3A74CA] md:w-[88.5vw] w-[96vw] h-16 bg-white w-full px-5 py-2 flex gap-2 items-center'>
+                <div className='fixed md:bottom-8 bottom-20 w-full md:pr-40 pr-4'>
+                    <div className='rounded-md border border-[#3A74CA] h-16 bg-white px-5 py-2 flex gap-2 items-center '>
                         <input value={text} onKeyDown={handleKeyDown} onChange={(e) => setText(e.target.value)} className='w-full px-2 py-2 select-none' placeholder='Send a message' />
                         <div className='cursor-pointer' onClick={() => callChatGpt(text)}>
                             <img src="/send.svg" />
@@ -146,7 +146,7 @@ const AiAdvisor = () => {
                     </div>
                     <div className='flex justify-between items-center'>
                         {size.width > 420 ? <p className='pt-1 text-[10px] ml-2 text-gray-500 md:mr-0 mr-2'>Note : It is important to note that while the bot tries to provide accurate information, it can sometimes make errors. So always double-check the important facts independently.</p> : null}
-                        <div className='flex items-center gap-4 text-xs mt-3 mr-5 mb-4'>
+                        <div className='flex items-center gap-4 text-xs mt-3 mr-5 md:mb-0 mb-4'>
                             <p className={credits < 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'}>${credits} Credits Remaining</p>
                             <Link to="/community/advisor/buycredits"><div className='text-[#124CA2] font-bold cursor-pointer'>Add more</div></Link>
                         </div>
