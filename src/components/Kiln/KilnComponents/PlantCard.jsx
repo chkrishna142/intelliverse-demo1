@@ -29,7 +29,7 @@ const PlantCard = ({ PlantName, CamData }) => {
   return (
     <div
       className={`flex flex-col bg-white rounded-xl pt-4 gap-1 col-span-2 ${
-        Object.keys(CamData).length > 1 ? "xl:col-span-2" : "xl:col-span-1"
+        CamData.length > 1 ? "xl:col-span-2" : "xl:col-span-1"
       }`}
     >
       <div className="flex justify-between pl-6 pr-6">
@@ -58,15 +58,15 @@ const PlantCard = ({ PlantName, CamData }) => {
       </div>
       <div
         className={`grid grid-cols-1 xl:grid-cols-${
-          Object.keys(CamData).length > 1 ? "2" : "1"
+          CamData.length > 1 ? "2" : "1"
         }`}
       >
-        {Object.keys(CamData).map((cam, idx) => {
+        {CamData.map((cam, idx) => {
           return (
             <CamCard
               plantId={PlantName}
-              cameraName={cam}
-              data={CamData[cam][0]}
+              cameraName={Object.values(cam)[0].cameraId}
+              data={Object.values(cam)[0]}
               alert={totalAlerts[idx]}
             />
           );

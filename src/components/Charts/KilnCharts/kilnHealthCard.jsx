@@ -24,7 +24,7 @@ const tagName = {
 
 // fffcf2
 
-const KilnHealthCard = ({ index, health }) => {
+const KilnHealthCard = ({ dusty, hot, health }) => {
   return (
     <div className="flex justify-start items-center w-full h-full min-w-[15vw]">
       <div
@@ -57,7 +57,7 @@ const KilnHealthCard = ({ index, health }) => {
               </p>
             </div>
             <div className="flex gap-2 items-center">
-              <p className="text-[#3E3C42] text-lg font-medium">{index}</p>
+              <p className="text-[#3E3C42] text-lg font-medium">{dusty}</p>
             </div>
           </div>
           <div className="flex flex-col gap-1">
@@ -68,7 +68,7 @@ const KilnHealthCard = ({ index, health }) => {
               <img src="/KilnIcons/info.svg" />
             </div>
             <div className="flex gap-2 items-center">
-              <p className="text-[#3E3C42] text-lg font-medium">{index}</p>
+              <p className="text-[#3E3C42] text-lg font-medium">{hot}</p>
             </div>
           </div>
         </div>
