@@ -118,7 +118,7 @@ const KilnSingleCam = () => {
           {
             <div className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}>
               <Timer
-                initialSeconds={30}
+                initialSeconds={150}
                 callFunc={setCallApi}
                 initialRender={initialRender}
                 setInitialRender={setInitialRender}
