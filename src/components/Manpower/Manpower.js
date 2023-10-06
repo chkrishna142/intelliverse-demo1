@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Weekly from "./Tabs/weekly";
 import ManpowerMngmt from "./Tabs/ManpowerMngmt";
+import MasterFiles from "./Tabs/MasterFiles";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const Manpower = () => {
@@ -94,6 +95,9 @@ const Manpower = () => {
           </TabPanel>
           <TabPanel className="!p-0">
             <ManpowerMngmt />
+          </TabPanel>
+          <TabPanel className="!p-0">
+            <MasterFiles />
           </TabPanel>
         </TabPanels>
       </Tabs>
