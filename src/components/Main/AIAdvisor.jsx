@@ -56,7 +56,11 @@ const AiAdvisor = () => {
         const res = await data.json()
         setSend(true)
         setTyping(false)
-        setResponse(current => [...current, res?.data?.reply])
+        setResponse(current => [...current, addBreak(res?.data?.reply)])
+    }
+
+    function addBreak(str) {
+        return str.replace("\n\n", "<br><br>")
     }
 
     useEffect(() => {

@@ -25,7 +25,7 @@ const UserProfile = () => {
   //Spinner State
   const [spinner, setSpinner] = useState(false)
   const [success, setSuccess] = useState(false)
-
+  
   const size = useWindowSize()
 
   useEffect(() => {
@@ -111,7 +111,6 @@ const UserProfile = () => {
   }
 
   const selectPicture = (event) => {
-    // console.log(event.target.files[0])
     var profile = event.target.files[0]
     setSendImage(profile)
     setImageUrl(URL.createObjectURL(profile))
@@ -154,7 +153,7 @@ const UserProfile = () => {
           </Box>
         </VStack> : null}
 
-        {/* right conatiner */}
+        {/* right container */}
         <Flex
           width={size.width > 420 ? "65%" : "100%"}
           padding={"30px"}
@@ -178,17 +177,14 @@ const UserProfile = () => {
                     <input value={fullName} placeholder={"Enter Full Name"} onChange={(e) => setFullName(e.target.value)} className="w-full focus:outline-none pl-2 " />
                   </div>
                 </div>
-                {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
               <FormControl>
                 <div>
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Job Title / Position</div>
                   <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
                     <input value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="w-full focus:outline-none pl-2" placeholder="Enter Your Job Title" />
-
                   </div>
-                </div>
-                {/* <Input placeholder="Enter Your Name" /> */}
+                </div> 
               </FormControl>
             </Flex>
             <Flex gap={"35px"}>
@@ -199,7 +195,6 @@ const UserProfile = () => {
                     <input value={department} onChange={(e) => setDepartment(e.target.value)} className="w-full focus:outline-none pl-2" placeholder="Enter Your Department" />
                   </div>
                 </div>
-                {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
               <FormControl>
                 <div>
@@ -208,7 +203,6 @@ const UserProfile = () => {
                     <input value={location} onChange={(e) => setLocation(e.target.value)} className="w-full focus:outline-none pl-2" placeholder="Enter Your Location" />
                   </div>
                 </div>
-                {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
             </Flex>
             <div className="grid grid-cols-2 gap-9">
@@ -219,7 +213,6 @@ const UserProfile = () => {
                     <input disabled value={email} className="w-full focus:outline-none pl-2" placeholder="abc@email.com" />
                   </div>
                 </div>
-                {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
               <FormControl>
                 <div>
@@ -228,7 +221,6 @@ const UserProfile = () => {
                     <div className="w-full focus:outline-none pl-2" >{tokenBalance}</div>
                   </div>
                 </div>
-                {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
             </div>
           </Flex>
