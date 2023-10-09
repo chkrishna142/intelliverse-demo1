@@ -2,9 +2,12 @@ import * as React from "react";
 import { useRef, useState } from "react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import SkillMatrix from "../Tables/SkillMatrix";
+import ResourceMapping from "../Tables/ResourceMapping";
 
 const MasterFiles = () => {
   const fileInputRef = useRef(null);
+  const [selected, setSelected] = useState("A");
+  const blocks = ["A", "B", "C", "D"];
   const [page, setPage] = useState("skill matrix");
 
   const handleFileDrop = (e) => {
@@ -86,10 +89,10 @@ const MasterFiles = () => {
               py="8px"
               textColor={page == "skill matrix" ? "#5892E8" : "#79767D"}
               fontWeight={500}
-              fontSize='16px'
+              fontSize="16px"
               bgColor={page == "skill matrix" ? "#E2EDFE" : "white"}
               onClick={() => setPage("skill matrix")}
-              rounded='4px'
+              rounded="4px"
             >
               Skill Matrix
             </Tab>
@@ -100,21 +103,42 @@ const MasterFiles = () => {
               py="8px"
               textColor={page == "resource mapping" ? "#5892E8" : "#79767D"}
               fontWeight={500}
-              fontSize='16px'
+              fontSize="16px"
               bgColor={page == "resource mapping" ? "#E2EDFE" : "white"}
               onClick={() => setPage("resource mapping")}
-              rounded='4px'
+              rounded="4px"
             >
               Resource Mapping
             </Tab>
           </TabList>
-
+          <div className="flex justify-between items-center px-[25px] cursor-pointer mt-5 mb-4">
+            <div className="flex gap-4 items-center text-[#605D64] text-base">
+              {blocks.map((i) => {
+                return (
+                  <div
+                    className="rounded-[32px] px-4 py-2"
+                    onClick={() => setSelected(i)}
+                    style={{
+                      border:
+                        selected == i
+                          ? "1px solid #6CA6FC"
+                          : "1px solid #EBEBEB",
+                      backgroundColor: selected == i ? "#ddeeff" : "white",
+                    }}
+                  >
+                    Block {i}
+                  </div>
+                );
+              })}
+            </div>
+            <p className="text-[#6CA6FC] font-medium text-sm">Download Table</p>
+          </div>
           <TabPanels>
             <TabPanel padding={0}>
               <SkillMatrix />
             </TabPanel>
             <TabPanel padding={0}>
-              <p>two!</p>
+              <ResourceMapping />
             </TabPanel>
           </TabPanels>
         </Tabs>
