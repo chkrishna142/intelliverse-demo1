@@ -15,7 +15,7 @@ const useCase = {
   Sizing: "Sizing",
   ProcessMonitoring: "Analysis",
   qualityTracking: "Tracking",
-  workforce: "Monitoring",
+  workforceMonitoring: "Monitoring",
   datadigitization: "",
 };
 

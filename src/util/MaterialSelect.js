@@ -9,7 +9,7 @@ const useCase = {
   Sizing: ["Particle Sizing"],
   ProcessMonitoring: ["Colour scheme analysis"],
   qualityTracking: ["Counting and Tracking", "Quality Check"],
-  workforce: ["Object Monitoring"],
+  workforceMonitoring: ["Object Monitoring"],
   datadigitization: ["Automated Data Digitization"],
 };
 
