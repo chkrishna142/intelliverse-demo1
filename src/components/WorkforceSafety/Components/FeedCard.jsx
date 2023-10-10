@@ -1,3 +1,18 @@
+const iconMap = {
+  Chock: "chock.svg",
+  Clamp: "clamp.svg",
+  Helmet: "helmet.svg",
+  Rope: "rope.svg",
+  Harness: "harness.svg",
+  Executive: "executive.svg",
+  Security: "security.svg",
+  "Rod Dip": "rod.svg",
+  Flushing: "flushing.svg",
+  Sampling: "sampling.svg",
+  Compartment: "compartment.svg",
+  Port: "port.svg",
+};
+
 const FeedCard = ({ parameter, reasons, codes, bgcode }) => {
   const colors = ["#CDEEBF", "#EC928E"];
 
@@ -16,10 +31,14 @@ const FeedCard = ({ parameter, reasons, codes, bgcode }) => {
       >
         {parameter}
       </div>
-      {reasons.map((val,idx) => {
+      {reasons.map((val, idx) => {
         return (
-          <div className={`pt-3 pl-3 flex items-center rounded ${codes[idx] == 1 ? 'border-2 border-[#E46962]' : 'border-0'}`}>
-            <img src={`/WorkforceSafetyIcons/${icons[idx2]}`} />
+          <div
+            className={`pt-3 pl-3 flex items-center rounded ${
+              codes[idx] == 1 ? "border-2 border-[#E46962]" : "border-0"
+            }`}
+          >
+            <img src={`/WorkforceSafetyIcons/${iconMap[val]}`} />
             <div className="py-[10px] px-4 flex justify-between items-center w-full">
               <p className="text-[#79767D] text-base">{val}</p>
               <img src={urls[codes[idx]]} />

@@ -40,6 +40,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   ];
   const count = [66, 100, 65, 50, 80, 78];
   const total = [70, 100, 80, 52, 100, 100];
+  const color = [0, 1, 2, 0, 2, 2];
 
   return (
     <div className="relative flex flex-col">
@@ -78,6 +79,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                   parameter={val}
                   count={count[idx]}
                   total={total[idx]}
+                  val={color[idx]}
                 />
               );
             })}
