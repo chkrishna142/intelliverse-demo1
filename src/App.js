@@ -9,6 +9,7 @@ import SingleCam from './components/Sizing/SingleCam';
 import Kiln from "./components/Kiln/Kiln";
 import KilnSingleCam from './components/Kiln/KilnSingleCam';
 import Manpower from './components/Manpower/Manpower';
+import WorkforceSafety from './components/WorkforceSafety/WorkforceSafety';
 import Quality from './components/QualityTracking/Quality';
 import QualitySingleCam from './components/QualityTracking/QualitySingleCam';
 import Login from './components/Auth/Login';
@@ -87,6 +88,9 @@ function App() {
                     <Route path="/vision/qualityTracking/:material/:clientId/:plantId/:cameraId" element={<QualitySingleCam />} />
                     {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
+                    {/*Workforce pages*/ }
+                    <Route path="/vision/workforceMonitoring/:material" element={<ClientSelect />} />
+                    <Route path="/vision/workforceMonitoring/:material/:clientId" element={<WorkforceSafety />} />
                     {/* Profile Pages */}
                     <Route path="/contactus" element={<ConatctUs />} />
                     <Route path="/settings" element={<Setting />} />

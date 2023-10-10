@@ -4,6 +4,7 @@ import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
+import ReportTable from "../Tables/ReportTable";
 import NavContext from "../../NavContext";
 import {
   Table,
@@ -40,44 +41,48 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
     disable ? cameraId : "All Cams"
   );
 
-  const apiCall = async () => {
-    const requestData = JSON.stringify({
-      clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
-      startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
-      endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
-      cameraId:
-        selectedCam === "All Cams" || selectedPlant === "All Plants"
-          ? "all"
-          : selectedCam,
-      plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
-      basis: selectedBasis,
-    });
-    const response = await axios
-      .post(baseURL + "vision/v2/qualityTracking/report/overview/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
-      .then((response) => {
-        setReport(response.data);
-        setReportChanging(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // const apiCall = async () => {
+  //   const requestData = JSON.stringify({
+  //     clientId: param.clientId.toLowerCase(),
+  //     useCase: param.material.toUpperCase(),
+  //     startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
+  //     endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
+  //     cameraId:
+  //       selectedCam === "All Cams" || selectedPlant === "All Plants"
+  //         ? "all"
+  //         : selectedCam,
+  //     plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
+  //     basis: selectedBasis,
+  //   });
+  //   const response = await axios
+  //     .post(
+  //       baseURL + "vision/v2/qualityTracking/report/overview/",
+  //       requestData,
+  //       {
+  //         credentials: "same-origin",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "X-Auth-Token": auth,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       setReport(response.data);
+  //       setReportChanging(false);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
-  const handleClick = () => {
-    setReportChanging(true);
-    apiCall();
-  };
+  // const handleClick = () => {
+  //   setReportChanging(true);
+  //   apiCall();
+  // };
 
-  useEffect(() => {
-    handleClick();
-  }, []);
+  // useEffect(() => {
+  //   handleClick();
+  // }, []);
 
   return (
     <div className="relative flex flex-col">
@@ -101,7 +106,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
           <button
             className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
-            onClick={handleClick}
+            // onClick={handleClick}
           >
             {reportChanging ? <Spinner /> : "Show Report"}
           </button>
@@ -109,7 +114,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       </div>
       <div className="flex flex-col gap-4 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
         <div className="flex justify-between gap-2 pl-4 pr-6 mr-3 overflow-x-auto">
-          <div className="flex gap-2">
+          {/* <div className="flex gap-2">
             <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
@@ -124,14 +129,14 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                 <option key="All Plants" value="All Plants">
                   All Plants
                 </option>
-                {/* {!disable &&
+                {!disable &&
                   Object.keys(plantCamMap).map((plant) => {
                     return (
                       <option key={plant} value={plant}>
                         {plant}
                       </option>
                     );
-                  })} */}
+                  })}
               </Select>
             </div>
             {selectedPlant !== "All Plants" && (
@@ -150,14 +155,14 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                   <option key="All Cams" value="All Cams">
                     All Cams
                   </option>
-                  {/* {!disable &&
+                  {!disable &&
                     plantCamMap[selectedPlant].map((cam) => {
                       return (
                         <option key={cam} value={cam}>
                           {cam}
                         </option>
                       );
-                    })} */}
+                    })}
                 </Select>
               </div>
             )}
@@ -181,55 +186,56 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
             >
               {reportChanging ? <Spinner /> : "Apply"}
             </button>
-          </div>
+          </div> */}
           {report.hasOwnProperty("order") && (
             <ExlCsvDownload order={report.order} data={report.data} />
           )}
         </div>
-        {report.hasOwnProperty("data") && (
-          <TableContainer className="!max-h-[80vh] !overflow-y-auto">
-            <Table variant="simple">
-              <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
-                <Tr>
-                  <Th color="#79767D" fontWeight={400}>
-                    SR. NO.
-                  </Th>
-                  {report.order.map((id, idx) => {
-                    return (
-                      <Th key={idx} color="#79767D" fontWeight={400}>
-                        {id.toUpperCase()}
-                      </Th>
-                    );
-                  })}
-                </Tr>
-              </Thead>
-              <Tbody>
-                {report.data.map((item, index) => {
-                  return (
-                    <Tr
-                      key={index}
-                      className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
-                    >
-                      <Td className="cursor-pointer">
-                        {String(index + 1).padStart(2, "0")}
-                      </Td>
-                      {report.order.map((x, idx) => {
-                        return (
-                          <Td key={idx} className="cursor-pointer">
-                            {x.toLowerCase().includes("time")
-                              ? new Date(item[x]).toLocaleDateString() +
-                                " " +
-                                new Date(item[x]).toLocaleTimeString()
-                              : item[x]}
-                          </Td>
-                        );
-                      })}
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
+        {true && (
+          // <TableContainer className="!max-h-[80vh] !overflow-y-auto">
+          //   <Table variant="simple">
+          //     <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
+          //       <Tr>
+          //         <Th color="#79767D" fontWeight={400}>
+          //           SR. NO.
+          //         </Th>
+          //         {report.order.map((id, idx) => {
+          //           return (
+          //             <Th key={idx} color="#79767D" fontWeight={400}>
+          //               {id.toUpperCase()}
+          //             </Th>
+          //           );
+          //         })}
+          //       </Tr>
+          //     </Thead>
+          //     <Tbody>
+          //       {report.data.map((item, index) => {
+          //         return (
+          //           <Tr
+          //             key={index}
+          //             className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
+          //           >
+          //             <Td className="cursor-pointer">
+          //               {String(index + 1).padStart(2, "0")}
+          //             </Td>
+          //             {report.order.map((x, idx) => {
+          //               return (
+          //                 <Td key={idx} className="cursor-pointer">
+          //                   {x.toLowerCase().includes("time")
+          //                     ? new Date(item[x]).toLocaleDateString() +
+          //                       " " +
+          //                       new Date(item[x]).toLocaleTimeString()
+          //                     : item[x]}
+          //                 </Td>
+          //               );
+          //             })}
+          //           </Tr>
+          //         );
+          //       })}
+          //     </Tbody>
+          //   </Table>
+          // </TableContainer>
+          <ReportTable />
         )}
       </div>
     </div>
