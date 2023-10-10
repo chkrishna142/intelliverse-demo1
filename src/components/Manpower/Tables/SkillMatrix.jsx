@@ -1,6 +1,5 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { useState } from "react";
 
 const MuiTheme = createTheme();
 const rows = [
@@ -74,34 +73,10 @@ const columns = [
 ];
 
 const SkillMatrix = () => {
-  const [selected, setSelected] = useState("A");
-  const blocks = ["A", "B", "C", "D"];
   return (
-    <div className="flex flex-col gap-4 mt-5">
-      <div className="flex justify-between items-center px-[25px] cursor-pointer">
-        <div className="flex gap-4 items-center text-[#605D64] text-base">
-          {blocks.map((i) => {
-            return (
-              <div
-                className="rounded-[32px] px-4 py-2"
-                onClick={() => setSelected(i)}
-                style={{
-                  border:
-                    selected == i ? "1px solid #6CA6FC" : "1px solid #EBEBEB",
-                  backgroundColor: selected == i ? "#ddeeff" : "white",
-                }}
-              >
-                Block {i}
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-[#6CA6FC] font-medium text-sm">Download Table</p>
-      </div>
-      <ThemeProvider theme={MuiTheme}>
-        <DataGrid rows={rows} columns={columns} />
-      </ThemeProvider>
-    </div>
+    <ThemeProvider theme={MuiTheme}>
+      <DataGrid rows={rows} columns={columns} />
+    </ThemeProvider>
   );
 };
 
