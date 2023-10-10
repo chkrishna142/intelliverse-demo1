@@ -15,16 +15,16 @@ const Feed = () => {
   ];
 
   const reasons = [
-    ["Chock", "Champ"],
+    ["Chock", "Clamp"],
     ["Helmet", "Rope", "Harness"],
-    ["Executive", "Security", "Rod"],
+    ["Executive", "Security", "Rod Dip"],
     ["Flushing"],
     ["Executive", "Sampling"],
-    ["Compartment", "Pot"],
+    ["Compartment", "Port"],
   ];
 
   const codes = [[1, 0], [0, 1, 1], [0, 1, 1], [0], [0, 0], [1, 0]];
-  const bgcode = [1,1,1,0,0,1];
+  const bgcode = [1, 1, 1, 0, 0, 1];
 
   const cams = [
     "Camera 1",
@@ -54,6 +54,20 @@ const Feed = () => {
               </div>
             );
           })}
+        </div>
+      </div>
+      <div className="self-start px-6 py-3 flex gap-7 items-center bg-[#FAFAFA] rounded-[6px] border border-[#EBEBEB]">
+        <div className="flex gap-2 items-center">
+          <p className="text-sm text-[#605D64]">Truck no.</p>
+          <p className="text-base font-medium text-[#3E3C42]">18002341</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <p className="text-sm text-[#605D64]">In Time</p>
+          <p className="text-base font-medium text-[#3E3C42]">11:12:34</p>
+        </div>
+        <div className="flex gap-2 items-center">
+          <p className="text-sm text-[#605D64]">Date</p>
+          <p className="text-base font-medium text-[#3E3C42]">10-10-2021</p>
         </div>
       </div>
       <div className="flex gap-8">
