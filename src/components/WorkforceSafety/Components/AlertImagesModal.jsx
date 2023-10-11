@@ -12,7 +12,7 @@ import { useState } from "react";
 
 const AlertImagesModal = ({ openModal, closeModal, row }) => {
   const [selectedImage, setSelectedImage] = useState(1);
-  const imgs = [1, 2, 3, 4];
+  const imgs = [1, 2, 3];
   return (
     <ChakraProvider>
       <Modal isOpen={openModal} onClose={closeModal} isCentered="true">
@@ -36,7 +36,7 @@ const AlertImagesModal = ({ openModal, closeModal, row }) => {
               <div className="flex flex-col gap-2 w-full">
                 <p className="text-xs text-[#605D64] font-medium">Violations</p>
                 <div className="flex flex-col gap-2 py-3 pl-4 pr-6 bg-[#FCEEEE] text-[#3E3C42] text-sm font-medium rounded-xl h-full">
-                  <p>Safety rope missing</p>
+                  <p>{row.violation}</p>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -56,7 +56,7 @@ const AlertImagesModal = ({ openModal, closeModal, row }) => {
                   })}
                 </div>
                 <div className="relative w-[400px] h-[300px] bg-black rounded-xl flex justify-center items-center">
-                  <img src="https://img.freepik.com/free-photo/workers-examining-work_1122-970.jpg?1" />
+                  <img src={`/WorkforceSafetyIcons/images/${(selectedImage + 3) + '.png'}`} />
                   <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
                     <p className="text-white text-xs font-semibold bg-black rounded-lg">
                       {new Date().toLocaleDateString()}

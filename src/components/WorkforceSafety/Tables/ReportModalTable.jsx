@@ -34,20 +34,26 @@ const StatusCell = (param) => {
   let status = row[field];
 
   return (
-    <p className={`${status == "Yes" ? "text-green-500" : "text-red-500"}`}>
+    <p className={`${status == "Pass" ? "text-green-500" : "text-red-500"}`}>
       {status}
     </p>
   );
 };
 
 const rows = [
-  { id: 1, check: "Check 1", compliance: "Yes" },
-  { id: 2, check: "Check 2", compliance: "No" },
-  { id: 3, check: "Check 3", compliance: "Yes" },
-  { id: 4, check: "Check 4", compliance: "Yes" },
-  { id: 5, check: "Check 5", compliance: "No" },
-  { id: 6, check: "Check 6", compliance: "Yes" },
-  { id: 7, check: "Check 7", compliance: "No" },
+  { id: 1, check: "Wheel Choke", compliance: "Fail" },
+  { id: 2, check: "Earthing Clamp", compliance: "Pass" },
+  { id: 3, check: "Helmet", compliance: "Pass" },
+  { id: 4, check: "Safety Belt", compliance: "Pass" },
+  { id: 5, check: "Safety Rope", compliance: "Pass" },
+  { id: 6, check: "APL Executive Present", compliance: "Pass" },
+  { id: 7, check: "Security Present", compliance: "Pass" },
+  { id: 8, check: "Rod Dipped in Ports", compliance: "Pass" },
+  { id: 9, check: "Sampler Flushing", compliance: "Fail" },
+  { id: 10, check: "Sample Collection from compartments", compliance: "Fail" },
+  { id: 11, check: "Samples Checked visually", compliance: "Pass" },
+  { id: 12, check: "Port Lids Closed", compliance: "Pass" },
+  { id: 13, check: "Compartment Lids Closed", compliance: "Pass" },
 ];
 
 const columns = [
@@ -81,16 +87,19 @@ const columns = [
 
 const ReportModalTable = () => {
   return (
-    <ThemeProvider theme={MuiTheme}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        hideFooter={true}
-        columnVisibilityModel={{
-          id: false,
-        }}
-      />
-    </ThemeProvider>
+    <div className="overflow-auto">
+      <ThemeProvider theme={MuiTheme}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          hideFooter={true}
+          columnVisibilityModel={{
+            id: false,
+          }}
+          sx={{maxHeight: "500px"}}
+        />
+      </ThemeProvider>
+    </div>
   );
 };
 

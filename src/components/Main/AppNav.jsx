@@ -39,7 +39,7 @@ const AppNav = () => {
                                         <div className='mt-4 flex text-[10px] justify-center h-10 w-20 '><p className='font-bold text-[#024D87] text-center'>Quality Inspection</p></div>
                                     </div>
                                 </Link>
-                                <Link to="/vision/workforce">
+                                <Link to="/vision/workforceMonitoring">
                                     <div onClick={() => setBar(false)}>
                                         <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 

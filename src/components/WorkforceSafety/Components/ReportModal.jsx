@@ -8,6 +8,21 @@ import {
 import { ChakraProvider } from "@chakra-ui/react";
 import ReportModalTable from "../Tables/ReportModalTable";
 
+const formatTime = (rawTime) => {
+  const date = new Date(rawTime);
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // Convert 0 to 12
+
+  const formattedTime = `${hours}:${
+    minutes < 10 ? "0" + minutes : minutes
+  } ${ampm}`;
+  return formattedTime;
+};
+
 const ReportModal = ({ openModal, closeModal, row }) => {
   return (
     <ChakraProvider>

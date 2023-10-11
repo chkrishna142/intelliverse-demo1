@@ -1,9 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useToast } from "@chakra-ui/react";
 import FeedCard from "../Components/FeedCard";
+
+const playNotificationSound = () => {
+  console.log('playing...')
+  const audio = new Audio('/WorkforceSafetyIcons/audio/alert.mp3');
+  audio.play();
+};
 
 const Feed = () => {
   const [selectedBay, setSelectedBay] = useState(1);
   const bays = [1, 2, 3, 4];
+  const toast = useToast();
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      toast({
+        title: "No Helmet",
+        description: "Helmet not detected!",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+        position: "top-right",
+      });
+      playNotificationSound();
+    }, 60*1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const entries = [
     "Clamp and Chock",
@@ -34,6 +57,8 @@ const Feed = () => {
     "Camera - Sampling backside 3&4",
     "Camera - Sampling vehicle number",
   ];
+
+  const imgs = ["1.png", "2.png", "3.png", "1.png", "2.png", "3.png"];
 
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
@@ -71,7 +96,7 @@ const Feed = () => {
         </div>
       </div>
       <div className="flex gap-8">
-        <div className="grid grid-cols-3 gap-4 h-[60%] w-[60%]">
+        <div className="grid grid-cols-3 gap-4 h-[60%] w-full">
           {entries.map((val, idx) => {
             return (
               <FeedCard
@@ -83,17 +108,17 @@ const Feed = () => {
             );
           })}
         </div>
-        <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[750px] overflow-y-auto">
-          {cams.map((val) => {
+        <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[100vh] w-[45vw] overflow-y-auto">
+          {cams.map((val, idx) => {
             return (
-              <div className="flex flex-col gap-2 w-[40%]">
+              <div className="flex-1 flex flex-col gap-2 w-full">
                 <p className="text-[#605D64] text-sm font-medium whitespace-nowrap">
                   {val}
                 </p>
-                <div className="relative bg-black h-[200px] w-[400px] flex justify-center items-center rounded-xl">
+                <div className="relative bg-black h-full w-full flex justify-center items-center rounded-xl">
                   <img
-                    className="h-[200px] rounded-xl"
-                    src="https://img.freepik.com/free-photo/workers-examining-work_1122-970.jpg?1"
+                    className="w-[40vw] rounded-xl"
+                    src={`/WorkforceSafetyIcons/images/${imgs[idx]}`}
                   />
                   <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
                     <p className="text-white text-xs font-semibold bg-black rounded-lg">

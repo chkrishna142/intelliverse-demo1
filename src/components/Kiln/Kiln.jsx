@@ -88,7 +88,7 @@ const Kiln = () => {
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
             <KilnFeed
-              material={param.material.toLowerCase()}
+              material={'kilnhealth'}
               clientId={param.clientId.toLowerCase()}
               setPlantCamMap={setPlantCamMap}
               Map = {plantCamMap}
