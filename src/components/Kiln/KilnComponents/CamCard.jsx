@@ -3,7 +3,7 @@ import KilnHealthCard from "../../Charts/KilnCharts/kilnHealthCard";
 
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();
-  let material = param.material.toLowerCase();
+  let material = 'kilnhealth';
   // console.log(data,'cam data')
   return (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6">

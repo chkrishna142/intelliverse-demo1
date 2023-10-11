@@ -138,7 +138,7 @@ const KilnCamFeed = ({
             <div className="flex flex-col gap-8 flex-1">
               <div className="flex justify-between items-center w-full">
                 <p className="self-start text-[#3E3C42] text-xl font-medium">
-                  Kiln live image
+                  Current Analysis
                 </p>
                 <p className="text-sm text-[#79767D]">
                   {new Date(camData.created).toLocaleDateString("en-US", {
@@ -191,7 +191,7 @@ const KilnCamFeed = ({
             </div>
             <div className="flex flex-col gap-8 flex-1">
               <p className="self-start text-[#3E3C42] text-xl font-medium">
-                Kiln Index Graph
+                Trend Analysis
               </p>
               <div className="h-[60vh]">
                 <LineChart

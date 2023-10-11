@@ -28,7 +28,7 @@ const KilnSingleCam = () => {
   const [page, setPage] = useState("feed");
   const [callApi, setCallApi] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
-  let material = param.material.toLowerCase();
+  let material = 'kilnhealth';
   let cameraId = param.cameraId;
   let clientId = param.clientId;
   let plantId = param.plantId;
