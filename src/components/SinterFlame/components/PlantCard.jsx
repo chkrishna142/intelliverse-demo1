@@ -1,5 +1,6 @@
 import CamCard from "./CamCard";
 import { useState } from "react";
+import DetailModal from "./DetailModal";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -10,15 +11,30 @@ const Capitalize = (str) => {
   return str2;
 };
 
+const SortBurners = (data) => {
+  const sortedData = {};
+  const keys = Object.keys(data);
+  keys.sort((a, b) => {
+    const indexA = parseInt(a.match(/\d+/)[0], 10);
+    const indexB = parseInt(b.match(/\d+/)[0], 10);
+    return indexA - indexB;
+  });
+  keys.forEach((key) => {
+    sortedData[key] = data[key];
+  });
+  return sortedData;
+};
+
 const PlantCard = ({ PlantName, CamData }) => {
   const [openModal, setOpenModal] = useState(false);
   let totalAlerts = [];
   let totalData = [];
+  CamData = SortBurners(CamData);
   Object.keys(CamData).map((cam) => {
-    if(CamData[cam].hasAlert){
-        totalAlerts.push(1);
-        totalData.push(CamData[cam])
-    }else totalAlerts.push(0);
+    if (CamData[cam][0].hasAlert) {
+      totalAlerts.push(1);
+      totalData.push(CamData[cam][0]);
+    } else totalAlerts.push(0);
   });
   let sum = totalAlerts.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
@@ -42,14 +58,14 @@ const PlantCard = ({ PlantName, CamData }) => {
             >
               See Detail
             </p>
-            {/* {openModal && (
+            {openModal && (
               <DetailModal
                 openModal={openModal}
                 closeModal={() => setOpenModal(false)}
                 data={totalData}
-                index = {0}
+                index={0}
               />
-            )} */}
+            )}
           </div>
         )}
       </div>
@@ -63,7 +79,7 @@ const PlantCard = ({ PlantName, CamData }) => {
             <CamCard
               plantId={PlantName}
               cameraName={cam}
-              data={CamData[cam]}
+              data={CamData[cam][0]}
               alert={totalAlerts[idx]}
             />
           );

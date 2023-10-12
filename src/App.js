@@ -9,6 +9,7 @@ import SingleCam from './components/Sizing/SingleCam';
 import Kiln from "./components/Kiln/Kiln";
 import KilnSingleCam from './components/Kiln/KilnSingleCam';
 import Sinterflame from './components/SinterFlame/Sinterflame';
+import SinterflameSingle from './components/SinterFlame/SinterflameSingle';
 import Manpower from './components/Manpower/Manpower';
 import WorkforceSafety from './components/WorkforceSafety/WorkforceSafety';
 import Quality from './components/QualityTracking/Quality';
@@ -85,7 +86,7 @@ function App() {
                     <Route path="/vision/ProcessMonitoring/kilnhealth/:clientId/:plantId/:cameraId" element={<KilnSingleCam />} />
                     {/*Sinter Flame Analysis*/}
                     <Route path="/vision/ProcessMonitoring/sinterflame/:clientId" element={<Sinterflame />} />
-                    <Route path="/vision/ProcessMonitoring/sinterflame/:clientId/:plantId/:cameraId" element={<KilnSingleCam />} />
+                    <Route path="/vision/ProcessMonitoring/sinterflame/:clientId/:plantId/:cameraId" element={<SinterflameSingle />} />
                     {/*Quality Tracking pages */}
                     <Route path="/vision/qualityTracking/:material" element={<ClientSelect />} />
                     <Route path="/vision/qualityTracking/:material/:clientId" element={<Quality />} />
