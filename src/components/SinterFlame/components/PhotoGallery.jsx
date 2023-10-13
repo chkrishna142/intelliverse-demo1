@@ -31,13 +31,13 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: 'sinterflame',
+      useCase: 'SINTERFLAME',
       plantName: selectedPlant,
       cameraId: selectedCam,
       startDate: new Date(date).getTime(),
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/feedLibrary/images/", requestData, {
+      .post(baseURL + "vision/v2/processMonitoring/feedLibrary/images/", requestData, {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
