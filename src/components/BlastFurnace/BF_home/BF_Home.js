@@ -3,10 +3,11 @@ import Fuelrate from "./Fuelrate";
 import Production from "./Production";
 import Modelaccuracy from "../BF_Components/Modelaccuracy";
 import Averagepar from "./Averagepar";
-import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import { CircularProgress, CircularProgressLabel, Spinner } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import BFHomeComponent from "../BF_Components/BFHomeComponent";
 import Serverdown from "../BF_Components/Serverdown";
+import { clientIdbf } from "../BF_Components/urlforbf";
 import Timer from "../../../util/VisionUtils/Timer";
 
 const BF_Home = ({
@@ -17,7 +18,8 @@ const BF_Home = ({
   workingurl,
   setInitialRender,
   initialRender,
-  callFunc
+  callFunc,
+  camData
 }) => {
   const size = useWindowSize();
 
@@ -48,7 +50,7 @@ const BF_Home = ({
     // },
   ];
 
-  if (fetcheddata) {
+
     return (
       <div className="w-full h-full flex flex-col  ">
         <div class="w-full h-full ">
@@ -80,6 +82,8 @@ const BF_Home = ({
             }
           </div>
           {/* className={`${page==="feed" ? "opacity-100" : "opacity-0"}`} */}
+          
+          {fetcheddata ?
           <div
             style={{}}
             //  className="grid grid-cols-1 h-auto sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-[4px] sm:gap-[5px] md:gap-[6px] lg:gap-[7px] xl:gap-[8px] w-full  justify-items-center"
@@ -97,30 +101,37 @@ const BF_Home = ({
               handleTabChange={handleTabChange}
             />
 
-            {/* {
-                client!="sesa"? <Averagepar pageshift={pageshift} handleTabChange={handleTabChange}/>:""
-              } */}
-            <Averagepar
+            {
+                clientIdbf==="sesa"? "":<Averagepar
+                pageshift={pageshift}
+                handleTabChange={handleTabChange}
+                camData={camData}
+              />
+              }
+            {/* <Averagepar
               pageshift={pageshift}
               handleTabChange={handleTabChange}
-            />
+              camData={camData}
+            /> */}
             {/* <BFHomeComponent data={fetcheddata?.tools.fuel_rate} tableData={silicon_table_data} toolname={"Silicon Prediction"} pageshift={pageshift} handleTabChange={handleTabChange}/> */}
-          </div>
+          </div>:(workingurl? <div className=" flex justify-center">
+           <CircularProgress isIndeterminate color="green.300" />
+         </div>
+          :
+          <Serverdown/>
+          )
+          
+         }
+         
+          
+          
           <div className="flex w-full justify-end  h-[20%]">
             {/* <Modelaccuracy /> */}
           </div>
         </div>
       </div>
     );
-  } else {
-    return (
-      <div className=" flex justify-center">
-        <CircularProgress isIndeterminate color="green.300" />
-        {/* return '<div class="relative bg-white border border-gray-300 p-4 shadow-md rounded-md flex flex-col gap-[30px] h-[180px] w-[100px]" >' +
-          '<p class="absolute bottom-[30%] left-[-40px] font-bold mb-1 rotate-[-90deg]"> ' + data1.x +':'+ '</p>' +  */}
-      </div>
-    );
-  }
+  
 };
 
 export default BF_Home;
