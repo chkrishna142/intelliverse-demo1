@@ -121,9 +121,11 @@ function ThermalIndicator({ isExpanded3, handleToggle3 ,fetcheddata,client}) {
               </div>
             </div>
 
+
          <div className=" min-w-[200px] flex-1 self-center">
             <img src="/Bficons/heatmaplegends.svg" alt="heat map legends"   />
             </div>
+
              
           </div>
         </div>

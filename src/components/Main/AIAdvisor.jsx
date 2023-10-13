@@ -19,6 +19,17 @@ const AiAdvisor = () => {
     const [text, setText] = useState("")
     const [credits, setCredits] = useState()
 
+    const sampleQuestions = [
+        {
+            id: 1,
+            question: "What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?"
+        },
+        {
+            id: 2,
+            question: "Ask me to generate test plans for the manufacturing of automobile axels including test cases, and acceptance criteria."
+        }
+    ]
+
     useEffect(() => {
         getBalance()
     }, [])
@@ -60,7 +71,7 @@ const AiAdvisor = () => {
     }
 
     function addBreak(str) {
-        return str.replace("\n\n", "<br><br>")
+        return str?.replace("\n\n", "<br><br>")
     }
 
     useEffect(() => {
@@ -132,12 +143,15 @@ const AiAdvisor = () => {
                 {send === false ? <div className='md:visible invisible'>
                     <div className='fixed bottom-32 ml-4 text-xs mb-3'>
                         <div style={{ width: '85.5vw' }} className='flex gap-4' >
-                            <div onClick={() => { callChatGpt("What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?"); setSend(true) }} className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
-                                What are the recommended strategies and techniques for effectively mitigating scaffold build-up on the refractory lining of a blast furnace?
-                            </div>
-                            <div onClick={() => { callChatGpt("Ask me to generate test plans for the manufacturing of automobile axels including test cases, and acceptance criteria."); setSend(true) }} className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
-                                Ask me to generate test plans for the manufacturing of automobile axels including test cases, and acceptance criteria.
-                            </div>
+                            {
+                                sampleQuestions?.map((item, index) => {
+                                    return (
+                                        <div key={index} onClick={() => { callChatGpt(item?.question); setSend(true) }} className='rounded-md border border-[#605D64] px-2 py-2 w-1/2 text-[#605D64] bg-white cursor-pointer hover:bg-gray-100 hover:transition duration-200'>
+                                            {item?.question}
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div> : null}
