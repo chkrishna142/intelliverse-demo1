@@ -230,12 +230,12 @@ const StabilityandThermal = () => {
             </div>
           )}
 
-          {/* <Rca
+          <Rca
             isExpanded2={isExpanded2}
             handleToggle2={handleToggle2}
             series={series}
             options={options}
-          /> */}
+          />
         </div>
 
         <div
@@ -260,12 +260,12 @@ const StabilityandThermal = () => {
             isExpanded5={isExpanded5}
             handleToggle5={handleToggle5}
           />
-          {/* <Rca
+          <Rca
             isExpanded2={isExpanded21}
             handleToggle2={handleToggle21}
             series={series}
             options={options}
-          /> */}
+          />
         </div>
 
         <div
