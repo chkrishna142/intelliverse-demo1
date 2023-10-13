@@ -204,6 +204,19 @@ const BF_Dashboard = () => {
             >
               Impact Tracker
             </Tab>
+            <Tab
+              className={
+                page === "Alert"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
+              }
+              onClick={() => {
+                setPage("Alert");
+                navigate(`/optimus/blastfurnace/${client}`);
+              }}
+            >
+             Alert
+            </Tab>
           </div>
         </TabList>
         <TabPanels className="">
@@ -227,7 +240,7 @@ const BF_Dashboard = () => {
             <Fueloptimizercomp fetcheddata={fetcheddata} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
-            <StabilityandThermal />
+            <StabilityandThermal handleTabChange={handleTabChange} pageshift={pageshift}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Siliconpredictor />
