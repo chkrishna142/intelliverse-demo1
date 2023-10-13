@@ -5,3 +5,19 @@
 
 // base url for trial;
 export const BASE_URL_FOR_BF = 'https://15.206.88.112.nip.io:443/api'; 
+
+
+
+
+
+
+
+// // for jindal with forticlient(vpn)
+export const clientIdbf="jindalsteel";
+
+
+
+
+
+
+

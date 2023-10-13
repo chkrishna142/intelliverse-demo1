@@ -8,38 +8,38 @@ import { WarningTwoIcon } from "@chakra-ui/icons";
 const Production = ({ data, pageshift, handleTabChange }) => {
   const size = useWindowSize();
 
-  const [productionTabel, setProductionTabel] = useState([
-    {
-      name: "Oxygen Enrichment",
-      current: 10.2,
-      optimalRange: "10.0-10.3",
-      impact: "-",
-    },
-    {
-      name: "Cold Blast Volume",
-      current: 5650,
-      optimalRange: "5750-5950",
-      impact: "4",
-    },
-    {
-      name: "Permeability",
-      current: 2.55,
-      optimalRange: "2.59-2.69",
-      impact: "6",
-    },
-    {
-      name: "Stave Cooling - Heat Loss",
-      current: 33,
-      optimalRange: "32-34",
-      impact: "-",
-    },
-    {
-      name: "HS RTD Temp H3",
-      current: 43,
-      optimalRange: "42-45",
-      impact: "-",
-    },
-  ]);
+  // const [productionTabel, setProductionTabel] = useState([
+  //   {
+  //     name: "Oxygen Enrichment",
+  //     current: 10.2,
+  //     optimalRange: "10.0-10.3",
+  //     impact: "-",
+  //   },
+  //   {
+  //     name: "Cold Blast Volume",
+  //     current: 5650,
+  //     optimalRange: "5750-5950",
+  //     impact: "4",
+  //   },
+  //   {
+  //     name: "Permeability",
+  //     current: 2.55,
+  //     optimalRange: "2.59-2.69",
+  //     impact: "6",
+  //   },
+  //   {
+  //     name: "Stave Cooling - Heat Loss",
+  //     current: 33,
+  //     optimalRange: "32-34",
+  //     impact: "-",
+  //   },
+  //   {
+  //     name: "HS RTD Temp H3",
+  //     current: 43,
+  //     optimalRange: "42-45",
+  //     impact: "-",
+  //   },
+  // ]);
 
   const current = new Date();
 
@@ -62,16 +62,21 @@ const Production = ({ data, pageshift, handleTabChange }) => {
   const [alertS, setAlertState] = useState(0);
   let alertState = 0;
 
+  const resetAlert=()=>{
+    setAlertState(0);
+  }
+
+ 
   const handleAlert = () => {
-    alertState = alertState + 1;
+    console.log("alert updates")
+    setAlertState(prev => prev + 1)
+    // alertState = alertState + 1;
+    // console.log("alert increased", alertState);
   };
 
-  useEffect(() => {
-    setAlertState(alertState);
-  }, [alertState]);
 
   const lineStyle = {
-    width: "35%",
+    width: "100%",
     height: "1px",
     background: "#EBEBEB",
   };
@@ -79,28 +84,29 @@ const Production = ({ data, pageshift, handleTabChange }) => {
   // line chart
 
   // console.log("table====>", data.chart);
-  const optimalValue =  Math.floor(data.chart.optimal_value);
+  const optimalValue = Math.floor(data.chart.optimal_value);
   let current_values = data.chart.values;
-//   if(current_values.length<=5){
-//     current_values=[5500, 5000, 6500, 5500, 4000,7500];
-//     // console.log("current valuess--->", current_values.length);
-    
-//  }
+  let current_values_Lastelement=current_values[current_values.length-1]
+  //   if(current_values.length<=5){
+  //     current_values=[5500, 5000, 6500, 5500, 4000,7500];
+  //     // console.log("current valuess--->", current_values.length);
+
+  //  }
   const timeArray = data.chart.times;
 
-  const [chart, setChart] = useState({
+  const chart = {
     series: [
       {
         name: "Current",
         data: current_values,
         // [9500, 11000, 11500, 10500, 10000,9500]
       },
-      {
-        name: "Optimal",
-        // data: Array(data.chart.values.length).fill(optimalValue),
-        data: Array(6).fill(optimalValue),
-        //  [10500,10500,10500,10500,10500,10500]
-      },
+      // {
+      //   name: "Optimal",
+      //   // data: Array(data.chart.values.length).fill(optimalValue),
+      //   data: Array(6).fill(optimalValue),
+      //   //  [10500,10500,10500,10500,10500,10500]
+      // },
     ],
 
     options: {
@@ -142,24 +148,22 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       },
       xaxis: {
         categories: timeArray,
-        //  [
-        //   "5 Aug",
-        //   "6 Aug",
-        //   "7 Aug",
-        //   "8 Aug",
-        //   "9 Aug",
-        //   "10 Aug",
-        //   "11 Aug",
+        tickAmount: 7,
 
-        // ]
+        // [
+        //   "11 pm",
+        //   "11:10 pm",
+        //   "11:20 pm",
+        //   "11:30 pm",
+        //   "11:40 pm",
+        //   "11:50 pm",
+
+        // ],
         labels: {
           show: true,
-          rotate: -60,
-          rotateAlways: false,
           hideOverlappingLabels: true,
           showDuplicates: false,
-          trim: false,
-          minHeight: undefined,
+          trim: true,
 
           style: {
             colors: [],
@@ -183,9 +187,12 @@ const Production = ({ data, pageshift, handleTabChange }) => {
         tickAmount: 4,
       },
 
-      colors: ["#6CA6FC", "#69B04B"], // Set the colors for the first and second series
+      // colors: ["#6CA6FC", "#69B04B"], // Set the colors for the first and second series
+      colors: ["#6CA6FC"],
       dataLabels: {
-        enabled: [true, false], // Enable for Series 1, disable for Series 2
+        // enabled: [true, false], // Enable for Series 1, disable for Series 2
+        enabled: [true], // Enable for Series 1, disable for Series 2
+
         enabledOnSeries: [0],
         style: {
           fontSize: 9,
@@ -198,7 +205,9 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       },
       stroke: {
         curve: "straight",
-        width: [1, 2],
+        // width: [1, 2],
+        width: [1],
+
         // width: [1, 3, 3, 1],
         dashArray: [0, 6],
       },
@@ -209,8 +218,27 @@ const Production = ({ data, pageshift, handleTabChange }) => {
         offsetY: -25,
         offsetX: -5,
       },
+      tooltip: {
+        custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+          var data1 = w.globals.initialSeries[0].data[dataPointIndex];
+
+          return (
+            '<div class="  bg-blue-200  border border-gray-300 shadow-md rounded-md p-2  flex  flex-col justify-center items-center  h-[40px] w-[120px]" >' +
+            '<p class=" bottom-[20%] left-[5px] font-normal mt-4 mb-2  p-2 bg-blue-200 "> <span class="font-bold">Value: </span>: ' +
+            data1 +
+            "</p>" +
+            "</div>"
+          );
+        },
+        // fixed: {
+        //   enabled: true,
+        //   // position: "leftCenter",
+        //   offsetX: 0,
+        //   offsetY: 0,
+        // },
+      },
     },
-  });
+  };
 
   return (
     <div
@@ -223,7 +251,7 @@ const Production = ({ data, pageshift, handleTabChange }) => {
       className="flex h-auto  pb-0 text-left flex-col items-end gap-4 w-[100%]"
     >
       <div
-        className="flex flex-col bg-blue-300 w-full h-auto items-center  "
+        className="flex flex-col bg-blue-300 gap-[5px] w-full h-auto items-center  "
         style={{
           // width: "331px",
 
@@ -248,10 +276,10 @@ const Production = ({ data, pageshift, handleTabChange }) => {
         >
           <div className="flex  flex-col items-start gap-0 w-[146px]">
             <p className="text-white text-neutral-n-99 text-[14px]  md:text-[15px] lg:text-[18px]  font-normal">
-              Production
+               {" Production (ftd)"}
             </p>
             <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
-              {optimalValue} tpd
+              {current_values_Lastelement} tpd
             </p>
           </div>
 
@@ -310,7 +338,7 @@ const Production = ({ data, pageshift, handleTabChange }) => {
 
         <div
           style={{ justifyContent: "center" }}
-          className="flex items-center  w-[100%] p-3 justify-between  "
+          className="flex items-center  w-[100%] p-3 justify-between mt-[28px] "
         >
           <p
             style={{
@@ -327,14 +355,14 @@ const Production = ({ data, pageshift, handleTabChange }) => {
             Top Drivers
           </p>
           <div style={lineStyle}></div>
-          <div className="flex w-[37%] ml-[10px] justify-between ">
+          {/* <div className="flex w-[37%] ml-[10px] justify-between ">
             <p className="text-xs md:text-xs lg:text-[10px] xl:text-[13px] w-[50%] text-[#AEA9B1] text-right font-[400]">
               {formattedDate}
             </p>
             <p className="text-xs md:text-xs lg:text-xs xl:text-xs w-[50%] text-[#AEA9B1] text-right font-[400]">
               {formattedTime}
             </p>
-          </div>
+          </div> */}
         </div>
 
         {/* mid part of div */}
@@ -344,6 +372,7 @@ const Production = ({ data, pageshift, handleTabChange }) => {
             rowArray={data.data}
             tabelname={"production"}
             handleAlert={handleAlert}
+            resetAlert={resetAlert}
           />
         </div>
         <div

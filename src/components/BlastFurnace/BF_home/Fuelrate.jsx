@@ -7,10 +7,7 @@ import { type } from "@testing-library/user-event/dist/type";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
-
-
- 
+const Fuelrate = ({ data, pageshift, handleTabChange }) => {
   const current = new Date();
   const size = useWindowSize();
   // Format the date
@@ -30,7 +27,7 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
   const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
 
   const lineStyle = {
-    width: "35%",
+    width: "100%",
     height: "1px",
     background: "#EBEBEB",
   };
@@ -38,28 +35,37 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
   // line chart data
 
   const [alertS, setAlertState] = useState(0);
-  let alertState = 0;
+  // let alertState = 0;
+
+  const resetAlert=()=>{
+    setAlertState(0);
+  }
 
   const handleAlert = () => {
-    alertState = alertState + 1;
+    console.log("alert updates")
+    setAlertState(prev => prev + 1)
+    // alertState = alertState + 1;
     // console.log("alert increased", alertState);
   };
 
-  useEffect(() => {
-    setAlertState(alertState);
-  }, [alertState]);
+  // useEffect(() => {
+  //   setAlertState(alertState);
+  // }, [alertState]);
 
   const optimalValue = Math.floor(data.chart.optimal_value);
   let current_values = data.chart.values;
+  let current_values_Lastelement=current_values[current_values.length-1]
   // if(current_values.length<=5){
   //    current_values=[530,540,533,555,568,550,];
   // // console.log("current valuess--->", current_values.length);
-     
+
   // }
 
   const timeArray = data.chart.times;
 
-  const [chart, setChart] = useState({
+  
+
+  const chart = {
     series: [
       {
         name: "Current",
@@ -107,52 +113,37 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
         },
       },
       markers: {
-        size: 1,
+        size: [1,0],
       },
       xaxis: {
         categories: timeArray,
-        // [
-        //   "11 pm",
-        //   "11:10 pm",
-        //   "11:20 pm",
-        //   "11:30 pm",
-        //   "11:40 pm",
-        //   "11:50 pm",
-        // ]
+        tickAmount: 5, // Display only 5 ticks
         labels: {
           show: true,
-          rotate: -60,
-          rotateAlways: false,
           hideOverlappingLabels: true,
           showDuplicates: false,
-          trim: false,
-          minHeight: undefined,
-
+          trim: true,
           style: {
             colors: [],
             fontSize: "9px",
-            // fontFamily: 'Helvetica, Arial, sans-serif',
             fontWeight: 300,
             cssClass: "apexcharts-xaxis-label",
           },
         },
-
-        // title: {
-        //   text: "Month",
-        // },
+        tickPlacement: 'on', // Place ticks between labels
       },
       yaxis: {
         // title: {
         //   text: "Temperature",
-        // },
-        min: 525,
-        max: 575,
-        tickAmount: 3,
+        // // },
+        // min: 525,
+        // max: 575,
+        tickAmount: 4,
       },
 
       colors: ["#6CA6FC", "#69B04B"], // Set the colors for the first and second series
       dataLabels: {
-        enabled: [true, false], // Enable for Series 1, disable for Series 2
+        enabled: true, // Enable for Series 1, disable for Series 2
         enabledOnSeries: [0],
         style: {
           fontSize: 9,
@@ -176,11 +167,30 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
         offsetY: -25,
         offsetX: -5,
       },
+      tooltip: {
+        enabled: true, // Enable for Series 1, disable for Series 2
+        enabledOnSeries: [0],
+        custom: function({series, seriesIndex, dataPointIndex, w}) {
+          var data1 = w.globals.initialSeries[0].data[dataPointIndex];
+        
+          return '<div class="  bg-blue-200  border border-gray-300 shadow-md rounded-md p-2  flex  flex-col justify-center items-center  h-[40px] w-[120px]" >' +
+          
+          '<p class=" bottom-[20%] left-[5px] font-normal mt-4 mb-2  p-2 bg-blue-200 "> <span class="font-bold">Value: </span>'+  data1+'</p>' +
+          
+          '</div>';
+        },
+        // fixed: {
+        //   enabled: true,
+        //   // position: "leftCenter",
+        //   offsetX: 0,
+        //   offsetY: 0,
+        // },
+      }
     },
-  });
+  };
 
   // tabel
-  const [fuelTabel, setFuelTabel] = useState([]);
+ 
 
   //  console.log("table",fuelTabel)
 
@@ -227,29 +237,50 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
               Fuel Rate
             </p>
             <p className="text-[#6CA6FC] , text-[16px] font-[500]   md:text-[15px] lg:text-[18px]">
-              {optimalValue} kg/tHM
+              {current_values_Lastelement} kg/tHM
             </p>
           </div>
           {/* condition for numbers of alert or optimal  */}
 
           {alertS === 0 ? (
             // show optimal
-            <div className={` flex p-6 px-8 items-center gap-1  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}>
+            <div
+              className={` flex p-6 px-8 items-center gap-1  ${
+                size.width < 420 ? "w-[100px]" : "w-[118px]"
+              } h-[44px] rounded-[8px] justify-center bg-[#69B04B] `}
+            >
               <CheckCircleOutlineIcon
                 // style={{ width: "38px", height: "38px", color: "#FFF" }}
-                style={{ width: `${size.width < 420 ? '28px' : '30px'}`,
-                 height:`${size.width < 420 ? '28px' : '30px'}`, color: '#FFF' }}
-            
+                style={{
+                  width: `${size.width < 420 ? "28px" : "30px"}`,
+                  height: `${size.width < 420 ? "28px" : "30px"}`,
+                  color: "#FFF",
+                }}
               />
-              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">Optimal</p>
+              <p className="text-[#FFF] text-[18px] text-base  md:text-[15px] lg:text-[18px]  font-normal ">
+                Optimal
+              </p>
             </div>
           ) : (
             //  alert
-            <div className={` flex p-6 px-8 items-center gap-2  ${size.width<420? "w-[100px]":"w-[118px]"} h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}>
-            <WarningTwoIcon  style={{ width: `${size.width < 420 ? '20px' : '25px'}`,
-                 height:`${size.width < 420 ? '20px' : '25px'}`, color: '#FFF' }}/>
+            <div
+              className={` flex p-6 px-8 items-center gap-2  ${
+                size.width < 420 ? "w-[100px]" : "w-[118px]"
+              } h-[44px] rounded-[8px] justify-center bg-[#DC362E] `}
+            >
+              <WarningTwoIcon
+                style={{
+                  width: `${size.width < 420 ? "20px" : "25px"}`,
+                  height: `${size.width < 420 ? "20px" : "25px"}`,
+                  color: "#FFF",
+                }}
+              />
               <div>
-                <p className={`flex items-center   ${size.width<420? "w-[50px]":"w-[58px]"}  text-white  text-[18px] text-base  md:text-[15px] lg:text-[18px] font-normal `}>
+                <p
+                  className={`flex items-center   ${
+                    size.width < 420 ? "w-[50px]" : "w-[58px]"
+                  }  text-white  text-[18px] text-base  md:text-[15px] lg:text-[18px] font-normal `}
+                >
                   {alertS} Alert
                 </p>
               </div>
@@ -257,7 +288,7 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
           )}
         </div>
         {/* chart part */}
-        <div className="w-[95%] h-[200px] ">
+        <div className="w-[95%] h-[230px]  ">
           <Linechart chart={chart} />
         </div>
 
@@ -271,20 +302,21 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
             Top Drivers
           </p>
           <div style={lineStyle}></div>
-          <div className="flex w-[37%] ml-[10px] justify-between ">
+          {/* <div className="flex w-[37%] ml-[10px] justify-between ">
             <p className="text-xs md:text-xs lg:text-[10px] xl:text-[13px] w-[50%] text-[#AEA9B1] text-right font-[400]">
               {formattedDate}
             </p>
             <p className="text-xs md:text-xs lg:text-xs xl:text-xs w-[50%] text-[#AEA9B1] text-right font-[400]">
               {formattedTime}
             </p>
-          </div>
+          </div> */}
         </div>
         {/* Tabel */}
         <div className="w-full  p-2 ">
           <DashboardTable
             rowArray={data.data}
             handleAlert={handleAlert}
+            resetAlert={resetAlert}
             tabelname={"fuelrate"}
           />
         </div>
@@ -297,8 +329,11 @@ const Fuelrate = ({ data ,pageshift,handleTabChange}) => {
             height="44"
             viewdiv="0 0 44 44"
             fill="none"
-            onClick={()=>{pageshift("fuel optimizer"); handleTabChange(1)}}
-              cursor="pointer"
+            onClick={() => {
+              pageshift("fuel optimizer");
+              handleTabChange(1);
+            }}
+            cursor="pointer"
           >
             <g filter="url(#filter0_d_260_2062)">
               <rect
