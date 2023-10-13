@@ -121,6 +121,7 @@ const [heapMapData,setHeatMapData]=useState(fetcheddata.thermal_heat_map.reverse
          
               <img src="/Bficons/heatmaplegends.svg" alt="heat map legends" width="200px"  style={{ height:"300px", }} />
         
+      
              
           </div>
         </div>
