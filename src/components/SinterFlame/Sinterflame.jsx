@@ -5,7 +5,7 @@ import Feed from "./Tabs/Feed";
 import FeedLibrary from "./Tabs/FeedLibrary";
 import Alerts from "./Tabs/Alerts";
 import Report from "./Tabs/Report";
-// import Analytics from "./Tabs/Analytics";
+import Analytics from "./Tabs/Analytics";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const Capitalize = (str) => {
@@ -115,14 +115,14 @@ const Sinterflame = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* {Object.keys(plantCamMap).length != 0 && (
+            {Object.keys(plantCamMap).length != 0 && (
               <Analytics
                 plantId={Object.keys(plantCamMap)[0]}
                 cameraId={plantCamMap[Object.keys(plantCamMap)[0]][0]}
                 disable={false}
                 plantCamMap={plantCamMap}
               />
-            )} */}
+            )}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Report

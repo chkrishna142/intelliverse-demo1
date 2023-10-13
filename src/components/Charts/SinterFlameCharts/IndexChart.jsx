@@ -14,14 +14,14 @@ const IndexChart = ({ type, value }) => {
                 // border: `2px solid ${color[type]}`,
               }}
             >
-              {i == value && (
+              {/* {i == value && (
                 <div className="absolute flex flex-col top-[-30px] right-0 left-0 items-center">
                   <p className="bg-white rounded text-xs text-black font-medium">
                     {value}
                   </p>
                   <TriangleDownIcon />
                 </div>
-              )}
+              )} */}
             </div>
           );
         })}
