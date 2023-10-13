@@ -117,7 +117,7 @@ const SinterflameSingle = () => {
           {
             <div className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}>
               <Timer
-                initialSeconds={30}
+                initialSeconds={900}
                 callFunc={setCallApi}
                 initialRender={initialRender}
                 setInitialRender={setInitialRender}

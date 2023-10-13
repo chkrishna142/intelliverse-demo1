@@ -34,11 +34,11 @@ const VideoInputForm = ({
         new Date(date + "T" + fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
       clientId: param.clientId.toLowerCase(),
-      material: 'sinterflame',
+      useCase: 'SINTERFLAME',
     });
     const response = await axios
       .post(
-        baseURL + "vision/v2/sizing/feedLibrary/video/",
+        baseURL + "vision/v2/processMonitoring/feedLibrary/video/",
         requestData,
         {
           credentials: "same-origin",
@@ -75,7 +75,7 @@ const VideoInputForm = ({
   };
 
   return (
-    <div className="flex flex-col gap-8 w-[24vw] min-w-[375px] h-full">
+    <div className="flex flex-col gap-8 w-[24vw] min-w-[245px] sm:min-w-[375px] h-full">
       <div className="flex flex-col gap-6 items-center">
         <div className="flex flex-col gap-3 items-start w-full">
           <p className="text-[#938F96] text-sm font-medium">Select a plant</p>

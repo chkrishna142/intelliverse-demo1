@@ -1,10 +1,11 @@
-import LineChart from "../../Charts/KilnCharts/LineChart";
 import IndexChart from "../../Charts/SinterFlameCharts/IndexChart";
 import { useEffect, useState, useContext } from "react";
 import { baseURL } from "../../../index";
 import { Spinner } from "@chakra-ui/react";
 import axios from "axios";
 import NavContext from "../../NavContext";
+import ColorBarChart from "../../Charts/SinterFlameCharts/ColorBarChart";
+import LineChart from "../../Charts/SinterFlameCharts/LineChart";
 
 const colors = {
   dusty: "#fffcf2",
@@ -45,21 +46,25 @@ const CamFeed = ({
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
-      clientId: "ultratech",
-      material: "kilnhealth",
-      cameraId: "jaffrabad1",
-      plantName: "jaffrabad",
+      clientId: clientId,
+      useCase: material.toUpperCase(),
+      cameraId: cameraId,
+      // plantName: plantName,
     });
     const response = await axios
-      .post(baseURL + "vision/processMonitoring/feed/detail/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/analysis/detail/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
-        setCamData(response.data['jaffrabad1']);
+        setCamData(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -68,21 +73,25 @@ const CamFeed = ({
 
   const apiCallPopulate = async () => {
     const requestData = JSON.stringify({
-      clientId: "ultratech",
-      material: "kilnhealth",
-      cameraId: "jaffrabad1",
-      plantName: "jaffrabad",
+      clientId: clientId,
+      useCase: material.toUpperCase(),
+      cameraId: cameraId,
+      // plantName: plantName,
     });
     const response = await axios
-      .post(baseURL + "vision/processMonitoring/feed/list/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/analysis/list/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
-        setBulkData(response.data['jaffrabad1'].reverse());
+        setBulkData(response.data.reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -136,52 +145,57 @@ const CamFeed = ({
                   Current Analysis
                 </p>
                 <p className="text-sm text-[#79767D]">
-                  {new Date(camData.created).toLocaleDateString("en-US", {
+                  {new Date(camData.timestamp).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "2-digit",
                   })}
                   &nbsp;&nbsp;&nbsp;
-                  {new Date(camData.created).toLocaleTimeString()}
+                  {new Date(camData.timestamp).toLocaleTimeString()}
                 </p>
               </div>
               <div className="flex flex-col gap-4 w-full h-[80vh] sm:h-[60vh]">
-                <div className="w-full h-[60%] bg-black flex justify-center items-center rounded-lg">
+                <div className="w-full h-[70%] bg-black flex justify-center items-center rounded-lg">
                   <img
-                    className="rounded-xl w-auto h-[80%]"
-                    src={camData.image_url}
+                    className="rounded-xl w-auto h-[30vh]"
+                    src={camData.originalImage}
                   />
                 </div>
-                <div className="h-[40%] gap-4 flex flex-col sm:flex-row w-full items-start sm:items-center justify-between">
-                  <div
-                    className="py-5 px-5 flex flex-col gap-2 sm:gap-[30px] w-[70vw] sm:w-[45vw] xl:w-[28vw] h-full justify-center rounded"
-                    // style={{ backgroundColor: colors[dummy.tag.toLowerCase()] }}
-                  >
-                    <IndexChart type="Flame" value={camData.dusty} />
-                    {/* <IndexChart type="Hot" value={camData.hot} /> */}
-                  </div>
-                  <div
-                    className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-center"
-                    style={{
-                      backgroundColor: colors[camData.tag.toLowerCase()],
-                    }}
-                  >
-                    <p className="text-sm text-[#605D64] font-medium">
-                      Health:
-                    </p>
-                    <div className="flex gap-3 items-center">
-                      <div
-                        className="w-[5px] h-[20px]"
-                        style={{
-                          backgroundColor: tagColor[camData.tag.toLowerCase()],
-                        }}
-                      ></div>
-                      <p className="text-[#3E3C42] font-medium text-lg">
-                        {tagName[camData.tag.toLowerCase()]}
+                {!(camData.flags.viewObstructed || camData.flags.flapClosed) ? (
+                  <div className="h-[30%] gap-4 flex flex-col sm:flex-row w-full items-start sm:items-center justify-between">
+                    <div className="py-5 px-5 flex flex-col gap-2 sm:gap-[30px] w-[70vw] sm:w-[45vw] xl:w-[28vw] h-full justify-center items-center rounded">
+                      <p className="self-start text-sm text-[#605D64] font-medium whitespace-nowrap">
+                        Health Index:
+                      </p>
+                      <IndexChart type="Flame" value={camData.healthIndex} />
+                    </div>
+                    <div
+                      className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-start sm:self-center"
+                      style={{
+                        backgroundColor: `rgb(${camData.rgb.r},${camData.rgb.g},${camData.rgb.b},0.6)`,
+                      }}
+                    >
+                      <p className="text-sm text-[#605D64] font-medium">RGB</p>
+                      <p className="text-[#3E3C42] font-medium text-lg whitespace-nowrap">
+                        {"( " +
+                          camData.rgb.r +
+                          "," +
+                          camData.rgb.g +
+                          "," +
+                          camData.rgb.b +
+                          " )"}
                       </p>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="h-[40%] gap-4 flex flex-row w-full items-center justify-center text-black font-bold text-center text-2xl">
+                    <img
+                      src="/SinterflameIcons/viewObstruct.svg"
+                      className="h-[10vh]"
+                    />
+                    <p>View Obstructed</p>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-8 flex-1">
@@ -190,11 +204,15 @@ const CamFeed = ({
               </p>
               <div className="h-[60vh]">
                 <LineChart
-                  data={[camData.dusty]}
-                  timeStamps={new Date(camData?.created).getTime()}
-                  labels={["Index"]}
+                  data={[camData.healthIndex]}
+                  timeStamps={new Date(camData?.timestamp).getTime()}
+                  labels={["healthIndex"]}
                   color={["#fee179"]}
                 />
+                {/* <ColorBarChart
+                    timeStamps={new Date(camData?.timestamp).getTime()}
+                    rgb={camData.rgb}
+                  /> */}
               </div>
             </div>
           </div>

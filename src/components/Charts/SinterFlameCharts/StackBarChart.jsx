@@ -1,23 +1,5 @@
 import ReactApexChart from "react-apexcharts";
 
-let color = {
-  size: [
-    "#ffc107",
-    "#5193f6",
-    "#ef6f12",
-    "#1c56ac",
-    "#e91e63",
-    "#00bcd4",
-    "#8bc34a",
-    "#9c27b0",
-    "#673ab7",
-    "#ff9800",
-    "#4caf50",
-    "#795548",
-  ],
-  color: ["#79767D", "#000000"],
-};
-
 const StackBarChart = () => {
   const series = [
     {
@@ -68,7 +50,7 @@ const StackBarChart = () => {
         fontSize: "16px",
       },
     },
-    colors: color["size"],
+    colors: ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "black"],
     xaxis: {
       categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
       labels: {

@@ -46,7 +46,7 @@ const LibraryGrid = ({ plantName, img }) => {
                 </div>
               </div>
               <img className="rounded-lg" src={x.originalImage} />
-              <div className="flex gap-4 absolute bottom-2 right-2 opacity-0 hover:opacity-75">
+              <div className="flex gap-4 absolute top-[40px] right-2 opacity-50 hover:opacity-100">
                 {/* <img src="/SizingIcons/ShareIcon.svg" alt="" /> */}
                 <img
                   className="cursor-pointer rounded-full"
