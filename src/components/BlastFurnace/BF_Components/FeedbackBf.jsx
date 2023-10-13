@@ -40,7 +40,7 @@ import {
         throw new Error("Invalid data");
       }
   
-      const response = await axios.post(BASE_URL_FOR_BF + "/feedback/", requestData, {
+      const response = await axios.post(BASE_URL_FOR_BF + "/feedbac/", requestData, {
         headers: {
           "Content-Type": "application/json",
         },

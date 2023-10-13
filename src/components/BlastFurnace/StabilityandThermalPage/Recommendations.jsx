@@ -26,7 +26,40 @@ function Recommendations({
 }) {
   const size = useWindowSize();
 
-  const [recommendForMatrix, setRecommendForMatrix] = useState();
+  const [recommendForMatrix, setRecommendForMatrix] = useState({
+    "snooze": false,
+    "recommendation": "Optimized Functioning",
+    "pwi_status": "In-range",
+    "hot_metal_status": "In-range",
+    "recommendation_matrix": {
+      "pwi": "ir",
+      "hot_metal": "ir"
+    },
+    "show_burden": true,
+    "rolling_means": {
+      "last_24hrs": {
+        "pwi": 0.740092678405933,
+        "cwi": 1.57848007414272,
+        "hot_metal": 1492.52389249305
+      },
+      "last_8hrs": {
+        "pwi": 0.750104384133611,
+        "cwi": 1.51162839248434,
+        "hot_metal": 1486.91396659708
+      },
+      "last_1hrs": {
+        "pwi": 0.737457627118644,
+        "cwi": 1.68050847457627,
+        "hot_metal": 1481.41169491525
+      },
+      "current": {
+        "pwi": 0.7040191473957568,
+        "cwi": 1.5840430816404527,
+        "hot_metal": 1496.21057458333
+      }
+    },
+    "id": "7fe43d01-0710-408a-9f27-f42bcfe4d3f6"
+  });
   const [recommendForMatrixfail, setRecommendForMatrixfail] = useState(false);
   const [feedback, setFeedback] = useState(true);
 

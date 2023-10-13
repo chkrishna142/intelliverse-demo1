@@ -14,6 +14,8 @@ import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 import Serverdown from "./Serverdown";
 import { BASE_URL_FOR_BF } from "./urlforbf";
+import AlertBf from "../Alerts/AlertBf";
+import ReportBf from "../Report/ReportBf";
 const BF_Dashboard = () => {
   const navigate = useNavigate();
   const [callApi, setCallApi] = useState(false);
@@ -217,6 +219,19 @@ const BF_Dashboard = () => {
             >
              Alert
             </Tab>
+            <Tab
+              className={
+                page === "Report"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
+              }
+              onClick={() => {
+                setPage("Report");
+                navigate(`/optimus/blastfurnace/${client}`);
+              }}
+            >
+              Report
+            </Tab>
           </div>
         </TabList>
         <TabPanels className="">
@@ -254,6 +269,12 @@ const BF_Dashboard = () => {
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Impacttrackercharts />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
+            <AlertBf />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
+            <ReportBf />
           </TabPanel>
         </TabPanels>
       </Tabs>
