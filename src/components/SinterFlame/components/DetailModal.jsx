@@ -22,17 +22,6 @@ import NavContext from "../../NavContext";
 import { useState, useContext, useRef, useEffect } from "react";
 import { useWindowSize } from "@uidotdev/usehooks";
 
-let dummy = {
-  originalImage:
-    "https://gmk.center/wp-content/uploads/2023/09/image-1-2023-09-22T121503.866.jpg",
-  index: 1,
-  hasAlert: false,
-  created: 1633958103000,
-  lidDown: false,
-  color: { r: 255, g: 0, b: 0 },
-  alert: "Reduce Air-to-fuel ratio",
-};
-
 const DetailModal = ({ openModal, closeModal, data, index }) => {
   let param = useParams();
   const size = useWindowSize();
@@ -43,25 +32,29 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
   const idRef = useRef();
   const cameraRef = useRef();
   const plantRef = useRef();
-  const [modalData, setModalData] = useState(dummy);
+  const [modalData, setModalData] = useState({});
   const [openFeedback, setopenFeedback] = useState(false);
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: clientId,
-      material: material,
+      useCase: material.toUpperCase(),
       plantName: plantRef.current,
       cameraId: cameraRef.current,
       recordId: idRef.current,
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/history/single/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/history/single/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
         setModalData(response.data);
       })
@@ -75,7 +68,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
     idRef.current = data[index].id;
     cameraRef.current = data[index].cameraId;
     plantRef.current = data[index].plantName;
-    // apiCall();
+    apiCall();
   }, []);
 
   const toggleMove = (val) => {
@@ -107,17 +100,23 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                 <div className="py-3 pr-2 pl-6 flex justify-between items-center bg-[#F5F5F5] rounded-tr-xl rounded-tl-xl">
                   <div className="flex gap-3 items-center">
                     <p className="text-[#AEA9B1] font-semibold text-xl">
-                      {/* {data[indexRef.current].hasOwnProperty("idx") &&
-                        data[indexRef.current]["idx"] + "."} */}
+                      {data[indexRef.current].hasOwnProperty("idx") &&
+                        data[indexRef.current]["idx"] + "."}
                     </p>
                     <p className="text-black font-semibold text-sm">
-                      {new Date(modalData.created).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "short",
-                        day: "2-digit",
-                      }) +
+                      {new Date(modalData.timestamp).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "2-digit",
+                        }
+                      ) +
                         " " +
-                        new Date(modalData.created).toLocaleTimeString()}
+                        new Date(modalData.timestamp).toLocaleTimeString()}
+                    </p>
+                    <p className="text-black font-semibold text-sm">
+                      {modalData.cameraId}
                     </p>
                   </div>
                   <img
@@ -136,7 +135,9 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                       onClick={() => toggleMove(1)}
                     />
                   )}
-                  {!modalData.lidDown ? (
+                  {!(
+                    modalData.flags.viewObstructed || modalData.flags.flapClosed
+                  ) ? (
                     <>
                       <div className="flex-1 grid grid-cols-2 gap-4 p-5">
                         <div className="flex flex-col gap-2 items-center">
@@ -157,17 +158,17 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                           <div className="h-full w-full">
                             <IndexChart
                               type={"Flame"}
-                              value={modalData.index}
+                              value={modalData.healthIndex}
                             />
                           </div>
-                          <div className="h-full w-full border-2 border-red-400 text-black font-medium text-base bg-red-100 flex justify-center items-center rounded-xl">
+                          {/* <div className="h-full w-full border-2 border-red-400 text-black font-medium text-base bg-red-100 flex justify-center items-center rounded-xl">
                             {modalData.alert}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </>
                   ) : (
-                    <div className="flex-1 flex gap-4 items-center">
+                    <div className="flex-1 grid grid-cols-2 gap-4 p-5">
                       <div className="flex flex-col gap-2 items-center">
                         <p className="text-sm text-[#3E3C42] self-start">
                           Original Image
@@ -223,8 +224,8 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                 <div className="py-3 pr-2 pl-6 flex justify-between items-center bg-[#F5F5F5] rounded-tr-xl rounded-tl-xl">
                   <div className="flex gap-3 items-center">
                     <p className="text-[#AEA9B1] font-semibold text-xl">
-                      {/* {data[indexRef.current].hasOwnProperty("idx") &&
-                        data[indexRef.current]["idx"] + "."} */}
+                      {data[indexRef.current].hasOwnProperty("idx") &&
+                        data[indexRef.current]["idx"] + "."}
                     </p>
                     <p className="text-black font-semibold text-sm">
                       {new Date(modalData.timestamp).toLocaleDateString(
@@ -238,6 +239,9 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                         " " +
                         new Date(modalData.timestamp).toLocaleTimeString()}
                     </p>
+                    <p className="text-black font-semibold text-sm">
+                      {modalData.cameraId}
+                    </p>
                   </div>
                   <img
                     src="/SizingIcons/cross.svg"
@@ -247,7 +251,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                 </div>
               </DrawerHeader>
               <DrawerBody padding="0px">
-                <div className="flex">
+                <div className="flex justify-center items-center h-[80%]">
                   {data.length > 1 && (
                     <img
                       className="sticky top-[50%] left-0 h-[32px] pl-2 cursor-pointer"
@@ -255,8 +259,10 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                       onClick={() => toggleMove(1)}
                     />
                   )}
-                  {!modalData.lidDown ? (
-                    <div className="flex-1 grid grid-cols-1 gap-3 p-3">
+                  {!(
+                    modalData.flags.viewObstructed || modalData.flags.flapClosed
+                  ) ? (
+                    <div className="flex-1 grid grid-cols-1 gap-20 p-3">
                       <div className="flex flex-col gap-2 items-center">
                         <p className="text-sm text-[#3E3C42] self-start">
                           Original Image
@@ -273,12 +279,15 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                           Health Index
                         </p>
                         <div className="h-full w-full">
-                          <IndexChart type={"Flame"} value={modalData.index} />
+                          <IndexChart
+                            type={"Flame"}
+                            value={modalData.healthIndex}
+                          />
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div className="flex-1 flex flex-col gap-3 justify-center p-3 items-center">
+                    <div className="flex-1 grid grid-cols-1 gap-20 p-3">
                       <div className="flex flex-col gap-2 items-center">
                         <p className="text-sm text-[#3E3C42] self-start">
                           Original Image
@@ -290,10 +299,10 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                           />
                         </div>
                       </div>
-                      <div className="flex-1 flex flex-col gap-8 items-center justify-center">
+                      <div className="flex-1 flex gap-8 items-center justify-center">
                         <img
                           src="/SinterflameIcons/viewObstruct.svg"
-                          className="h-[20vh]"
+                          className="h-[10vh]"
                         />
                         <p>View Obstructed</p>
                       </div>

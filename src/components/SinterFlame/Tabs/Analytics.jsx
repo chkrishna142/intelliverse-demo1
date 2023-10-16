@@ -6,12 +6,13 @@ import SpiderChart from "../../Charts/SinterFlameCharts/SpiderChart";
 import StackBarChart from "../../Charts/SinterFlameCharts/StackBarChart";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { Select, Spinner } from "@chakra-ui/react";
+import HistoryAnalytics from "../components/HistoryAnalytics";
 import axios from "axios";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
-  const [gapData, setGapData] = useState([]);
+  const [graphData, setGraphData] = useState([]);
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
@@ -47,20 +48,17 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: 'sinterflame',
-      cameraId:
-        selectedCam === "All Cams" || selectedPlant === "All Plants"
-          ? "all"
-          : selectedCam,
+      useCase: "SINTERFLAME",
+      cameraId: "all",
       plantName: selectedPlant === "All Plants" ? "all" : selectedPlant,
       startDate: new Date(fromTime).getTime(),
       endDate:
         new Date(toTime).getTime() + 11 * 60 * 60 * 1000 + 59 * 60 * 1000,
-      distType: "MGW",
+      distType: "HEALTHINDEX",
     });
     const response = await axios
       .post(
-        baseURL + "vision/v2/qualityTracking/analytics/distribution/",
+        baseURL + "vision/v2/processMonitoring/analytics/distribution/",
         requestData,
         {
           credentials: "same-origin",
@@ -71,7 +69,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
         }
       )
       .then((response) => {
-        setGapData(response.data);
+        setGraphData(response.data);
         setSizeDataChanging(false);
       })
       .catch((error) => {
@@ -91,14 +89,14 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   useEffect(() => {
     let gap = 0;
     let count = 0;
-    gapData.map((i) => {
+    graphData.map((i) => {
       if (i.mgw != 0) {
         gap += i.mgw;
         count++;
       }
     });
     setAvgMgw(count == 0 ? 0 : (gap / count).toFixed(2));
-  }, [gapData]);
+  }, [graphData]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -129,7 +127,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                   })}
               </Select>
             </div>
-            <div className="min-w-[110px]">
+            {/* <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
                 color="#605D64"
@@ -154,7 +152,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                     );
                   })}
               </Select>
-            </div>
+            </div> */}
             <div className="min-w-[110px]">
               <Select
                 borderColor="#CAC5CD"
@@ -204,14 +202,24 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           Burner Health Distribution
         </p>
         <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
-          <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw] h-[35vh]">
-            <SpiderChart />
+          <div className="ml-0 min-w-[285px] w-[25vw] h-[35vh]">
+            <SpiderChart data={graphData} />
           </div>
-          <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
-            <StackBarChart />
+          <div className="ml-[-10px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
+            <StackBarChart data={graphData} />
           </div>
         </div>
       </div>
+      {(disable || Object.keys(plantCamMap).length != 0) && (
+        <HistoryAnalytics
+          plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
+          cameraId={
+            disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
+          }
+          disable={disable}
+          plantCamMap={plantCamMap}
+        />
+      )}
     </div>
   );
 };

@@ -27,11 +27,11 @@ const MaterialSelect = () => {
   let param = useParams();
   const [materialData, setMaterialData] = useState({});
   const [materials, setMaterials] = useState([]);
-  const { auth } = useContext(NavContext);
+  const { auth, email } = useContext(NavContext);
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
-      email: "aman@ripik.in",
+      email: email,
       category: param.category.toLowerCase(),
     });
     const response = await axios
