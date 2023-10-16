@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
-// import DetailModal from "../SizingComponents/DetailModal";
+import DetailModal from "../components/DetailModal";
 import Paginator from "../../../util/VisionUtils/Paginator";
 import {
   Select,
@@ -40,6 +40,10 @@ const getReason = (reason) => {
   }
 };
 
+const getAlertMessage = () => {
+  return "Health index is poor";
+};
+
 const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   const { auth } = useContext(NavContext);
@@ -69,7 +73,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: clientId,
-      material: material,
+      useCase: material.toUpperCase(),
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
       cameraId:
@@ -80,13 +84,17 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       maxLimit: 8000,
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/alerts/overview/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/alerts/overview/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
         setAlerts(response.data);
         setAlertsChanging(false);
@@ -221,6 +229,9 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                     );
                   })}
                   <Th color="#79767D" fontWeight={400}>
+                    COMMENT
+                  </Th>
+                  <Th color="#79767D" fontWeight={400}>
                     {""}
                   </Th>
                 </Tr>
@@ -242,7 +253,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                           " " +
                           new Date(item.timestamp).toLocaleTimeString()}
                       </Td>
-                      <Td className="">
+                      {/* <Td className="">
                         <Flex gap="1rem" align="center">
                           <div className="flex flex-col justify-center items-center">
                             <Image
@@ -253,8 +264,9 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                             <span>{getReason(item.alertCodes[0])}</span>
                           </div>
                         </Flex>{" "}
-                      </Td>
-                      <Td className="">{item.alertMessages.join(" ")}</Td>
+                      </Td> */}
+                      <Td className="">{item.healthIndex}</Td>
+                      <Td className="">{getAlertMessage()}</Td>
                       <Td>
                         <p
                           className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[80px]"
@@ -271,7 +283,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           </TableContainer>
         )}
       </div>
-      {/* {openModal && (
+      {openModal && (
         <DetailModal
           openModal={openModal}
           closeModal={() => setOpenModal(false)}
@@ -279,7 +291,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           index={indexRef.current}
           PlantName={selectedPlant}
         />
-      )} */}
+      )}
     </div>
   );
 };

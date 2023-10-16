@@ -104,6 +104,7 @@ const Login = () => {
         if (data === 202) {
           localStorage.setItem('logged_in', true)
           localStorage.setItem('auth_token', authToken)
+          localStorage.setItem('email', email)
           console.log('token', authToken)
           setLogin(true)
           setSubmittingOTP(false)

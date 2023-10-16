@@ -17,6 +17,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
+const getComment = (val) => {
+  if (val <= 2) return "POOR";
+  else if (val == 3) return "AVERAGE";
+  else return "GOOD";
+};
+
 const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   const { auth } = useContext(NavContext);
@@ -43,7 +49,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: "sinterflame",
+      useCase: "SINTERFLAME",
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
       cameraId:
@@ -54,13 +60,17 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       basis: selectedBasis,
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/report/overview/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/report/overview/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
         setReport(response.data);
         setReportChanging(false);
@@ -200,6 +210,9 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                       </Th>
                     );
                   })}
+                  <Th color="#79767D" fontWeight={400}>
+                    COMMENT
+                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -209,12 +222,10 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                       key={index}
                       className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                     >
-                      <Td className="cursor-pointer">
-                        {String(index + 1).padStart(2, "0")}
-                      </Td>
+                      <Td className="">{String(index + 1).padStart(2, "0")}</Td>
                       {report.order.map((x, idx) => {
                         return (
-                          <Td key={idx} className="cursor-pointer">
+                          <Td key={idx} className="">
                             {x.toLowerCase().includes("time")
                               ? new Date(item[x]).toLocaleDateString() +
                                 " " +
@@ -223,6 +234,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                           </Td>
                         );
                       })}
+                      <Td className="">{getComment(item.healthIndex)}</Td>
                     </Tr>
                   );
                 })}

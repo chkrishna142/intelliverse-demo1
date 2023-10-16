@@ -1,32 +1,53 @@
 import ReactApexChart from "react-apexcharts";
 
-const StackBarChart = () => {
+const map = {
+  "Index 1": 1,
+  "Index 2": 2,
+  "Index 3": 3,
+  "Index 4": 4,
+  "Index 5": 5,
+  "View obstructed": 0,
+};
+
+const StackBarChart = ({ data }) => {
   const series = [
     {
       name: "Index 1",
-      data: [7, 8, 2, 1, 3, 7, 5, 6],
+      data: [],
     },
     {
       name: "Index 2",
-      data: [2, 7, 6, 2, 5, 8, 6, 4],
+      data: [],
     },
     {
       name: "Index 3",
-      data: [9, 6, 5, 1, 4, 9, 3, 6],
+      data: [],
     },
     {
       name: "Index 4",
-      data: [7, 2, 9, 3, 6, 8, 4, 5],
+      data: [],
     },
     {
       name: "Index 5",
-      data: [2, 1, 4, 3, 1, 7, 5, 2],
+      data: [],
     },
     {
       name: "View obstructed",
-      data: [7, 6, 8, 1, 5, 7, 4, 5],
+      data: [],
     },
   ];
+
+  const burners = [];
+
+  data.map((val) => {
+    burners.push(val.cameraId);
+  });
+
+  series.map((obj, idx) => {
+    data.map((val) => {
+      obj.data.push(val.freqDist[map[obj.name]]);
+    });
+  });
 
   const options = {
     chart: {
@@ -41,7 +62,7 @@ const StackBarChart = () => {
       x: {
         show: true,
         formatter: function (value) {
-          return "Burner " + value;
+          return value;
         },
       },
       theme: "dark",
@@ -52,7 +73,8 @@ const StackBarChart = () => {
     },
     colors: ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "black"],
     xaxis: {
-      categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
+      // categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
+      categories: burners,
       labels: {
         show: true,
         formatter: function (value) {

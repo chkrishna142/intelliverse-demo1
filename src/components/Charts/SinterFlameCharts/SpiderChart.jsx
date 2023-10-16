@@ -1,14 +1,32 @@
 import ReactApexChart from "react-apexcharts";
 
-const SpiderChart = () => {
-  let points = [1.0, 1.4, 1.9, 2.3, 2.8, 3.2, 3.7, 4.1];
-  let labels = ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"];
+const SpiderChart = ({ data }) => {
+  let points = [];
+  let labels = [];
+  data.map((val) => {
+    let avgValue;
+    let total = 0;
+    let sum = Object.values(val.freqDist).reduce(
+      (accumulator, currentValue, idx) => {
+        if (idx != 0) return accumulator + currentValue;
+        return accumulator;
+      },
+      0
+    );
+    Object.keys(val.freqDist).map((id) => {
+      if (id != 0) total += parseInt(id) * val.freqDist[id];
+    });
+    avgValue = sum != 0 ? total / sum : 0;
+    points.push(avgValue);
+    labels.push(val.cameraId);
+  });
   const series = [
     {
       name: "Avg health index",
       data: points,
     },
   ];
+  console.log(series, "data points");
   const options = {
     chart: {
       type: "radar",
@@ -21,7 +39,7 @@ const SpiderChart = () => {
       x: {
         show: true,
         formatter: function (value) {
-          return "Burner " + value;
+          return value;
         },
       },
       theme: "dark",
@@ -30,8 +48,19 @@ const SpiderChart = () => {
         fontSize: "16px",
       },
     },
+    fill: {
+      opacity: 0.1,
+      type: "solid",
+    },
     xaxis: {
       categories: labels,
+    },
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return value.toFixed(2);
+        },
+      },
     },
   };
 

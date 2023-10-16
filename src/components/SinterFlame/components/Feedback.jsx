@@ -33,7 +33,7 @@ import {
     const apiCall = async () => {
       const requestData = JSON.stringify({
         clientId: clientId,
-        material: material,
+        useCase: material.toUpperCase(),
         plantName: plantName,
         cameraId: cameraId,
         recordId: id,
@@ -52,7 +52,7 @@ import {
         return;
       }
       const response = await axios
-        .post(baseURL + "vision/v2/sizing/feedback/single/", requestData, {
+        .post(baseURL + "vision/v2/processMonitoring/feedback/single/", requestData, {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
