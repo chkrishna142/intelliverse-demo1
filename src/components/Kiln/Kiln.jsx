@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useWindowSize } from "@uidotdev/usehooks";
 import KilnFeed from "./Tabs/KilnFeed";
+import Alerts from "./Tabs/Alerts";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -16,7 +17,7 @@ const Capitalize = (str) => {
 const Kiln = () => {
   const size = useWindowSize();
   let param = useParams();
-  const [plantCamMap,setPlantCamMap] = useState({});
+  const [plantCamMap, setPlantCamMap] = useState({});
   const [page, setPage] = useState("feed");
   return (
     <div
@@ -25,7 +26,7 @@ const Kiln = () => {
     >
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
-          {Capitalize('kiln Vision')}
+          {Capitalize("kiln Vision")}
         </p>
       </div>
 
@@ -88,13 +89,20 @@ const Kiln = () => {
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
             <KilnFeed
-              material={'kilnhealth'}
+              material={"kilnhealth"}
               clientId={param.clientId.toLowerCase()}
               setPlantCamMap={setPlantCamMap}
-              Map = {plantCamMap}
+              Map={plantCamMap}
             />
           </TabPanel>
-          <TabPanel className="!pl-0 !pr-0"></TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            <Alerts
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
+          </TabPanel>
           <TabPanel className="!pl-0 !pr-0"></TabPanel>
           <TabPanel className="!pl-0 !pr-0"></TabPanel>
           <TabPanel className="!pl-0 !pr-0"></TabPanel>
