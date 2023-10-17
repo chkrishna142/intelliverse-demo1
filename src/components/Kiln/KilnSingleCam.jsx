@@ -4,7 +4,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
-// import Alerts from "./Tabs/Alerts";
+import Alerts from "./Tabs/Alerts";
 // import FeedLibrary from "./Tabs/FeedLibrary";
 // import Report from "./Tabs/Report";
 import KilnCamFeed from "./Tabs/KilnCamFeed";
@@ -48,7 +48,7 @@ const KilnSingleCam = () => {
               style={{ textDecoration: "none" }}
             >
               <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
-                {Capitalize(material + " Sizing")}
+                {Capitalize("Kiln Vision")}
               </p>
             </Link>
           </BreadcrumbItem>
@@ -139,7 +139,7 @@ const KilnSingleCam = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <Alerts plantId={plantId} cameraId={cameraId} disable={true} /> */}
+            <Alerts plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             {/* <FeedLibrary plantId={plantId} cameraId={cameraId} disable={true} /> */}

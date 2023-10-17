@@ -26,7 +26,12 @@ const WorkforceSafety = () => {
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-      <img className="fixed top-5 right-0 h-[30px] w-[160px] bg-white" style={{zIndex: 1000}} src="/WorkforceSafetyIcons/asianpaintsLogo.svg"/>
+      <div className="fixed top-5 right-0 h-[30px] w-[180px] bg-white" style={{ zIndex: 1000 }}>
+        <img
+          className="absolute h-[200px] w-[180px] top-[-85px]"
+          src="https://static.vecteezy.com/system/resources/previews/021/671/856/original/asian-paints-logo-free-png.png"
+        />
+      </div>
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
           {Capitalize("raw material sampling")}

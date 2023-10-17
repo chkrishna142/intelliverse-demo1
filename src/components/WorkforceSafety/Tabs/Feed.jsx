@@ -3,9 +3,21 @@ import { useToast } from "@chakra-ui/react";
 import FeedCard from "../Components/FeedCard";
 
 const playNotificationSound = () => {
-  console.log('playing...')
-  const audio = new Audio('/WorkforceSafetyIcons/audio/alert.mp3');
-  audio.play();
+  console.log("playing...");
+
+  const audio = new Audio("/WorkforceSafetyIcons/audio/alert.mp3");
+
+  const playPromise = audio.play();
+
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        console.log("Audio playback started successfully.");
+      })
+      .catch((error) => {
+        console.error("Error starting audio playback:", error);
+      });
+  }
 };
 
 const Feed = () => {
@@ -24,7 +36,7 @@ const Feed = () => {
         position: "top-right",
       });
       playNotificationSound();
-    }, 60*1000);
+    }, 20 * 1000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -51,14 +63,14 @@ const Feed = () => {
 
   const cams = [
     "Camera 1",
-    "Camera - Sampling backside 3&4",
+    "Camera - SAMPLING BACK SIDE 01 & 02",
     "Camera - Sampling vehicle number",
     "Camera 1",
-    "Camera - Sampling backside 3&4",
+    "Camera - SAMPLING BACK SIDE 01 & 02",
     "Camera - Sampling vehicle number",
   ];
 
-  const imgs = ["1.png", "2.png", "3.png", "1.png", "2.png", "3.png"];
+  const imgs = ["3.png", "2.png", "1.png", "3.png", "2.png", "1.png"];
 
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
