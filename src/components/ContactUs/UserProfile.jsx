@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { baseURL } from "../..";
 import { useWindowSize } from "@uidotdev/usehooks";
+import { Link } from "react-router-dom";
 const UserProfile = () => {
 
   //Update states
@@ -25,7 +26,7 @@ const UserProfile = () => {
   //Spinner State
   const [spinner, setSpinner] = useState(false)
   const [success, setSuccess] = useState(false)
-  
+
   const size = useWindowSize()
 
   useEffect(() => {
@@ -184,7 +185,7 @@ const UserProfile = () => {
                   <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
                     <input value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} className="w-full focus:outline-none pl-2" placeholder="Enter Your Job Title" />
                   </div>
-                </div> 
+                </div>
               </FormControl>
             </Flex>
             <Flex gap={"35px"}>
@@ -219,6 +220,7 @@ const UserProfile = () => {
                   <div style={{ zIndex: '100px' }} className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center">Ripik Token Balance</div>
                   <div style={{ zIndex: '10px' }} className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center">
                     <div className="w-full focus:outline-none pl-2" >{tokenBalance}</div>
+                    <Link to="/community/advisor/buycredits"><div className="bg-[#034D87] shadow-md text-white cursor-pointer px-2 py-2 rounded-md md:w-32 flex justify-center"><p className="text-xs">Buy Tokens</p></div></Link>
                   </div>
                 </div>
               </FormControl>
