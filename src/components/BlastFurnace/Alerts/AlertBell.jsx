@@ -2,9 +2,25 @@ import { BellIcon } from "@chakra-ui/icons";
 import { useEffect, useRef, useState } from "react";
 
 const playsound = () => {
+  
   const bellSound = new Audio("/Bficons/cullingham.mp3");
-  bellSound.play();
+  bellSound.volume = 0.03;
+  var playPromise = bellSound.play();
+
+  if (playPromise !== undefined) {
+    playPromise
+      .then(function () {
+        // Audio is successfully playing
+        // console.log("playing audio: ");
+      })
+      .catch(function (error) {
+        console.log("Error in playing audio: " + error);
+      });
+  } else {
+    console.log("Error in the promise");
+  }
 };
+
 
 const AlertBell = ({ snooze, handleTabChange, pageshift }) => {
   const [isShaking, setIsShaking] = useState(false);

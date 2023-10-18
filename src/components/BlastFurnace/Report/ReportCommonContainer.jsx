@@ -2,7 +2,6 @@ import ReportBarLineChart from "./ReportBarLineChart";
 import ReportPiechart from "./ReportPiechart";
 
 const ReportCommonContainer = ({ name,timeRange,  piechartdata, labelData,barGraphName1,barGraphName2,barGraphName3,barGraphData1,barGraphData2,barGraphData3 , appendValue}) => {
-  console.log("common",piechartdata);
   return (
    
     <div className="w-full ">
