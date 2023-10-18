@@ -2,16 +2,15 @@ import { BellIcon } from "@chakra-ui/icons";
 import { useEffect, useRef, useState } from "react";
 
 const playsound = () => {
-  
-  const bellSound = new Audio("/Bficons/cullingham.mp3");
+  const audioUrl = "https://drive.google.com/uc?id=1gPd2KnnMREazQaWODL8QxuaY8Qqp3phc&export=download"; // Replace with the direct URL to your audio file
+  const bellSound = new Audio(audioUrl);
   bellSound.volume = 0.03;
   var playPromise = bellSound.play();
-
+console.log("inside play fcun")
   if (playPromise !== undefined) {
     playPromise
       .then(function () {
-        // Audio is successfully playing
-        // console.log("playing audio: ");
+        console.log("Playing audio");
       })
       .catch(function (error) {
         console.log("Error in playing audio: " + error);
@@ -22,8 +21,8 @@ const playsound = () => {
 };
 
 
+
 const AlertBell = ({ snooze, handleTabChange, pageshift }) => {
-  const [isShaking, setIsShaking] = useState(false);
 
   useEffect(() => {
     let intervalId;
@@ -33,8 +32,7 @@ const AlertBell = ({ snooze, handleTabChange, pageshift }) => {
       intervalId = setInterval(() => {
         playsound();
        
-        setIsShaking((prevIsShaking) => !prevIsShaking);
-      }, 60000); // 30,000 milliseconds = 30 seconds
+      }, 20000); // 30,000 milliseconds = 30 seconds
     }
 
     return () => {
@@ -56,6 +54,7 @@ const AlertBell = ({ snooze, handleTabChange, pageshift }) => {
           className="cursor-pointer"
         />
       ) : (
+      
         <BellIcon
           w={8}
           h={8}
@@ -66,6 +65,8 @@ const AlertBell = ({ snooze, handleTabChange, pageshift }) => {
             handleTabChange(7);
           }}
         />
+        
+      
       )}
     </div>
   );
