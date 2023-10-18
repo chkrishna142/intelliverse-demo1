@@ -48,7 +48,6 @@ const BF_Dashboard = () => {
         `${BASE_URL_FOR_BF}/get_fuel_rate_and_production/?client_id=${client}`
       );
       const json = await response.json();
-      console.log("fetched data of dashboard===>>>", json);
       setWorkingurl(true);
       setFetcheddata(json);
     } catch (error) {

@@ -68,7 +68,6 @@ const Production = ({ data, pageshift, handleTabChange }) => {
 
  
   const handleAlert = () => {
-    console.log("alert updates")
     setAlertState(prev => prev + 1)
     // alertState = alertState + 1;
     // console.log("alert increased", alertState);
