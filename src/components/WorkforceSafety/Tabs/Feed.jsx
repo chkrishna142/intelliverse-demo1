@@ -5,10 +5,11 @@ import FeedCard from "../Components/FeedCard";
 const playNotificationSound = () => {
   console.log("playing...");
 
-  const audio = new Audio("/WorkforceSafetyIcons/audio/alert.mp3");
+  const audio = new Audio(
+    "https://drive.google.com/uc?id=1q5E3cd0B8L1z89ojBex3ZzNxDakk1ilG&export=download"
+  );
 
   const playPromise = audio.play();
-
   if (playPromise !== undefined) {
     playPromise
       .then(() => {
@@ -74,7 +75,7 @@ const Feed = () => {
 
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
-      <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-7">
         <p className="text-xl font-medium text-[#3E3C42]">Khandala</p>
         <div className="flex gap-4 items-center">
           {bays.map((val) => {
