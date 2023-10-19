@@ -131,10 +131,56 @@ const Feed = () => {
       });
   };
 
+  const LiveSummaryApi = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      useCase: param.material.toUpperCase(),
+      plantName: "khandala",
+      cameraGpId: selectedBay,
+    });
+    const response = await axios
+      .post(
+        baseURL + "vision/v1/workforceMonitoring/summary/live/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
+      .then((response) => {
+        let data = response.data.summary;
+        if (data && Object.keys(data).length > 0) {
+          setFeedMap((prev) => {
+            const updatedMap = { ...prev };
+            for (const key in data) {
+              for (const subKey in data[key]) {
+                const { passed, total } = data[key][subKey];
+                updatedMap[key][subKey] = passed === total ? 0 : 1;
+              }
+            }
+            return updatedMap;
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       LiveAlertsApi();
     }, 7 * 1000);
+    return () => clearInterval(intervalId);
+  }, [selectedBay]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      LiveSummaryApi();
+    }, 15 * 1000);
     return () => clearInterval(intervalId);
   }, [selectedBay]);
 
