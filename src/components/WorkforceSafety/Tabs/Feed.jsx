@@ -6,6 +6,15 @@ import { baseURL } from "../../../index";
 import FeedCard from "../Components/FeedCard";
 import axios from "axios";
 
+const Capitalize = (str) => {
+  const arr = str.split(" ");
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  }
+  const str2 = arr.join(" ");
+  return str2;
+};
+
 const playNotificationSound = (toast, check, title) => {
   console.log("playing...");
 
@@ -20,8 +29,8 @@ const playNotificationSound = (toast, check, title) => {
       .then(() => {
         console.log("Audio playback started successfully.");
         toast({
-          title: title,
-          description: Object.keys(check)[0] + " not detected",
+          title: Capitalize(title),
+          description: Capitalize(check) + " not detected",
           status: "error",
           duration: 4000,
           isClosable: true,
@@ -48,7 +57,7 @@ const Feed = () => {
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
       plantName: "khandala",
-      bayId: "bay1",
+      cameraGpId: selectedBay,
       endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
     });
     const response = await axios
@@ -127,7 +136,7 @@ const Feed = () => {
       LiveAlertsApi();
     }, 7 * 1000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [selectedBay]);
 
   useEffect(() => {
     BaysApiCall();
