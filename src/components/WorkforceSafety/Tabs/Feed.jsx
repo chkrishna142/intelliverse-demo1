@@ -39,6 +39,7 @@ const Feed = () => {
   const param = useParams();
   const [bays, setBays] = useState([]);
   const [currentCams, setCurrentCams] = useState({});
+  const [feedMap, setFeedMap] = useState({});
   const { auth } = useContext(NavContext);
   const toast = useToast();
 
@@ -48,6 +49,7 @@ const Feed = () => {
       useCase: param.material.toUpperCase(),
       plantName: "khandala",
       bayId: "bay1",
+      endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
     });
     const response = await axios
       .post(
@@ -65,7 +67,7 @@ const Feed = () => {
         let data = response.data.alerts;
         if (data && Object.keys(data).length > 0) {
           Object.keys(data).map((title) => {
-            data[title].map((check, idx) => {
+            Object.keys(data[title]).map((check, idx) => {
               playNotificationSound(toast, check, title);
             });
           });
@@ -81,11 +83,11 @@ const Feed = () => {
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
       plantName: "khandala",
-      bayId: "all",
+      cameraGpId: "all",
     });
     const response = await axios
       .post(
-        baseURL + "vision/v1/workforceMonitoring/info/cameraList/",
+        baseURL + "vision/v1/workforceMonitoring/info/initialize/",
         requestData,
         {
           credentials: "same-origin",
@@ -105,6 +107,15 @@ const Feed = () => {
         });
         setBays(totalbays);
         setCurrentCams(bayCamMap);
+        let map = {};
+        let feedData = response.data.events;
+        Object.keys(feedData).map((val) => {
+          map[val] = feedData[val].reduce((acc, s, index) => {
+            acc[s] = -1;
+            return acc;
+          }, {});
+        });
+        setFeedMap(map);
       })
       .catch((error) => {
         console.log(error);
@@ -114,7 +125,7 @@ const Feed = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       LiveAlertsApi();
-    }, 20 * 1000);
+    }, 7 * 1000);
     return () => clearInterval(intervalId);
   }, []);
 
@@ -127,36 +138,6 @@ const Feed = () => {
       setSelectedBay(bays[0]);
     }
   }, [bays]);
-
-  const entries = [
-    "Clamp and Chock",
-    "Safety",
-    "Dip rod test",
-    "Flushing",
-    "Sampling",
-    "Lids closed",
-  ];
-
-  const reasons = [
-    ["Chock", "Clamp"],
-    ["Helmet", "Rope", "Harness"],
-    ["Executive", "Security", "Rod Dip"],
-    ["Flushing"],
-    ["Executive", "Sampling"],
-    ["Compartment", "Port"],
-  ];
-
-  const codes = [[1, 0], [0, 1, 1], [0, 1, 1], [0], [0, 0], [1, 0]];
-  const bgcode = [1, 1, 1, 0, 0, 1];
-
-  const cams = [
-    "Camera 1",
-    "Camera - SAMPLING BACK SIDE 01 & 02",
-    "Camera - Sampling vehicle number",
-    "Camera 1",
-    "Camera - SAMPLING BACK SIDE 01 & 02",
-    "Camera - Sampling vehicle number",
-  ];
 
   const imgs = ["3.png", "2.png", "1.png", "3.png", "2.png", "1.png"];
 
@@ -175,40 +156,37 @@ const Feed = () => {
                 }`}
                 onClick={() => setSelectedBay(val)}
               >
-                {val}
+                {"Bay " + val[val.length - 1]}
               </div>
             );
           })}
         </div>
       </div>
-      <div className="self-start px-6 py-3 flex gap-7 items-center bg-[#FAFAFA] rounded-[6px] border border-[#EBEBEB]">
-        <div className="flex gap-2 items-center">
+      <div className="self-start px-6 py-3 flex gap-7 items-center bg-[#FAFAFA] rounded-[6px] max-w-[80vw] border border-[#EBEBEB] overflow-x-auto">
+        <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">Truck no.</p>
           <p className="text-base font-medium text-[#3E3C42]">18002341</p>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">In Time</p>
-          <p className="text-base font-medium text-[#3E3C42]">11:12:34</p>
+          <p className="text-base font-medium text-[#3E3C42]">
+            {new Date().toLocaleTimeString()}
+          </p>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">Date</p>
-          <p className="text-base font-medium text-[#3E3C42]">10-10-2021</p>
+          <p className="text-base font-medium text-[#3E3C42]">
+            {new Date().toLocaleDateString()}
+          </p>
         </div>
       </div>
-      <div className="flex gap-8">
-        <div className="grid grid-cols-3 gap-4 h-[60%] w-full">
-          {entries.map((val, idx) => {
-            return (
-              <FeedCard
-                parameter={val}
-                reasons={reasons[idx]}
-                codes={codes[idx]}
-                bgcode={bgcode[idx]}
-              />
-            );
+      <div className="flex flex-col-reverse items-center min-[900px]:items-start min-[900px]:flex-row gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-4 gap-4 h-[250px] sm:h-[60%] max-h-[100vh] overflow-y-auto w-full">
+          {Object.keys(feedMap).map((val, idx) => {
+            return <FeedCard parameter={val} reasons={feedMap[val]} />;
           })}
         </div>
-        <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[100vh] w-[45vw] overflow-y-auto">
+        <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[250px] sm:h-[100vh] w-[85vw] sm:w-[70vw] min-[900px]:w-[100vw] lg:w-[45vw] overflow-y-auto">
           {currentCams.hasOwnProperty(selectedBay) &&
             currentCams[selectedBay].map((val, idx) => {
               return (
@@ -218,7 +196,7 @@ const Feed = () => {
                   </p>
                   <div className="relative bg-black h-full w-full flex justify-center items-center rounded-xl">
                     <img
-                      className="w-[40vw] rounded-xl"
+                      className="w-[60vw] lg:w-[40vw] rounded-xl"
                       src={`/WorkforceSafetyIcons/images/${imgs[idx]}`}
                     />
                     <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
