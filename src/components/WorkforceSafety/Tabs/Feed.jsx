@@ -48,6 +48,7 @@ const Feed = () => {
   const param = useParams();
   const [bays, setBays] = useState([]);
   const [currentCams, setCurrentCams] = useState({});
+  const [trucInfo, setTruckInfo] = useState({});
   const [feedMap, setFeedMap] = useState({});
   const { auth } = useContext(NavContext);
   const toast = useToast();
@@ -107,12 +108,12 @@ const Feed = () => {
         }
       )
       .then((response) => {
-        let data = response.data.bays;
+        let data = response.data.cameraGpIds;
         let totalbays = [];
         let bayCamMap = {};
         data.map((item) => {
-          totalbays.push(item.bayId);
-          bayCamMap[item.bayId] = item.cameraInfo;
+          totalbays.push(item.cameraGpId);
+          bayCamMap[item.cameraGpId] = item.cameraInfo;
         });
         setBays(totalbays);
         setCurrentCams(bayCamMap);
@@ -151,17 +152,26 @@ const Feed = () => {
         }
       )
       .then((response) => {
-        let data = response.data.summary;
-        if (data && Object.keys(data).length > 0) {
-          setFeedMap((prev) => {
-            const updatedMap = { ...prev };
-            for (const key in data) {
-              for (const subKey in data[key]) {
-                const { passed, total } = data[key][subKey];
-                updatedMap[key][subKey] = passed === total ? 0 : 1;
+        if (
+          response.data.summary &&
+          Object.keys(response.data.summary).length > 0
+        ) {
+          let data = response.data.summary;
+          if (data && Object.keys(data).length > 0) {
+            setFeedMap((prev) => {
+              const updatedMap = { ...prev };
+              for (const key in data) {
+                for (const subKey in data[key]) {
+                  const { passed, total } = data[key][subKey];
+                  updatedMap[key][subKey] = passed === total ? 0 : 1;
+                }
               }
-            }
-            return updatedMap;
+              return updatedMap;
+            });
+          }
+          setTruckInfo({
+            truckNumber: response.data.vehicleNo,
+            timestamp: response.data.createdAt,
           });
         }
       })
@@ -220,18 +230,24 @@ const Feed = () => {
       <div className="self-start px-6 py-3 flex gap-7 items-center bg-[#FAFAFA] rounded-[6px] max-w-[80vw] border border-[#EBEBEB] overflow-x-auto">
         <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">Truck no.</p>
-          <p className="text-base font-medium text-[#3E3C42]">18002341</p>
+          <p className="text-base font-medium text-[#3E3C42]">
+            {trucInfo?.truckNumber ? trucInfo?.truckNumber : "UNKNOWN"}
+          </p>
         </div>
         <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">In Time</p>
           <p className="text-base font-medium text-[#3E3C42]">
-            {new Date().toLocaleTimeString()}
+            {trucInfo?.timestamp
+              ? new Date(trucInfo?.timestamp * 1000).toLocaleTimeString()
+              : ""}
           </p>
         </div>
         <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">Date</p>
           <p className="text-base font-medium text-[#3E3C42]">
-            {new Date().toLocaleDateString()}
+            {trucInfo?.timestamp
+              ? new Date(trucInfo?.timestamp * 1000).toLocaleDateString()
+              : ""}
           </p>
         </div>
       </div>

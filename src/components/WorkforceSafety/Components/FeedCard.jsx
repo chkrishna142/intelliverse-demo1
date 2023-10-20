@@ -24,29 +24,23 @@ const Capitalize = (str) => {
   return str2;
 };
 
+const urls = [
+  "/WorkforceSafetyIcons/tick.svg",
+  "/WorkforceSafetyIcons/alert.svg",
+];
+
+const BgColorHandler = (data) => {
+  return Object.values(data).some((reason) => reason === 1);
+};
+
 const FeedCard = ({ parameter, reasons }) => {
-  const urls = [
-    "/WorkforceSafetyIcons/tick.svg",
-    "/WorkforceSafetyIcons/alert.svg",
-  ];
-  const [bgColor, setBgColor] = useState("#CDEEBF");
-
-  useEffect(() => {
-    let flag = false;
-    Object.keys(reasons).map((val) => {
-      if (reasons[val] == 1) {
-        flag = true;
-      }
-    });
-    if (flag) setBgColor("#EC928E");
-    else setBgColor("#CDEEBF");
-  }, [reasons]);
-
   return (
     <div className="flex flex-col gap-0 w-full h-[250px] shadow-md rounded-lg">
       <div
         className="py-4 pl-4 text-[#525056] text-base font-medium w-full rounded-t-lg"
-        style={{ backgroundColor: bgColor }}
+        style={{
+          backgroundColor: BgColorHandler(reasons) ? "#EC928E" : "#CDEEBF",
+        }}
       >
         {Capitalize(parameter)}
       </div>
@@ -63,7 +57,11 @@ const FeedCard = ({ parameter, reasons }) => {
               {reasons[val] != -1 ? (
                 <img src={urls[reasons[val]]} />
               ) : (
-                <p className="text-[#79767D] text-base">-</p>
+                <div className="flex">
+                  <div className="animate-beatloader-item animate-delay-0"></div>
+                  <div className="animate-beatloader-item animate-delay-1000"></div>
+                  <div className="animate-beatloader-item animate-delay-2000"></div>
+                </div>
               )}
             </div>
           </div>
