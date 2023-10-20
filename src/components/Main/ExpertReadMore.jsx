@@ -28,14 +28,15 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                         {expert === 2 ? <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                             <div className='col-span-1 flex justify-center items-center'>
                                 <img className='rounded-md shadow-md h-40' src="/advisor3.png" />
-
                             </div>
                             <div className='col-span-2 w-full pr-8'>
                                 <p className='text-[#034D86] font-semibold'>Luc Bonte</p>
-                                <p className='text-xs w-full mt-2'><span className='font-bold'>Industry or Functional Focus:</span> Human Resources, Operational Excellence, Maintenance methodology, Capex and Opex modeling, Environment, Corporate responsibility, Change Management, Communication, Ironmaking & Steel</p>
-                                <p className='text-xs w-full mt-3'><span className='font-bold'>Experience:</span> Corporate experience as CEO of important local business unit in steelmaking (Gent Belgium), Technical Director in steelmaking (Arcelor North France), President ArcelorMittal South Africa. Broad experience in Iron Making Joseph Award).
-                                    Previous Head of ArcelorMittal Operational Excellence worldwide</p>
-                                <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span> PhD State University of Ghent, Belgium (Grid Connected Photovoltaic Energy Applications)</p>
+                                <p className='text-xs w-full mt-2'><span className='font-bold'>Industry or Functional Focus:</span> Luc Bonte is chairman of the Board of Directors of OVO - Entrepreneurs of Entrepreneurs.
+                                </p>
+                                <p className='text-xs w-full mt-3'><span className='font-bold'>Experience:</span> He is the recipient of the Thomas L. Joseph Award - 2006 and has been Technical Director of ArcelorMittal Dunkerque (France), CEO and Country Manager at ArcelorMittal Gent, President of ArcelorMittal South-Africa and Head of Operational Excellence of ArcelorMittal worldwide.
+                                    He is member of the Royal Flemish Academy of Belgium and authored two position papers on Corporate Social Responsibility and Responsible Digitalization. He was board member of
+                                    Argus (environment focus group of KBC-CERA).</p>
+                                <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span> He holds a PhD in Applied Sciences from the University in Gent.</p>
                             </div>
                         </div> : expert === 0 ? <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                             <div className='col-span-1 flex justify-center items-center'>
