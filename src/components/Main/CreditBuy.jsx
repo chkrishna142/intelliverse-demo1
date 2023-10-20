@@ -102,7 +102,6 @@ const CreditBuy = () => {
             setInterval(() => {
                 getPaymentStatus(txn_id)
             }, 2000)
-
         } catch (e) {
             console.log(e);
         }
