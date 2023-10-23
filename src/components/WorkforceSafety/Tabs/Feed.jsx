@@ -118,13 +118,19 @@ const Feed = () => {
         setBays(totalbays);
         setCurrentCams(bayCamMap);
         let map = {};
-        let feedData = response.data.events;
-        Object.keys(feedData).map((val) => {
-          map[val] = feedData[val].reduce((acc, s, index) => {
-            acc[s] = -1;
-            return acc;
-          }, {});
+        totalbays.map((x) => {
+          map[x] = {};
         });
+        let feedData = response.data.events;
+        totalbays.map((x) => {
+          Object.keys(feedData).map((val) => {
+            map[x][val] = feedData[val].reduce((acc, s, index) => {
+              acc[s] = -1;
+              return acc;
+            }, {});
+          });
+        });
+        console.log(map, "bay feed related");
         setFeedMap(map);
       })
       .catch((error) => {
@@ -163,7 +169,8 @@ const Feed = () => {
               for (const key in data) {
                 for (const subKey in data[key]) {
                   const { passed, total } = data[key][subKey];
-                  updatedMap[key][subKey] = passed === total ? 0 : 1;
+                  updatedMap[selectedBay][key][subKey] =
+                    passed === total ? 0 : 1;
                 }
               }
               return updatedMap;
@@ -253,9 +260,12 @@ const Feed = () => {
       </div>
       <div className="flex flex-col-reverse items-center min-[900px]:items-start min-[900px]:flex-row gap-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-4 gap-4 h-[250px] sm:h-[60%] max-h-[100vh] overflow-y-auto w-full">
-          {Object.keys(feedMap).map((val, idx) => {
-            return <FeedCard parameter={val} reasons={feedMap[val]} />;
-          })}
+          {feedMap.hasOwnProperty(selectedBay) &&
+            Object.keys(feedMap[selectedBay]).map((val, idx) => {
+              return (
+                <FeedCard parameter={val} reasons={feedMap[selectedBay][val]} />
+              );
+            })}
         </div>
         <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[250px] sm:h-[100vh] w-[85vw] sm:w-[70vw] min-[900px]:w-[100vw] lg:w-[45vw] overflow-y-auto">
           {currentCams.hasOwnProperty(selectedBay) &&

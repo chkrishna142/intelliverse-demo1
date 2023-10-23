@@ -40,22 +40,6 @@ const StatusCell = (param) => {
   );
 };
 
-const rows = [
-  { id: 1, check: "Wheel Choke", compliance: "Fail" },
-  { id: 2, check: "Earthing Clamp", compliance: "Pass" },
-  { id: 3, check: "Helmet", compliance: "Pass" },
-  { id: 4, check: "Safety Belt", compliance: "Pass" },
-  { id: 5, check: "Safety Rope", compliance: "Pass" },
-  { id: 6, check: "APL Executive Present", compliance: "Pass" },
-  { id: 7, check: "Security Present", compliance: "Pass" },
-  { id: 8, check: "Rod Dipped in Ports", compliance: "Pass" },
-  { id: 9, check: "Sampler Flushing", compliance: "Fail" },
-  { id: 10, check: "Sample Collection from compartments", compliance: "Fail" },
-  { id: 11, check: "Samples Checked visually", compliance: "Pass" },
-  { id: 12, check: "Port Lids Closed", compliance: "Pass" },
-  { id: 13, check: "Compartment Lids Closed", compliance: "Pass" },
-];
-
 const columns = [
   {
     field: "id",
@@ -85,18 +69,33 @@ const columns = [
   },
 ];
 
-const ReportModalTable = () => {
+const ReportModalTable = ({ rowData }) => {
+  for (let i = 0; i < rowData.length; i++) {
+    rowData[i]["id"] = i + 1;
+  }
+  const modRows = [];
+  let id = 1;
+  let data = rowData.summary;
+  for (const category in data) {
+    for (const check in data[category]) {
+      const { passed, total } = data[category][check];
+      const compliance = passed === total ? "Pass" : "Fail";
+      const complianceObject = { id, check, compliance };
+      modRows.push(complianceObject);
+      id++; // Increment the unique ID counter.
+    }
+  }
   return (
     <div className="overflow-auto">
       <ThemeProvider theme={MuiTheme}>
         <DataGrid
-          rows={rows}
+          rows={modRows}
           columns={columns}
           hideFooter={true}
           columnVisibilityModel={{
             id: false,
           }}
-          sx={{maxHeight: "500px"}}
+          sx={{ maxHeight: "500px" }}
         />
       </ThemeProvider>
     </div>
