@@ -77,7 +77,6 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                                 </div>
                             </div>}
                     </ModalBody>
-
                 </ModalContent>
             </Modal>
         </>

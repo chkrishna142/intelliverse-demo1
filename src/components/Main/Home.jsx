@@ -85,7 +85,7 @@ const Home = ({ state }) => {
         setServices(res?.relSubscriptionServices)
         let visionCount, processCount, qualityCount, ocrCount, prodCount, qcCount, manCount, bfCount, potCount, kilnCount, workforce_count;
         visionCount = processCount = qualityCount = ocrCount = prodCount = qcCount = manCount = bfCount = potCount = kilnCount = workforce_count = 0; 
-        for (let i = 0; i <= res?.relSubscriptionServices.length; i++) {
+        for (let i = 0; i <= res?.relSubscriptionServices?.length; i++) {
             //Vision
             if (res?.relSubscriptionServices[i]?.serv?.servCategory === "Particle Sizing") {
                 visionCount = visionCount + 1

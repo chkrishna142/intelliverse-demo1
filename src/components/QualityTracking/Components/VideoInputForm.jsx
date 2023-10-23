@@ -30,8 +30,7 @@ const VideoInputForm = ({
     const requestData = JSON.stringify({
       plantName: selectedPlant,
       cameraId: selectedCam,
-      startDate:
-        new Date(date + "T" + fromTime).getTime() + 5.5 * 60 * 60 * 1000,
+      startDate:new Date(date + "T" + fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
