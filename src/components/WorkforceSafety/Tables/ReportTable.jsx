@@ -28,96 +28,6 @@ const DetailClick = (param) => {
   );
 };
 
-const formatTime = (rawTime) => {
-  const date = new Date(rawTime);
-  let hours = date.getHours();
-  const minutes = date.getMinutes();
-  const ampm = hours >= 12 ? "PM" : "AM";
-
-  hours = hours % 12;
-  hours = hours ? hours : 12; // Convert 0 to 12
-
-  const formattedTime = `${hours}:${
-    minutes < 10 ? "0" + minutes : minutes
-  } ${ampm}`;
-  return formattedTime;
-};
-
-const rows = [
-  {
-    id: 1,
-    truckNumber: "MH04KU6382",
-    inTime: "10:30:05",
-    outTime: "10:50:10",
-    date: "24/09/2023",
-    tat: "0:20:05",
-    violation: "All Checks Passed",
-  },
-  {
-    id: 2,
-    truckNumber: "MH02KU51xx",
-    inTime: "11:20:30",
-    outTime: "11:45:56",
-    date: "24/09/2023",
-    tat: "0:25:26",
-    violation: "Two Violations Detected",
-  },
-  {
-    id: 3,
-    truckNumber: "MH03KU42xx",
-    inTime: "13:05:09",
-    outTime: "13:30:30",
-    date: "24/09/2023",
-    tat: "0:25:21",
-    violation: "All Checks Passed",
-  },
-  {
-    id: 4,
-    truckNumber: "MH03KU42xx",
-    inTime: "13:05:09",
-    outTime: "13:30:30",
-    date: "24/09/2023",
-    tat: "0:25:21",
-    violation: "Dip Check Failed",
-  },
-  {
-    id: 5,
-    truckNumber: "MH03KU42xx",
-    inTime: "13:05:09",
-    outTime: "13:30:30",
-    date: "24/09/2023",
-    tat: "0:25:21",
-    violation: "All Checks Passed",
-  },
-  {
-    id: 6,
-    truckNumber: "MH03KU42xx",
-    inTime: "13:05:09",
-    outTime: "13:30:30",
-    date: "24/09/2023",
-    tat: "0:25:21",
-    violation: "All Checks Passed",
-  },
-  {
-    id: 7,
-    truckNumber: "MH03KU42xx",
-    inTime: "13:05:09",
-    outTime: "13:30:30",
-    date: "24/09/2023",
-    tat: "0:25:21",
-    violation: "All Checks Passed",
-  },
-  {
-    id: 8,
-    truckNumber: "MH03KU42xx",
-    inTime: "13:05:09",
-    outTime: "13:30:30",
-    date: "24/09/2023",
-    tat: "0:25:21",
-    violation: "All Checks Passed",
-  },
-];
-
 const columns = [
   {
     field: "id",
@@ -125,7 +35,7 @@ const columns = [
     flex: 1,
   },
   {
-    field: "truckNumber",
+    field: "vehicleNo",
     headerName: "Truck Id",
     flex: 1,
   },
@@ -133,34 +43,56 @@ const columns = [
     field: "date",
     headerName: "Date",
     flex: 1,
+    valueGetter: ({ row }) => {
+      return new Date(row.createdAt * 1000).toLocaleDateString();
+    },
   },
   {
-    field: "inTime",
+    field: "createdAt",
     headerName: "In Time",
     type: "time",
     flex: 1,
     valueGetter: ({ value }) => {
-      return value;
+      return new Date(value * 1000).toLocaleTimeString();
     },
   },
   {
-    field: "outTime",
+    field: "lastUpdatedAt",
     headerName: "Out Time",
     type: "time",
     flex: 1,
     valueGetter: ({ value }) => {
-      return value;
+      return new Date(value * 1000).toLocaleTimeString();
     },
   },
   {
     field: "tat",
     headerName: "Tat",
     flex: 1,
+    valueGetter: ({ row }) => {
+      const timeDifferenceInSeconds = Math.abs(
+        row.createdAt - row.lastUpdatedAt
+      );
+      const timeDifferenceDate = new Date(timeDifferenceInSeconds * 1000);
+      const hours = timeDifferenceDate.getUTCHours();
+      const minutes = timeDifferenceDate.getUTCMinutes();
+      const seconds = timeDifferenceDate.getUTCSeconds();
+
+      const timeString = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+      return timeString;
+    },
   },
   {
-    field: "violation",
+    field: "hasAlert",
     headerName: "Violation",
     flex: 1,
+    valueGetter: ({ value }) => {
+      if(value)return 'Violations detected'
+      return 'All checks passed'
+    },
   },
   {
     field: "report",
@@ -170,7 +102,7 @@ const columns = [
   },
 ];
 
-const ReportTable = () => {
+const ReportTable = ({ rowData }) => {
   const headerClass =
     "text-xs font-medium text-[#525056] bg-[#ddeeff] uppercase";
   const cellClass = "text-sm font-medium text-[#3E3C42]";
@@ -178,16 +110,24 @@ const ReportTable = () => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
   });
+  for (let i = 0; i < rowData.length; i++) {
+    rowData[i]["id"] = i + 1;
+  }
+  console.log(rowData, "data");
   return (
     <div className="overflow-x-auto">
       <ThemeProvider theme={MuiTheme}>
         <DataGrid
-          rows={rows}
+          rows={rowData}
           columns={columns}
           columnVisibilityModel={{
             id: false,
           }}
-          sx={{minWidth: '1000px'}}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+          }}
+          pageSizeOptions={[5, 10, 25]}
+          sx={{ minWidth: "1000px" }}
         />
       </ThemeProvider>
     </div>

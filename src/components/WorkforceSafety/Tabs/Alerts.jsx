@@ -12,6 +12,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   const { auth } = useContext(NavContext);
   const [alerts, setAlerts] = useState([]);
+  const [alertCards, setAlertCards] = useState({});
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
@@ -23,24 +24,47 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       .toISOString()
       .slice(0, 16)
   );
-  const [selectedPlant, setSelectedPlant] = useState(
-    disable ? plantId : "All Plants"
-  );
-  const [selectedCam, setSelectedCam] = useState(
-    disable ? cameraId : "All Cams"
-  );
 
-  const entries = [
-    "Clamp and Chock",
-    "Safety",
-    "Dip rod test",
-    "Flushing",
-    "Sampling",
-    "Lids closed",
-  ];
-  const count = [66, 100, 65, 50, 80, 78];
-  const total = [70, 100, 80, 52, 100, 100];
-  const color = [0, 1, 2, 0, 2, 2];
+  const AlertApi = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      useCase: param.material.toUpperCase(),
+      plantName: "khandala",
+      cameraGpId: "bay1",
+      startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
+      endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
+    });
+    const response = await axios
+      .post(
+        baseURL + "vision/v1/workforceMonitoring/alerts/ranged/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data, "alert data");
+        setAlertCards(response.data.eventSummary);
+        setAlerts(response.data.subEventHistory.data);
+        setAlertsChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleClick = () => {
+    setAlertsChanging(true);
+    AlertApi();
+  };
+
+  useEffect(() => {
+    handleClick();
+  }, []);
 
   return (
     <div className="relative flex flex-col">
@@ -62,7 +86,10 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
               value={toTime}
             />
           </div>
-          <button className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
+          <button
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+            onClick={handleClick}
+          >
             {alertsChanging ? <Spinner /> : "Show Alerts"}
           </button>
         </div>
@@ -73,19 +100,18 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
             How you are doing
           </p>
           <div className="px-4 flex gap-4 justify-between flex-wrap">
-            {entries.map((val, idx) => {
+            {Object.keys(alertCards).map((val, idx) => {
               return (
                 <AlertCard
                   parameter={val}
-                  count={count[idx]}
-                  total={total[idx]}
-                  val={color[idx]}
+                  count={alertCards[val]["passed"]}
+                  total={alertCards[val]["total"]}
                 />
               );
             })}
           </div>
         </div>
-        {true && <AlertTable />}
+        {alerts.length > 0 && <AlertTable rowData={alerts} />}
       </div>
     </div>
   );
