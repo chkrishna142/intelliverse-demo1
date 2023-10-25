@@ -39,7 +39,7 @@ const AlertImagesModal = ({ openModal, closeModal, row }) => {
               <div className="flex flex-col gap-2 w-full">
                 <p className="text-xs text-[#605D64] font-medium">Violations</p>
                 <div className="flex flex-col gap-2 py-3 pl-4 pr-6 bg-[#FCEEEE] text-[#3E3C42] text-sm font-medium rounded-xl h-full">
-                  <p>{row.subEvent}</p>
+                  <p>{row?.subEvent || row?.check}</p>
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -59,7 +59,7 @@ const AlertImagesModal = ({ openModal, closeModal, row }) => {
                   })}
                 </div>
                 <div className="relative w-[400px] h-[300px] bg-black rounded-xl flex justify-center items-center">
-                  <img src={row.annotatedImage[selectedImage]} />
+                  <img src={row.annotatedImage[selectedImage]} crossOrigin="anonymous"/>
                   <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
                     <p className="text-white text-xs font-semibold bg-black rounded-lg">
                       {new Date(row.startTs * 1000).toLocaleTimeString()}

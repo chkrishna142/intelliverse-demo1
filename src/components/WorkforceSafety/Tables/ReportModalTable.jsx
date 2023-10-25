@@ -75,14 +75,18 @@ const ReportModalTable = ({ rowData }) => {
   }
   const modRows = [];
   let id = 1;
-  let data = rowData.summary;
+  let data = rowData.events;
   for (const category in data) {
     for (const check in data[category]) {
-      const { passed, total } = data[category][check];
-      const compliance = passed === total ? "Pass" : "Fail";
-      const complianceObject = { id, check, compliance };
-      modRows.push(complianceObject);
-      id++; // Increment the unique ID counter.
+      data[category][check].map((item) => {
+        const compliance = item.passed ? "Pass" : "Fail";
+        const images = item?.annotatedImage;
+        const startTs = item?.startTs;
+        const endTs = item?.endTs;
+        const complianceObject = { id, check, compliance, images, startTs, endTs };
+        modRows.push(complianceObject);
+        id++;
+      });
     }
   }
   return (
@@ -91,7 +95,7 @@ const ReportModalTable = ({ rowData }) => {
         <DataGrid
           rows={modRows}
           columns={columns}
-          hideFooter={true}
+          hideFooter={false}
           columnVisibilityModel={{
             id: false,
           }}
