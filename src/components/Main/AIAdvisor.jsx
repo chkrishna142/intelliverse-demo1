@@ -7,6 +7,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import { getCreditsRemaining } from '../../util/utilFunctions';
 
 
+
 const AiAdvisor = () => {
 
     const [send, setSend] = useState(false)
