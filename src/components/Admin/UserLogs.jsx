@@ -26,9 +26,7 @@ const UserLogs = () => {
                         <Th>
                             Location
                         </Th>
-                        <Th>
-                            Actions
-                        </Th>
+                        
                     </Tr>
                 </Thead>
                 <Tbody>
@@ -40,7 +38,7 @@ const UserLogs = () => {
                         <Td>192.168.0.1</Td>
                         <Td>Chrome</Td>
                         <Td>Bhubaneshwar, India</Td>
-                        <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td>
+                        {/* <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td> */}
                     </Tr>
                     <Tr className='text-sm'>
                         <Td>09 Sep 2023 10:15 AM</Td>
@@ -50,7 +48,7 @@ const UserLogs = () => {
                         <Td>192.168.0.1</Td>
                         <Td>Chrome</Td>
                         <Td>Bhubaneshwar, India</Td>
-                        <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td>
+                        {/* <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td> */}
                     </Tr>
                     <Tr className='text-sm'>
                         <Td>09 Sep 2023 10:15 AM</Td>
@@ -60,7 +58,7 @@ const UserLogs = () => {
                         <Td>192.168.0.1</Td>
                         <Td>Chrome</Td>
                         <Td>Bhubaneshwar, India</Td>
-                        <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td>
+                        {/* <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td> */}
                     </Tr>
                     <Tr className='text-sm'>
                         <Td>09 Sep 2023 10:15 AM</Td>
@@ -70,7 +68,7 @@ const UserLogs = () => {
                         <Td>192.168.0.1</Td>
                         <Td>Chrome</Td>
                         <Td>Bhubaneshwar, India</Td>
-                        <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td>
+                        {/* <Td className='text-[#024D87] font-bold cursor-pointer'>View Details</Td> */}
                     </Tr>
                 </Tbody>
                 <Tfoot>
