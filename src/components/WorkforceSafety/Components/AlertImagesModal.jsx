@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 const AlertImagesModal = ({ openModal, closeModal, row }) => {
   const [selectedImage, setSelectedImage] = useState(1);
-
+  console.log(row,'row')
   useEffect(() => {
     setSelectedImage(Object.keys(row.annotatedImage)[0]);
   }, []);
