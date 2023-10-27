@@ -30,7 +30,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
       plantName: "khandala",
-      cameraGpId: "bay1",
+      cameraGpId: "all",
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
     });

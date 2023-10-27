@@ -80,10 +80,10 @@ const ReportModalTable = ({ rowData }) => {
     for (const check in data[category]) {
       data[category][check].map((item) => {
         const compliance = item.passed ? "Pass" : "Fail";
-        const images = item?.annotatedImage;
+        const annotatedImage = item?.annotatedImage;
         const startTs = item?.startTs;
         const endTs = item?.endTs;
-        const complianceObject = { id, check, compliance, images, startTs, endTs };
+        const complianceObject = { id, check, compliance, annotatedImage, startTs, endTs };
         modRows.push(complianceObject);
         id++;
       });
