@@ -28,7 +28,7 @@ function ThermalIndicator({ isExpanded3, handleToggle3 ,fetcheddata,client}) {
             <div class="text-neutral-n-80 text-[#CAC5CD] font-roboto text-[16px] font-normal leading-normal"></div>
           </div>
         </div>
-        <div class="flex w-[100px] justify-between fill-white drop-shadow-md  ">
+        <div class="flex w-[100px] justify-between fill-white  ">
           <div className="flex justify-center items-center  w-[50px]">
             <Mymodal imageone={"/Bficons/HeatmapIndTop.svg"} imageTwo={""} />
           </div>

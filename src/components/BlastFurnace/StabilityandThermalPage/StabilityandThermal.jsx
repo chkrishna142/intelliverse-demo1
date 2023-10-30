@@ -17,9 +17,10 @@ import { useParams } from "react-router-dom";
 import Timer from "../../../util/VisionUtils/Timer";
 import { BASE_URL_FOR_BF } from "../BF_Components/urlforbf";
 import AlertBell from "../Alerts/AlertBell";
+import html2canvas from "html2canvas";
 
 
-const StabilityandThermal = ({handleTabChange, pageshift}) => {
+const StabilityandThermal = ({handleTabChange, pageshift,capture,setCapture}) => {
   let param = useParams();
   const [callApi, setCallApi] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
@@ -1594,6 +1595,119 @@ const StabilityandThermal = ({handleTabChange, pageshift}) => {
 const [parentSnooze,setParentSnooze] = useState(true);
 
 
+
+console.log("CAPTUEE",capture)
+
+useEffect(() => {
+  // Listen for messages from Tab 1
+
+  // window.addEventListener('storage', (e) => {
+  //   if (e.key === 'captureScreenshot' && e.newValue === 'true') {
+    if(capture==true){
+      // captureAndDownloadScreenshot();
+      captureAndDownloadScreenshotStability();
+      captureAndDownloadScreenshotThermal()
+      captureAndDownloadScreenshotRecom();
+   setCapture(false)
+
+
+    }
+    
+    
+  // });
+
+  
+}, [capture]);
+const captureAndDownloadScreenshot = () => {
+  const componentRef = document.getElementById('component-to-capture');
+
+  if (componentRef) {
+    // Add a small delay (e.g., 100 milliseconds) to allow the component to render
+    setTimeout(() => {
+      html2canvas(componentRef)
+        .then((canvas) => {
+          const dataUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = 'stabilityindicator.png';
+
+          a.click();
+        })
+        .catch((error) => {
+          console.error('Screenshot capture error:', error);
+        });
+    }, 1000); // Adjust the delay duration as needed
+
+  }
+};
+
+const captureAndDownloadScreenshotStability = () => {
+  const componentRef = document.getElementById('component-to-capture-stability');
+
+  if (componentRef) {
+    // Add a small delay (e.g., 100 milliseconds) to allow the component to render
+    setTimeout(() => {
+      html2canvas(componentRef)
+        .then((canvas) => {
+          const dataUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = 'stabilityindicator.png';
+
+          a.click();
+        })
+        .catch((error) => {
+          console.error('Screenshot capture error:', error);
+        });
+    }, 1000); // Adjust the delay duration as needed
+
+  }
+};
+
+
+const captureAndDownloadScreenshotThermal = () => {
+  const componentRef = document.getElementById('component-to-capture-thermal');
+
+  if (componentRef) {
+    // Add a small delay (e.g., 100 milliseconds) to allow the component to render
+    setTimeout(() => {
+      html2canvas(componentRef)
+        .then((canvas) => {
+          const dataUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = 'thermalindicator.png';
+          a.click();
+        })
+        .catch((error) => {
+          console.error('Screenshot capture error:', error);
+        });
+    }, 1000); // Adjust the delay duration as needed
+
+  }
+};
+
+const captureAndDownloadScreenshotRecom = () => {
+  const componentRef = document.getElementById('component-to-capture-recom');
+
+  if (componentRef) {
+    // Add a small delay (e.g., 100 milliseconds) to allow the component to render
+    setTimeout(() => {
+      html2canvas(componentRef)
+        .then((canvas) => {
+          const dataUrl = canvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = 'recommendation.png';
+          a.click();
+        })
+        .catch((error) => {
+          console.error('Screenshot capture error:', error);
+        });
+    }, 1000); // Adjust the delay duration as needed
+
+  }
+};
   return (
     <div className="w-full h-full gap-2 flex flex-col  ">
       {/* nav */}
@@ -1611,10 +1725,11 @@ const [parentSnooze,setParentSnooze] = useState(true);
 
       {/* body */}
 
-      <div className="w-full h-[64vh] flex flex-col overflow-y-auto ">
-        <div
-          id="StabilityIndicator"
-          className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px "
+      <div className="w-full h-[64vh] flex flex-col overflow-y-auto "  id="component-to-capture">
+        {/* <div
+          // id="StabilityIndicator"
+          id="component-to-capture-stability"
+          className="flex flex-col w-[100%] p-2 gap-4 flex-shrink-0 rounded-[12px] "
         >
           {stabilityIndData && (
             <StabilityInd
@@ -1636,10 +1751,11 @@ const [parentSnooze,setParentSnooze] = useState(true);
             series={series}
             options={options}
           />
-        </div>
+        </div> */}
 
         <div
-          id="ThermalIndicator"
+          // id="ThermalIndicator"
+          id="component-to-capture-thermal"
           className="flex flex-col gap-4 w-[100%] h-[auto]  p-2 flex-shrink-0 rounded-[12px] element transition-colors duration-1000 ease-in-out "
         >
          {thermalIndData && !serverDown1 && (
@@ -1669,7 +1785,8 @@ const [parentSnooze,setParentSnooze] = useState(true);
         </div>
 
         <div
-          id="Recommendations"
+          // id="Recommendations"
+          id="component-to-capture-recom"
           className="w-[100%] h-[auto] p-2 flex-shrink-0 rounded-[12px]  element transition-colors duration-1000 ease-in-out "
         >
           {recommendationFetcheddata && !serverDown1 && (<Recommendations
