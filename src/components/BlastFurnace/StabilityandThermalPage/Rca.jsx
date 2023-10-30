@@ -56,9 +56,22 @@ function Rca({ isExpanded2, handleToggle2 ,series,options}) {
           </div>
           )}
         </div>
-        <div onClick={handleToggle2} className="w-[30px] ">
-          <img src="/dropicon.svg" alt="" />
+        <div className="flex w-[100px] justify-between fill-white  ">
+        <div className="flex justify-center items-center  w-[50px]">
+          {/* <Mymodal
+            imageone={"/Bficons/stabilityindtopcard.svg"}
+            imageTwo={""}
+          /> */}
         </div>
+        <div>
+          <img
+            src="/dropicon.svg"
+            alt=""
+            onClick={handleToggle2}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
+      </div>
       </div>
       {/* bottom */}
       {isExpanded2 && (

@@ -10,7 +10,7 @@ console.log("inside play fcun")
   if (playPromise !== undefined) {
     playPromise
       .then(function () {
-        console.log("Playing audio");
+        // console.log("Playing audio");
       })
       .catch(function (error) {
         console.log("Error in playing audio: " + error);
@@ -32,7 +32,7 @@ const AlertBell = ({ snooze, handleTabChange, pageshift }) => {
       intervalId = setInterval(() => {
         playsound();
        
-      }, 20000); // 30,000 milliseconds = 30 seconds
+      }, 60000); // 30,000 milliseconds = 30 seconds
     }
 
     return () => {

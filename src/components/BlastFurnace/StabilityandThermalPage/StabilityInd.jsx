@@ -203,7 +203,7 @@ function StabilityInd({ isExpanded1, handleToggle1 ,fetcheddata,client}) {
         </div>
         <div className={`flex items-start gap-[2%] w-[80%]   `}></div>
       </div>
-      <div className="flex w-[100px] justify-between fill-white drop-shadow-md  ">
+      <div className="flex w-[100px] justify-between fill-white  ">
         <div className="flex justify-center items-center  w-[50px]">
           <Mymodal
             imageone={"/Bficons/stabilityindtopcard.svg"}

@@ -16,11 +16,12 @@ import Serverdown from "./Serverdown";
 import { BASE_URL_FOR_BF } from "./urlforbf";
 import AlertBf from "../Alerts/AlertBf";
 import ReportBf from "../Report/ReportBf";
+import DownloadReportBf from "../Downloads/DownloadReportBf";
 const BF_Dashboard = () => {
   const navigate = useNavigate();
   const [callApi, setCallApi] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
-
+  const [capture,setCapture]=useState(false);
   const Capitalize = (str) => {
     const arr = str.split(" ");
     for (var i = 0; i < arr.length; i++) {
@@ -60,6 +61,22 @@ const BF_Dashboard = () => {
   useEffect(() => {
     fetchData();
   }, [callApi]);
+
+  useEffect(()=>{
+    
+    const beforeUnloadHandler = () => {
+    
+      setCapture(false)
+    };
+
+    // Attach the event listener
+    window.addEventListener('beforeunload', beforeUnloadHandler);
+
+    return () => {
+      // Remove the event listener when the component is unmounted
+      window.removeEventListener('beforeunload', beforeUnloadHandler);
+    };
+  })
 
   // ----------------------------------------------------------------------
 
@@ -113,7 +130,7 @@ const BF_Dashboard = () => {
       </div>
       <Tabs index={activeTab} onChange={handleTabChange}>
         <TabList className={` !flex !border-0 mt-0 mb-2`}>
-          <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[50px] md:h-10">
+          <div className="flex w-[80vw]  items-center gap-4 overflow-x-auto h-[60px] ">
             <Tab
               className={
                 page === "dashboard"
@@ -231,6 +248,19 @@ const BF_Dashboard = () => {
             >
               Report
             </Tab>
+              <Tab
+              className={
+                page === "Download Report"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full whitespace-nowrap pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0 whitespace-nowrap"
+              }
+              onClick={() => {
+                setPage("Download Report");
+                navigate(`/optimus/blastfurnace/${client}`);
+              }}
+            >
+              Download Report
+            </Tab>
           </div>
         </TabList>
         <TabPanels className="">
@@ -254,7 +284,7 @@ const BF_Dashboard = () => {
             <Fueloptimizercomp fetcheddata={fetcheddata} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
-            <StabilityandThermal handleTabChange={handleTabChange} pageshift={pageshift}/>
+            <StabilityandThermal handleTabChange={handleTabChange} pageshift={pageshift} capture={capture}  setCapture={setCapture}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0 mb-[10px]">
             <Siliconpredictor />
@@ -275,6 +305,10 @@ const BF_Dashboard = () => {
           <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
             <ReportBf />
           </TabPanel>
+          <TabPanel className="!pl-0 !pr-0 mb-[10px] ">
+            <DownloadReportBf  capture={capture}  setCapture={setCapture}    pageshift={pageshift}
+                handleTabChange={handleTabChange}/>
+        </TabPanel>
         </TabPanels>
       </Tabs>
       <div className=" fixed bottom-0 w-[90%] rounded-xl h-[30px] bg-[#FFFFC4] ">
