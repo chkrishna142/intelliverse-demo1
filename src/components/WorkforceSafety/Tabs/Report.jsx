@@ -6,22 +6,13 @@ import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import ReportTable from "../Tables/ReportTable";
 import NavContext from "../../NavContext";
-import {
-  Table,
-  Td,
-  Tr,
-  Thead,
-  Tbody,
-  TableContainer,
-  Th,
-  Select,
-  Spinner,
-} from "@chakra-ui/react";
+import { Spinner } from "@chakra-ui/react";
 
 const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   const { auth } = useContext(NavContext);
   const [report, setReport] = useState([]);
+  const [downloadData, setDownloadData] = useState({});
   const [reportChanging, setReportChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
@@ -57,8 +48,37 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       )
       .then((response) => {
         setReport(response.data);
-        console.log(response.data.data)
+        console.log(response.data.data);
         setReportChanging(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const DownloadApi = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      useCase: param.material.toUpperCase(),
+      plantName: "khandala",
+      cameraGpId: "all",
+      startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
+      endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
+    });
+    const response = await axios
+      .post(
+        baseURL + "vision/v1/workforceMonitoring/report/detail/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
+      .then((response) => {
+        setDownloadData(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -68,6 +88,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const handleClick = () => {
     setReportChanging(true);
     ReportApi();
+    DownloadApi();
   };
 
   useEffect(() => {
@@ -104,8 +125,8 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       </div>
       <div className="flex flex-col gap-4 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
         <div className="flex justify-end gap-2 pl-4 pr-6 mr-3 overflow-x-auto">
-          {report.hasOwnProperty("order") && (
-            <ExlCsvDownload order={report.order} data={report.data} />
+          {downloadData.hasOwnProperty("order") && (
+            <ExlCsvDownload order={downloadData.order} data={downloadData.data} />
           )}
         </div>
         {report.hasOwnProperty("data") && report.data.length > 0 && (
