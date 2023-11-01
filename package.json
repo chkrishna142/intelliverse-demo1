@@ -26,6 +26,7 @@
     "d3-transition": "^3.0.1",
     "file-saver": "^2.0.5",
     "framer-motion": "^7.5.3",
+    "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.5",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
