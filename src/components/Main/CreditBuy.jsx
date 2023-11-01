@@ -103,7 +103,7 @@ const CreditBuy = () => {
           'X-Auth-Token': localStorage.getItem('auth_token'),
         },
         body: JSON.stringify({
-          amount: amount,
+          amount: parseInt(amount),
         }),
       });
       const res = await data.text();
@@ -359,7 +359,7 @@ const CreditBuy = () => {
                     Total cost
                   </p>
                   <div className="flex gap-2">
-                    <p className="text-lg text-black">₹ {amount / 10}</p>
+                    <p className="text-lg text-black">₹{amount / 10}</p>
                     <img src="/token.svg" className="opacity-0" />
                   </div>
                 </Flex>
@@ -375,7 +375,7 @@ const CreditBuy = () => {
               className="bg-[#084298] text-white px-7 py-2 rounded-md mb-5 "
               mr={3}
             >
-              Pay ₹ {amount / 10}
+              Pay ₹{amount / 10}
             </button>
           </ModalFooter>
         </ModalContent>
