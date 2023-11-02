@@ -163,13 +163,13 @@ const CamFeed = ({
                 </div>
                 {!(camData.flags.viewObstructed || camData.flags.flapClosed) ? (
                   <div className="h-[30%] gap-4 flex flex-col sm:flex-row w-full items-start sm:items-center justify-between">
-                    <div className="py-5 px-5 flex flex-col gap-2 sm:gap-[30px] w-[70vw] sm:w-[45vw] xl:w-[28vw] h-full justify-center items-center rounded">
+                    <div className="py-5 px-5 flex flex-col gap-2 sm:gap-[30px] w-[85vw] xl:w-[40vw] h-full justify-center items-center rounded">
                       <p className="self-start text-sm text-[#605D64] font-medium whitespace-nowrap">
                         Health Index:
                       </p>
                       <IndexChart type="Flame" value={camData.healthIndex} />
                     </div>
-                    <div
+                    {/* <div
                       className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-start sm:self-center"
                       style={{
                         backgroundColor: `rgb(${camData.rgb.r},${camData.rgb.g},${camData.rgb.b},0.6)`,
@@ -185,7 +185,7 @@ const CamFeed = ({
                           camData.rgb.b +
                           " )"}
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 ) : (
                   <div className="h-[40%] gap-4 flex flex-row w-full items-center justify-center text-black font-bold text-center text-2xl">

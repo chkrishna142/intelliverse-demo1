@@ -13,6 +13,7 @@ const iconMap = {
   sampling: "sampling.svg",
   compartment: "compartment.svg",
   port: "port.svg",
+  sampleCollection: "samplerContainer.svg"
 };
 
 const Capitalize = (str) => {
@@ -51,7 +52,7 @@ const FeedCard = ({ parameter, reasons }) => {
               reasons[val] == 1 ? "border-2 border-[#E46962]" : "border-0"
             }`}
           >
-            <img src={`/WorkforceSafetyIcons/${iconMap[val]}`} />
+            <img className="h-[50px] w-[50px]" src={`/WorkforceSafetyIcons/${iconMap[val]}`} />
             <div className="py-[10px] px-4 flex justify-between items-center w-full">
               <p className="text-[#79767D] text-base">{Capitalize(val)}</p>
               {reasons[val] != -1 ? (
