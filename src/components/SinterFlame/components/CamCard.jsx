@@ -30,8 +30,8 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
             <p className="text-xs sm:text-base text-black self-start">
               Health Index
             </p>
-            {data.healthIndex != 0 && <IndexChart type={"Flame"} value={data.healthIndex} />}
-            <ColorCard r={data.rgb.r} g={data.rgb.g} b={data.rgb.b} />
+            <IndexChart type={"Flame"} value={data.healthIndex} />
+            {/* <ColorCard r={data.rgb.r} g={data.rgb.g} b={data.rgb.b} /> */}
           </div>
         ) : (
           <div className="h-full flex flex-col gap-8 items-center justify-center text-black font-bold text-center text-2xl w-full sm:w-[35vw] min-w-[15vw]">
