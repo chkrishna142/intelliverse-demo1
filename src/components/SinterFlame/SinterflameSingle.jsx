@@ -27,7 +27,7 @@ const SinterflameSingle = () => {
   const [page, setPage] = useState("feed");
   const [callApi, setCallApi] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
-  let material = 'sinterflame';
+  let material = "sinterflame";
   let cameraId = param.cameraId;
   let clientId = param.clientId;
   let plantId = param.plantId;
@@ -36,6 +36,15 @@ const SinterflameSingle = () => {
       className="pl-5 pr-5 flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
+      <div
+        className="fixed top-5 right-0 h-[30px] w-[180px] bg-white"
+        style={{ zIndex: 1000 }}
+      >
+        <img
+          className="absolute h-[50px] w-[120px] top-[-20px] right-0"
+          src="/clientLogos/hzl.png"
+        />
+      </div>
       <div className="flex justify-between mb-3 mt-6 items-center">
         <Breadcrumb
           spacing="8px"

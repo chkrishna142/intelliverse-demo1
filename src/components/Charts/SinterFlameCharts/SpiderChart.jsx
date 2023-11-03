@@ -3,6 +3,18 @@ import ReactApexChart from "react-apexcharts";
 const SpiderChart = ({ data }) => {
   let points = [];
   let labels = [];
+  data.sort((a, b) => {
+    const cameraIdA = a.cameraId.toLowerCase();
+    const cameraIdB = b.cameraId.toLowerCase();
+
+    if (cameraIdA < cameraIdB) {
+      return -1;
+    }
+    if (cameraIdA > cameraIdB) {
+      return 1;
+    }
+    return 0;
+  });
   data.map((val) => {
     let avgValue;
     let total = 0;
