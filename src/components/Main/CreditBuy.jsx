@@ -103,7 +103,7 @@ const CreditBuy = () => {
           'X-Auth-Token': localStorage.getItem('auth_token'),
         },
         body: JSON.stringify({
-          amount: parseInt(amount),
+          amount: amount,
         }),
       });
       const res = await data.text();
