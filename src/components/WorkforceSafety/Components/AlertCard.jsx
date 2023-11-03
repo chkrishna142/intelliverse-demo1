@@ -2,9 +2,9 @@ const iconMap = {
   chock: "clamp.svg",
   safety: "helmet.svg",
   dipRod: "rod.svg",
-  Flushing: "flushing.svg",
-  Sampling: "sampling.svg",
-  "Lids closed": "compartment.svg",
+  flushing: "flushing.svg",
+  sampling: "sampling.svg",
+  lidInspection: "compartment.svg",
 };
 
 const getColor = (val, total) => {

@@ -28,6 +28,15 @@ const Sinterflame = () => {
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
+      <div
+        className="fixed top-5 right-0 h-[30px] w-[180px] bg-white"
+        style={{ zIndex: 1000 }}
+      >
+        <img
+          className="absolute h-[50px] w-[120px] top-[-20px] right-0"
+          src="/clientLogos/hzl.png"
+        />
+      </div>
       <div className="flex justify-between mb-3 mt-6">
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
           {Capitalize("Sinter Flame Monitoring")}
@@ -93,7 +102,7 @@ const Sinterflame = () => {
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
             <Feed
-              material={'sinterflame'}
+              material={"sinterflame"}
               clientId={param.clientId.toLowerCase()}
               setPlantCamMap={setPlantCamMap}
             />
