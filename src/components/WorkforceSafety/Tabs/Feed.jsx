@@ -273,13 +273,22 @@ const Feed = () => {
               return (
                 <div className="flex-1 flex flex-col gap-2 w-full">
                   <p className="text-[#605D64] text-sm font-medium whitespace-nowrap">
-                    {val.cameraId}
+                    {val.name}
                   </p>
                   <div className="relative bg-black h-full w-full flex justify-center items-center rounded-xl">
-                    <img
+                    {/* <img
                       className="w-[60vw] lg:w-[40vw] rounded-xl"
                       src={`/WorkforceSafetyIcons/images/${imgs[idx]}`}
-                    />
+                    /> */}
+                    <video
+                      muted
+                      autoPlay
+                      loop
+                      crossOrigin="anonymous"
+                      className="w-[60vw] lg:w-[40vw] rounded-xl"
+                    >
+                      <source src={val.rtsp} type="video/mp4" />
+                    </video>
                     <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
                       <p className="text-white text-xs font-semibold bg-black rounded-lg">
                         {new Date().toLocaleDateString()}
