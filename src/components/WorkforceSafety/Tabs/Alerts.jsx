@@ -14,6 +14,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [alerts, setAlerts] = useState([]);
   const [alertCards, setAlertCards] = useState({});
   const [alertsChanging, setAlertsChanging] = useState(false);
+  const [filterData, setFilterData] = useState({ items: [] });
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
       .toISOString()
@@ -66,6 +67,8 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
+  console.log(filterData, "hello filters");
+
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">
@@ -106,12 +109,19 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                   parameter={val}
                   count={alertCards[val]["passed"]}
                   total={alertCards[val]["total"]}
+                  setFilterData={setFilterData}
                 />
               );
             })}
           </div>
         </div>
-        {alerts.length > 0 && <AlertTable rowData={alerts} />}
+        {alerts.length > 0 && (
+          <AlertTable
+            rowData={alerts}
+            filterData={filterData}
+            setFilterModel={setFilterData}
+          />
+        )}
       </div>
     </div>
   );

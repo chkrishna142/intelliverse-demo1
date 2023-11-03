@@ -90,6 +90,22 @@ const columns = [
     flex: 1,
   },
   {
+    field: "event",
+    headerName: "Event",
+    flex: 1,
+    type: "singleSelect",
+    valueOptions: [
+      "chock",
+      "clamp",
+      "safety",
+      "dipRod",
+      "flushing",
+      "sampling",
+      "contamination",
+      "lidInspection",
+    ],
+  },
+  {
     field: "subEvent",
     headerName: "Violation",
     flex: 1,
@@ -102,8 +118,13 @@ const columns = [
   },
 ];
 
-const AlertTable = ({ rowData }) => {
-  console.log(rowData, "value");
+const AlertTable = ({ rowData, filterData, setFilterModel }) => {
+  const [rows, setRows] = useState(
+    rowData.map((item, idx) => {
+      item["id"] = idx + 1;
+      return item;
+    })
+  );
   const headerClass =
     "text-xs font-medium text-[#525056] bg-[#ddeeff] uppercase";
   const cellClass = "text-sm font-medium text-[#3E3C42]";
@@ -115,14 +136,19 @@ const AlertTable = ({ rowData }) => {
     <div className="overflow-x-auto">
       <ThemeProvider theme={MuiTheme}>
         <DataGrid
-          rows={rowData}
+          rows={rows}
           columns={columns}
           columnVisibilityModel={{
             id: false,
+            event: false,
           }}
           initialState={{
             pagination: { paginationModel: { pageSize: 5 } },
           }}
+          filterModel={filterData}
+          onFilterModelChange={(newFilterModel) =>
+            setFilterModel(newFilterModel)
+          }
           pageSizeOptions={[5, 10, 25]}
           sx={{ minWidth: "1000px" }}
         />
