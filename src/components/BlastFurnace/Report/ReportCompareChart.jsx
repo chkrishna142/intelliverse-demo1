@@ -25,6 +25,9 @@ const ReportCompareChart = ({
     chart: {
       height: 350,
       type: "line",
+      toolbar: {
+        show: false,
+      }
       
     },
     stroke: {
@@ -61,7 +64,7 @@ const ReportCompareChart = ({
   };
 
   return (
-    <div id="chart">
+    <div id="chart" className="">
       <ReactApexChart
         options={options}
         series={series}
