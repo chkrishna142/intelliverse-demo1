@@ -13,9 +13,31 @@ const getColor = (val, total) => {
   else return "#EC928E";
 };
 
-const AlertCard = ({ parameter, count, total }) => {
+const AlertCard = ({ parameter, count, total, setFilterData }) => {
+  const handleClick = () => {
+    setFilterData((prev) => {
+      // Check if the value already exists in the filter data
+      const existingIndex = prev.items.findIndex(
+        (item) => item.value === parameter
+      );
+
+      if (existingIndex !== -1) {
+        // If the value already exists, remove it from the filter data
+        return { items: [] };
+      } else {
+        // If the value doesn't exist, add it to the filter data
+        return {
+          items: [{ field: "event", operator: "is", value: parameter }],
+        };
+      }
+    });
+  };
+
   return (
-    <div className="flex flex-col gap-0 justify-center rounded-lg shadow-md w-[195px]">
+    <div
+      className="flex flex-col gap-0 justify-center rounded-lg shadow-md w-[195px] cursor-pointer"
+      onClick={handleClick}
+    >
       <div
         className="px-3 py-2 flex gap-2 items-center self-start rounded-t-lg w-full h-[52px]"
         style={{ backgroundColor: getColor(count, total) }}
