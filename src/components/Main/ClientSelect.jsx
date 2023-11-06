@@ -14,7 +14,7 @@ const ClientSelect = () => {
     }, [])
 
     const getClients = async () => {
-        const data = await fetch(`${baseURL}vision/v1/sizing/getClientIdsByUseCase/`, {
+        const data = await fetch(`${baseURL}vision/v2/product/getClientIdsByUseCase/`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -22,7 +22,7 @@ const ClientSelect = () => {
             },
             body: JSON.stringify(
                 {
-                    "material": param.material.toLowerCase()
+                    "usecase": param.material.toLowerCase()
                 }
             )
         })
