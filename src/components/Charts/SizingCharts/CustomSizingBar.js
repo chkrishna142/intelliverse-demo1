@@ -56,7 +56,7 @@ const CustomSizingBar = ({ size }) => {
                       {x}%
                     </p>
                     <div className="flex gap-1 items-center">
-                      <p className="text-black font-medium text-xs">
+                      <p className="text-black font-medium text-xs whitespace-nowrap">
                         {labels[idx]}
                       </p>
                       {/* <p className="text-gray-300 text-xs">0-6mm</p> */}

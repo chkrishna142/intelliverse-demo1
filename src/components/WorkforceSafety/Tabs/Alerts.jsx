@@ -48,7 +48,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
         }
       )
       .then((response) => {
-        console.log(response.data, "alert data");
         setAlertCards(response.data.eventSummary);
         setAlerts(response.data.subEventHistory.data);
         setAlertsChanging(false);
@@ -67,7 +66,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
-  console.log(filterData, "hello filters");
 
   return (
     <div className="relative flex flex-col">

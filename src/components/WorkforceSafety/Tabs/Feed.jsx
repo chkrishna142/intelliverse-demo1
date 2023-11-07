@@ -5,6 +5,8 @@ import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import FeedCard from "../Components/FeedCard";
 import axios from "axios";
+import ReactPlayer from "react-player";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -16,8 +18,6 @@ const Capitalize = (str) => {
 };
 
 const playNotificationSound = (toast, check, title) => {
-  console.log("playing...");
-
   const audio = new Audio(
     "https://drive.google.com/uc?id=1q5E3cd0B8L1z89ojBex3ZzNxDakk1ilG&export=download"
   );
@@ -27,7 +27,6 @@ const playNotificationSound = (toast, check, title) => {
   if (playPromise !== undefined) {
     playPromise
       .then(() => {
-        console.log("Audio playback started successfully.");
         toast({
           title: Capitalize(title),
           description: Capitalize(check) + " not detected",
@@ -43,10 +42,30 @@ const playNotificationSound = (toast, check, title) => {
   }
 };
 
+const RtspToHslConverter = async (url, camId) => {
+  const request = JSON.stringify({
+    uri: url,
+    alias: camId,
+  });
+  const response = await axios.post(
+    "https://rtsp.backend-ripik.com/start",
+    request,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.data;
+  return data.running ? "https://rtsp.backend-ripik.com" + data.uri : "";
+};
+
 const Feed = () => {
   const [selectedBay, setSelectedBay] = useState();
   const param = useParams();
   const [bays, setBays] = useState([]);
+  const [truckNo, setTruckNo] = useState("");
+  const [editing, setEditing] = useState(false);
   const [currentCams, setCurrentCams] = useState({});
   const [trucInfo, setTruckInfo] = useState({});
   const [feedMap, setFeedMap] = useState({});
@@ -113,6 +132,13 @@ const Feed = () => {
         let bayCamMap = {};
         data.map((item) => {
           totalbays.push(item.cameraGpId);
+          item.cameraInfo.map(async (cam) => {
+            cam["hsl"] = await RtspToHslConverter(
+              "rtsp://admin:jsplIT321@115.247.181.84/",
+              cam.cameraId
+            );
+            return cam;
+          });
           bayCamMap[item.cameraGpId] = item.cameraInfo;
         });
         setBays(totalbays);
@@ -130,7 +156,6 @@ const Feed = () => {
             }, {});
           });
         });
-        console.log(map, "bay feed related");
         setFeedMap(map);
       })
       .catch((error) => {
@@ -166,6 +191,11 @@ const Feed = () => {
           if (data && Object.keys(data).length > 0) {
             setFeedMap((prev) => {
               const updatedMap = { ...prev };
+              for (const key in updatedMap[selectedBay]) {
+                for (const subKey in updatedMap[selectedBay][key]) {
+                  updatedMap[selectedBay][key][subKey] = -1;
+                }
+              }
               for (const key in data) {
                 for (const subKey in data[key]) {
                   const { passed, total } = data[key][subKey];
@@ -190,14 +220,15 @@ const Feed = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       LiveAlertsApi();
-    }, 7 * 1000);
+    }, 6 * 1000);
     return () => clearInterval(intervalId);
   }, [selectedBay]);
 
   useEffect(() => {
+    setTruckInfo({})
     const intervalId = setInterval(() => {
       LiveSummaryApi();
-    }, 15 * 1000);
+    }, 7 * 1000);
     return () => clearInterval(intervalId);
   }, [selectedBay]);
 
@@ -210,6 +241,12 @@ const Feed = () => {
       setSelectedBay(bays[0]);
     }
   }, [bays]);
+
+  useEffect(() => {
+    if (trucInfo && Object.keys(trucInfo).length > 0) {
+      setTruckNo(trucInfo.truckNumber ? trucInfo.truckNumber : "UNKNOWN");
+    }
+  }, [trucInfo]);
 
   const imgs = ["3.png", "2.png", "1.png", "3.png", "2.png", "1.png"];
 
@@ -237,9 +274,31 @@ const Feed = () => {
       <div className="self-start px-6 py-3 flex gap-7 items-center bg-[#FAFAFA] rounded-[6px] max-w-[80vw] border border-[#EBEBEB] overflow-x-auto">
         <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">Truck no.</p>
-          <p className="text-base font-medium text-[#3E3C42]">
-            {trucInfo?.truckNumber ? trucInfo?.truckNumber : "UNKNOWN"}
-          </p>
+          {!editing ? (
+            <p className="text-base font-medium text-[#3E3C42]">{truckNo}</p>
+          ) : (
+            <div className="w-[150px]">
+              <FloatingInput
+                text="TruckNo"
+                type="text"
+                setDateTime={setTruckNo}
+                value={truckNo}
+              />
+            </div>
+          )}
+          {!editing ? (
+            <img
+              src="/WorkforceSafetyIcons/edit.svg"
+              className="cursor-pointer"
+              onClick={() => setEditing(true)}
+            />
+          ) : (
+            <img
+              src="/SizingIcons/cross.svg"
+              className="cursor-pointer"
+              onClick={() => setEditing(false)}
+            />
+          )}
         </div>
         <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">In Time</p>
@@ -289,6 +348,15 @@ const Feed = () => {
                     >
                       <source src={val.rtsp} type="video/mp4" />
                     </video>
+                    {/* <div className="w-[60vw] lg:w-[40vw] rounded-xl">
+                      <ReactPlayer
+                        url={val?.hsl}
+                        playing={true}
+                        muted={true}
+                        height="100%"
+                        width="100%"
+                      />
+                    </div> */}
                     <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
                       <p className="text-white text-xs font-semibold bg-black rounded-lg">
                         {new Date().toLocaleDateString()}

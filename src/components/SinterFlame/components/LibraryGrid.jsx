@@ -12,19 +12,23 @@ const Capitalize = (str) => {
 };
 
 const LibraryGrid = ({ plantName, img }) => {
-  const [displayData,setDisplayData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
   const ImgDownload = (url, idx) => {
-    const blob = new Blob([url], { type: 'image/jpeg' });
+    const blob = new Blob([url], { type: "image/jpeg" });
     saveAs(url, `image-${idx}.jpg`);
   };
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between">
-        <p className="text-[#3E3C42] font-medium text-xl">{Capitalize(plantName)}</p>
+        <p className="text-[#3E3C42] font-medium text-xl">
+          {Capitalize(plantName)}
+        </p>
         {/* <button className="text-white text-sm font-medium bg-[#447ED4] p-3 pt-1 pb-1 rounded-full">
           Download all
         </button> */}
-        {img.length != 0 && <Paginator data={img} limit={20} setDisplayData={setDisplayData}/>}
+        {img.length != 0 && (
+          <Paginator data={img} limit={20} setDisplayData={setDisplayData} />
+        )}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 overflow-y-scroll h-[80vh]">
         {displayData.map((x, id) => {
@@ -46,7 +50,7 @@ const LibraryGrid = ({ plantName, img }) => {
                 </div>
               </div>
               <img className="rounded-lg" src={x.originalImage} />
-              <div className="flex gap-4 absolute top-[40px] right-2 opacity-50 hover:opacity-100">
+              <div className="flex flex-col gap-2 absolute top-[40px] right-2 opacity-50 hover:opacity-100">
                 {/* <img src="/SizingIcons/ShareIcon.svg" alt="" /> */}
                 <img
                   className="cursor-pointer rounded-full"
@@ -54,6 +58,9 @@ const LibraryGrid = ({ plantName, img }) => {
                   alt=""
                   onClick={() => ImgDownload(x.originalImage, x.id)}
                 />
+                <p className="text-white text-xs p-1 font-semibold bg-black rounded-lg">
+                  {x.healthIndex + "/5"}
+                </p>
               </div>
             </div>
           );
