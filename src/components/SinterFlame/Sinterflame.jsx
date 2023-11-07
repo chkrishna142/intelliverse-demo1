@@ -33,7 +33,7 @@ const Sinterflame = () => {
         style={{ zIndex: 1000 }}
       >
         <img
-          className="absolute h-[50px] w-[120px] top-[-20px] right-0"
+          className="absolute h-[50px] w-[120px] top-[-20px] right-2"
           src="/clientLogos/hzl.png"
         />
       </div>

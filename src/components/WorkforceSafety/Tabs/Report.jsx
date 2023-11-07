@@ -48,7 +48,6 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       )
       .then((response) => {
         setReport(response.data);
-        console.log(response.data.data);
         setReportChanging(false);
       })
       .catch((error) => {

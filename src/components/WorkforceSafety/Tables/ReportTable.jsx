@@ -113,7 +113,7 @@ const ReportTable = ({ rowData }) => {
   for (let i = 0; i < rowData.length; i++) {
     rowData[i]["id"] = i + 1;
   }
-  console.log(rowData, "data");
+
   return (
     <div className="overflow-x-auto">
       <ThemeProvider theme={MuiTheme}>
