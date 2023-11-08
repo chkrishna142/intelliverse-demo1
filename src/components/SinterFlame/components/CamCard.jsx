@@ -14,7 +14,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
     } else setLastGoodData(data);
   }, [data]);
 
-  return !(data.flags.viewObstructed || data.flags.flapClosed) &&
+  return !(data.flags.viewObstructed && data.flags.flapClosed) &&
     !data.hasOwnProperty("lastGoodRecord") ? (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6 justify-between">
       {alert !== 0 && (
