@@ -1,25 +1,24 @@
-import { useState, useEffect, useContext } from "react";
-import { useToast } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
-import NavContext from "../../NavContext";
-import { baseURL } from "../../../index";
-import FeedCard from "../Components/FeedCard";
-import axios from "axios";
-import ReactPlayer from "react-player";
-import FloatingInput from "../../../util/VisionUtils/FloatingInput";
+import { useState, useEffect, useContext } from 'react';
+import { useToast } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
+import NavContext from '../../NavContext';
+import { baseURL } from '../../../index';
+import FeedCard from '../Components/FeedCard';
+import axios from 'axios';
+import FloatingInput from '../../../util/VisionUtils/FloatingInput';
 
 const Capitalize = (str) => {
-  const arr = str.split(" ");
+  const arr = str.split(' ');
   for (var i = 0; i < arr.length; i++) {
     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
   }
-  const str2 = arr.join(" ");
+  const str2 = arr.join(' ');
   return str2;
 };
 
 const playNotificationSound = (toast, check, title) => {
   const audio = new Audio(
-    "https://drive.google.com/uc?id=1q5E3cd0B8L1z89ojBex3ZzNxDakk1ilG&export=download"
+    'https://drive.google.com/uc?id=1q5E3cd0B8L1z89ojBex3ZzNxDakk1ilG&export=download'
   );
 
   const playPromise = audio.play();
@@ -29,15 +28,15 @@ const playNotificationSound = (toast, check, title) => {
       .then(() => {
         toast({
           title: Capitalize(title),
-          description: Capitalize(check) + " not detected",
-          status: "error",
+          description: Capitalize(check) + ' not detected',
+          status: 'error',
           duration: 4000,
           isClosable: true,
-          position: "top-right",
+          position: 'top-right',
         });
       })
       .catch((error) => {
-        console.error("Error starting audio playback:", error);
+        console.error('Error starting audio playback:', error);
       });
   }
 };
@@ -48,23 +47,23 @@ const RtspToHslConverter = async (url, camId) => {
     alias: camId,
   });
   const response = await axios.post(
-    "https://rtsp.backend-ripik.com/start",
+    'https://rtsp.backend-ripik.com/start',
     request,
     {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     }
   );
   const data = await response.data;
-  return data.running ? "https://rtsp.backend-ripik.com" + data.uri : "";
+  return data.running ? 'https://rtsp.backend-ripik.com' + data.uri : '';
 };
 
 const Feed = () => {
   const [selectedBay, setSelectedBay] = useState();
   const param = useParams();
   const [bays, setBays] = useState([]);
-  const [truckNo, setTruckNo] = useState("");
+  const [truckNo, setTruckNo] = useState('');
   const [editing, setEditing] = useState(false);
   const [currentCams, setCurrentCams] = useState({});
   const [trucInfo, setTruckInfo] = useState({});
@@ -76,19 +75,19 @@ const Feed = () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
-      plantName: "khandala",
+      plantName: 'khandala',
       cameraGpId: selectedBay,
       endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
     });
     const response = await axios
       .post(
-        baseURL + "vision/v1/workforceMonitoring/alerts/live/",
+        baseURL + 'vision/v1/workforceMonitoring/alerts/live/',
         requestData,
         {
-          credentials: "same-origin",
+          credentials: 'same-origin',
           headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
+            'Content-Type': 'application/json',
+            'X-Auth-Token': auth,
           },
         }
       )
@@ -111,18 +110,18 @@ const Feed = () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
-      plantName: "khandala",
-      cameraGpId: "all",
+      plantName: 'khandala',
+      cameraGpId: 'all',
     });
     const response = await axios
       .post(
-        baseURL + "vision/v1/workforceMonitoring/info/initialize/",
+        baseURL + 'vision/v1/workforceMonitoring/info/initialize/',
         requestData,
         {
-          credentials: "same-origin",
+          credentials: 'same-origin',
           headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
+            'Content-Type': 'application/json',
+            'X-Auth-Token': auth,
           },
         }
       )
@@ -133,8 +132,8 @@ const Feed = () => {
         data.map((item) => {
           totalbays.push(item.cameraGpId);
           item.cameraInfo.map(async (cam) => {
-            cam["hsl"] = await RtspToHslConverter(
-              "rtsp://admin:jsplIT321@115.247.181.84/",
+            cam['hsl'] = await RtspToHslConverter(
+              'rtsp://admin:jsplIT321@115.247.181.84/',
               cam.cameraId
             );
             return cam;
@@ -167,18 +166,18 @@ const Feed = () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
       useCase: param.material.toUpperCase(),
-      plantName: "khandala",
+      plantName: 'khandala',
       cameraGpId: selectedBay,
     });
     const response = await axios
       .post(
-        baseURL + "vision/v1/workforceMonitoring/summary/live/",
+        baseURL + 'vision/v1/workforceMonitoring/summary/live/',
         requestData,
         {
-          credentials: "same-origin",
+          credentials: 'same-origin',
           headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
+            'Content-Type': 'application/json',
+            'X-Auth-Token': auth,
           },
         }
       )
@@ -225,7 +224,7 @@ const Feed = () => {
   }, [selectedBay]);
 
   useEffect(() => {
-    setTruckInfo({})
+    setTruckInfo({});
     const intervalId = setInterval(() => {
       LiveSummaryApi();
     }, 7 * 1000);
@@ -244,11 +243,11 @@ const Feed = () => {
 
   useEffect(() => {
     if (trucInfo && Object.keys(trucInfo).length > 0) {
-      setTruckNo(trucInfo.truckNumber ? trucInfo.truckNumber : "UNKNOWN");
+      setTruckNo(trucInfo.truckNumber ? trucInfo.truckNumber : 'UNKNOWN');
     }
   }, [trucInfo]);
 
-  const imgs = ["3.png", "2.png", "1.png", "3.png", "2.png", "1.png"];
+  const imgs = ['3.png', '2.png', '1.png', '3.png', '2.png', '1.png'];
 
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
@@ -260,12 +259,12 @@ const Feed = () => {
               <div
                 className={`rounded-[32px] px-4 py-[6px] text-[#605D64] text-base cursor-pointer ${
                   selectedBay != val
-                    ? "bg-white border border-gray-300"
-                    : "bg-[#e2edfe] border border-[#6CA6FC]"
+                    ? 'bg-white border border-gray-300'
+                    : 'bg-[#e2edfe] border border-[#6CA6FC]'
                 }`}
                 onClick={() => setSelectedBay(val)}
               >
-                {"Bay " + val[val.length - 1]}
+                {'Bay ' + val[val.length - 1]}
               </div>
             );
           })}
@@ -305,7 +304,7 @@ const Feed = () => {
           <p className="text-base font-medium text-[#3E3C42]">
             {trucInfo?.timestamp
               ? new Date(trucInfo?.timestamp * 1000).toLocaleTimeString()
-              : ""}
+              : ''}
           </p>
         </div>
         <div className="flex gap-2 items-center min-w-[160px]">
@@ -313,7 +312,7 @@ const Feed = () => {
           <p className="text-base font-medium text-[#3E3C42]">
             {trucInfo?.timestamp
               ? new Date(trucInfo?.timestamp * 1000).toLocaleDateString()
-              : ""}
+              : ''}
           </p>
         </div>
       </div>
