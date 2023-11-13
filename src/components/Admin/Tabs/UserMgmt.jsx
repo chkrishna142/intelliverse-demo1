@@ -12,6 +12,14 @@ import {
   Link,
   Button,
   Icon,
+  FormControl,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalOverlay,
+  ModalCloseButton,
+  ModalContent,
+  Flex,
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from '@chakra-ui/icons';
 import { AddNewModal, DeleteUserModal, EditUserModal } from './UserModals';
@@ -44,6 +52,10 @@ const UserMgmt = () => {
   const onCloseE = () => {
     setIsOpenE(false);
   };
+
+  const [contact, setContact] = useState('');
+  const [whatsapp, setWhatsapp] = useState(false);
+  const [emailInvitation, setEmailInvitation] = useState(false);
 
   return (
     <>
@@ -148,7 +160,7 @@ const UserMgmt = () => {
                           <DeleteIcon h={5} />
                         </Button>
                         <Button
-                          //   onClick={() => setIsOpenE(true)}
+                          onClick={() => setIsOpenE(true)}
                           className="!text-[#3474CA] !bg-white !p-0 !border-0"
                         >
                           <EditIcon h={5} />
@@ -165,7 +177,107 @@ const UserMgmt = () => {
       </div>
       <DeleteUserModal isOpen={isOpenD} onClose={onCloseD} />
       <AddNewModal isOpen={isOpenA} onClose={onCloseA} />
-      {/* <EditUserModal isOpen={isOpenE} onClose={onCloseE} user={dummyData} /> */}
+      <Modal
+        isOpen={isOpenE}
+        onClose={onCloseE}
+        isCentered
+        size={'sm'}
+        width={740}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <div className="text-white w-full h-10 flex bg-[#2660B6] font-semibold justify-center items-center rounded-t-md">
+            Edit User
+          </div>
+          {/* <ModalCloseButton className="mt-2" color={'white'} /> */}
+          <ModalBody className="mt-6">
+            <Flex flexDirection={'column'} gap={'30px'}>
+              <FormControl className="!h-12">
+                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                  Full Name
+                </div>
+                <input
+                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                  placeholder="Enter full name"
+                  value={dummyData.userName}
+                />
+              </FormControl>
+              <FormControl className="!h-12">
+                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                  E-mail ID
+                </div>
+                <input
+                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                  placeholder="Enter valid email ID"
+                  value={dummyData.email}
+                />
+              </FormControl>
+              <FormControl className="!h-12">
+                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                  Phone Number{' '}
+                  <span className="text-[#CAC5CD] text-xs">(optional)</span>
+                </div>
+                <input
+                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                  placeholder="Enter valid phone number"
+                  value={dummyData.phoneNumber}
+                />
+              </FormControl>
+              <FormControl className="!h-12 mb-2 font-semibold">
+                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                  Role
+                </div>
+                <select
+                  value={dummyData.role}
+                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                >
+                  <option>Admin</option>
+                  <option>Regular</option>
+                  <option>CXO</option>
+                </select>
+                {/* <Input placeholder="Enter Your Name" /> */}
+              </FormControl>
+              <div className="flex flex-col items-start gap-2 text-xs font-light">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    disabled={contact?.length !== 10}
+                    onSelect={() => setWhatsapp(!whatsapp)}
+                  />
+                  Enable WhatsApp Integration
+                </div>
+                {/* <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  onSelect={() => setEmailInvitation(!emailInvitation)}
+                />
+                Send Invitation Email
+              </div> */}
+              </div>
+            </Flex>
+          </ModalBody>
+          <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
+            <button
+              onClick={() => {
+                onCloseE();
+              }}
+              className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
+              mr={3}
+            >
+              Save
+            </button>
+            <button
+              onClick={() => {
+                onCloseE();
+              }}
+              className="border-[#DC362E] text-sm h-10 border text-[#DC632E] bg-white px-7 py-2 rounded-md mb-5 "
+              mr={3}
+            >
+              Delete user
+            </button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
