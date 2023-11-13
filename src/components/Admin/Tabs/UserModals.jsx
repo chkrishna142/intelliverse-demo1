@@ -283,7 +283,7 @@ const AddNewModal = ({ isOpen, onClose }) => {
   );
 };
 
-const EditUserModal = (isOpen, onClose) => {
+const EditUserModal = (isOpenE, setIsOpen) => {
   const [contact, setContact] = useState('');
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
@@ -295,10 +295,20 @@ const EditUserModal = (isOpen, onClose) => {
     role: 'Admin',
   };
   useEffect(() => {
-    console.log('OncloseE', onClose, isOpen);
+    console.log('OncloseE', onCloseE, isOpenE);
   });
+
+  const onCloseE = () => {
+    setIsOpen(false);
+  };
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'} width={740}>
+    <Modal
+      isOpen={isOpenE}
+      onClose={onCloseE}
+      isCentered
+      size={'sm'}
+      width={740}
+    >
       <ModalOverlay />
       <ModalContent>
         <div className="text-white w-full h-10 flex bg-[#2660B6] font-semibold justify-center items-center rounded-t-md">
@@ -374,7 +384,7 @@ const EditUserModal = (isOpen, onClose) => {
         <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
           <button
             onClick={() => {
-              onClose();
+              onCloseE();
             }}
             className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
             mr={3}
@@ -383,7 +393,7 @@ const EditUserModal = (isOpen, onClose) => {
           </button>
           <button
             onClick={() => {
-              onClose();
+              onCloseE();
             }}
             className="border-[#DC362E] text-sm h-10 border text-[#DC632E] bg-white px-7 py-2 rounded-md mb-5 "
             mr={3}
