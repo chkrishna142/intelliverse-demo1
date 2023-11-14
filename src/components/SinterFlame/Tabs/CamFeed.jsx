@@ -158,7 +158,7 @@ const CamFeed = ({
                 <div className="w-full h-[70%] bg-black flex justify-center items-center rounded-lg">
                   <img
                     className="rounded-xl w-auto h-[30vh]"
-                    src={camData.originalImage}
+                    src={camData.annotatedImage}
                   />
                 </div>
                 {!(camData.flags.viewObstructed || camData.flags.flapClosed) ? (
