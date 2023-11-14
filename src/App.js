@@ -118,11 +118,15 @@ function App() {
                       path="/vision/:category"
                       element={<MaterialSelect />}
                     />
-                    {/*Sizing pages */}
                     <Route
-                      path="/vision/Sizing/:material"
+                      path="/vision/:category/:material"
                       element={<ClientSelect />}
                     />
+                    {/*Sizing pages */}
+                    {/* <Route
+                      path="/vision/Sizing/:material"
+                      element={<ClientSelect />}
+                    /> */}
                     <Route
                       path="/vision/Sizing/:material/:clientId"
                       element={<Sizing />}
@@ -132,10 +136,10 @@ function App() {
                       element={<SingleCam />}
                     />
                     {/*Process and Kiln Pages */}
-                    <Route
+                    {/* <Route
                       path="/vision/ProcessMonitoring/:material"
                       element={<ClientSelect />}
-                    />
+                    /> */}
                     <Route
                       path="/vision/ProcessMonitoring/kilnhealth/:clientId"
                       element={<Kiln />}
@@ -154,10 +158,10 @@ function App() {
                       element={<SinterflameSingle />}
                     />
                     {/*Quality Tracking pages */}
-                    <Route
+                    {/* <Route
                       path="/vision/qualityTracking/:material"
                       element={<ClientSelect />}
-                    />
+                    /> */}
                     <Route
                       path="/vision/qualityTracking/:material/:clientId"
                       element={<Quality />}
@@ -169,10 +173,10 @@ function App() {
                     {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
                     {/*Workforce pages*/}
-                    <Route
+                    {/* <Route
                       path="/vision/workforceMonitoring/:material"
                       element={<ClientSelect />}
-                    />
+                    /> */}
                     <Route
                       path="/vision/workforceMonitoring/:material/:clientId"
                       element={<WorkforceSafety />}
