@@ -30,7 +30,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
             <img
               className="h-[30vh] sm:h-[30vh] rounded-lg"
-              src={data.originalImage}
+              src={data.annotatedImage}
               alt="no Support"
             />
           </div>
@@ -91,7 +91,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
             <img
               className="h-[30vh] sm:h-[30vh] rounded-lg"
-              src={lastGoodData.originalImage}
+              src={lastGoodData.annotatedImage}
               alt="no Support"
               crossOrigin="anonymous"
             />
