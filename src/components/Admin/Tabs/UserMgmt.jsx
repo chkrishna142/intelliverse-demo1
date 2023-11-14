@@ -23,8 +23,11 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from '@chakra-ui/icons';
 import { AddNewModal, DeleteUserModal, EditUserModal } from './UserModals';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useEffect } from 'react';
+import NavContext from '../../NavContext';
+import axios from 'axios';
+import { baseURL } from '../../..';
 
 const UserMgmt = () => {
   const dummyData = {
@@ -34,6 +37,72 @@ const UserMgmt = () => {
     phoneNumber: '9856417823',
     role: 'Admin',
   };
+  const { auth } = useContext(NavContext);
+
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get(baseURL + 'iam/users', {
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Auth-Token': auth,
+        },
+      });
+      setUsers(response?.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  function tableToCSV() {
+    let csv_data = [];
+
+    let csv_headers = [];
+    csv_headers.push('USER NAME');
+    csv_headers.push('EMAIL');
+    csv_headers.push('ROLE');
+    csv_headers.push('LAST LOGIN');
+    csv_headers.push('STATUS');
+    csv_headers.join(',');
+    csv_data.push(csv_headers);
+    users?.map((elem) => {
+      let csv_row = [];
+      csv_row.push(elem.username[0].toUpperCase() + elem.username.slice(1));
+      csv_row.push(elem.email);
+      csv_row.push(elem.role === 'USER' ? 'REGULAR' : elem.role);
+      csv_row.push(dummyData.lastLogin);
+      csv_row.push(
+        elem.isactive === 'false' || !elem.isactive ? 'Inactive' : 'Active'
+      );
+      csv_row.join(',');
+      csv_data.push(csv_row);
+    });
+    csv_data = csv_data.join('\n');
+
+    downloadCSVFile(csv_data);
+  }
+
+  function downloadCSVFile(csv_data) {
+    let CSVFile = new Blob([csv_data], {
+      type: 'text/csv',
+    });
+
+    let temp_link = document.createElement('a');
+    temp_link.download = 'Users.csv';
+    let url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
+    temp_link.style.display = 'none';
+    document.body.appendChild(temp_link);
+
+    temp_link.click();
+    document.body.removeChild(temp_link);
+  }
 
   const [isOpenD, setIsOpenD] = useState(false);
 
@@ -56,6 +125,7 @@ const UserMgmt = () => {
   const [contact, setContact] = useState('');
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
+  const [selectedUser, setSelectedUser] = useState([]);
 
   return (
     <>
@@ -80,7 +150,10 @@ const UserMgmt = () => {
             </div>
           </div>
           <div className="flex flex-row items-end gap-6">
-            <Button className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white">
+            <Button
+              onClick={tableToCSV}
+              className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
+            >
               <DownloadIcon />
               <span>Download Table</span>
             </Button>
@@ -125,23 +198,23 @@ const UserMgmt = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {[...Array(14)].map(() => {
+              {users.map((elem) => {
                 return (
                   <Tr className="">
                     <Td className="!text-center !px-0 !text-sm font-semibold whitespace-nowrap">
-                      {dummyData.userName}
+                      {elem.username[0].toUpperCase() + elem.username.slice(1)}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                      {dummyData.email}
+                      {elem.email}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                      {10 * Math.random() > 7 ? 'Regular' : 'Admin'}
+                      {elem.role === 'USER' ? 'REGULAR' : elem.role}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                       {dummyData.lastLogin}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap ">
-                      {10 * Math.random() > 7 ? (
+                      {elem.isactive === 'false' || !elem.isactive ? (
                         <span className="text-[#E46962] text-sm font-semibold">
                           Inactive
                         </span>
@@ -160,7 +233,10 @@ const UserMgmt = () => {
                           <DeleteIcon h={5} />
                         </Button>
                         <Button
-                          onClick={() => setIsOpenE(true)}
+                          onClick={() => {
+                            setIsOpenE(true);
+                            setSelectedUser(elem);
+                          }}
                           className="!text-[#3474CA] !bg-white !p-0 !border-0"
                         >
                           <EditIcon h={5} />
@@ -199,7 +275,11 @@ const UserMgmt = () => {
                 <input
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                   placeholder="Enter full name"
-                  value={dummyData.userName}
+                  value={
+                    selectedUser &&
+                    selectedUser?.username[0].toUpperCase() +
+                      selectedUser?.username.slice(1)
+                  }
                 />
               </FormControl>
               <FormControl className="!h-12">
@@ -209,7 +289,7 @@ const UserMgmt = () => {
                 <input
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                   placeholder="Enter valid email ID"
-                  value={dummyData.email}
+                  value={selectedUser?.email}
                 />
               </FormControl>
               <FormControl className="!h-12">
@@ -228,12 +308,12 @@ const UserMgmt = () => {
                   Role
                 </div>
                 <select
-                  value={dummyData.role}
+                  value={selectedUser?.role}
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                 >
-                  <option>Admin</option>
-                  <option>Regular</option>
-                  <option>CXO</option>
+                  <option value={'ADMIN'}>Admin</option>
+                  <option value={'USER'}>Regular</option>
+                  <option value={'Super Admin'}>CXO</option>
                 </select>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
