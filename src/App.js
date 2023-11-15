@@ -36,6 +36,7 @@ import AdminHome from "./components/Admin/Home";
 import BillingHome from "./components/Billing/Home";
 import EmailActivation from "./components/Admin/EmailActivation";
 import AiAdvisorHistory from "./components/Admin/AdvisorHistory/AiAdvisorHistory";
+import AiExpertHistory from "./components/Admin/AdvisorHistory/AiExpertHistory";
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem("logged_in")); // used on Login.jsx to set login provider to true
@@ -204,7 +205,14 @@ function App() {
                       path="/admin/activatesubscription"
                       element={<EmailActivation />}
                     />
-                    <Route path="/community/advisor/history" element={<AiAdvisorHistory />} />
+                    <Route
+                      path="/community/advisor/history"
+                      element={<AiAdvisorHistory />}
+                    />
+                    <Route
+                      path="/community/expert/history"
+                      element={<AiExpertHistory />}
+                    />
                   </Routes>
                 </div>
               </div>

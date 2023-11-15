@@ -1,9 +1,17 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { Spinner } from "@chakra-ui/react";
+import Bargraph from "../../Charts/Admin/Bargraph";
+import TransactionTable from "./TransactionTable";
+import ReadMore from "./ReadMore";
 
 const AiAdvisorHistory = () => {
   const [stateChanging, setStateChanging] = useState(false);
+
+  const [homebadge, setHomebadge] = useState({
+    badgeLogo: "/advisor/batchok.svg",
+    badgeTag: "Proficient Inquirer",
+  });
 
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
@@ -21,8 +29,105 @@ const AiAdvisorHistory = () => {
     // apiCall();
   };
 
+  const series = [
+    {
+      name: "Passed",
+      type: "column",
+      data: [10, 20, 10, 11, 12, 15, 16],
+    },
+  ];
+
+  const options = {
+    chart: {
+      type: "bar",
+      stacked: false,
+      // stackType: "100%",
+
+      toolbar: {
+        show: false,
+        offsetX: 0,
+        offsetY: 0,
+        tools: {
+          download: true,
+          selection: false,
+          zoom: false,
+          zoomin: false,
+          zoomout: false,
+          pan: false,
+          // reset: true | '<img src="/static/icons/reset.png" width="20">',
+          reset: false,
+        },
+
+        // autoSelected: "zoom",
+      },
+    },
+    stroke: {
+      width: [0, 0, 0],
+      curve: "smooth",
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "30%",
+      },
+    },
+    colors: ["#CDEEBF", "#EF6F12", "#6CA6FC"],
+
+    // fill: {
+    //   opacity: [0.8, 0.8, 0.8],
+    //   gradient: {
+    //     inverseColors: false,
+    //     shade: "light",
+    //     type: "vertical",
+    //     opacityFrom: 0.85,
+    //     opacityTo: 0.55,
+    //     stops: [0, 100, 100, 100],
+    //   },
+    // },
+
+    markers: {
+      size: 0,
+    },
+    xaxis: {
+      type: "category",
+      categories: [
+        "01/01/2003",
+        "02/01/2003",
+        "03/01/2003",
+        "04/01/2003",
+        "05/01/2003",
+        "06/01/2003",
+        "07/01/2003",
+      ],
+      labels: {
+        show: true,
+        hideOverlappingLabels: true,
+        showDuplicates: false,
+        trim: true,
+        style: {
+          fontSize: "12px",
+          fontWeight: 300,
+          cssClass: "apexcharts-xaxis-label",
+        },
+      },
+      tooltip: {
+        enabled: false,
+      },
+    },
+    grid: {
+      strokeDashArray: 5,
+    },
+    yaxis: {
+      tickAmount: 4,
+      // labels: {
+      //   formatter: function (y) {
+      //     return y + "%";
+      //   },
+      // },
+    },
+  };
+
   return (
-    <div className="mt-[3vh] w-full ">
+    <div className="mt-[3vh] w-full flex flex-col gap-2">
       <div className="w-full flex gap-[8px]">
         <img src="/backtick.svg" alt="" />
         <p className="text-[20px] sm:text-[20px] font-semibold text-[#024D87]">
@@ -42,21 +147,21 @@ const AiAdvisorHistory = () => {
           {/* batch pic */}
           <div className="flex gap-2">
             <div className="flex p-5 h-[150px] w-[150px] bg-[#00cefe] bg-opacity-10">
-              <img src="/advisor/batchok.svg" alt="Badge" />
+              <img src={homebadge.badgeLogo} alt="Badge" />
             </div>
             <div className="flex flex-col p-2">
               <p className="text-[#605D64] text-[20px]">
                 Congratulations! You are now a{" "}
-                <span className="font-semibold "> Frequent Inquirer</span>
+                <span className="font-semibold ">{homebadge.badgeTag}</span>
               </p>
-              <p className=" text-[#1C56AC] text-[14px] self-end">Read more</p>
+              <ReadMore setHomebadge={setHomebadge} />
             </div>
           </div>
           {/* current balance */}
           <div className=" p-4">
             <div className="flex justify-center gap-2 w-[230px] p-[8px] bg-[#FFFFD8] text-[16px]">
               <p className="text-[#605D64]">Current Balance</p>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <p className="text-[#3E3C42] font-semibold ">2000</p>
                 {/* coin icons */}
                 <img src="/token.svg" alt="coins" />
@@ -95,8 +200,8 @@ const AiAdvisorHistory = () => {
 
         <div className="w-full flex gap-[32px]">
           {/* report */}
-          <div className="flex flex-col w-[25%] gap-[30px]">
-            <div className="w-full p-4">
+          <div className="flex  w-full gap-[30px]">
+            <div className="w-[80%] p-4">
               <p className="text-[#79767D] bg-[#f2f5f9] px-[16px] py-[8px] flex justify-center text-[14px] font-medium ">
                 Queries resolved using AI advisor
               </p>
@@ -104,13 +209,13 @@ const AiAdvisorHistory = () => {
                 10
               </p>
             </div>
-            <div className="w-full p-4">
+            <div className=" w-[80%] p-4">
               <p className="text-[#79767D] bg-[#f2f5f9] px-[16px] py-[8px] flex justify-center text-[14px] font-medium ">
                 Tokens used
               </p>
 
               <p className="flex items-center gap-1 justify-center bg-[#FAFAFA] text-[#3E3C42] text-[18px] px-[16px] py-[8px] text-center">
-                1{" "}
+                3{" "}
                 <span className="">
                   {" "}
                   <img src="/token.svg" alt="coins" />
@@ -119,7 +224,7 @@ const AiAdvisorHistory = () => {
             </div>
           </div>
           {/* chart */}
-          <div className="w-[70%] flex flex-col p-4">
+          {/* <div className="w-[70%] flex flex-col p-4">
             <div className="flex flex-col gap-1">
               <p className=" text-[#605D64] text-[14px] font-medium">
                 AI Advisor credit usage
@@ -135,7 +240,14 @@ const AiAdvisorHistory = () => {
                 </span>
               </p>
             </div>
-          </div>
+            <div className="">
+              <Bargraph series={series} options={options} />
+            </div>
+          </div> */}
+        </div>
+
+        <div>
+          <TransactionTable />
         </div>
       </div>
     </div>
