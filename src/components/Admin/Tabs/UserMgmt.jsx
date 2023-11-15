@@ -277,8 +277,8 @@ const UserMgmt = () => {
                   placeholder="Enter full name"
                   value={
                     selectedUser &&
-                    selectedUser?.username[0].toUpperCase() +
-                      selectedUser?.username.slice(1)
+                    selectedUser?.username?.charAt(0)?.toUpperCase() +
+                      selectedUser?.username?.slice(1)
                   }
                 />
               </FormControl>
