@@ -49,11 +49,11 @@ const FloatingInput = (props) => {
     <ChakraProvider theme={theme}>
       <FormControl variant="floating" id="Dates">
         <Input
-          // placeholder=""
+          placeholder=""
           size="md"
           type={props.type}
-          value = {props.value}
-          onChange={(e)=>props?.setDateTime(e.target.value)}
+          value={props.value}
+          onChange={(e) => props?.setDateTime(e.target.value)}
           className="!border-1 !border-[#79767D] !rounded-[5px] !text-[#AEA9B1] !text-base"
         />
         {/* It is important that the Label comes after the Control due to css selectors */}
