@@ -276,7 +276,6 @@ const UserMgmt = () => {
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                   placeholder="Enter full name"
                   value={
-                    selectedUser &&
                     selectedUser?.username?.charAt(0)?.toUpperCase() +
                       selectedUser?.username?.slice(1)
                   }
