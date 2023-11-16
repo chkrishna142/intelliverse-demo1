@@ -35,6 +35,7 @@ import CreditBuy from './components/Main/CreditBuy';
 import AdminHome from './components/Admin/Home';
 import BillingHome from './components/Billing/Home';
 import EmailActivation from './components/Admin/EmailActivation';
+import TransactionHistory from './components/Admin/TransactionHistory/TransactionHistory';
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem('logged_in')); // used on Login.jsx to set login provider to true
@@ -203,6 +204,7 @@ function App() {
                       path="/admin/activatesubscription"
                       element={<EmailActivation />}
                     />
+                    <Route path="/user/transactionhistory" element={<TransactionHistory />}/>
                   </Routes>
                 </div>
               </div>
