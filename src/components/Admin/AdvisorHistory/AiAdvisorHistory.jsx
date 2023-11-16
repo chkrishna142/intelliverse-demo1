@@ -372,7 +372,7 @@ const AiAdvisorHistory = () => {
   const [displayData, setDisplayData] = useState([]);
 
   return (
-    <div className="mt-[3vh] w-full flex flex-col gap-2">
+    <div className="mt-[3vh] w-full flex flex-col gap-1">
       <div className="w-full flex gap-[8px]">
         <img src="/backtick.svg" alt="" />
         <p className="text-[20px] sm:text-[20px] font-semibold text-[#024D87]">
@@ -380,7 +380,7 @@ const AiAdvisorHistory = () => {
         </p>
       </div>
       {/* bottom white background part */}
-      <div className="flex flex-col w-full h-full gap-[14px]  bg-white p-4 rounded-xl   ">
+      <div className="flex flex-col w-full h-full gap-[8px]  bg-white p-4 rounded-xl   ">
         {/* batch */}
         <div
           className="flex justify-between w-full rounded-sm"

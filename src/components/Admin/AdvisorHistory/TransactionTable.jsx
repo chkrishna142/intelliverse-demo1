@@ -13,7 +13,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 const TransactionTable = ({ tableData }) => {
   return (
     <div>
-      <TableContainer className="!max-h-[70vh] !overflow-y-auto">
+      <TableContainer className="!max-h-[31vh] !overflow-y-auto">
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] !text-xs !sticky !top-0">
             <Tr>
