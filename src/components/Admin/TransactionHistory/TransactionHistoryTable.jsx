@@ -8,57 +8,12 @@ import {
   Tr,
 } from "@chakra-ui/react";
 
-const TransactionHistoryTable = () => {
-  const dummyData = [
-    {
-      date: "15 Nov 23",
-      time: "12:30",
-      description: "Purchase",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "16 Nov 23",
-      time: "01:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov 23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov 23",
-      time: "17:00",
-      description: "Purchase",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "16 Nov 23",
-      time: "16:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov 23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
-  ];
-
+const TransactionHistoryTable = ({ dummyData }) => {
   return (
     <div className="w-[55vw] border border-gray-100">
       <TableContainer className="w-[55vw] !text-center  border rounded-md shadow-md bg-white">
         <Table variant="simple">
-          <Thead className="bg-[#DEF] !text-[#79767D]">
+          <Thead className="bg-[#DEF] !text-[#79767D] !top-0">
             <Tr>
               <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
                 TRANSACTION TIME
