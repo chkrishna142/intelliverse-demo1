@@ -4,8 +4,252 @@ import { Spinner } from "@chakra-ui/react";
 import Bargraph from "../../Charts/Admin/Bargraph";
 import TransactionTable from "./TransactionTable";
 import ReadMore from "./ReadMore";
+import Paginator from "../../../util/VisionUtils/Paginator";
 
 const AiAdvisorHistory = () => {
+  const [tableData, setTAbleData] = useState([
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+    {
+      date: "15 Nov 2023",
+      time: "12:30 pm",
+      summary: "Sustainable steel production practices",
+      tokenUsed: "1",
+    },
+    {
+      date: "14 Nov 2023",
+      time: "01:30 pm",
+      summary: "Sustainable steel production practices 2",
+      tokenUsed: "2",
+    },
+  ]);
+
   const [stateChanging, setStateChanging] = useState(false);
 
   const [homebadge, setHomebadge] = useState({
@@ -125,6 +369,7 @@ const AiAdvisorHistory = () => {
       // },
     },
   };
+  const [displayData, setDisplayData] = useState([]);
 
   return (
     <div className="mt-[3vh] w-full flex flex-col gap-2">
@@ -171,22 +416,24 @@ const AiAdvisorHistory = () => {
         </div>
 
         {/* date picker */}
-        <div className="p-5 pl-0 pr-6 gap-4 flex flex-col md:flex-row items-center ">
-          <div className="">
-            <FloatingInput
-              text="From"
-              type="date"
-              setDateTime={setFromTime}
-              value={fromTime}
-            />
-          </div>
-          <div>
-            <FloatingInput
-              text="To"
-              type="date"
-              setDateTime={setToTime}
-              value={toTime}
-            />
+        <div className="p-2 pl-0 pr-6 gap-3 flex flex-col md:flex-row items-center ">
+          <div className="w-[350px] flex gap-2">
+            <div className="">
+              <FloatingInput
+                text="From"
+                type="date"
+                setDateTime={setFromTime}
+                value={fromTime}
+              />
+            </div>
+            <div>
+              <FloatingInput
+                text="To"
+                type="date"
+                setDateTime={setToTime}
+                value={toTime}
+              />
+            </div>
           </div>
           <button
             className="text-center px-[16px] py-[10px] text-white text-xs md:text-base font-medium bg-[#084298] rounded-lg"
@@ -198,10 +445,10 @@ const AiAdvisorHistory = () => {
 
         {/* graph and reports */}
 
-        <div className="w-full flex gap-[32px]">
+        <div className="w-full flex gap-[25px] ">
           {/* report */}
-          <div className="flex  w-full gap-[30px]">
-            <div className="w-[80%] p-4">
+          <div className="flex  w-full gap-[20px] ">
+            <div className="w-[80%] p-2">
               <p className="text-[#79767D] bg-[#f2f5f9] px-[16px] py-[8px] flex justify-center text-[14px] font-medium ">
                 Queries resolved using AI advisor
               </p>
@@ -209,7 +456,7 @@ const AiAdvisorHistory = () => {
                 10
               </p>
             </div>
-            <div className=" w-[80%] p-4">
+            <div className=" w-[80%] p-2">
               <p className="text-[#79767D] bg-[#f2f5f9] px-[16px] py-[8px] flex justify-center text-[14px] font-medium ">
                 Tokens used
               </p>
@@ -223,31 +470,18 @@ const AiAdvisorHistory = () => {
               </p>
             </div>
           </div>
-          {/* chart */}
-          {/* <div className="w-[70%] flex flex-col p-4">
-            <div className="flex flex-col gap-1">
-              <p className=" text-[#605D64] text-[14px] font-medium">
-                AI Advisor credit usage
-              </p>
-              <p className="text-[12px] text-[#7AC958] flex gap-1">
-                <span className="flex justify-center items-center">
-                  <img src="/advisor/greenarrow.svg" alt="arrow" />
-                </span>
-                +150
-                <span className="text-[12px] text-[#938F96]">
-                  {" "}
-                  increase in the last week
-                </span>
-              </p>
-            </div>
-            <div className="">
-              <Bargraph series={series} options={options} />
-            </div>
-          </div> */}
+          {/* paginator */}
+          <div className="w-[200px]  flex justify-end items-end">
+            <Paginator
+              data={tableData}
+              limit={15}
+              setDisplayData={setDisplayData}
+            />
+          </div>
         </div>
 
         <div>
-          <TransactionTable />
+          <TransactionTable tableData={displayData} />
         </div>
       </div>
     </div>

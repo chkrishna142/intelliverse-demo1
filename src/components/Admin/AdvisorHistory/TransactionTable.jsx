@@ -10,27 +10,12 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useRef, useContext } from "react";
 
-const TransactionTable = () => {
-  const tableData = [
-    {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
-      summary: "Sustainable steel production practices",
-      tokenUsed: "1",
-    },
-    {
-      date: "14 Nov 2023",
-      time: "01:30 pm",
-      summary: "Sustainable steel production practices 2",
-      tokenUsed: "2",
-    },
-  ];
-
+const TransactionTable = ({ tableData }) => {
   return (
     <div>
-      <TableContainer className="!max-h-[50vh] !overflow-y-auto">
+      <TableContainer className="!max-h-[70vh] !overflow-y-auto">
         <Table variant="simple">
-          <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
+          <Thead className="bg-[#DDEEFF] !text-xs !sticky !top-0">
             <Tr>
               <Th color="#79767D" fontWeight={400} className="!w-[150px]">
                 <div className="w-full h-full flex justify-center">DATE</div>

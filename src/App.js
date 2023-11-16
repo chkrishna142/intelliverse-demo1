@@ -211,7 +211,7 @@ function App() {
                       element={< AiAdvisorHistory/>}
                     />
                     <Route
-                      path="/community/expert/history"
+                      path="community/askanexpert/history"
                       element={<AiExpertHistory />}
                     />
                     <Route path="/user/transactionhistory" element={<TransactionHistory />}/>
