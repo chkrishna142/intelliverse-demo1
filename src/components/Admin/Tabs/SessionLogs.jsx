@@ -27,7 +27,7 @@ const SessionLogs = () => {
   };
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full px-2 !font-roboto">
       <div className="flex flex-row justify-between">
         <div className="flex flex-row justify-start gap-6">
           <div className="flex flex-col">
@@ -58,26 +58,26 @@ const SessionLogs = () => {
           </div>
         </div>
       </div>
-      <TableContainer className="w-full !text-center mt-[2vh] border rounded-md shadow-md bg-white">
+      <TableContainer className="w-full !text-center !font-roboto mt-[2vh] border rounded-md shadow-md bg-white">
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
             <Tr>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
                 LAST LOGIN
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
                 EMAIL
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
                 SESSION DURATION
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
                 IP ADDRESS
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
                 DEVICE
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-[300px] !pl-0 !pr-10 !text-start !text-sm !font-normal mr-auto">
+              <Th className="!text-[#79767D] whitespace-nowrap w-[300px] !pl-0 !pr-10 !text-start !text-sm !font-normal !font-roboto mr-auto">
                 LOCATION
               </Th>
             </Tr>
@@ -86,22 +86,22 @@ const SessionLogs = () => {
             {[...Array(14)].map(() => {
               return (
                 <Tr className="">
-                  <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {dummyData.lastLogin}
                   </Td>
-                  <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {dummyData.email}
                   </Td>
-                  <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {dummyData.sessionDur}
                   </Td>
-                  <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {dummyData.IP}
                   </Td>
-                  <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap ">
+                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap ">
                     {dummyData.device}
                   </Td>
-                  <Td className="!text-start !pl-0 !pr-10 !text-sm !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
+                  <Td className="!text-start !pl-0 !pr-10 !text-sm !font-roboto !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
                     {dummyData.location}
                   </Td>
                 </Tr>

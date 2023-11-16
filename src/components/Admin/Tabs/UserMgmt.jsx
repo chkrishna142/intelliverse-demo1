@@ -122,30 +122,61 @@ const UserMgmt = () => {
     setIsOpenE(false);
   };
 
-  const [contact, setContact] = useState('');
+  const [contact, setContact] = useState(dummyData.phoneNumber);
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
 
+  const deleteUser = async (userID) => {
+    try {
+      const response = await axios.delete(
+        baseURL + 'iam/users',
+        {
+          userid: userID,
+        },
+        {
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Auth-Token': auth,
+          },
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    console.log(contact);
+  }, [contact]);
+
   return (
     <>
-      <div className="w-full px-2">
+      <div className="w-full px-2 !font-roboto">
         <div className="flex flex-row justify-between">
           <div className="flex flex-row justify-start gap-6">
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-[#605D64]">30</p>
+              <p className="text-lg font-semibold text-[#605D64]">
+                {users?.length}
+              </p>
               <p className="text-[#938F96]">Total</p>
             </div>
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-[#605D64]">12</p>
+              <p className="text-lg font-semibold text-[#605D64]">
+                {users?.filter((elem) => elem?.isactive).length}
+              </p>
               <p className="text-[#938F96]">Active</p>
             </div>
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-[#605D64]">8</p>
+              <p className="text-lg font-semibold text-[#605D64]">
+                {users?.filter((elem) => !elem?.isactive).length}
+              </p>
               <p className="text-[#938F96]">Inactive Last Week</p>
             </div>
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-[#605D64]">5</p>
+              <p className="text-lg font-semibold text-[#605D64]">0</p>
               <p className="text-[#938F96]">Deleted</p>
             </div>
           </div>
@@ -177,22 +208,22 @@ const UserMgmt = () => {
           <Table variant="simple">
             <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
               <Tr>
-                <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   USER NAME
                 </Th>
-                <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   EMAIL
                 </Th>
-                <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   ROLE
                 </Th>
-                <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   LAST LOGIN
                 </Th>
-                <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   STATUS
                 </Th>
-                <Th className="!text-[#79767D] whitespace-nowrap w-[300px] !pl-0 !pr-10 !text-start !text-sm !font-normal mr-auto">
+                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-[300px] !pl-0 !pr-10 !text-start !text-sm !font-normal mr-auto">
                   ACTION
                 </Th>
               </Tr>
@@ -201,7 +232,7 @@ const UserMgmt = () => {
               {users.map((elem) => {
                 return (
                   <Tr className="">
-                    <Td className="!text-center !px-0 !text-sm font-semibold whitespace-nowrap">
+                    <Td className="!text-center !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
                       {elem.username[0].toUpperCase() + elem.username.slice(1)}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
@@ -227,7 +258,10 @@ const UserMgmt = () => {
                     <Td className="!text-start !pl-0 !pr-10 !text-sm !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
                       <span className="flex flex-row gap-1">
                         <Button
-                          onClick={() => setIsOpenD(true)}
+                          onClick={() => {
+                            setIsOpenD(true);
+                            setSelectedUser(elem);
+                          }}
                           className="!text-[#E46962] !bg-white !p-0 !border-0"
                         >
                           <DeleteIcon h={5} />
@@ -251,7 +285,11 @@ const UserMgmt = () => {
           </Table>
         </TableContainer>
       </div>
-      <DeleteUserModal isOpen={isOpenD} onClose={onCloseD} />
+      <DeleteUserModal
+        isOpen={isOpenD}
+        onClose={onCloseD}
+        userID={selectedUser?.userid}
+      />
       <AddNewModal isOpen={isOpenA} onClose={onCloseA} />
       <Modal
         isOpen={isOpenE}
@@ -277,7 +315,7 @@ const UserMgmt = () => {
                   placeholder="Enter full name"
                   value={
                     selectedUser?.username?.charAt(0)?.toUpperCase() +
-                      selectedUser?.username?.slice(1)
+                    selectedUser?.username?.slice(1)
                   }
                 />
               </FormControl>
@@ -299,7 +337,8 @@ const UserMgmt = () => {
                 <input
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                   placeholder="Enter valid phone number"
-                  value={dummyData.phoneNumber}
+                  value={selectedUser?.phoneNumber}
+                  onChange={(event) => setContact(event.target.value)}
                 />
               </FormControl>
               <FormControl className="!h-12 mb-2 font-semibold">
@@ -347,6 +386,7 @@ const UserMgmt = () => {
             </button>
             <button
               onClick={() => {
+                deleteUser(selectedUser?.userid);
                 onCloseE();
               }}
               className="border-[#DC362E] text-sm h-10 border text-[#DC632E] bg-white px-7 py-2 rounded-md mb-5 "

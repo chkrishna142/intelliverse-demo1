@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Flex,
   Button,
@@ -11,132 +11,35 @@ import {
   ModalContent,
   Spinner,
 } from '@chakra-ui/react';
+import axios from 'axios';
+import { baseURL } from '../../..';
+import NavContext from '../../NavContext';
 
-const AddNew = () => {
-  const [contact, setContact] = useState('');
-  const [whatsapp, setWhatsapp] = useState(false);
-  const [emailInvitation, setEmailInvitation] = useState(false);
+const DeleteUserModal = ({ isOpen, onClose, userID }) => {
+  const { auth } = useContext(NavContext);
 
-  return (
-    <div className="p-[30px] pt-[40px] flex flex-col gap-[60px] md:w-[60vw] w-full">
-      <Flex flexDirection={'column'} gap={'30px'}>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Full Name
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <input
-                className="w-full focus:outline-none pl-2"
-                placeholder="Enter Your Name"
-              />
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Name" /> */}
-        </FormControl>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Email ID
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <input
-                className="w-full focus:outline-none pl-2"
-                placeholder="Email ID"
-              />
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Official Email Id" /> */}
-        </FormControl>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Phone Number
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <input
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-                className="w-full focus:outline-none pl-2"
-                placeholder="Phone Number (Optional)"
-              />
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Name" /> */}
-        </FormControl>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Role
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <select className="w-full focus:outline-none">
-                <option>Admin</option>
-                <option>Regular</option>
-                <option>CXO</option>
-              </select>
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Name" /> */}
-        </FormControl>
-        <div className="flex items-center gap-6 font-light">
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              disabled={contact?.length !== 10}
-              onSelect={() => setWhatsapp(!whatsapp)}
-            />
-            Enable WhatsApp Integration
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              onSelect={() => setEmailInvitation(!emailInvitation)}
-            />
-            Send Invitation Email
-          </div>
-        </div>
-      </Flex>
-      <Flex justifyContent={'flex-start'}>
-        <Button
-          bg={'#034D87'}
-          _hover={{ bg: '#034D87' }}
-          onClick={''}
-          color={'white'}
-          borderRadius={'md'}
-        >
-          Submit
-        </Button>
-      </Flex>
-    </div>
-  );
-};
+  const deleteUser = async () => {
+    try {
+      const response = await axios.delete(
+        baseURL + `iam/users/?userid=${userID}`,
+        {
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Auth-Token': auth,
+          },
+        }
+      );
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-const DeleteUserModal = ({ isOpen, onClose }) => {
+  const deleteFunc = () => {
+    deleteUser();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'} width={740}>
       <ModalOverlay />
@@ -163,6 +66,7 @@ const DeleteUserModal = ({ isOpen, onClose }) => {
         <ModalFooter className="!w-full !flex !flex-row !items-center !justify-center !gap-2">
           <button
             onClick={() => {
+              deleteFunc();
               onClose();
             }}
             className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
@@ -283,4 +187,4 @@ const AddNewModal = ({ isOpen, onClose }) => {
   );
 };
 
-export { AddNew, DeleteUserModal, AddNewModal };
+export { DeleteUserModal, AddNewModal };
