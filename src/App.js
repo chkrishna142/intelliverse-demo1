@@ -35,15 +35,18 @@ import CreditBuy from './components/Main/CreditBuy';
 import AdminHome from './components/Admin/Home';
 import BillingHome from './components/Billing/Home';
 import EmailActivation from './components/Admin/EmailActivation';
+import AiAdvisorHistory from './components/Admin/AdvisorHistory/AiAdvisorHistory';
+import AiExpertHistory from './components/Admin/AdvisorHistory/AiExpertHistory';
+import TransactionHistory from './components/Admin/TransactionHistory/TransactionHistory';
 
 function App() {
-  const [login, setLogin] = useState(localStorage.getItem('logged_in')); // used on Login.jsx to set login provider to true
-  const [auth, setAuth] = useState(localStorage.getItem('auth_token')); // used on Login.jsx to set auth provider to true
-  const [email, setEmail] = useState(localStorage.getItem('email'));
+  const [login, setLogin] = useState(localStorage.getItem("logged_in")); // used on Login.jsx to set login provider to true
+  const [auth, setAuth] = useState(localStorage.getItem("auth_token")); // used on Login.jsx to set auth provider to true
+  const [email, setEmail] = useState(localStorage.getItem("email"));
 
   useEffect(() => {
-    setAuth(localStorage.getItem('auth_token'));
-    setEmail(localStorage.getItem('email'));
+    setAuth(localStorage.getItem("auth_token"));
+    setEmail(localStorage.getItem("email"));
   }, [login]);
 
   return (
@@ -57,21 +60,21 @@ function App() {
               <Navbar />
               <NavBox />
               <Sidebar />
-              <div className="" style={{ display: 'flex' }}>
+              <div className="" style={{ display: "flex" }}>
                 <div className="md:ml-32 md:mr-10 md:mt-[12vh] w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
                   <Routes>
                     {/* Home Pages */}
                     <Route path="/" element={<Navigate to="/home" />} />
-                    <Route path="/home" element={<Home state={'home'} />} />
-                    <Route path="/vision" element={<Home state={'vision'} />} />
+                    <Route path="/home" element={<Home state={"home"} />} />
+                    <Route path="/vision" element={<Home state={"vision"} />} />
                     <Route
                       path="/optimus"
-                      element={<Home state={'optimus'} />}
+                      element={<Home state={"optimus"} />}
                     />
                     {/* Community Pages */}
                     <Route
                       path="/community"
-                      element={<Home state={'community'} />}
+                      element={<Home state={"community"} />}
                     />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
                     <Route
@@ -203,6 +206,15 @@ function App() {
                       path="/admin/activatesubscription"
                       element={<EmailActivation />}
                     />
+                    <Route
+                      path="/community/advisor/history"
+                      element={< AiAdvisorHistory/>}
+                    />
+                    <Route
+                      path="community/askanexpert/history"
+                      element={<AiExpertHistory />}
+                    />
+                    <Route path="/user/transactionhistory" element={<TransactionHistory />}/>
                   </Routes>
                 </div>
               </div>
