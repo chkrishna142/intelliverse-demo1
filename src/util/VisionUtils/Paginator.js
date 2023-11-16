@@ -1,13 +1,15 @@
 import { Button } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Paginator = ({ data, limit, setDisplayData }) => {
   const selected = useRef();
+  const size = useWindowSize();
   const [openTable, setOpenTable] = useState(false);
   let page = 1,
     maxPage;
-  let idx = 0;
+  let idx = 1;
   const perPageData = {};
   let dummy = [];
   data.forEach((item) => {
@@ -28,7 +30,7 @@ const Paginator = ({ data, limit, setDisplayData }) => {
     selected.current = 1;
   }, [data]);
 
-  console.log(selected.current, "page selected");
+  // console.log(selected.current, "page selected");
   return (
     perPageData.hasOwnProperty(selected.current) && (
       // <div className="self-center flex gap-1 overflow-x-auto min-w-[100px] max-w-[35vw]">
@@ -48,7 +50,11 @@ const Paginator = ({ data, limit, setDisplayData }) => {
       //     );
       //   })}
       // </div>
-      <div className="relative flex gap-[2px] text-sm text-gray-400 items-center whitespace-nowrap">
+      <div
+        className={`relative flex  ${
+          size.width < 425 ? "flex-col" : ""
+        }  gap-[2px] text-sm text-gray-400 items-center whitespace-nowrap p-2`}
+      >
         <p
           onClick={() => {
             if (Object.keys(perPageData).length > 1) setOpenTable(true);
@@ -56,32 +62,34 @@ const Paginator = ({ data, limit, setDisplayData }) => {
           className="cursor-pointer"
         >
           {(selected.current - 1) * limit +
+            1 +
             "-" +
             ((selected.current - 1) * limit +
-              perPageData[selected.current].length -
-              1)}{" "}
+              perPageData[selected.current].length)}{" "}
           of {data.length}
         </p>
-        <Button
-          variant="link"
-          isDisabled={selected.current == 1}
-          onClick={() => {
-            selected.current = selected.current - 1;
-            setDisplayData(perPageData[selected.current]);
-          }}
-        >
-          <ChevronLeftIcon />
-        </Button>
-        <Button
-          variant="link"
-          isDisabled={selected.current == maxPage}
-          onClick={() => {
-            selected.current = selected.current + 1;
-            setDisplayData(perPageData[selected.current]);
-          }}
-        >
-          <ChevronRightIcon />
-        </Button>
+        <div>
+          <Button
+            variant="link"
+            isDisabled={selected.current == 1}
+            onClick={() => {
+              selected.current = selected.current - 1;
+              setDisplayData(perPageData[selected.current]);
+            }}
+          >
+            <ChevronLeftIcon />
+          </Button>
+          <Button
+            variant="link"
+            isDisabled={selected.current == maxPage}
+            onClick={() => {
+              selected.current = selected.current + 1;
+              setDisplayData(perPageData[selected.current]);
+            }}
+          >
+            <ChevronRightIcon />
+          </Button>
+        </div>
         {openTable && (
           <div className="absolute left-0 right-0 top-[90%] flex flex-col h-[20vh] overflow-y-auto text-sm text-gray-400 items-start bg-white z-50">
             {Object.keys(perPageData).map((i) => {
@@ -95,8 +103,9 @@ const Paginator = ({ data, limit, setDisplayData }) => {
                   className="cursor-pointer hover:bg-gray-100"
                 >
                   {(i - 1) * limit +
+                    1 +
                     "-" +
-                    ((i - 1) * limit + perPageData[i].length - 1)}
+                    ((i - 1) * limit + perPageData[i].length)}
                 </p>
               );
             })}

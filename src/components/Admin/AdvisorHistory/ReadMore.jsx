@@ -90,8 +90,6 @@ const ReadMore = ({ setHomebadge }) => {
     },
   ]);
 
-  console.log(badges);
-
   return (
     <>
       <p
@@ -105,7 +103,7 @@ const ReadMore = ({ setHomebadge }) => {
         <ModalOverlay />
         <ModalContent style={{ borderRadius: "12px" }} maxW="700px">
           <ModalBody pos="relative" p="24px" rounded="12px">
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 relative">
               {badges.map((item) => {
                 return (
                   <div className="flex flex-col justify-between gap-4 ">
@@ -156,6 +154,12 @@ const ReadMore = ({ setHomebadge }) => {
                   </div>
                 );
               })}
+            </div>
+            <div
+              className="absolute top-[-20px] left-[47%] w-[45px] h-[45px] p-2 flex rounded-full bg-white shadow-md cursor-pointer"
+              onClick={onClose}
+            >
+              <img src="/advisor/closemodal.svg" alt="" />
             </div>
           </ModalBody>
         </ModalContent>
