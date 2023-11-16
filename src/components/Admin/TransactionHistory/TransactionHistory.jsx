@@ -3,6 +3,7 @@ import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { useEffect, useState } from "react";
 import TransactionHistoryTable from "./TransactionHistoryTable";
 import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";
 
 const dummyData = [
   {
@@ -87,6 +88,7 @@ const dummyData = [
 const TransactionHistory = () => {
   const [alertsChanging, setAlertsChanging] = useState(false);
   const [displayData, setDisplayData] = useState([]);
+  const navigate = useNavigate()
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
       .toISOString()
@@ -105,7 +107,9 @@ const TransactionHistory = () => {
   const handleClickHistory = () => {
     window.history.back();
   };
-
+  const handleToken = () =>{
+    navigate("/community/advisor/buycredits")
+  }
   useEffect(() => {
     handleClick();
   }, []);
@@ -113,7 +117,7 @@ const TransactionHistory = () => {
   return (
     <div className="mt-[3vh]">
       <div className="flex justify-start items-center w-full gap-2">
-        <div>
+        <div className="cursor-pointer">
           <img
             src="/transactionhistory/backarrow.svg"
             className="w-full h-full"
@@ -129,7 +133,7 @@ const TransactionHistory = () => {
           </p>
         </div>
       </div>
-      <div className="flex flex-col rounded-lg">
+      <div className="flex flex-col rounded-lg bg-white">
         <div className="p-6 pl-6 pr-6 gap-6 flex flex-col md:flex-row items-center">
           {/* Date Picker */}
           <div>
@@ -169,14 +173,14 @@ const TransactionHistory = () => {
                     2000
                   </p>
                   <img
-                    src="/transactionhistory/token.svg"
+                    src="/token.svg"
                     className="w-full h-full"
                     alt="token"
                   />
                 </div>
               </div>
-              <div>
-                <p className="text-[#3A74CA] font-medium text-[14px]">
+              <div onClick={handleToken}>
+                <p className="text-[#3A74CA] font-bold text-[14px] cursor-pointer">
                   Add Tokens
                 </p>
               </div>

@@ -11,9 +11,9 @@ import {
 const TransactionHistoryTable = ({ dummyData }) => {
   return (
     <div className="w-[55vw] border border-gray-100">
-      <TableContainer className="w-[55vw] !text-center  border rounded-md shadow-md bg-white">
+      <TableContainer className="w-[55vw] !text-center  border rounded-md bg-white">
         <Table variant="simple">
-          <Thead className="bg-[#DEF] !text-[#79767D] !top-0">
+          <Thead className="bg-[#DDEEFF] !text-[#79767D] !text-xs !top-0">
             <Tr>
               <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
                 TRANSACTION TIME
@@ -46,7 +46,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
                         <div className="w-full flex justify-center gap-1 text-[#7AC958] !text-[14px]">
                           <p>+{item.tokens}</p>
                           <img
-                            src="/transactionhistory/token.svg"
+                            src="/token.svg"
                             alt="token"
                           />
                         </div>
@@ -54,7 +54,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
                         <div className="w-full flex justify-center gap-1 text-[#3E3C42] !text-[14px]">
                           <p>-{item.tokens}</p>
                           <img
-                            src="/transactionhistory/token.svg"
+                            src="/token.svg"
                             alt="token"
                           />
                         </div>
@@ -63,7 +63,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
                     <Td className="!text-center !text-normal font-semibold !text-[#3E3C42] !text-[14px]">
                       <div className="w-full flex justify-center gap-1">
                         <p>{item.balance}</p>
-                        <img src="/transactionhistory/token.svg" alt="token" />
+                        <img src="/token.svg" alt="token" />
                       </div>
                     </Td>
                   </Tr>
