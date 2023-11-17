@@ -88,7 +88,7 @@ const ActiveSubs = () => {
               displayData.map((elem) => {
                 return (
                   <Tr>
-                    <Td className="!text-center !font-semibold !font-roboto !text-sm !w-[300px] whitespace-break-spaces">
+                    <Td className="!px-6 !font-semibold !font-roboto !text-sm !w-[300px] whitespace-break-spaces">
                       {elem?.serv?.servName}
                     </Td>
                     <Td className="!text-center !font-roboto !text-sm">1</Td>
