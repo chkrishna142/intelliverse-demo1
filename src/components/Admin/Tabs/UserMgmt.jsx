@@ -28,6 +28,7 @@ import { useEffect } from 'react';
 import NavContext from '../../NavContext';
 import axios from 'axios';
 import { baseURL } from '../../..';
+import Paginator from '../../../util/VisionUtils/Paginator';
 
 const UserMgmt = () => {
   const dummyData = {
@@ -40,6 +41,9 @@ const UserMgmt = () => {
   const { auth } = useContext(NavContext);
 
   const [users, setUsers] = useState([]);
+
+  const [displayData, setDisplayData] = useState([]);
+  const [displayUsers, setDisplayUsers] = useState([]);
 
   const fetchUsers = async () => {
     try {
@@ -59,6 +63,14 @@ const UserMgmt = () => {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  // useEffect(() => {
+  //   setDisplayData(displayUsers);
+  // }, [displayUsers]);
+
+  useEffect(() => {
+    setDisplayUsers(users);
+  }, [users]);
 
   function tableToCSV() {
     let csv_data = [];
@@ -122,27 +134,33 @@ const UserMgmt = () => {
     setIsOpenE(false);
   };
 
-  const [contact, setContact] = useState(dummyData.phoneNumber);
+  const [contact, setContact] = useState();
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
 
   const deleteUser = async (userID) => {
     try {
-      const response = await axios.delete(
-        baseURL + 'iam/users',
-        {
-          userid: userID,
+      let data = JSON.stringify({
+        userid: userID,
+      });
+
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: 'https://backend-ripik.com/api/iam/users',
+        headers: {
+          'x-auth-token': auth,
+          'Content-Type': 'application/json',
         },
-        {
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': auth,
-          },
-        }
-      );
+        data: data,
+      };
+
+      const response = await axios.request(config);
       console.log(response);
+      if (response.status === 200) {
+        fetchUsers();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -151,6 +169,27 @@ const UserMgmt = () => {
   useEffect(() => {
     console.log(contact);
   }, [contact]);
+
+  useEffect(() => {
+    if (selectedUser) {
+      setContact(selectedUser.phoneNumber);
+    }
+  }, [selectedUser]);
+
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    let temp = users.filter((user) => {
+      return (
+        user?.username?.slice(0, search?.length)?.toLowerCase() ===
+          search?.toLowerCase() ||
+        (user?.email?.includes('@') &&
+          user?.email?.split('@')[1]?.slice(0, search.length)?.toLowerCase() ===
+            search?.toLowerCase())
+      );
+    });
+    setDisplayUsers(temp);
+  }, [search]);
 
   return (
     <>
@@ -176,11 +215,21 @@ const UserMgmt = () => {
               <p className="text-[#938F96]">Inactive Last Week</p>
             </div>
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-[#605D64]">0</p>
+              <p className="text-lg font-semibold text-[#605D64]">
+                {users?.filter((elem) => elem?.isDeleted).length}
+              </p>
               <p className="text-[#938F96]">Deleted</p>
             </div>
           </div>
           <div className="flex flex-row items-end gap-6">
+            <div className="w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
+              <input
+                className="w-full focus:outline-none text-sm"
+                placeholder="Search email ID/name"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <img className="h-5 text-black" src="/search.svg" />
+            </div>
             <Button
               onClick={tableToCSV}
               className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
@@ -195,16 +244,14 @@ const UserMgmt = () => {
               <AddIcon />
               <span>Add New User</span>
             </Button>
-            <div className="w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
-              <input
-                className="w-full focus:outline-none text-sm"
-                placeholder="Search email ID/name"
-              />
-              <img className="h-5 text-black" src="/search.svg" />
-            </div>
+            <Paginator
+              data={displayUsers}
+              setDisplayData={setDisplayData}
+              limit={10}
+            />
           </div>
         </div>
-        <TableContainer className="w-full !text-center mt-[2vh] border rounded-md shadow-md bg-white">
+        <TableContainer className="w-full !text-center mt-4 border rounded-md shadow-md bg-white">
           <Table variant="simple">
             <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
               <Tr>
@@ -229,7 +276,7 @@ const UserMgmt = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {users.map((elem) => {
+              {displayData.map((elem) => {
                 return (
                   <Tr className="">
                     <Td className="!text-center !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
@@ -289,8 +336,13 @@ const UserMgmt = () => {
         isOpen={isOpenD}
         onClose={onCloseD}
         userID={selectedUser?.userid}
+        fetchUsers={fetchUsers}
       />
-      <AddNewModal isOpen={isOpenA} onClose={onCloseA} />
+      <AddNewModal
+        isOpen={isOpenA}
+        onClose={onCloseA}
+        fetchUsers={fetchUsers}
+      />
       <Modal
         isOpen={isOpenE}
         onClose={onCloseE}
