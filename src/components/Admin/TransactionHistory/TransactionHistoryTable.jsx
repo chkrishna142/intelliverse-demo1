@@ -34,14 +34,14 @@ const TransactionHistoryTable = ({ dummyData }) => {
               dummyData.map((item) => {
                 return (
                   <Tr>
-                    <Td className="!text-center !text-normal !font-semibold !text-[#3E3C42] !text-[14px] flex items-center justify-center gap-2">
+                    <Td className="!text-center !text-normal !text-[#3E3C42] !text-[14px] flex items-center justify-center gap-2" style={{fontWeight:400}}>
                       <p className=" pl-2 pr-2">{item.date}</p>
                       <p className="px-4"> {item.time}</p>
                     </Td>
-                    <Td className="!text-center !text-normal !font-semibold !text-[#3E3C42] !text-[14px]">
+                    <Td className="!text-center !text-normal !text-[#3E3C42] !text-[14px]" style={{fontWeight:500}}>
                       {item.description}
                     </Td>
-                    <Td className="!text-center !text-normal !font-semibold !text-[#3E3C42] !text-[14px]">
+                    <Td className="!text-center !text-normal !text-[#3E3C42] !text-[14px]" style={{fontWeight:500}}>
                       {item.description == "Purchase" ? (
                         <div className="w-full flex justify-center gap-1 text-[#7AC958] !text-[14px]">
                           <p>+{item.tokens}</p>
@@ -60,7 +60,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
                         </div>
                       )}
                     </Td>
-                    <Td className="!text-center !text-normal !font-semibold !text-[#3E3C42] !text-[14px]">
+                    <Td className="!text-center !text-normal !text-[#3E3C42] !text-[14px]" style={{fontWeight:500}}>
                       <div className="w-full flex justify-center gap-1">
                         <p>{item.balance}</p>
                         <img src="/token.svg" alt="token" />
