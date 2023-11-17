@@ -3,90 +3,90 @@ import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { useEffect, useState } from "react";
 import TransactionHistoryTable from "./TransactionHistoryTable";
 import Pagination from "./Pagination";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const dummyData = [
-  {
-    date: "15 Nov 23",
-    time: "12:30",
-    description: "Purchase",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "16 Nov 23",
-    time: "01:30",
-    description: "Transfer",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "15 Nov 23",
-    time: "12:30",
-    description: "AI Advisor usage",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "15 Nov 23",
-    time: "17:00",
-    description: "Purchase",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "16 Nov 23",
-    time: "16:30",
-    description: "Transfer",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "15 Nov 23",
-    time: "12:30",
-    description: "AI Advisor usage",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "16 Nov 23",
-    time: "01:30",
-    description: "Transfer",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "15 Nov 23",
-    time: "12:30",
-    description: "AI Advisor usage",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "15 Nov 23",
-    time: "17:00",
-    description: "Purchase",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "16 Nov 23",
-    time: "16:30",
-    description: "Transfer",
-    tokens: "20",
-    balance: "20",
-  },
-  {
-    date: "15 Nov 23",
-    time: "12:30",
-    description: "AI Advisor usage",
-    tokens: "20",
-    balance: "20",
-  }
-];
 
 const TransactionHistory = () => {
   const [alertsChanging, setAlertsChanging] = useState(false);
+  const [dummyData,setDummyData] = useState([
+    {
+      date: "15 Nov 23",
+      time: "12:30",
+      description: "Purchase",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "16 Nov 23",
+      time: "01:30",
+      description: "Transfer",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "15 Nov 23",
+      time: "12:30",
+      description: "AI Advisor usage",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "15 Nov 23",
+      time: "17:00",
+      description: "Purchase",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "16 Nov 23",
+      time: "16:30",
+      description: "Transfer",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "15 Nov 23",
+      time: "12:30",
+      description: "AI Advisor usage",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "16 Nov 23",
+      time: "01:30",
+      description: "Transfer",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "15 Nov 23",
+      time: "12:30",
+      description: "AI Advisor usage",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "15 Nov 23",
+      time: "17:00",
+      description: "Purchase",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "16 Nov 23",
+      time: "16:30",
+      description: "Transfer",
+      tokens: "20",
+      balance: "20",
+    },
+    {
+      date: "15 Nov 23",
+      time: "12:30",
+      description: "AI Advisor usage",
+      tokens: "20",
+      balance: "20",
+    }
+  ]);
   const [displayData, setDisplayData] = useState([]);
   const navigate = useNavigate()
   const [fromTime, setFromTime] = useState(
@@ -104,12 +104,15 @@ const TransactionHistory = () => {
   const handleClick = () => {
     setAlertsChanging(false);
   };
+
   const handleClickHistory = () => {
     window.history.back();
   };
+  // navigating to addtokens page
   const handleToken = () =>{
     navigate("/community/advisor/buycredits")
-  }
+  };
+  
   useEffect(() => {
     handleClick();
   }, []);
@@ -194,6 +197,7 @@ const TransactionHistory = () => {
               />
             </div>
           </div>
+
           {/* Transaction History Table */}
 
           <TransactionHistoryTable dummyData={displayData} />
@@ -201,12 +205,12 @@ const TransactionHistory = () => {
           <div className="flex items-center gap-4 mb-[10px] ">
             <div className="bg-[#447ED4] text-[#FFFFFF] rounded-lg text-[16px] font-semibold">
               <button className="px-[16px] py-[10px]">
-                AI Advisor question history
+                <NavLink to="/community/advisor/history">AI Advisor question history</NavLink>
               </button>
             </div>
             <div className="bg-[#447ED4] text-[#FFFFFF] rounded-lg text-[16px] font-semibold">
               <button className="px-[16px] py-[10px]">
-                Ask an Expert history
+               Ask an Expert history
               </button>
             </div>
           </div>
