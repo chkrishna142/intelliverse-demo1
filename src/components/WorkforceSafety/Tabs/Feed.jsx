@@ -131,13 +131,13 @@ const Feed = () => {
         let bayCamMap = {};
         data.map((item) => {
           totalbays.push(item.cameraGpId);
-          item.cameraInfo.map(async (cam) => {
-            cam['hsl'] = await RtspToHslConverter(
-              'rtsp://admin:jsplIT321@115.247.181.84/',
-              cam.cameraId
-            );
-            return cam;
-          });
+          // item.cameraInfo.map(async (cam) => {
+          //   cam['hsl'] = await RtspToHslConverter(
+          //     'rtsp://admin:jsplIT321@115.247.181.84/',
+          //     cam.cameraId
+          //   );
+          //   return cam;
+          // });
           bayCamMap[item.cameraGpId] = item.cameraInfo;
         });
         setBays(totalbays);
@@ -285,7 +285,7 @@ const Feed = () => {
               />
             </div>
           )}
-          {!editing ? (
+          {/* {!editing ? (
             <img
               src="/WorkforceSafetyIcons/edit.svg"
               className="cursor-pointer"
@@ -297,7 +297,7 @@ const Feed = () => {
               className="cursor-pointer"
               onClick={() => setEditing(false)}
             />
-          )}
+          )} */}
         </div>
         <div className="flex gap-2 items-center min-w-[160px]">
           <p className="text-sm text-[#605D64]">In Time</p>

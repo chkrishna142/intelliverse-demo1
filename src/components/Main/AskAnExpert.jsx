@@ -461,7 +461,7 @@ const AskAnExpert = () => {
       />
       <div className="flex justify-between items-center md:mb-0 mb-20">
         <div></div>
-        <div className="flex items-start gap-4 text-[14px] mt-0 mr-2">
+        <div className="flex items-start gap-4 text-[14px] mt-0 mr-2 whitespace-nowrap">
           <p
             className={
               credits < 5 ? 'font-bold text-[#DC362E]' : 'font-bold text-black'
@@ -474,6 +474,11 @@ const AskAnExpert = () => {
           <Link to="/community/advisor/buycredits">
             <div className="text-[#124CA2] font-bold cursor-pointer">
               Add more
+            </div>
+          </Link>
+          <Link to="/community/askanexpert/history">
+            <div className="text-[#124CA2] font-bold cursor-pointer">
+              View Transaction History
             </div>
           </Link>
         </div>
