@@ -1,11 +1,11 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { baseURL } from "../../../index";
 import axios from "axios";
 import KilnModal from "./KilnModal";
-import Paginator from "../SizingUtils/Paginator";
+import Paginator from "../../../util/VisionUtils/Paginator";
 import {
   Table,
   Td,
@@ -34,7 +34,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   );
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
-    if (e.target.value === 0) {
+    if (e.target.value == 0) {
       setDate(
         new Date(new Date() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
       );
@@ -44,20 +44,23 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: param.material.toLowerCase(),
+      useCase: "KILNHEALTH",
       cameraId: selectedCam,
       plantName: selectedPlant,
       startDate: new Date(date).getTime(),
-      maxLimit: 8000,
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/analytics/history/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/analytics/history/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
         setHistory(response.data);
         setHistoryChanging(false);
@@ -85,7 +88,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
-        <div className="flex gap-2">
+        <div className="flex gap-3 items-baseline">
           <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
           {history.hasOwnProperty("data") && (
             <Paginator
@@ -162,7 +165,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </div>
           )}
           <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+            className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
             onClick={handleClick}
           >
             {historyChanging ? <Spinner /> : "Apply"}
@@ -175,7 +178,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       {history.hasOwnProperty("data") && (
         <TableContainer className="!max-h-[80vh] !overflow-y-auto">
           <Table variant="simple">
-            <Thead className="bg-[#FAFAFA] !text-xs">
+            <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
               <Tr>
                 <Th color="#79767D" fontWeight={400}>
                   SR. NO.
@@ -200,12 +203,21 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                     className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                   >
                     <Td className="cursor-pointer">
-                      {String(item['idx']).padStart(2, "0")}
+                      {String(item["idx"]).padStart(2, "0")}
                     </Td>
                     {history.order.map((x, idx) => {
                       return (
                         <Td key={idx} className="cursor-pointer">
-                          {item[x]}
+                          {x.toLowerCase().includes("time")
+                            ? new Date(item[x]).toLocaleDateString() +
+                              " " +
+                              new Date(item[x]).toLocaleTimeString("en-US", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                                timeZone: "UTC", // Specify UTC timezone
+                              })
+                            : item[x]}
                         </Td>
                       );
                     })}
@@ -230,7 +242,6 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           closeModal={() => setOpenModal(false)}
           data={displayData}
           index={indexRef.current}
-          PlantName={selectedPlant}
         />
       )}
     </div>
