@@ -6,11 +6,13 @@ import {
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useWindowSize } from "@uidotdev/usehooks";
 import { useState } from "react";
 
 let wordLimit = 500;
 
 const ReadMore = ({ setHomebadge }) => {
+  const size = useWindowSize();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [badges, setBadges] = useState([
@@ -103,7 +105,7 @@ const ReadMore = ({ setHomebadge }) => {
         <ModalOverlay />
         <ModalContent style={{ borderRadius: "12px" }} maxW="700px">
           <ModalBody pos="relative" p="20px" rounded="12px">
-            <div className="grid grid-cols-3 gap-8">
+            <div className={`grid grid-cols-3 gap-8 ${size.width < 768}`}>
               {badges.map((item) => {
                 return (
                   <div className="flex flex-col justify-between gap-2 ">
