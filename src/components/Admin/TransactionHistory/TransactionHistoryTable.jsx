@@ -34,7 +34,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
               dummyData.map((item) => {
                 return (
                   <Tr>
-                    <Td className="!text-center !text-normal !font-semibold !text-[#3E3C42] text-[14px] flex items-center justify-center gap-2">
+                    <Td className="!text-center !text-normal !font-semibold !text-[#3E3C42] !text-[14px] flex items-center justify-center gap-2">
                       <p className=" pl-2 pr-2">{item.date}</p>
                       <p className="px-4"> {item.time}</p>
                     </Td>

@@ -208,11 +208,11 @@ const TransactionHistory = () => {
                 <NavLink to="/community/advisor/history">AI Advisor question history</NavLink>
               </button>
             </div>
-            <div className="bg-[#447ED4] text-[#FFFFFF] rounded-lg text-[16px] font-semibold">
+            {/* <div className="bg-[#447ED4] text-[#FFFFFF] rounded-lg text-[16px] font-semibold">
               <button className="px-[16px] py-[10px]">
                Ask an Expert history
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
