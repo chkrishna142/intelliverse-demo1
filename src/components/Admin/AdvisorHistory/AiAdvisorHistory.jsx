@@ -211,7 +211,7 @@ const AiAdvisorHistory = () => {
   );
 
   return (
-    <div className="mt-[3vh] w-full flex flex-col gap-1">
+    <div className="mt-[3vh] w-full flex flex-col gap-1 ">
       <div className="w-full flex gap-[8px]">
         <img src="/backtick.svg" alt="" />
         <p className="text-[20px] sm:text-[20px] font-semibold text-[#024D87]">
@@ -231,10 +231,12 @@ const AiAdvisorHistory = () => {
           }}
         >
           {/* batch pic */}
-          <div className="flex gap-2">
+          <div className={`flex gap-2 ${size.width < 425 ? "flex-col" : ""}`}>
             <div
               className={`flex p-5  ${
-                size.width < 768 ? "h-full w-full" : "h-[150px] w-[180px]"
+                size.width < 768
+                  ? "h-full w-full justify-center"
+                  : "h-[150px] w-[180px]"
               } bg-[#00cefe] bg-opacity-10`}
             >
               <img src={homebadge.badgeLogo} alt="Badge" />
@@ -280,7 +282,11 @@ const AiAdvisorHistory = () => {
 
         {/* date picker */}
         <div className="p-2  gap-3 flex flex-col md:flex-row items-center justify-center md:justify-start">
-          <div className="w-[350px] flex gap-2 justify-center">
+          <div
+            className={` w-full md:w-[350px] flex gap-2 p-4 justify-center ${
+              size.width < 375 ? "flex-col" : ""
+            } `}
+          >
             <div className="">
               <FloatingInput
                 text="From"
