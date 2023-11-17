@@ -15,6 +15,9 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from '@chakra-ui/icons';
 import { NorthEast } from '@mui/icons-material';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import Paginator from '../../../util/VisionUtils/Paginator';
 
 const SessionLogs = () => {
   const dummyData = {
@@ -25,6 +28,37 @@ const SessionLogs = () => {
     device: 'Chrome',
     location: 'Bhubaneshwar, India',
   };
+
+  const [sessions, setSessions] = useState([]);
+  const [displaySessions, setDisplaySessions] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    let temp = [];
+    for (let i = 0; i < 30; i++) {
+      temp.push(dummyData);
+    }
+    setSessions(temp);
+  }, []);
+
+  useEffect(() => {
+    if (search) {
+      setDisplaySessions(
+        sessions.filter((session) => {
+          return (
+            session?.email?.slice(0, search.length)?.toLowerCase() ===
+              search?.toLowerCase() ||
+            (session?.email?.includes('@') &&
+              session?.email
+                ?.split('@')[1]
+                ?.slice(0, search.length)
+                ?.toLowerCase() === search?.toLowerCase())
+          );
+        })
+      );
+    } else setDisplaySessions(sessions);
+  }, [search, sessions]);
 
   return (
     <div className="w-full px-2 !font-roboto">
@@ -45,17 +79,23 @@ const SessionLogs = () => {
           </div>
         </div>
         <div className="flex flex-row items-end gap-6">
+          <div className="w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
+            <input
+              className="w-full focus:outline-none text-sm"
+              placeholder="Search email ID"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <img className="h-5 text-black" src="/search.svg" />
+          </div>
           <Button className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white">
             <DownloadIcon />
             <span>Download Table</span>
           </Button>
-          <div className="w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
-            <input
-              className="w-full focus:outline-none text-sm"
-              placeholder="Search email ID/name"
-            />
-            <img className="h-5 text-black" src="/search.svg" />
-          </div>
+          <Paginator
+            data={displaySessions}
+            limit={10}
+            setDisplayData={setDisplayData}
+          />
         </div>
       </div>
       <TableContainer className="w-full !text-center !font-roboto mt-[2vh] border rounded-md shadow-md bg-white">
@@ -63,7 +103,7 @@ const SessionLogs = () => {
           <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
             <Tr>
               <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
-                LAST LOGIN
+                LOGIN TIME
               </Th>
               <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
                 EMAIL
@@ -83,26 +123,26 @@ const SessionLogs = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {[...Array(14)].map(() => {
+            {displayData.map((session) => {
               return (
                 <Tr className="">
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {dummyData.lastLogin}
+                    {session.lastLogin}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {dummyData.email}
+                    {session.email}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {dummyData.sessionDur}
+                    {session.sessionDur}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {dummyData.IP}
+                    {session.IP}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap ">
-                    {dummyData.device}
+                    {session.device}
                   </Td>
                   <Td className="!text-start !pl-0 !pr-10 !text-sm !font-roboto !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
-                    {dummyData.location}
+                    {session.location}
                   </Td>
                 </Tr>
               );
