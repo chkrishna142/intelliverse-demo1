@@ -141,20 +141,26 @@ const UserMgmt = () => {
 
   const deleteUser = async (userID) => {
     try {
-      const response = await axios.delete(
-        baseURL + 'iam/users',
-        {
-          userid: userID,
+      let data = JSON.stringify({
+        userid: userID,
+      });
+
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: 'https://backend-ripik.com/api/iam/users',
+        headers: {
+          'x-auth-token': auth,
+          'Content-Type': 'application/json',
         },
-        {
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': auth,
-          },
-        }
-      );
+        data: data,
+      };
+
+      const response = await axios.request(config);
       console.log(response);
+      if (response.status === 200) {
+        fetchUsers();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -174,7 +180,13 @@ const UserMgmt = () => {
 
   useEffect(() => {
     let temp = users.filter((user) => {
-      return user?.username?.includes(search) || user?.email?.includes(search);
+      return (
+        user?.username?.slice(0, search?.length)?.toLowerCase() ===
+          search?.toLowerCase() ||
+        (user?.email?.includes('@') &&
+          user?.email?.split('@')[1]?.slice(0, search.length)?.toLowerCase() ===
+            search?.toLowerCase())
+      );
     });
     setDisplayUsers(temp);
   }, [search]);
@@ -203,7 +215,9 @@ const UserMgmt = () => {
               <p className="text-[#938F96]">Inactive Last Week</p>
             </div>
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-[#605D64]">0</p>
+              <p className="text-lg font-semibold text-[#605D64]">
+                {users?.filter((elem) => elem?.isDeleted).length}
+              </p>
               <p className="text-[#938F96]">Deleted</p>
             </div>
           </div>
@@ -322,8 +336,13 @@ const UserMgmt = () => {
         isOpen={isOpenD}
         onClose={onCloseD}
         userID={selectedUser?.userid}
+        fetchUsers={fetchUsers}
       />
-      <AddNewModal isOpen={isOpenA} onClose={onCloseA} />
+      <AddNewModal
+        isOpen={isOpenA}
+        onClose={onCloseA}
+        fetchUsers={fetchUsers}
+      />
       <Modal
         isOpen={isOpenE}
         onClose={onCloseE}

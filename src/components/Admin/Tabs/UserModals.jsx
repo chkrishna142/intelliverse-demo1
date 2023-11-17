@@ -15,22 +15,31 @@ import axios, { Axios } from 'axios';
 import { baseURL } from '../../..';
 import NavContext from '../../NavContext';
 
-const DeleteUserModal = ({ isOpen, onClose, userID }) => {
+const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
   const { auth } = useContext(NavContext);
 
   const deleteUser = async () => {
     try {
-      const response = await axios.delete(
-        baseURL + `iam/users/?userid=${userID}`,
-        {
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': auth,
-          },
-        }
-      );
+      let data = JSON.stringify({
+        userid: userID,
+      });
+
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: 'https://backend-ripik.com/api/iam/users',
+        headers: {
+          'x-auth-token': auth,
+          'Content-Type': 'application/json',
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
       console.log(response);
+      if (response.status === 200) {
+        fetchUsers();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -89,7 +98,7 @@ const DeleteUserModal = ({ isOpen, onClose, userID }) => {
   );
 };
 
-const AddNewModal = ({ isOpen, onClose }) => {
+const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
   const [fullName, setFullName] = useState('');
   const [emailID, setEmailID] = useState('');
   const [contact, setContact] = useState('');
@@ -103,12 +112,12 @@ const AddNewModal = ({ isOpen, onClose }) => {
       let data = JSON.stringify({
         username: fullName,
         fullname: fullName,
-        jobtitle: 'engineer',
+        jobtitle: '',
         email: emailID,
-        department: 'xyz',
-        location: 'xyz',
+        department: '',
+        location: '',
         phoneNumber: contact,
-        services: ['1222bc39-1b49-4238-b07b-871363e2bd78'],
+        services: [],
       });
 
       let config = {
@@ -125,6 +134,10 @@ const AddNewModal = ({ isOpen, onClose }) => {
       const response = await axios.request(config);
 
       console.log(response);
+
+      if (response.status === 200) {
+        fetchUsers();
+      }
     } catch (err) {
       console.error(err);
     }

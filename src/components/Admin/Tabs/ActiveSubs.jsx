@@ -61,11 +61,11 @@ const ActiveSubs = () => {
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] text-[#79767D] !font-roboto">
             <Tr>
-              <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal !w-[300px]">
+              <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal !w-[400px]">
                 TOOL
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
-                NUMBER OF PLANTS
+                PLANTS
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
                 STATUS
