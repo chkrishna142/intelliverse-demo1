@@ -168,6 +168,7 @@ const Feed = () => {
       useCase: param.material.toUpperCase(),
       plantName: 'khandala',
       cameraGpId: selectedBay,
+      endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000
     });
     const response = await axios
       .post(
