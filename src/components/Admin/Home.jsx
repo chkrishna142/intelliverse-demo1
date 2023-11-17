@@ -67,7 +67,7 @@ const AdminHome = () => {
           </div>
         </TabList>
 
-        <TabPanels className="!pt-6">
+        <TabPanels className="!pt-4">
           <TabPanel className="!pl-0 !pr-0">
             <ActiveSubs />
           </TabPanel>
