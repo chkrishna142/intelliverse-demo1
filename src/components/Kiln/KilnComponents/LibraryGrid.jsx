@@ -1,6 +1,6 @@
 import { saveAs } from "file-saver";
-import Paginator from "../SizingUtils/Paginator";
-import { useState } from "react";
+import Paginator from "../../../util/VisionUtils/Paginator";
+import { useEffect, useState } from "react";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -12,18 +12,25 @@ const Capitalize = (str) => {
 };
 
 const LibraryGrid = ({ plantName, img }) => {
-  const [displayData,setDisplayData] = useState([]);
+  const [displayData, setDisplayData] = useState([]);
   const ImgDownload = (url, idx) => {
     saveAs(url, `image-${idx}`);
   };
+  useEffect(() => {
+    if (img.length == 0) setDisplayData([]);
+  }, [img]);
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between">
-        <p className="text-[#3E3C42] font-medium text-xl">{Capitalize(plantName)}</p>
+        <p className="text-[#3E3C42] font-medium text-xl">
+          {Capitalize(plantName)}
+        </p>
         {/* <button className="text-white text-sm font-medium bg-[#447ED4] p-3 pt-1 pb-1 rounded-full">
           Download all
         </button> */}
-        {img.length != 0 && <Paginator data={img} limit={20} setDisplayData={setDisplayData}/>}
+        {img.length != 0 && (
+          <Paginator data={img} limit={20} setDisplayData={setDisplayData} />
+        )}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 overflow-y-scroll h-[80vh]">
         {displayData.map((x, id) => {
@@ -40,7 +47,12 @@ const LibraryGrid = ({ plantName, img }) => {
                 </div>
                 <div className="bg-black rounded-md opacity-70 p-[2px]">
                   <p className="text-white text-xs font-semibold bg-black rounded-lg">
-                    {new Date(x.timestamp).toLocaleTimeString()}
+                    {new Date(x.timestamp).toLocaleTimeString("en-US", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      second: "2-digit",
+                      timeZone: "UTC", // Specify UTC timezone
+                    })}
                   </p>
                 </div>
               </div>

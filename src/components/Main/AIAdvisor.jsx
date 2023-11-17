@@ -221,7 +221,7 @@ const AiAdvisor = () => {
                 always double-check the important facts independently.
               </p>
             ) : null}
-            <div className="flex items-center gap-4 text-[14px] mt-3 mr-5 md:mb-0 mb-4">
+            <div className="flex items-center gap-4 text-[14px] mt-3 mr-5 md:mb-0 mb-4 whitespace-nowrap">
               <p
                 className={
                   credits < 5
@@ -239,6 +239,11 @@ const AiAdvisor = () => {
               <Link to="/community/advisor/buycredits">
                 <div className="text-[#124CA2] font-bold cursor-pointer">
                   Add more
+                </div>
+              </Link>
+              <Link to="/community/advisor/history">
+                <div className="text-[#124CA2] font-bold cursor-pointer">
+                  View Transaction History
                 </div>
               </Link>
             </div>

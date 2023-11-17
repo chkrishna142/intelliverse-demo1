@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { useWindowSize } from "@uidotdev/usehooks";
 import KilnFeed from "./Tabs/KilnFeed";
 import Alerts from "./Tabs/Alerts";
+import Report from "./Tabs/Report";
+import FeedLibrary from "./Tabs/FeedLibrary";
+import Analytics from "./Tabs/Analytics";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -103,9 +106,32 @@ const Kiln = () => {
               plantCamMap={plantCamMap}
             />
           </TabPanel>
-          <TabPanel className="!pl-0 !pr-0"></TabPanel>
-          <TabPanel className="!pl-0 !pr-0"></TabPanel>
-          <TabPanel className="!pl-0 !pr-0"></TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            <FeedLibrary
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            {Object.keys(plantCamMap).length != 0 && (
+              <Analytics
+                plantId={Object.keys(plantCamMap)[0]}
+                cameraId={plantCamMap[Object.keys(plantCamMap)[0]][0]}
+                disable={false}
+                plantCamMap={plantCamMap}
+              />
+            )}
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            <Report
+              plantId="All Plants"
+              cameraId=""
+              disable={false}
+              plantCamMap={plantCamMap}
+            />
+          </TabPanel>
         </TabPanels>
       </Tabs>
     </div>

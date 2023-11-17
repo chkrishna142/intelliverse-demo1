@@ -5,10 +5,10 @@ import { Breadcrumb, BreadcrumbItem } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import Alerts from "./Tabs/Alerts";
-// import FeedLibrary from "./Tabs/FeedLibrary";
-// import Report from "./Tabs/Report";
+import FeedLibrary from "./Tabs/FeedLibrary";
+import Report from "./Tabs/Report";
 import KilnCamFeed from "./Tabs/KilnCamFeed";
-// import Analytics from "./Tabs/Analytics";
+import Analytics from "./Tabs/Analytics";
 import Timer from "../../util/VisionUtils/Timer";
 import { useWindowSize } from "@uidotdev/usehooks";
 
@@ -142,13 +142,13 @@ const KilnSingleCam = () => {
             <Alerts plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <FeedLibrary plantId={plantId} cameraId={cameraId} disable={true} /> */}
+            <FeedLibrary plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <Analytics plantId={plantId} cameraId={cameraId} disable={true} /> */}
+            <Analytics plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {/* <Report plantId={plantId} cameraId={cameraId} disable={true} /> */}
+            <Report plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -4,7 +4,7 @@ import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import PieChart from "../../Charts/KilnCharts/PieChart";
 import StackBarChart from "../../Charts/KilnCharts/StackBarChart";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import HistoryAnalytics from "../KilnComponents/HistoryAnalytics";
 import { Select, Spinner } from "@chakra-ui/react";
 import axios from "axios";
@@ -14,12 +14,9 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
   const { auth } = useContext(NavContext);
   const size = useWindowSize();
-  let material = param.material.toLowerCase();
   const [sizeData, setSizeData] = useState([]);
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
-  const [selectedBasis, setSelectedBasis] = useState(0);
   const typeRef = useRef();
-  const [avgMoisture, setAvgMoisture] = useState(0);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
   const [selectedCam, setSelectedCam] = useState(cameraId);
@@ -53,7 +50,7 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: param.material.toLowerCase(),
+      useCase: "KILNHEALTH",
       cameraId:
         selectedCam === "All Cams" || selectedPlant === "All Plants"
           ? "all"
@@ -82,91 +79,21 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   const handleClick = () => {
-    if (selectedBasis == 0) typeRef.current = "SIZE";
-    else if (selectedBasis == 1) typeRef.current = "COLOR";
-    else typeRef.current = "MOISTURE";
     setSizeDataChanging(true);
     apiCall();
   };
 
   useEffect(() => {
-    typeRef.current = "SIZE";
-    setSelectedBasis(0);
     setSizeDataChanging(true);
     apiCall();
   }, []);
-
-  useEffect(() => {
-    if (typeRef.current == "MOISTURE") {
-      let sum = 0;
-      let count = 0;
-      sizeData.map((i) => {
-        if (i.moisture != 0) {
-          sum += i.moisture;
-          count++;
-        }
-      });
-      let avgSum = count == 0 ? 0 : sum / count;
-      setAvgMoisture(avgSum);
-    }
-  }, [typeRef.current, sizeData]);
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
         <div
-          className={`flex ${
-            material === "coal"
-              ? "justify-between"
-              : "justify-start xl:justify-end"
-          } items-center overflow-x-auto h-[60px]`}
+          className={`flex justify-start xl:justify-end items-center overflow-x-auto h-[60px]`}
         >
-          {material === "coal" && (
-            <div className="flex gap-6 text-[#49454F] text-xs lg:text-base min-w-[445px]">
-              <div
-                className={`p-3 flex items-center gap-1 ${
-                  selectedBasis == 0 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-                }`}
-              >
-                <input
-                  value={0}
-                  onChange={(e) => setSelectedBasis(e.target.value)}
-                  type="radio"
-                  name="freq"
-                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-                />
-                <p>Size distribution</p>
-              </div>
-              <div
-                className={`p-3 flex items-center gap-1 ${
-                  selectedBasis == 1 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-                }`}
-              >
-                <input
-                  value={1}
-                  onChange={(e) => setSelectedBasis(e.target.value)}
-                  type="radio"
-                  name="freq"
-                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-                />
-                <p>Colour Analysis</p>
-              </div>
-              <div
-                className={`p-3 flex items-center gap-1 ${
-                  selectedBasis == 2 ? "bg-[#e7effb] rounded-xl" : "bg-white"
-                }`}
-              >
-                <input
-                  value={2}
-                  onChange={(e) => setSelectedBasis(e.target.value)}
-                  type="radio"
-                  name="freq"
-                  className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
-                />
-                <p>Moisture analysis</p>
-              </div>
-            </div>
-          )}
           <div className="flex items-center gap-2">
             <div className="min-w-[110px]">
               <Select
@@ -257,14 +184,16 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
               </div>
             )}
             <button
-              className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full min-w-[100px]"
+              className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
               onClick={handleClick}
             >
               {sizeDataChanging ? <Spinner /> : "Apply"}
             </button>
           </div>
         </div>
-        <p className="text-[#3E3C42] font-medium text-xl">Size Distribution</p>
+        <p className="text-[#3E3C42] font-medium text-xl">
+          Health Distribution
+        </p>
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
