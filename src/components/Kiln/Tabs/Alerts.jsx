@@ -242,9 +242,9 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       <Td className="cursor-pointer">{item.plantName}</Td>
                       <Td className="cursor-pointer">{item.cameraId}</Td>
                       <Td className="cursor-pointer">
-                        {new Date(item._id.date).toLocaleDateString() +
+                        {new Date(item.createdAt*1000).toLocaleDateString() +
                           " " +
-                          new Date(item._id.date).toLocaleTimeString("en-US", {
+                          new Date(item.createdAt*1000).toLocaleTimeString("en-US", {
                             hour: "2-digit",
                             minute: "2-digit",
                             second: "2-digit",
