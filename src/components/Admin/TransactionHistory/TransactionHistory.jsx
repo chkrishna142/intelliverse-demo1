@@ -120,13 +120,13 @@ const TransactionHistory = () => {
   return (
     <div className="mt-[3vh]">
       <div className="flex justify-start items-center w-full gap-2">
-        <div className="cursor-pointer">
+        {/* <div className="cursor-pointer">
           <img
             src="/transactionhistory/backarrow.svg"
             className="w-full h-full"
             alt="backarrow_img"
           />
-        </div>
+        </div> */}
         <div
           className="flex justify-center items-center cursor-pointer"
           onClick={handleClickHistory}
