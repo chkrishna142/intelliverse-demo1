@@ -255,7 +255,7 @@ const UserMgmt = () => {
           <Table variant="simple">
             <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
               <Tr>
-                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
+                <Th className="!text-[#79767D] !w-[250px] !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal">
                   USER NAME
                 </Th>
                 <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
@@ -279,7 +279,7 @@ const UserMgmt = () => {
               {displayData.map((elem) => {
                 return (
                   <Tr className="">
-                    <Td className="!text-center !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
+                    <Td className="!px-6 !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
                       {elem.username[0].toUpperCase() + elem.username.slice(1)}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
