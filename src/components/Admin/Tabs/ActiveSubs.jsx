@@ -15,11 +15,13 @@ import axios from 'axios';
 import NavContext from '../../NavContext';
 import { baseURL } from '../../..';
 import Paginator from '../../../util/VisionUtils/Paginator';
+import { useToast } from '@chakra-ui/react';
 
 const ActiveSubs = () => {
   const [activeSubs, setActiveSubs] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const { auth } = useContext(NavContext);
+  const toast = useToast();
 
   const fetchActiveSubs = async () => {
     try {
@@ -86,12 +88,10 @@ const ActiveSubs = () => {
               displayData.map((elem) => {
                 return (
                   <Tr>
-                    <Td className="!text-center !font-roboto !text-sm font-semibold !w-[300px] whitespace-break-spaces">
+                    <Td className="!text-center !font-semibold !font-roboto !text-sm !w-[300px] whitespace-break-spaces">
                       {elem?.serv?.servName}
                     </Td>
-                    <Td className="!text-center !font-roboto !text-sm font-semibold">
-                      1
-                    </Td>
+                    <Td className="!text-center !font-roboto !text-sm">1</Td>
                     <Td className="!text-center !font-roboto !text-sm font-semibold">
                       {elem.isActive === 'false' ? (
                         <span className="text-[#E46962] text-sm font-semibold">
@@ -103,14 +103,51 @@ const ActiveSubs = () => {
                         </span>
                       )}
                     </Td>
-                    <Td className="!text-center !font-roboto !text-sm font-semibold">
-                      {new Date(elem.validityStart).toISOString().split('T')[0]}
+                    <Td className="!text-center !font-roboto !text-sm ">
+                      {elem.validityStart &&
+                        new Date(elem.validityStart)
+                          .toDateString()
+                          .split(' ')[2] +
+                          ' ' +
+                          new Date(elem.validityStart)
+                            .toDateString()
+                            .split(' ')[1] +
+                          " '" +
+                          new Date(elem.validityStart)
+                            .toDateString()
+                            .split(' ')[3]
+                            .slice(2, 4)}
                     </Td>
-                    <Td className="!text-center !font-roboto !text-sm font-semibold ">
-                      {new Date(elem.validityEnd).toISOString().split('T')[0]}
+                    <Td className="!text-center !font-roboto !text-sm">
+                      {elem.validityEnd &&
+                        new Date(elem.validityEnd)
+                          .toDateString()
+                          .split(' ')[2] +
+                          ' ' +
+                          new Date(elem.validityEnd)
+                            .toDateString()
+                            .split(' ')[1] +
+                          " '" +
+                          new Date(elem.validityEnd)
+                            .toDateString()
+                            .split(' ')[3]
+                            .slice(2, 4)}
                     </Td>
                     <Td className="!text-center !font-roboto !text-sm font-semibold">
-                      <Link className="!text-[#3474CA] !no-underline">
+                      <Link
+                        onClick={() => {
+                          toast({
+                            title: 'Mail sent',
+                            description:
+                              "We've recieved a request for your subscription renewal.",
+                            status: 'success',
+                            duration: 4000,
+                            position: 'top-right',
+                            isClosable: true,
+                          });
+                        }}
+                        className="!text-[#3474CA] !no-underline"
+                      >
                         Contact Ripik
                       </Link>
                     </Td>
