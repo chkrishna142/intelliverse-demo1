@@ -241,7 +241,7 @@ const AiAdvisor = () => {
                   Add more
                 </div>
               </Link>
-              <Link to="/community/advisor/history">
+              <Link to="/user/transactionhistory">
                 <div className="text-[#124CA2] font-bold cursor-pointer">
                   View Transaction History
                 </div>
