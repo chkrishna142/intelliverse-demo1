@@ -65,7 +65,6 @@ const KilnModal = ({ openModal, closeModal, data, index }) => {
   };
 
   useEffect(() => {
-    console.log('hello this is data',data[index].id);
     indexRef.current = index;
     idRef.current = data[index].id;
     cameraRef.current = data[index].cameraId;
