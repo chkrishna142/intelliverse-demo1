@@ -1,9 +1,9 @@
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { useState, useEffect, useContext } from "react";
 import { baseURL } from "../../../index";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ExlCsvDownload from "../SizingUtils/ExlCsvDownload";
+import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import NavContext from "../../NavContext";
 import {
   Table,
@@ -43,7 +43,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: param.material.toLowerCase(),
+      useCase: 'KILNHEALTH',
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
       endDate: new Date(toTime).getTime() + 5.5 * 60 * 60 * 1000,
       cameraId:
@@ -54,17 +54,13 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       basis: selectedBasis,
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/report/overview/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/processMonitoring/report/overview/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setReport(response.data);
         setReportChanging(false);
@@ -179,6 +175,12 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                 <option value={2}>Hourly Basis</option>
               </Select>
             </div>
+            <button
+              className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
+              onClick={handleClick}
+            >
+              {reportChanging ? <Spinner /> : "Apply"}
+            </button>
           </div>
           {report.hasOwnProperty("order") && (
             <ExlCsvDownload order={report.order} data={report.data} />
@@ -187,7 +189,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
         {report.hasOwnProperty("data") && (
           <TableContainer className="!max-h-[80vh] !overflow-y-auto">
             <Table variant="simple">
-              <Thead className="bg-[#FAFAFA] !text-xs">
+              <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
                 <Tr>
                   <Th color="#79767D" fontWeight={400}>
                     SR. NO.
@@ -215,11 +217,14 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
                         return (
                           <Td key={idx} className="cursor-pointer">
                             {x.toLowerCase().includes("time")
-                              ? new Date(item[x])
-                                  .toISOString()
-                                  .split("T")
-                                  .join(" ")
-                                  .slice(0, 19)
+                              ? new Date(item[x]).toLocaleDateString() +
+                                " " +
+                                new Date(item[x]).toLocaleTimeString('en-US', {
+                                  hour: '2-digit',
+                                  minute: '2-digit',
+                                  second: '2-digit',
+                                  timeZone: 'UTC', // Specify UTC timezone
+                                })
                               : item[x]}
                           </Td>
                         );

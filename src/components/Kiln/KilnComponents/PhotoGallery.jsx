@@ -4,7 +4,7 @@ import NavContext from "../../NavContext";
 import LibraryGrid from "./LibraryGrid";
 import { Select, Spinner } from "@chakra-ui/react";
 import { baseURL } from "../../../index";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import axios from "axios";
 
 const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
@@ -31,13 +31,13 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      material: param.material.toLowerCase(),
+      useCase: 'KILNHEALTH',
       plantName: selectedPlant,
       cameraId: selectedCam,
       startDate: new Date(date).getTime(),
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/feedLibrary/images/", requestData, {
+      .post(baseURL + "vision/v2/processMonitoring/feedLibrary/images/", requestData, {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -64,8 +64,8 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
 
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
-      <div className="flex pt-5 gap-4 items-start">
-        <div>
+      <div className="flex pt-5 gap-4 items-center overflow-x-auto">
+        <div className="min-w-[110px]">
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -86,7 +86,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               })}
           </Select>
         </div>
-        <div>
+        <div className="min-w-[110px]">
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -107,7 +107,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
               })}
           </Select>
         </div>
-        <div>
+        <div className="min-w-[110px]">
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -122,7 +122,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
           </Select>
         </div>
         {showType == 2 && (
-          <div>
+          <div className="min-w-[110px]">
             <FloatingInput
               text="Date"
               type="date"
@@ -132,7 +132,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         )}
         <button
-          className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+          className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
           onClick={handleClick}
         >
           {imgDataChanging ? <Spinner /> : "Apply"}
@@ -144,3 +144,4 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
 };
 
 export default PhotoGallery;
+

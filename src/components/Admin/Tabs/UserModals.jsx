@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   Flex,
   Button,
@@ -11,132 +11,44 @@ import {
   ModalContent,
   Spinner,
 } from '@chakra-ui/react';
+import axios, { Axios } from 'axios';
+import { baseURL } from '../../..';
+import NavContext from '../../NavContext';
 
-const AddNew = () => {
-  const [contact, setContact] = useState('');
-  const [whatsapp, setWhatsapp] = useState(false);
-  const [emailInvitation, setEmailInvitation] = useState(false);
+const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
+  const { auth } = useContext(NavContext);
 
-  return (
-    <div className="p-[30px] pt-[40px] flex flex-col gap-[60px] md:w-[60vw] w-full">
-      <Flex flexDirection={'column'} gap={'30px'}>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Full Name
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <input
-                className="w-full focus:outline-none pl-2"
-                placeholder="Enter Your Name"
-              />
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Name" /> */}
-        </FormControl>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Email ID
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <input
-                className="w-full focus:outline-none pl-2"
-                placeholder="Email ID"
-              />
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Official Email Id" /> */}
-        </FormControl>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Phone Number
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <input
-                value={contact}
-                onChange={(e) => setContact(e.target.value)}
-                className="w-full focus:outline-none pl-2"
-                placeholder="Phone Number (Optional)"
-              />
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Name" /> */}
-        </FormControl>
-        <FormControl>
-          <div>
-            <div
-              style={{ zIndex: '100px' }}
-              className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
-            >
-              Role
-            </div>
-            <div
-              style={{ zIndex: '10px' }}
-              className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
-            >
-              <select className="w-full focus:outline-none">
-                <option>Admin</option>
-                <option>Regular</option>
-                <option>CXO</option>
-              </select>
-            </div>
-          </div>
-          {/* <Input placeholder="Enter Your Name" /> */}
-        </FormControl>
-        <div className="flex items-center gap-6 font-light">
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              disabled={contact?.length !== 10}
-              onSelect={() => setWhatsapp(!whatsapp)}
-            />
-            Enable WhatsApp Integration
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              onSelect={() => setEmailInvitation(!emailInvitation)}
-            />
-            Send Invitation Email
-          </div>
-        </div>
-      </Flex>
-      <Flex justifyContent={'flex-start'}>
-        <Button
-          bg={'#034D87'}
-          _hover={{ bg: '#034D87' }}
-          onClick={''}
-          color={'white'}
-          borderRadius={'md'}
-        >
-          Submit
-        </Button>
-      </Flex>
-    </div>
-  );
-};
+  const deleteUser = async () => {
+    try {
+      let data = JSON.stringify({
+        userid: userID,
+      });
 
-const DeleteUserModal = ({ isOpen, onClose }) => {
+      let config = {
+        method: 'delete',
+        maxBodyLength: Infinity,
+        url: 'https://backend-ripik.com/api/iam/users',
+        headers: {
+          'x-auth-token': auth,
+          'Content-Type': 'application/json',
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+      console.log(response);
+      if (response.status === 200) {
+        fetchUsers();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteFunc = () => {
+    deleteUser();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'} width={740}>
       <ModalOverlay />
@@ -163,6 +75,7 @@ const DeleteUserModal = ({ isOpen, onClose }) => {
         <ModalFooter className="!w-full !flex !flex-row !items-center !justify-center !gap-2">
           <button
             onClick={() => {
+              deleteFunc();
               onClose();
             }}
             className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
@@ -185,17 +98,57 @@ const DeleteUserModal = ({ isOpen, onClose }) => {
   );
 };
 
-const AddNewModal = ({ isOpen, onClose }) => {
+const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
+  const [fullName, setFullName] = useState('');
+  const [emailID, setEmailID] = useState('');
   const [contact, setContact] = useState('');
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
+  const { auth } = useContext(NavContext);
+  const [role, setRole] = useState('USER');
+
+  const addNewUser = async () => {
+    try {
+      let data = JSON.stringify({
+        username: fullName,
+        fullname: fullName,
+        jobtitle: '',
+        email: emailID,
+        department: '',
+        location: '',
+        phoneNumber: contact,
+        services: [],
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: baseURL + 'iam/adduser',
+        headers: {
+          'x-auth-token': auth,
+          'Content-Type': 'application/json',
+        },
+        data: data,
+      };
+
+      const response = await axios.request(config);
+
+      console.log(response);
+
+      if (response.status === 200) {
+        fetchUsers();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'} width={740}>
       <ModalOverlay />
       <ModalContent>
         <div className="text-white w-full h-10 flex bg-[#2660B6] font-semibold justify-center items-center rounded-t-md">
-          Delete User
+          Add New User
         </div>
         {/* <ModalCloseButton className="mt-2" color={'white'} /> */}
         <ModalBody className="mt-6">
@@ -207,15 +160,17 @@ const AddNewModal = ({ isOpen, onClose }) => {
               <input
                 className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                 placeholder="Enter full name"
+                onChange={(e) => setFullName(e.target.value)}
               />
             </FormControl>
             <FormControl className="!h-12">
-              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+              <div className="text-xs text-[#2660B6] mb-2 font-semibold ">
                 E-mail ID
               </div>
               <input
                 className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                 placeholder="Enter valid email ID"
+                onChange={(e) => setEmailID(e.target.value)}
               />
             </FormControl>
             <FormControl className="!h-12">
@@ -226,16 +181,20 @@ const AddNewModal = ({ isOpen, onClose }) => {
               <input
                 className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                 placeholder="Enter valid phone number"
+                onChange={(e) => setContact(e.target.value)}
               />
             </FormControl>
             <FormControl className="!h-12 mb-2 font-semibold">
               <div className="text-xs text-[#2660B6] mb-2 font-semibold">
                 Role
               </div>
-              <select className="w-full border rounded text-sm border-[#938F96] py-2 px-5">
-                <option>Admin</option>
-                <option>Regular</option>
-                <option>CXO</option>
+              <select
+                onChange={(e) => setRole(e.target.value)}
+                className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+              >
+                <option value={'USER'}>Regular</option>
+                <option value={'ADMIN'}>Admin</option>
+                <option value={'CXO'}>CXO</option>
               </select>
               {/* <Input placeholder="Enter Your Name" /> */}
             </FormControl>
@@ -261,6 +220,7 @@ const AddNewModal = ({ isOpen, onClose }) => {
         <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
           <button
             onClick={() => {
+              addNewUser();
               onClose();
             }}
             className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
@@ -283,4 +243,4 @@ const AddNewModal = ({ isOpen, onClose }) => {
   );
 };
 
-export { AddNew, DeleteUserModal, AddNewModal };
+export { DeleteUserModal, AddNewModal };

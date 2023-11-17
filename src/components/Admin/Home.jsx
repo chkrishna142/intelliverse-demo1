@@ -22,7 +22,7 @@ const AdminHome = () => {
   const [page, setPage] = useState('activesubs');
   return (
     <div
-      className="pl-0 pr-5  font-poppins flex flex-col rounded-lg"
+      className="pl-0 pr-5  font-roboto flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? 'calc(100vw - 168px)' : '100vw' }}
     >
       <div className="flex justify-between mb-3 mt-6">
@@ -67,7 +67,7 @@ const AdminHome = () => {
           </div>
         </TabList>
 
-        <TabPanels className="!pt-6">
+        <TabPanels className="!pt-4">
           <TabPanel className="!pl-0 !pr-0">
             <ActiveSubs />
           </TabPanel>

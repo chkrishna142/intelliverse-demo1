@@ -244,7 +244,12 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       <Td className="cursor-pointer">
                         {new Date(item._id.date).toLocaleDateString() +
                           " " +
-                          new Date(item._id.date).toLocaleTimeString()}
+                          new Date(item._id.date).toLocaleTimeString("en-US", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            second: "2-digit",
+                            timeZone: "UTC", // Specify UTC timezone
+                          })}
                       </Td>
                       <Td className="cursor-pointer">{item.reason}</Td>
                       <Td className="cursor-pointer">{item.comment}</Td>
@@ -270,7 +275,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           closeModal={() => setOpenModal(false)}
           data={displayData}
           index={indexRef.current}
-          PlantName={selectedPlant}
         />
       )}
     </div>

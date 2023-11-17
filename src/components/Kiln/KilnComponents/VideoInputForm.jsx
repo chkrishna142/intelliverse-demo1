@@ -1,5 +1,5 @@
 import { Select, Input, Spinner } from "@chakra-ui/react";
-import FloatingInput from "../SizingUtils/FloatingInput";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { useState, useContext } from "react";
 import NavContext from "../../NavContext";
 import { useParams } from "react-router-dom";
@@ -22,23 +22,23 @@ const VideoInputForm = ({
   const [videoLoading, setVideoLoading] = useState(false);
   const [selectedCam, setSelectedCam] = useState(cameraId);
   const [date, setDate] = useState(new Date());
-  const [toTime, setToTime] = useState("00-00");
-  const [fromTime, setFromTime] = useState("00-00");
+  const [toTime, setToTime] = useState("00:00");
+  const [fromTime, setFromTime] = useState("00:00");
   const toast = useToast();
 
   const apiCall = async () => {
     const requestData = JSON.stringify({
-      plantId: selectedPlant,
+      plantName: selectedPlant,
       cameraId: selectedCam,
-      startTime:
+      startDate:
         new Date(date + "T" + fromTime).getTime() + 5.5 * 60 * 60 * 1000,
-      endTime: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
+      endDate: new Date(date + "T" + toTime).getTime() + 5.5 * 60 * 60 * 1000,
       clientId: param.clientId.toLowerCase(),
-      material: param.material.toLowerCase(),
+      useCase: 'KILNHEALTH',
     });
     const response = await axios
       .post(
-        baseURL + "vision/v1/sizing/getFeedLibrary/video/",
+        baseURL + "vision/v2/processMonitoring/feedLibrary/video/",
         requestData,
         {
           credentials: "same-origin",
@@ -52,12 +52,12 @@ const VideoInputForm = ({
         setIsVideo(response.data.url);
         toast({
           position: "top-right",
-          title: response.data.url === "" ? "Failed" : "Video loaded",
+          title: !response.data.success ? "Failed" : "Video loaded",
           description:
-            response.data.url === ""
+            !response.data.success
               ? "No video in range"
               : "Video is ready to play",
-          status: response.data.url === "" ? "error" : "success",
+          status: !response.data.success ? "error" : "success",
           duration: 3000,
           isClosable: true,
         });
@@ -70,11 +70,12 @@ const VideoInputForm = ({
 
   const handleSubmit = () => {
     setVideoLoading(true);
+    setIsVideo("");
     apiCall();
   };
 
   return (
-    <div className="flex flex-col gap-8 w-[24vw] min-w-[245px] h-full">
+    <div className="flex flex-col gap-8 w-[24vw] min-w-[245px] sm:min-w-[375px] h-full">
       <div className="flex flex-col gap-6 items-center">
         <div className="flex flex-col gap-3 items-start w-full">
           <p className="text-[#938F96] text-sm font-medium">Select a plant</p>
