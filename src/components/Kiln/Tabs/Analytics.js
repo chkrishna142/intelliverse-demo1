@@ -79,13 +79,13 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   const handleClick = () => {
-    setSizeDataChanging(true);
-    apiCall();
+    // setSizeDataChanging(true);
+    // apiCall();
   };
 
   useEffect(() => {
-    setSizeDataChanging(true);
-    apiCall();
+    // setSizeDataChanging(true);
+    // apiCall();
   }, []);
 
   return (
