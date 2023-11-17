@@ -6,11 +6,13 @@ import {
   Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
+import { useWindowSize } from "@uidotdev/usehooks";
 import { useState } from "react";
 
 let wordLimit = 500;
 
 const ReadMore = ({ setHomebadge }) => {
+  const size = useWindowSize();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [badges, setBadges] = useState([
@@ -102,13 +104,13 @@ const ReadMore = ({ setHomebadge }) => {
       <Modal isOpen={isOpen} onClose={onClose} isCentered="true">
         <ModalOverlay />
         <ModalContent style={{ borderRadius: "12px" }} maxW="700px">
-          <ModalBody pos="relative" p="24px" rounded="12px">
-            <div className="grid grid-cols-3 gap-2 relative">
+          <ModalBody pos="relative" p="20px" rounded="12px">
+            <div className={`grid grid-cols-3 gap-8 ${size.width < 768}`}>
               {badges.map((item) => {
                 return (
-                  <div className="flex flex-col justify-between gap-4 ">
-                    <div>
-                      <div className="flex p-2 justify-center">
+                  <div className="flex flex-col justify-between gap-2 ">
+                    <div className="flex flex-col justify-center items-center">
+                      <div className="flex p-2 justify-center w-[100px] h-[100px]">
                         <img src={item.badgeLogo} alt="" />
                       </div>
                       <div className="w-full gap-1">
@@ -121,7 +123,7 @@ const ReadMore = ({ setHomebadge }) => {
                         >
                           {item.tag}
                         </p>
-                        <p className="text-[#938F96] text-[14px] text-center">
+                        <p className="text-[#938F96] text-[14px]  text-center">
                           {item.rewardFor}
                         </p>
                       </div>
@@ -132,22 +134,28 @@ const ReadMore = ({ setHomebadge }) => {
                         name="freq"
                         disabled={item.recieved ? false : true}
                         checked={item.seclectedForProfile}
-                        onClick={() =>
+                        onClick={() => {
                           setBadges((prevBadges) =>
                             prevBadges.map((badge) => ({
                               ...badge,
                               seclectedForProfile:
                                 badge.seclectedForProfile == true
-                                  ? false
+                                  ? item.index == badge.index
+                                    ? true
+                                    : false
                                   : item.index == badge.index
                                   ? true
                                   : false,
                             }))
-                          )
-                        }
+                          );
+                          setHomebadge({
+                            badgeLogo: item.badgeLogo,
+                            badgeTag: item.tag,
+                          });
+                        }}
                         className="cursor-pointer accent-[#3A74CA] h-[18px] w-[18px]"
                       />
-                      <p className="text-[#AEA9B1] text-[12px]">
+                      <p className="text-[#a7a4a9] text-[12px]">
                         Show on my profile picture
                       </p>
                     </div>
@@ -156,7 +164,7 @@ const ReadMore = ({ setHomebadge }) => {
               })}
             </div>
             <div
-              className="absolute top-[-20px] left-[47%] w-[45px] h-[45px] p-2 flex rounded-full bg-white shadow-md cursor-pointer"
+              className="absolute top-[-20px] right-[46.9%] w-[45px] h-[45px] p-2 flex rounded-full bg-white shadow-md cursor-pointer"
               onClick={onClose}
             >
               <img src="/advisor/closemodal.svg" alt="" />

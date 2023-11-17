@@ -8,12 +8,18 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { useWindowSize } from "@uidotdev/usehooks";
 import React, { useState, useEffect, useRef, useContext } from "react";
 
 const TransactionTable = ({ tableData }) => {
+  const size = useWindowSize();
   return (
     <div>
-      <TableContainer className="!max-h-[31vh] !overflow-y-auto">
+      <TableContainer
+        className={` !overflow-y-auto ${
+          size.width < 768 ? "!mb-[50px] !max-h-[45vh]" : "!max-h-[31vh]"
+        }`}
+      >
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] !text-xs !sticky !top-0">
             <Tr>
