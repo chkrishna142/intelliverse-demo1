@@ -35,6 +35,9 @@ import CreditBuy from './components/Main/CreditBuy';
 import AdminHome from './components/Admin/Home';
 import BillingHome from './components/Billing/Home';
 import EmailActivation from './components/Admin/EmailActivation';
+import AiAdvisorHistory from './components/Admin/AdvisorHistory/AiAdvisorHistory';
+import AiExpertHistory from './components/Admin/AdvisorHistory/AiExpertHistory';
+import TransactionHistory from './components/Admin/TransactionHistory/TransactionHistory';
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem('logged_in')); // used on Login.jsx to set login provider to true
@@ -57,7 +60,7 @@ function App() {
               <Navbar />
               <NavBox />
               <Sidebar />
-              <div className="" style={{ display: 'flex' }}>
+              <div className="!font-roboto" style={{ display: 'flex' }}>
                 <div className="md:ml-32 md:mr-10 md:mt-[12vh] w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
                   <Routes>
                     {/* Home Pages */}
@@ -202,6 +205,18 @@ function App() {
                     <Route
                       path="/admin/activatesubscription"
                       element={<EmailActivation />}
+                    />
+                    <Route
+                      path="/community/advisor/history"
+                      element={<AiAdvisorHistory />}
+                    />
+                    <Route
+                      path="community/askanexpert/history"
+                      element={<AiExpertHistory />}
+                    />
+                    <Route
+                      path="/user/transactionhistory"
+                      element={<TransactionHistory />}
                     />
                   </Routes>
                 </div>
