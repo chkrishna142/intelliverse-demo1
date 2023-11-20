@@ -51,9 +51,7 @@ const Paginator = ({ data, limit, setDisplayData }) => {
       //   })}
       // </div>
       <div
-        className={`relative flex  ${
-          size.width < 425 ? 'flex-col' : ''
-        }  gap-[2px] text-sm text-gray-400 items-center whitespace-nowrap p-2`}
+        className={`relative flex gap-[2px] text-sm text-gray-400 items-center whitespace-nowrap p-2`}
       >
         <p
           onClick={() => {

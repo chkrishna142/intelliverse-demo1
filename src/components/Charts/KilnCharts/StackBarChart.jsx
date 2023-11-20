@@ -1,18 +1,12 @@
 import ReactApexChart from "react-apexcharts";
 
-let color = {
-  'size': [
-    "#ffc107",
-    "#5193f6",
-    "#ef6f12",
-    "#1c56ac",
-    "#e91e63",
-    "#00bcd4",
-    "#8bc34a",
-    "#9c27b0",
-  ],
-  'color' : ["#79767D","#000000"]
-}
+const tagColor = {
+  dusty: "#fee179",
+  healthy: "#59d79a",
+  hot: "#ff6460",
+  hotAndDusty: "#ef6f12",
+  negative: "#000000",
+};
 
 const StackBarChart = ({ data, type }) => {
   let graphData = {};
@@ -21,6 +15,10 @@ const StackBarChart = ({ data, type }) => {
     times.push(i.timestamp);
   });
   const labels = Object.keys(data[0][type]);
+  const colors = [];
+  labels.map((tag) => {
+    colors.push(tagColor[tag]);
+  });
   labels.map((i) => {
     graphData[i] = [];
   });
@@ -48,7 +46,7 @@ const StackBarChart = ({ data, type }) => {
       stacked: true,
       stackType: "100%",
     },
-    colors: color[type],
+    colors: colors,
     xaxis: {
       categories: times,
       labels: {

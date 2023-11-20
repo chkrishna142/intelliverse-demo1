@@ -16,7 +16,6 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const size = useWindowSize();
   const [sizeData, setSizeData] = useState([]);
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
-  const typeRef = useRef();
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
   const [selectedCam, setSelectedCam] = useState(cameraId);
@@ -59,16 +58,19 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       startDate: new Date(fromTime).getTime(),
       endDate:
         new Date(toTime).getTime() + 11 * 60 * 60 * 1000 + 59 * 60 * 1000,
-      distType: typeRef.current,
     });
     const response = await axios
-      .post(baseURL + "vision/v2/sizing/analytics/distribution/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/analytics/distribution/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
         setSizeData(response.data);
         setSizeDataChanging(false);
@@ -79,13 +81,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   const handleClick = () => {
-    // setSizeDataChanging(true);
-    // apiCall();
+    setSizeDataChanging(true);
+    apiCall();
   };
 
   useEffect(() => {
-    // setSizeDataChanging(true);
-    // apiCall();
+    handleClick();
   }, []);
 
   return (
@@ -197,12 +198,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
         {sizeData.length != 0 && (
           <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
             <div className="ml-[-40px] sm:ml-0 min-w-[280px] w-[25vw]">
-              <PieChart data={sizeData} type={typeRef.current.toLowerCase()} />
+              <PieChart data={sizeData} type={'distribution'} />
             </div>
             <div className="ml-[-40px] sm:ml-0 h-[35vh] min-w-[680px] flex-grow">
               <StackBarChart
                 data={sizeData}
-                type={typeRef.current.toLowerCase()}
+                type={'distribution'}
               />
             </div>
           </div>
