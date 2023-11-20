@@ -1,6 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import KilnHealthCard from "../../Charts/KilnCharts/kilnHealthCard";
 
+const Capitalize = (str) => {
+  const arr = str.split(" ");
+  for (var i = 0; i < arr.length; i++) {
+    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+  }
+  const str2 = arr.join(" ");
+  return str2;
+};
+
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();
   let material = 'kilnhealth';
@@ -15,7 +24,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
       <div className="flex flex-col sm:flex-row gap-6 items-center">
         <div className="flex flex-col h-full w-full items-center gap-4">
           <p className="self-start p-1 pl-2 pr-2 text-sm text-[#525056] font-medium ">
-            {cameraName}
+            {Capitalize(cameraName)}
           </p>
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
             <img
