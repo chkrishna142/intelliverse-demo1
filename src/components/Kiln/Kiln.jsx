@@ -48,16 +48,6 @@ const Kiln = () => {
             </Tab>
             <Tab
               className={
-                page === "alerts"
-                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
-              }
-              onClick={() => setPage("alerts")}
-            >
-              Alerts
-            </Tab>
-            <Tab
-              className={
                 page === "feed library"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
@@ -65,6 +55,16 @@ const Kiln = () => {
               onClick={() => setPage("feed library")}
             >
               Feed Library
+            </Tab>
+            <Tab
+              className={
+                page === "alerts"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+              }
+              onClick={() => setPage("alerts")}
+            >
+              Alerts
             </Tab>
             <Tab
               className={
@@ -99,7 +99,7 @@ const Kiln = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts
+            <FeedLibrary
               plantId="All Plants"
               cameraId=""
               disable={false}
@@ -107,7 +107,7 @@ const Kiln = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary
+            <Alerts
               plantId="All Plants"
               cameraId=""
               disable={false}

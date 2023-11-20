@@ -1,3 +1,5 @@
+import { Tooltip } from "@chakra-ui/react";
+
 const colors = {
   dusty: "#fffcf2",
   healthy: "#DDF7EA",
@@ -22,58 +24,69 @@ const tagName = {
   negative: "Negative",
 };
 
-// fffcf2
-
 const KilnHealthCard = ({ dusty, hot, health }) => {
+  const indexes = ["Dusty Index", "Hot Index"];
   return (
-    <div className="flex justify-start items-center w-full h-full min-w-[15vw]">
+    <div className="flex flex-col min-w-[220px] gap-4 w-full sm:w-[15vw] h-[250px] sm:h-full">
       <div
-        className="flex justify-start flex-col gap-6 pt-5 pl-4 pr-6 pb-6 rounded w-full sm:w-[15vw] min-w-[190px]"
+        className="w-full px-5 py-4 flex flex-col gap-2 rounded-lg"
         style={{ backgroundColor: colors[health] }}
       >
-        <div className="relative flex flex-col gap-1">
-          <p className="text-sm text-[#605D64]">Health:</p>
-          <div className="flex gap-3 items-center">
-            {/* <img src={`/KilnIcons/${health}.svg`} /> */}
-            <div
-              className="w-[5px] h-[20px]"
-              style={{ backgroundColor: tagColor[health] }}
-            ></div>
-            <p className="text-[#3E3C42] font-medium text-lg">
-              {tagName[health]}
-            </p>
-          </div>
-          {health != "healthy" && (
-            <p className="absolute right-0 top-[-5px] p-2 rounded-[34px] bg-[#F9DEDC] text-[#DC362E] text-xs font-medium">
-              Critical
-            </p>
-          )}
-        </div>
-        <div className="flex flex-row sm:flex-col gap-2">
-          <div className="flex flex-col gap-1">
-            <div className="flex gap-2 items-center">
-              <p className="text-[#605D64] text-sm whitespace-nowrap">
-                Dusty index
-              </p>
-              <img src="/KilnIcons/info.svg" />
-            </div>
-            <div className="flex gap-2 items-center">
-              <p className="text-[#3E3C42] text-lg font-medium">{dusty}</p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-1">
-            <div className="flex gap-2 items-center">
-              <p className="text-[#605D64] text-sm whitespace-nowrap">
-                Hot index
-              </p>
-              <img src="/KilnIcons/info.svg" />
-            </div>
-            <div className="flex gap-2 items-center">
-              <p className="text-[#3E3C42] text-lg font-medium">{hot}</p>
-            </div>
-          </div>
+        <p className="text-sm text-[#605D64]">Kiln is</p>
+        <div className="flex gap-2">
+          <div
+            className="h-[20px] w-[5px]"
+            style={{ backgroundColor: tagColor[health] }}
+          ></div>
+          <p className="text-[#3E3C42] text-base">{tagName[health]}</p>
         </div>
       </div>
+      {indexes.map((i, index) => {
+        //index 0 is dusty and 1 is hot
+        return (
+          <div className="flex-1 flex flex-col gap-[10px]">
+            <div className="flex gap-2">
+              <p className="text-sm text-[#605D64]">{i}</p>
+              <img src="/KilnIcons/info.svg" />
+            </div>
+            <div className="flex-1 flex gap-1 items-end">
+              {[...Array(5)].map((i, idx) => {
+                return (
+                  <Tooltip
+                    label={idx+1 + ".00"}
+                    isDisabled={index == 0 ? idx + 1 != dusty : idx + 1 != hot}
+                    placement="top"
+                    isOpen={index == 0 ? idx + 1 == dusty : idx + 1 == hot}
+                    hasArrow
+                    bg={"white"}
+                    px={'8px'}
+                    py={'4px'}
+                    color={index == 0 ? "#FFC107" : "#DC362E"}
+                    fontWeight={600}
+                    fontSize={14}
+                    rounded={'6px'}
+                    style={{boxShadow: '4px 4px 4px 0px rgba(226, 240, 220, 0.51), -4px -4px 18px 0px rgba(226, 240, 220, 0.38)',zIndex: 0}}
+                  >
+                    <div
+                      className="h-[10px] rounded-[2px] w-full"
+                      style={{
+                        backgroundColor:
+                          index == 0
+                            ? idx + 1 == dusty
+                              ? "#FFC107"
+                              : "#FFFFC4"
+                            : idx + 1 == hot
+                            ? "#DC362E"
+                            : "#F9DEDC",
+                      }}
+                    ></div>
+                  </Tooltip>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
