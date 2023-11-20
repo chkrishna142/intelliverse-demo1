@@ -1,7 +1,7 @@
-import { Button } from '@chakra-ui/react';
-import { useEffect, useRef, useState } from 'react';
-import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
-import { useWindowSize } from '@uidotdev/usehooks';
+import { Button } from "@chakra-ui/react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
+import { useWindowSize } from "@uidotdev/usehooks";
 
 const Paginator = ({ data, limit, setDisplayData }) => {
   const selected = useRef();
@@ -18,7 +18,7 @@ const Paginator = ({ data, limit, setDisplayData }) => {
       page++;
       dummy = [];
     }
-    item['idx'] = idx;
+    item["idx"] = idx;
     dummy.push(item);
     idx++;
   });
@@ -62,12 +62,12 @@ const Paginator = ({ data, limit, setDisplayData }) => {
           {data.length > 0
             ? (selected.current - 1) * limit +
               1 +
-              '-' +
+              "-" +
               ((selected.current - 1) * limit +
                 perPageData[selected.current].length) +
-              ' of ' +
+              " of " +
               data.length
-            : '0-0 of 0'}
+            : "0-0 of 0"}
         </p>
         <div>
           <Button
@@ -105,7 +105,7 @@ const Paginator = ({ data, limit, setDisplayData }) => {
                 >
                   {(i - 1) * limit +
                     1 +
-                    '-' +
+                    "-" +
                     ((i - 1) * limit + perPageData[i].length)}
                 </p>
               );
