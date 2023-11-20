@@ -28,7 +28,7 @@ const KilnSingleCam = () => {
   const [page, setPage] = useState("feed");
   const [callApi, setCallApi] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
-  let material = 'kilnhealth';
+  let material = "kilnhealth";
   let cameraId = param.cameraId;
   let clientId = param.clientId;
   let plantId = param.plantId;
@@ -116,13 +116,20 @@ const KilnSingleCam = () => {
             </div>
           </TabList>
           {
-            <div className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}>
-              <Timer
-                initialSeconds={150}
-                callFunc={setCallApi}
-                initialRender={initialRender}
-                setInitialRender={setInitialRender}
-              />
+            <div className="flex flex-row-reverse items-center gap-2">
+              <button className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full">
+                Retrain
+              </button>
+              <div
+                className={`${page === "feed" ? "opacity-100" : "opacity-0"}`}
+              >
+                <Timer
+                  initialSeconds={150}
+                  callFunc={setCallApi}
+                  initialRender={initialRender}
+                  setInitialRender={setInitialRender}
+                />
+              </div>
             </div>
           }
         </div>

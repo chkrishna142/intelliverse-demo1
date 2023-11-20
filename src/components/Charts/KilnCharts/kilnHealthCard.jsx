@@ -55,6 +55,7 @@ const KilnHealthCard = ({ dusty, hot, health }) => {
               <p className="text-[#605D64] text-sm whitespace-nowrap">
                 Dusty index
               </p>
+              <img src="/KilnIcons/info.svg" />
             </div>
             <div className="flex gap-2 items-center">
               <p className="text-[#3E3C42] text-lg font-medium">{dusty}</p>

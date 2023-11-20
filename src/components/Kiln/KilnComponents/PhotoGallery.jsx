@@ -31,19 +31,23 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: 'KILNHEALTH',
+      useCase: "KILNHEALTH",
       plantName: selectedPlant,
       cameraId: selectedCam,
       startDate: new Date(date).getTime(),
     });
     const response = await axios
-      .post(baseURL + "vision/v2/processMonitoring/feedLibrary/images/", requestData, {
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Auth-Token": auth,
-        },
-      })
+      .post(
+        baseURL + "vision/v2/processMonitoring/feedLibrary/images/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
       .then((response) => {
         setImgData(response.data);
         setImgDataChanging(false);
@@ -61,6 +65,12 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   useEffect(() => {
     handleClick();
   }, []);
+
+  useEffect(() => {
+    if (!disable && plantCamMap[selectedPlant] && plantCamMap[selectedPlant].length > 0) {
+      setSelectedCam(plantCamMap[selectedPlant][0]);
+    }
+  }, [selectedPlant]);
 
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
@@ -144,4 +154,3 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
 };
 
 export default PhotoGallery;
-

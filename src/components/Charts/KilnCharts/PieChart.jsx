@@ -1,34 +1,32 @@
 import ReactApexChart from "react-apexcharts";
 
-let color = {
-  'size': [
-    "#ffc107",
-    "#5193f6",
-    "#ef6f12",
-    "#1c56ac",
-    "#e91e63",
-    "#00bcd4",
-    "#8bc34a",
-    "#9c27b0",
-  ],
-  'color' : ["#79767D","#000000"]
-}
+const tagColor = {
+  dusty: "#fee179",
+  healthy: "#59d79a",
+  hot: "#ff6460",
+  hotAndDusty: "#ef6f12",
+  negative: "#000000",
+};
 
-const avgCal = (list) =>{
+const avgCal = (list) => {
   let sum = 0;
   let count = 0;
-  list.map(i=>{
-      if(i != 0){
-          count++;
-          sum += i;
-      }
-  })
-  return count==0 ? 0 : sum/count;
-}
+  list.map((i) => {
+    if (i != 0) {
+      count++;
+      sum += i;
+    }
+  });
+  return count == 0 ? 0 : sum / count;
+};
 
 const PieChart = ({ data, type }) => {
   const graphData = {};
   const labels = Object.keys(data[0][type]);
+  const colors = [];
+  labels.map((tag) => {
+    colors.push(tagColor[tag]);
+  });
   labels.map((i) => {
     graphData[i] = [];
   });
@@ -41,16 +39,14 @@ const PieChart = ({ data, type }) => {
 
   const series = [];
   labels.map((i) => {
-    series.push(
-      parseFloat(avgCal(graphData[i]).toFixed(2))
-    );
+    series.push(parseFloat(avgCal(graphData[i]).toFixed(2)));
   });
 
   const options = {
     chart: {
       type: "pie",
     },
-    colors: color[type],
+    colors: colors,
     labels: labels,
     legend: {
       show: false,
