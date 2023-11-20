@@ -12,7 +12,7 @@ const Capitalize = (str) => {
 
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();
-  let material = 'kilnhealth';
+  let material = "kilnhealth";
   // console.log(data,'cam data')
   return (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6">
@@ -28,29 +28,22 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           </p>
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
             <img
-              className="h-[30vh] sm:h-[30vh] rounded-lg"
+              className="h-[30vh] sm:h-[30vh] min-h-[250px] rounded-lg"
               src={data.image_url}
               alt="no Support"
             />
           </div>
         </div>
-        {data.noCoal !== 1 ? (
-          <div className="flex flex-col h-full w-full sm:w-min items-center gap-4">
-            <p className="text-xs sm:text-base text-black self-start">
-              Health Status
-            </p>
-            <KilnHealthCard
-              dusty={data.dusty}
-              hot={data.hot}
-              health={data.tag.toLowerCase()}
-            />
-          </div>
-        ) : (
-          <div className="h-full flex flex-col gap-8 items-center justify-center text-black font-bold text-center text-2xl min-w-[15vw]">
-            <img src="/SizingIcons/noCoal.svg" className="h-[10vh]" />
-            <p>No {material} on belt</p>
-          </div>
-        )}
+        <div className="flex flex-col h-full w-full sm:w-min items-center gap-4">
+          <p className="text-xs sm:text-base text-black self-start">
+            Health Status
+          </p>
+          <KilnHealthCard
+            dusty={data.dusty}
+            hot={data.hot}
+            health={data.tag.toLowerCase()}
+          />
+        </div>
       </div>
       <div className="flex flex-col gap-4 min-[400px]:flex-row justify-between">
         <Link

@@ -75,16 +75,6 @@ const KilnSingleCam = () => {
               </Tab>
               <Tab
                 className={
-                  page === "alerts"
-                    ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
-                    : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
-                }
-                onClick={() => setPage("alerts")}
-              >
-                Alerts
-              </Tab>
-              <Tab
-                className={
                   page === "feed library"
                     ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                     : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
@@ -92,6 +82,16 @@ const KilnSingleCam = () => {
                 onClick={() => setPage("feed library")}
               >
                 Feed Library
+              </Tab>
+              <Tab
+                className={
+                  page === "alerts"
+                    ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                    : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+                }
+                onClick={() => setPage("alerts")}
+              >
+                Alerts
               </Tab>
               <Tab
                 className={
@@ -146,10 +146,10 @@ const KilnSingleCam = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alerts plantId={plantId} cameraId={cameraId} disable={true} />
+            <FeedLibrary plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <FeedLibrary plantId={plantId} cameraId={cameraId} disable={true} />
+            <Alerts plantId={plantId} cameraId={cameraId} disable={true} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Analytics plantId={plantId} cameraId={cameraId} disable={true} />
