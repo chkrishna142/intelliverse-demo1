@@ -71,7 +71,7 @@ const StackBarChart = ({ data }) => {
         fontSize: "16px",
       },
     },
-    colors: ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "black"],
+    colors: ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "#000000"],
     xaxis: {
       // categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
       categories: burners,
