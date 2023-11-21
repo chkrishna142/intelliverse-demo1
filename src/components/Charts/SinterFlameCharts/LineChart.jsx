@@ -1,6 +1,15 @@
 import ReactApexCharts from "react-apexcharts";
 import { useState, useEffect } from "react";
 
+const indexWordMap = {
+  0: "No Flame",
+  1: "Poor",
+  2: "Average",
+  3: "Good",
+  4: "Better",
+  5: "Excellent",
+};
+
 const LineChart = ({ data, timeStamps, labels, color }) => {
   //manging x axis and y axis values
   const [times, setTimes] = useState([]);
@@ -41,7 +50,7 @@ const LineChart = ({ data, timeStamps, labels, color }) => {
       intersect: false,
       y: {
         formatter: function (y) {
-          return y;
+          return indexWordMap[y];
         },
       },
       theme: "dark",
@@ -93,20 +102,23 @@ const LineChart = ({ data, timeStamps, labels, color }) => {
       title: {
         text: "",
         style: {
-          fontSize: "16px",
+          fontSize: "12px",
           color: "#000000",
           fontWeight: 500,
           fontFamily: "Poppins",
         },
       },
+      tickAmount: 5,
       labels: {
         style: {
           fontSize: "14px",
         },
         formatter: function (value) {
-          return value;
+          return indexWordMap[value];
         },
       },
+      min: 0,
+      max: 5,
     },
     colors: color,
     stroke: {

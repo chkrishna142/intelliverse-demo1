@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Checkbox } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
 
-const Capitalize = (str) => {
-  const arr = str.split(" ");
-  for (var i = 0; i < arr.length; i++) {
-    arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
-  }
-  const str2 = arr.join(" ");
-  return str2;
+const indexWordMap = {
+  0: 'No Flame',
+  1: 'Poor',
+  2: 'Average',
+  3: 'Good',
+  4: 'Better',
+  5: 'Excellent'
 };
 
 const LibraryGrid = ({ plantName, img }) => {
@@ -43,8 +43,8 @@ const LibraryGrid = ({ plantName, img }) => {
     <div className="flex flex-col gap-3">
       <div className="flex justify-between items-baseline">
         <div className="flex gap-2 items-baseline">
-          <p className="text-[#3E3C42] font-medium text-xl">
-            {Capitalize(plantName)}
+          <p className="text-[#3E3C42] font-medium text-xl capitalize">
+            {plantName}
           </p>
           <p className="text-sm text-[#3E3C42]">
             {size.width <= 600
@@ -89,6 +89,9 @@ const LibraryGrid = ({ plantName, img }) => {
                 />
                 <p className="text-white text-xs p-1 font-semibold bg-black rounded-lg">
                   {x.healthIndex + "/5"}
+                </p>
+                <p className="text-white text-xs p-1 font-semibold bg-black rounded-lg">
+                  {indexWordMap[x.healthIndex]}
                 </p>
                 <Checkbox
                   isChecked={selectedPoints.some((item) => item.id == x.id)}
