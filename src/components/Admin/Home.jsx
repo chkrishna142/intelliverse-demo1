@@ -6,6 +6,7 @@ import SessionLogs from "./Tabs/SessionLogs";
 import UserMgmt from "./Tabs/UserMgmt";
 import ActiveSubs from "./Tabs/ActiveSubs";
 import TokenTransaction from "./Tabs/TokenTransaction";
+import AllotToken from "./Tabs/AllotToken";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -75,6 +76,16 @@ const AdminHome = () => {
             >
               Token Transactions
             </Tab>
+            <Tab
+              className={
+                page === "allot_token"
+                  ? "!text-[#605D64] !text-xs sm:!text-sm !bg-[#6CABFC] !bg-opacity-20 rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#6CA6FC]"
+                  : "!text-xs sm:!text-sm !text-[#605D64] !border !border-[#EBEBEB] !rounded-full"
+              }
+              onClick={() => setPage("allot_token")}
+            >
+              Allot Token
+            </Tab>
           </div>
         </TabList>
 
@@ -90,6 +101,9 @@ const AdminHome = () => {
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <TokenTransaction />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            <AllotToken />
           </TabPanel>
         </TabPanels>
       </Tabs>
