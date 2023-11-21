@@ -8,6 +8,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import TokenData from "../TokenData";
 
 const AllotToken = () => {
   const [inputValue, setInputValue] = useState(20);
@@ -55,10 +56,11 @@ const AllotToken = () => {
   };
 
   return (
-    <div>
+    <div className="w-full flex flex-col gap-4">
       <div>
         <p className="text-[18px] text-[#605D64] font-medium">Allot Tokens</p>
       </div>
+      <TokenData />
       <div className="border border-gray-100">
         <TableContainer className="!text-center  border rounded-md bg-white !overflow-y-auto !max-h-[50vh]">
           <Table variant="simple">
