@@ -70,7 +70,7 @@ const LibraryGrid = ({ plantName, img }) => {
                   </p>
                 </div>
               </div>
-              <img className="rounded-lg" src={x.originalImage} />
+              <img className="rounded-lg" src={x.annotatedImage} />
               <div className="flex flex-col items-center gap-2 absolute top-[40px] right-2 opacity-50 hover:opacity-100">
                 {/* <img src="/SizingIcons/ShareIcon.svg" alt="" /> */}
                 <img

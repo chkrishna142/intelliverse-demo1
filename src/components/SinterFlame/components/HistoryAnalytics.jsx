@@ -6,6 +6,7 @@ import { baseURL } from "../../../index";
 import axios from "axios";
 import DetailModal from "./DetailModal";
 import Paginator from "../../../util/VisionUtils/Paginator";
+import TrendLineChart from "../../Charts/SinterFlameCharts/TrendLineChart";
 import {
   Table,
   Td,
@@ -29,6 +30,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
   const [selectedCam, setSelectedCam] = useState(cameraId);
+  const [selectedView, setSelectedView] = useState(1);
   const [date, setDate] = useState(
     new Date(new Date() - 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
   );
@@ -90,7 +92,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">
         <div className="flex gap-3 items-baseline">
           <p className="text-[#3E3C42] text-xl font-medium pl-6">History</p>
-          {history.hasOwnProperty("data") && (
+          {selectedView == 0 && history.hasOwnProperty("data") && (
             <Paginator
               data={history.data}
               limit={30}
@@ -99,6 +101,19 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           )}
         </div>
         <div className="flex justify-start md:justify-end items-center gap-4 pr-6 pl-6 md:pl-0 overflow-x-auto max-w-[90vw] h-[60px]">
+          <div className="min-w-[110px]">
+            <Select
+              borderColor="#CAC5CD"
+              color="#605D64"
+              variant="outline"
+              className="!rounded-2xl !text-sm !font-medium !text-[#605D64]"
+              value={selectedView}
+              onChange={(e) => setSelectedView(e.target.value)}
+            >
+              <option value={0}>Tabular</option>
+              <option value={1}>Graphical</option>
+            </Select>
+          </div>
           <div className="min-w-[110px]">
             <Select
               borderColor="#CAC5CD"
@@ -175,7 +190,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           )} */}
         </div>
       </div>
-      {history.hasOwnProperty("data") && (
+      {selectedView == 0 && history.hasOwnProperty("data") && (
         <TableContainer className="!max-h-[80vh] !overflow-y-auto">
           <Table variant="simple">
             <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
@@ -226,6 +241,17 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
             </Tbody>
           </Table>
         </TableContainer>
+      )}
+      {selectedView == 1 && history.hasOwnProperty("data") && (
+        <div className="overflow-auto h-[80vh]">
+          <div className="h-[95%] w-[95%] min-w-[700px]">
+            <TrendLineChart
+              data={history.data}
+              camId={selectedCam}
+              color={["#fb8500"]}
+            />
+          </div>
+        </div>
       )}
       {openModal && (
         <DetailModal

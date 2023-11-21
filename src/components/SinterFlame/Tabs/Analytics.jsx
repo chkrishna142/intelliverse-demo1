@@ -8,6 +8,7 @@ import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { Select, Spinner } from "@chakra-ui/react";
 import HistoryAnalytics from "../components/HistoryAnalytics";
 import axios from "axios";
+import DowntimeAnalytics from "../components/DowntimeAnalytics";
 
 const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   let param = useParams();
@@ -16,8 +17,6 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const [sizeDataChanging, setSizeDataChanging] = useState(false);
   const [selectedRange, setSelectedRange] = useState(0);
   const [selectedPlant, setSelectedPlant] = useState(plantId);
-  const [avgMgw, setAvgMgw] = useState(0);
-  const [selectedCam, setSelectedCam] = useState(cameraId);
   const [fromTime, setFromTime] = useState(
     new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
       .toISOString()
@@ -85,18 +84,6 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   useEffect(() => {
     handleClick();
   }, []);
-
-  useEffect(() => {
-    let gap = 0;
-    let count = 0;
-    graphData.map((i) => {
-      if (i.mgw != 0) {
-        gap += i.mgw;
-        count++;
-      }
-    });
-    setAvgMgw(count == 0 ? 0 : (gap / count).toFixed(2));
-  }, [graphData]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -210,6 +197,16 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         </div>
       </div>
+      {(disable || Object.keys(plantCamMap).length != 0) && (
+        <DowntimeAnalytics
+          plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
+          cameraId={
+            disable ? cameraId : plantCamMap[Object.keys(plantCamMap)[0]][0]
+          }
+          disable={disable}
+          plantCamMap={plantCamMap}
+        />
+      )}
       {(disable || Object.keys(plantCamMap).length != 0) && (
         <HistoryAnalytics
           plantId={disable ? plantId : Object.keys(plantCamMap)[0]}
