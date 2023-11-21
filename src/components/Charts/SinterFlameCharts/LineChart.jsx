@@ -1,14 +1,6 @@
 import ReactApexCharts from "react-apexcharts";
 import { useState, useEffect } from "react";
-
-const indexWordMap = {
-  0: "No Flame",
-  1: "Poor",
-  2: "Average",
-  3: "Good",
-  4: "Better",
-  5: "Excellent",
-};
+import { indexWordMap } from "../../SinterFlame/Sinterflame";
 
 const LineChart = ({ data, timeStamps, labels, color }) => {
   //manging x axis and y axis values

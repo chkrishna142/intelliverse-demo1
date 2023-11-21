@@ -1,13 +1,5 @@
 import ReactApexChart from "react-apexcharts";
-
-const indexWordMap = {
-  0: "No Flame",
-  1: "Poor",
-  2: "Average",
-  3: "Good",
-  4: "Better",
-  5: "Excellent",
-};
+import { indexWordMap } from "../../SinterFlame/Sinterflame";
 
 const SpiderChart = ({ data }) => {
   let points = [];

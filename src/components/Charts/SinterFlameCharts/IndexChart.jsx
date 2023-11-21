@@ -1,13 +1,6 @@
 import { TriangleDownIcon } from "@chakra-ui/icons";
+import {indexWordMap} from "../../SinterFlame/Sinterflame"
 
-const indexWordMap = {
-  0: "No Flame",
-  1: "Poor",
-  2: "Average",
-  3: "Good",
-  4: "Better",
-  5: "Excellent",
-};
 
 const IndexChart = ({ type, value }) => {
   const vals = [1, 2, 3, 4, 5];
