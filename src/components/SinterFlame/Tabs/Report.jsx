@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import NavContext from "../../NavContext";
+import { indexWordMap } from "../Sinterflame";
 import {
   Table,
   Td,
@@ -18,9 +19,7 @@ import {
 } from "@chakra-ui/react";
 
 const getComment = (val) => {
-  if (val <= 2) return "POOR";
-  else if (val == 3) return "AVERAGE";
-  else return "GOOD";
+  return indexWordMap[Math.round(val)];
 };
 
 const Report = ({ plantId, cameraId, disable, plantCamMap }) => {

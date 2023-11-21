@@ -24,7 +24,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
       )}
       <div className="flex flex-col sm:flex-row gap-6 items-center">
         <div className="flex flex-col h-full w-full items-center gap-4">
-          <p className="self-start p-1 pl-2 pr-2 text-sm text-[#525056] font-medium ">
+          <p className="self-start p-1 pl-2 pr-2 text-sm text-[#525056] font-medium capitalize">
             {cameraName}
           </p>
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
@@ -36,7 +36,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
           </div>
         </div>
         {!(data.flags.viewObstructed || data.flags.flapClosed) ? (
-          <div className="flex flex-col h-full items-center gap-4 w-full sm:w-[35vw] min-w-[15vw]">
+          <div className="flex flex-col h-[100px] sm:h-full items-center gap-4 w-full sm:w-[35vw] min-w-[15vw]">
             <p className="text-xs sm:text-base text-black self-start">
               Health Index
             </p>
@@ -85,7 +85,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
       )}
       <div className="flex flex-col sm:flex-row gap-6 items-center">
         <div className="flex flex-col h-full w-full items-center gap-4">
-          <p className="self-start p-1 pl-2 pr-2 text-sm text-[#525056] font-medium ">
+          <p className="self-start p-1 pl-2 pr-2 text-sm text-[#525056] font-medium capitalize">
             {cameraName}
           </p>
           <div className="bg-black h-full w-full flex justify-center items-center rounded-md">
@@ -97,7 +97,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
             />
           </div>
         </div>
-        <div className="flex flex-col h-full items-center gap-4 w-full sm:w-[35vw] min-w-[15vw]">
+        <div className="flex flex-col h-[90px] sm:h-full items-center gap-4 w-full sm:w-[35vw] min-w-[15vw]">
           <p className="text-xs sm:text-base text-black self-start">
             Health Index
           </p>

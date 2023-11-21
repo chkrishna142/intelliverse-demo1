@@ -1,38 +1,38 @@
 import ReactApexChart from "react-apexcharts";
 
 const map = {
-  "Index 1": 1,
-  "Index 2": 2,
-  "Index 3": 3,
-  "Index 4": 4,
-  "Index 5": 5,
-  "View obstructed": 0,
+  "Poor": 1,
+  "Average": 2,
+  "Good": 3,
+  "Better": 4,
+  "Excellent": 5,
+  "No Flame": 0,
 };
 
 const StackBarChart = ({ data }) => {
   const series = [
     {
-      name: "Index 1",
+      name: "Poor",
       data: [],
     },
     {
-      name: "Index 2",
+      name: "Average",
       data: [],
     },
     {
-      name: "Index 3",
+      name: "Good",
       data: [],
     },
     {
-      name: "Index 4",
+      name: "Better",
       data: [],
     },
     {
-      name: "Index 5",
+      name: "Excellent",
       data: [],
     },
     {
-      name: "View obstructed",
+      name: "No Flame",
       data: [],
     },
   ];
