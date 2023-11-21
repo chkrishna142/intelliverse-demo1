@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useContext, useRef } from "react";
 import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
-import KilnModal from "../KilnComponents/KilnModal";
 import Paginator from "../../../util/VisionUtils/Paginator";
 import {
   Select,
@@ -21,23 +20,23 @@ import {
 } from "@chakra-ui/react";
 
 const getImage = (reason) => {
-  if (reason === 0) {
-    return "https://img.icons8.com/color/96/null/dew-point.png";
-  } else if (reason === 2) {
-    return "https://cdn-icons-png.flaticon.com/512/5098/5098724.png";
-  } else if (reason === 1) {
-    return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5yzFWdE5SK3P50mbWltF_3ZLLAEHzai5VuDl9NgQD_SIcG6sztUZueLJQekHEmEFNjkE&usqp=CAU";
-  }
+  const tagColor = {
+    2: "#fee179", //dusty
+    1: "#ff6460", // hot
+    3: "#ef6f12", //hotanddusty
+    0: "#000000", //negative
+  };
+  return tagColor[reason];
 };
 
 const getReason = (reason) => {
-  if (reason === 0) {
-    return "Moisture";
-  } else if (reason === 2) {
-    return "Size";
-  } else if (reason === 1) {
-    return "Gray";
-  }
+  const tagName = {
+    2: "Dusty", //dusty
+    1: "Hot", // hot
+    3: "Hot & Dusty", //hotanddusty
+    0: "Negative", //negative
+  };
+  return tagName[reason];
 };
 
 const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
@@ -45,8 +44,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const { auth } = useContext(NavContext);
   let material = "kilnhealth";
   let clientId = param.clientId.toLowerCase();
-  const indexRef = useRef();
-  const [openModal, setOpenModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
@@ -102,11 +99,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const handleClick = () => {
     setAlertsChanging(true);
     apiCall();
-  };
-
-  const handleDetail = (index) => {
-    indexRef.current = index;
-    setOpenModal(true);
   };
 
   useEffect(() => {
@@ -236,31 +228,34 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
                       key={index}
                       className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
                     >
-                      <Td className="cursor-pointer">
+                      <Td className="">
                         {String(item["idx"]).padStart(2, "0")}
                       </Td>
-                      <Td className="cursor-pointer">{item.plantName}</Td>
-                      <Td className="cursor-pointer">{item.cameraId}</Td>
-                      <Td className="cursor-pointer">
-                        {new Date(item.createdAt*1000).toLocaleDateString() +
+                      <Td className="">{item.plantName}</Td>
+                      <Td className="">{item.cameraId}</Td>
+                      <Td className="">
+                        {new Date(item.createdAt * 1000).toLocaleDateString() +
                           " " +
-                          new Date(item.createdAt*1000).toLocaleTimeString("en-US", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit",
-                            timeZone: "UTC", // Specify UTC timezone
-                          })}
+                          new Date(item.createdAt * 1000).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              second: "2-digit",
+                              timeZone: "UTC", // Specify UTC timezone
+                            }
+                          )}
                       </Td>
-                      <Td className="cursor-pointer">{item.reason}</Td>
-                      <Td className="cursor-pointer">{item.comment}</Td>
-                      <Td>
-                        <p
-                          className="text-blue-800 cursor-pointer hover:text-blue-200 font-semibold min-w-[80px]"
-                          onClick={() => handleDetail(index)}
-                        >
-                          View Details
-                        </p>
+                      <Td className="">
+                        <div className="flex gap-1 items-center justify-start">
+                          <div
+                            className="rounded-full w-[15px] h-[15px]"
+                            style={{ backgroundColor: getImage(item.reason) }}
+                          />
+                          <p>{getReason(item.reason)}</p>
+                        </div>
                       </Td>
+                      <Td className="">{item.comment}</Td>
                     </Tr>
                   );
                 })}
@@ -269,14 +264,6 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           </TableContainer>
         )}
       </div>
-      {openModal && (
-        <KilnModal
-          openModal={openModal}
-          closeModal={() => setOpenModal(false)}
-          data={displayData}
-          index={indexRef.current}
-        />
-      )}
     </div>
   );
 };

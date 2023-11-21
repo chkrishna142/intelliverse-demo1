@@ -5,7 +5,7 @@ const colors = {
   dusty: "#fffcf2",
   healthy: "#DDF7EA",
   hot: "#ffecec",
-  hot_Dusty: "#FFEDCC",
+  hotanddusty: "#FFEDCC",
   negative: "#F4F4F4",
 };
 
@@ -13,7 +13,7 @@ const tagColor = {
   dusty: "#fee179",
   healthy: "#59d79a",
   hot: "#ff6460",
-  hot_Dusty: "#ef6f12",
+  hotanddusty: "#ef6f12",
   negative: "#000000",
 };
 
@@ -21,7 +21,7 @@ const tagName = {
   dusty: "Dusty",
   healthy: "Healthy",
   hot: "Hot",
-  hot_Dusty: "Hot & Dusty",
+  hotanddusty: "Hot & Dusty",
   negative: "Negative",
 };
 
