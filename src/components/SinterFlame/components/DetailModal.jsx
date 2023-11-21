@@ -251,7 +251,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                 </div>
               </DrawerHeader>
               <DrawerBody padding="0px">
-                <div className="flex justify-center items-center h-[80%]">
+                <div className="flex justify-center items-center h-full">
                   {data.length > 1 && (
                     <img
                       className="sticky top-[50%] left-0 h-[32px] pl-2 cursor-pointer"
@@ -274,7 +274,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                           />
                         </div>
                       </div>
-                      <div className="flex flex-col gap-2 h-full w-full items-center justify-center">
+                      <div className="flex flex-col gap-2 h-[100px] w-full items-center justify-center">
                         <p className="text-black text-base font-medium">
                           Health Index
                         </p>
