@@ -166,10 +166,10 @@ const TransactionHistory = () => {
             {alertsChanging ? <Spinner /> : "Show"}
           </button>
         </div>
-        <div className="pl-6 flex flex-col gap-4">
-          <div className="flex items-center w-[55vw] justify-between">
+        <div className="lg:pl-6 flex flex-col gap-4 pr-2">
+          <div className="flex items-center lg:w-[55vw] md:w-[70vw] justify-between">
             <div className="flex items-center gap-4">
-              <div className=" flex items-center gap-4 px-3 py-1 rounded-sm bg-[#FFFFD8]">
+              <div className="flex items-center lg:gap-4 sm:gap-2 px-3 py-1 rounded-sm bg-[#FFFFD8]">
                 <div>
                   <p className="text-[14px] text-[#605D64] font-normal">
                     Current Balance
@@ -202,7 +202,7 @@ const TransactionHistory = () => {
 
           <TransactionHistoryTable dummyData={displayData} />
 
-          <div className="flex items-center gap-4 mb-[10px] ">
+          <div className="md:pb-0 pb-10 flex items-center gap-4 mb-[10px]">
             <div
               className="bg-[#447ED4] text-[#FFFFFF] rounded-lg text-[16px] font-semibold"
               onClick={handleAdvisorHistory}

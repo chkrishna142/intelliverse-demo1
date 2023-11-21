@@ -10,7 +10,7 @@ import {
 
 const TransactionHistoryTable = ({ dummyData }) => {
   return (
-    <div className="w-[55vw] border border-gray-100">
+    <div className="lg:w-[55vw] md:w-[70vw] sm:w-[80vw] border border-gray-100">
       <TableContainer className="!text-center  border rounded-md bg-white overflow-x-auto">
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] !text-[#79767D] !text-xs !top-0">
