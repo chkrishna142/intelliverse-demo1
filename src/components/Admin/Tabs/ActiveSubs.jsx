@@ -10,12 +10,14 @@ import {
   Td,
   Tfoot,
   Link,
+  Button,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import NavContext from '../../NavContext';
 import { baseURL } from '../../..';
 import Paginator from '../../../util/VisionUtils/Paginator';
 import { useToast } from '@chakra-ui/react';
+import { DownloadIcon } from '@chakra-ui/icons';
 
 const ActiveSubs = () => {
   const [activeSubs, setActiveSubs] = useState([]);
@@ -32,8 +34,24 @@ const ActiveSubs = () => {
           'X-Auth-Token': auth,
         },
       });
+      console.log(response.data, 'Active subscriptions1');
       if (Array.isArray(response.data?.relSubscriptionServices)) {
-        setActiveSubs(response.data?.relSubscriptionServices);
+        let active = new Array(
+          response.data?.relSubscriptionServices?.length * 3
+        )
+          .fill(0)
+          .map((_, i) =>
+            response.data?.relSubscriptionServices?.at(
+              i % response.data?.relSubscriptionServices?.length
+            )
+          );
+        active?.sort(
+          (first, second) =>
+            new Date(first?.validityEnd).getTime() -
+            new Date(second?.validityEnd).getTime()
+        );
+        console.log(response.data, 'Active subscriptions');
+        setActiveSubs(active);
       }
     } catch (e) {
       console.error(e);
@@ -43,6 +61,8 @@ const ActiveSubs = () => {
   useEffect(() => {
     fetchActiveSubs();
   }, []);
+
+  const plants = ['Angul', 'Jamshedpur', 'Goa'];
 
   return (
     <div className="w-full px-2 !font-roboto">
@@ -59,6 +79,15 @@ const ActiveSubs = () => {
           limit={10}
         />
       </div>
+      <div className="flex justify-end w-[80%]">
+        <Button
+          // onClick={tableToCSV}
+          className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
+        >
+          <DownloadIcon />
+          <span>Download</span>
+        </Button>
+      </div>
       <TableContainer className="w-[80%] !text-center !font-roboto mt-[2vh] border rounded-md shadow-md bg-white">
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] text-[#79767D] !font-roboto">
@@ -67,16 +96,19 @@ const ActiveSubs = () => {
                 TOOL
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
-                PLANTS
+                PLANT
+              </Th>
+              <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
+                INSTANCE
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
                 STATUS
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
-                ACTIVATED ON
+                RENEWS ON
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
-                RENEWS ON
+                EXPIRES IN
               </Th>
               <Th className="!text-[#79767D] !font-roboto !text-center !text-sm !font-normal">
                 RENEW NOW
@@ -85,13 +117,18 @@ const ActiveSubs = () => {
           </Thead>
           <Tbody>
             {Array.isArray(displayData) &&
-              displayData.map((elem) => {
+              displayData.map((elem, i) => {
                 return (
                   <Tr>
                     <Td className="!px-6 !font-semibold !font-roboto !text-sm !w-[300px] whitespace-break-spaces">
                       {elem?.serv?.servName}
                     </Td>
-                    <Td className="!text-center !font-roboto !text-sm">1</Td>
+                    <Td className="!text-center !font-roboto !text-sm">
+                      {plants[i % 3]}
+                    </Td>
+                    <Td className="!text-center !font-roboto !text-sm">
+                      {(i % 3) + 1}
+                    </Td>
                     <Td className="!text-center !font-roboto !text-sm font-semibold">
                       {elem.isActive === 'false' ? (
                         <span className="text-[#E46962] text-sm font-semibold">
@@ -102,21 +139,6 @@ const ActiveSubs = () => {
                           Active
                         </span>
                       )}
-                    </Td>
-                    <Td className="!text-center !font-roboto !text-sm ">
-                      {elem.validityStart &&
-                        new Date(elem.validityStart)
-                          .toDateString()
-                          .split(' ')[2] +
-                          ' ' +
-                          new Date(elem.validityStart)
-                            .toDateString()
-                            .split(' ')[1] +
-                          " '" +
-                          new Date(elem.validityStart)
-                            .toDateString()
-                            .split(' ')[3]
-                            .slice(2, 4)}
                     </Td>
                     <Td className="!text-center !font-roboto !text-sm">
                       {elem.validityEnd &&
@@ -133,6 +155,14 @@ const ActiveSubs = () => {
                             .split(' ')[3]
                             .slice(2, 4)}
                     </Td>
+                    <Td className="!text-center !font-roboto !text-sm ">
+                      {elem.validityEnd &&
+                        elem.validityStart &&
+                        (new Date(elem.validityEnd).getTime() -
+                          new Date(elem.validityStart).getTime()) /
+                          (24 * 60 * 60 * 1000)}{' '}
+                      days
+                    </Td>
                     <Td className="!text-center !font-roboto !text-sm font-semibold">
                       <Link
                         onClick={() => {
@@ -148,7 +178,7 @@ const ActiveSubs = () => {
                         }}
                         className="!text-[#3474CA] !no-underline"
                       >
-                        Contact Ripik
+                        Renew
                       </Link>
                     </Td>
                   </Tr>
