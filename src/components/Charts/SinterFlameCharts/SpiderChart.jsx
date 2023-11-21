@@ -35,7 +35,7 @@ const SpiderChart = ({ data }) => {
   });
   const series = [
     {
-      name: "Avg health index",
+      name: "Avg Flame Health",
       data: points,
     },
   ];

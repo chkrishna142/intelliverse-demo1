@@ -1,4 +1,5 @@
 import { Tooltip } from "@chakra-ui/react";
+import { TriangleDownIcon } from "@chakra-ui/icons";
 
 const colors = {
   dusty: "#fffcf2",
@@ -52,35 +53,40 @@ const KilnHealthCard = ({ dusty, hot, health }) => {
             <div className="flex-1 flex gap-1 items-end">
               {[...Array(5)].map((i, idx) => {
                 return (
-                  <Tooltip
-                    label={idx+1 + ".00"}
-                    isDisabled={index == 0 ? idx + 1 != dusty : idx + 1 != hot}
-                    placement="top"
-                    isOpen={index == 0 ? idx + 1 == dusty : idx + 1 == hot}
-                    hasArrow
-                    bg={"white"}
-                    px={'8px'}
-                    py={'4px'}
-                    color={index == 0 ? "#FFC107" : "#DC362E"}
-                    fontWeight={600}
-                    fontSize={14}
-                    rounded={'6px'}
-                    style={{boxShadow: '4px 4px 4px 0px rgba(226, 240, 220, 0.51), -4px -4px 18px 0px rgba(226, 240, 220, 0.38)',zIndex: 0}}
+                  <div
+                    className="h-[10px] rounded-[2px] w-full relative flex justify-center items-center"
+                    style={{
+                      backgroundColor:
+                        index == 0
+                          ? idx + 1 == dusty
+                            ? "#FFC107"
+                            : "#FFFFC4"
+                          : idx + 1 == hot
+                          ? "#DC362E"
+                          : "#F9DEDC",
+                    }}
                   >
-                    <div
-                      className="h-[10px] rounded-[2px] w-full"
-                      style={{
-                        backgroundColor:
-                          index == 0
-                            ? idx + 1 == dusty
-                              ? "#FFC107"
-                              : "#FFFFC4"
-                            : idx + 1 == hot
-                            ? "#DC362E"
-                            : "#F9DEDC",
-                      }}
-                    ></div>
-                  </Tooltip>
+                    {(index == 0 ? idx + 1 == dusty : idx + 1 == hot) && (
+                      <div className="flex flex-col gap-0 absolute top-[-35px] items-center">
+                        <p
+                          className="px-2 py-1 text-[#FFA500] font-bold text-sm rounded-md z-0 whitespace-nowrap bg-white"
+                          style={{
+                            boxShadow:
+                              "4px 4px 4px 0px rgba(226, 240, 220, 0.51), -4px -4px 18px 0px rgba(226, 240, 220, 0.38)",
+                            color: index == 0 ? "#FFC107" : "#DC362E",
+                          }}
+                        >
+                          {idx + 1 + ".00"}
+                        </p>
+                        <TriangleDownIcon
+                          style={{
+                            color: "#CCCCCC",
+                            marginTop: "-5px",
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
                 );
               })}
             </div>
