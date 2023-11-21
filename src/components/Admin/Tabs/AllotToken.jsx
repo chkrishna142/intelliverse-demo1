@@ -41,6 +41,7 @@ const AllotToken = () => {
       tokensRemaining: "150",
       addTokens: "20",
     },
+    
   ]);
 
   const handleAddToken = (itemId, newValue) => {
@@ -66,16 +67,16 @@ const AllotToken = () => {
           <Table variant="simple">
             <Thead className="bg-[#DDEEFF] !text-[#79767D] !text-xs !top-0">
               <Tr>
-                <Th className="!text-[#79767D] !text-center !text-sm !font-normal" width="150px">
+                <Th className="!text-[#79767D] !text-center !text-[12px] !font-normal" width="150px">
                   USER NAME
                 </Th>
-                <Th className="!text-[#79767D] !text-center !text-sm !font-normal" width="150px">
+                <Th className="!text-[#79767D] !text-center !text-[12px] !font-normal" width="150px">
                   EMAIL
                 </Th>
-                <Th className="!text-[#79767D] !text-center !text-sm !font-normal" width="150px">
+                <Th className="!text-[#79767D] !text-center !text-[12px] !font-normal" width="150px">
                   TOKENS REMAINING
                 </Th>
-                <Th className="!text-[#79767D] !text-sm !font-normal" flex={1} textAlign={"left"}>
+                <Th className="!text-[#79767D] !text-[12px] !font-normal" flex={1} textAlign={"left"}>
                   ADD TOKEN
                 </Th>
               </Tr>
