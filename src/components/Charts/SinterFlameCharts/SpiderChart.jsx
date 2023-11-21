@@ -1,4 +1,5 @@
 import ReactApexChart from "react-apexcharts";
+import { indexWordMap } from "../../SinterFlame/Sinterflame";
 
 const SpiderChart = ({ data }) => {
   let points = [];
@@ -34,7 +35,7 @@ const SpiderChart = ({ data }) => {
   });
   const series = [
     {
-      name: "Avg health index",
+      name: "Avg Flame Health",
       data: points,
     },
   ];
@@ -54,6 +55,12 @@ const SpiderChart = ({ data }) => {
           return value;
         },
       },
+      y: {
+        show: true,
+        formatter: function (value) {
+          return indexWordMap[Math.round(value)];
+        },
+      },
       theme: "dark",
       fillSeriesColor: true,
       style: {
@@ -68,11 +75,17 @@ const SpiderChart = ({ data }) => {
       categories: labels,
     },
     yaxis: {
+      tickAmount: 5,
       labels: {
+        style: {
+          fontSize: "10px",
+        },
         formatter: function (value) {
-          return value.toFixed(2);
+          return indexWordMap[value];
         },
       },
+      min: 0,
+      max: 5,
     },
   };
 

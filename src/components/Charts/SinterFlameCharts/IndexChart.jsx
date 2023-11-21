@@ -1,27 +1,40 @@
 import { TriangleDownIcon } from "@chakra-ui/icons";
+import {indexWordMap} from "../../SinterFlame/Sinterflame"
+
 
 const IndexChart = ({ type, value }) => {
   const vals = [1, 2, 3, 4, 5];
   return (
-    <div className="flex items-center justify-center h-full w-full">
+    <div className="flex justify-center items-end sm:items-center h-full w-full">
       <div className="flex gap-1 w-full">
         {vals.map((i) => {
           return (
             <div
-              className="h-3 w-full rounded-xl relative"
+              className="h-3 w-full rounded-xl relative flex items-center justify-center"
               style={{
                 backgroundColor: i <= value ? "#FFA500" : "#F2F2F2",
                 // border: `2px solid ${color[type]}`,
               }}
             >
-              {/* {i == value && (
-                <div className="absolute flex flex-col top-[-30px] right-0 left-0 items-center">
-                  <p className="bg-white rounded text-xs text-black font-medium">
-                    {value}
+              {i == value && (
+                <div className="flex flex-col gap-0 absolute top-[-40px] items-center">
+                  <p
+                    className="px-2 py-1 text-[#FFA500] font-bold text-sm rounded-md z-0 whitespace-nowrap bg-white"
+                    style={{
+                      boxShadow:
+                        "4px 4px 4px 0px rgba(226, 240, 220, 0.51), -4px -4px 18px 0px rgba(226, 240, 220, 0.38)",
+                    }}
+                  >
+                    {indexWordMap[value]}
                   </p>
-                  <TriangleDownIcon />
+                  <TriangleDownIcon
+                    style={{
+                      color: "#CCCCCC",
+                      marginTop: "-5px",
+                    }}
+                  />
                 </div>
-              )} */}
+              )}
             </div>
           );
         })}
