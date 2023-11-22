@@ -24,12 +24,12 @@ const TokenTransactionTable = ({ tableData }) => {
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] !text-xs !sticky !top-0">
             <Tr>
-              <Th color="#79767D" fontWeight={400} width="150px">
-                <div className="w-full h-full flex justify-center">DATE</div>
+              <Th color="#79767D" fontWeight={400} width="250px">
+                <div className="w-full h-full flex justify-center">
+                  DATE/TIME
+                </div>
               </Th>
-              <Th color="#79767D" fontWeight={400} width="150px">
-                <div className="w-full h-full flex justify-center">TIME</div>
-              </Th>
+
               <Th color="#79767D" fontWeight={400} width="150px">
                 <div className="w-full h-full flex justify-center">
                   TRANSACTION TYPE
@@ -55,11 +55,7 @@ const TokenTransactionTable = ({ tableData }) => {
                       {item.date}
                     </div>
                   </Td>
-                  <Td>
-                    <div className="w-full flex justify-center ">
-                      {item.time}
-                    </div>
-                  </Td>
+
                   <Td>
                     <div className="w-full flex justify-center gap-1 ">
                       {item.transactionType}
@@ -67,11 +63,20 @@ const TokenTransactionTable = ({ tableData }) => {
                   </Td>
                   <Td>
                     <div className="w-full flex justify-center gap-1 ">
-                      {item.amount}
+                      {item.amount == 0 ? "-" : `₹${item.amount}`}
                     </div>
                   </Td>
                   <Td>
-                    <div className="w-full flex justify-center gap-1 ">
+                    <div
+                      className={` w-full flex justify-center gap-1 ${
+                        item.status == true
+                          ? item.token > 0
+                            ? "text-[#7AC958]"
+                            : ""
+                          : "text-[#DC362E]"
+                      }`}
+                    >
+                      {item.status == true ? (item.token > 0 ? "+" : "") : ""}
                       {item.token}
                       <img src="/token.svg" alt="coins" />
                     </div>

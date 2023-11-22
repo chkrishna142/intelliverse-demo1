@@ -1,13 +1,16 @@
 import { saveAs } from "file-saver";
 import Paginator from "../../../util/VisionUtils/Paginator";
-import { useState } from "react";
+import { Button } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { indexWordMap } from "../Sinterflame";
+import CompareModal from "./CompareModal";
 
 const LibraryGrid = ({ plantName, img }) => {
   const [selectedPoints, setSelectedPoints] = useState([]);
   const [displayData, setDisplayData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
   const size = useWindowSize();
   const ImgDownload = (url, idx) => {
     const blob = new Blob([url], { type: "image/jpeg" });
@@ -31,6 +34,10 @@ const LibraryGrid = ({ plantName, img }) => {
     });
   };
 
+  useEffect(() => {
+    if (img.length == 0) setDisplayData([]);
+  }, [img]);
+
   return (
     <div className="flex flex-col gap-3">
       <div className="flex justify-between items-baseline">
@@ -44,14 +51,21 @@ const LibraryGrid = ({ plantName, img }) => {
               : `(${selectedPoints.length} prediction selected out of 4)`}
           </p>
         </div>
-        {/* <button className="text-white text-sm font-medium bg-[#447ED4] p-3 pt-1 pb-1 rounded-full">
-          Download all
-        </button> */}
-        {img.length != 0 && (
-          <Paginator data={img} limit={20} setDisplayData={setDisplayData} />
-        )}
+        <div className="flex flex-col sm:flex-row gap-1 items-center">
+          <Button
+            onClick={() => setOpenModal(true)}
+            isDisabled={selectedPoints.length < 2}
+            size="sm"
+            colorScheme="facebook"
+          >
+            Compare
+          </Button>
+          {img.length != 0 && (
+            <Paginator data={img} limit={20} setDisplayData={setDisplayData} />
+          )}
+        </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 overflow-y-scroll h-[80vh]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 min-[1750px]:grid-cols-5 min-[2200px]:grid-cols-6 gap-1 overflow-y-scroll h-[80vh]">
         {displayData.map((x, id) => {
           return (
             <div key={id} className="relative w-full object-cover text-center">
@@ -69,6 +83,14 @@ const LibraryGrid = ({ plantName, img }) => {
                     {new Date(x.timestamp).toLocaleTimeString()}
                   </p>
                 </div>
+                <Checkbox
+                  isChecked={selectedPoints.some((item) => item.id == x.id)}
+                  isDisabled={
+                    !selectedPoints.some((item) => item.id == x.id) &&
+                    selectedPoints.length == 4
+                  }
+                  onChange={() => handleChange(x)}
+                />
               </div>
               <img className="rounded-lg" src={x.annotatedImage} />
               <div className="flex flex-col items-center gap-2 absolute top-[40px] right-2 opacity-50 hover:opacity-100">
@@ -85,19 +107,19 @@ const LibraryGrid = ({ plantName, img }) => {
                 <p className="text-white text-xs p-1 font-semibold bg-black rounded-lg">
                   {indexWordMap[x.healthIndex]}
                 </p>
-                <Checkbox
-                  isChecked={selectedPoints.some((item) => item.id == x.id)}
-                  isDisabled={
-                    !selectedPoints.some((item) => item.id == x.id) &&
-                    selectedPoints.length == 4
-                  }
-                  onChange={() => handleChange(x)}
-                />
               </div>
             </div>
           );
         })}
       </div>
+      {openModal && (
+        <CompareModal
+          openModal={openModal}
+          closeModal={() => setOpenModal(false)}
+          data={selectedPoints}
+          setData={setSelectedPoints}
+        />
+      )}
     </div>
   );
 };

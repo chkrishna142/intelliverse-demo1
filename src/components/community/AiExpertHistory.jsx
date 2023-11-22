@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { Select, Spinner } from "@chakra-ui/react";
-import Bargraph from "../../Charts/Admin/Bargraph";
 import TransactionTable from "./TransactionTable";
 import ReadMore from "./ReadMore";
 import ExpertHistoryTable from "./ExpertHistoryTable";
 import DownloadExcel from "./DownloadExcel";
-import Paginator from "../../../util/VisionUtils/Paginator";
+import FloatingInput from "../../util/VisionUtils/FloatingInput";
+import Paginator from "../../util/VisionUtils/Paginator";
 
 const AiExpertHistory = () => {
   const [tableData, setTAbledata] = useState([

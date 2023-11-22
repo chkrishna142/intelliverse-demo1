@@ -3,6 +3,7 @@ import { useState } from "react";
 import TokenData from "../TokenData";
 import TokenTransactionTable from "../TokenTransactionTable";
 import TokenAllocationTable from "../TokenAllocationTable";
+import Paginator from "../../../util/VisionUtils/Paginator";
 
 const TokenTransaction = () => {
   const [selectPlant, setSelectPlant] = useState("All Plants");
@@ -12,48 +13,42 @@ const TokenTransaction = () => {
 
   const [TransactiontableData, setTransactiontableData] = useState([
     {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       transactionType: "Purchase",
       amount: 1000,
       token: 20,
       status: false,
     },
     {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
+      transactionType: "Transfer",
+      amount: 0,
+      token: -20,
+      status: true,
+    },
+    {
+      date: "8 Sep '23 10:15",
       transactionType: "Purchase",
       amount: 1000,
       token: 20,
       status: true,
     },
     {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       transactionType: "Purchase",
       amount: 1000,
       token: 20,
       status: true,
     },
     {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       transactionType: "Purchase",
       amount: 1000,
       token: 20,
       status: true,
     },
     {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
-      transactionType: "Purchase",
-      amount: 1000,
-      token: 20,
-      status: true,
-    },
-    {
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       transactionType: "Purchase",
       amount: 1000,
       token: 20,
@@ -64,45 +59,43 @@ const TokenTransaction = () => {
   const [AllocationtableData, setAllocationtableData] = useState([
     {
       name: "Sudhanshu Prasad",
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       email: " sudhanshu.12prasad@gmail.com",
-      tokenUsed: 1,
+      token: 1,
       status: false,
     },
     {
       name: "Sudhanshu Prasad",
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       email: " sudhanshu.12prasad@gmail.com",
-      tokenUsed: 1,
+      token: 1,
       status: true,
     },
     {
       name: "Sudhanshu Prasad",
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       email: " sudhanshu.12prasad@gmail.com",
-      tokenUsed: 1,
+      token: 1,
       status: true,
     },
     {
       name: "Sudhanshu Prasad",
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       email: " sudhanshu.12prasad@gmail.com",
-      tokenUsed: 1,
+      token: 1,
       status: true,
     },
     {
       name: "Sudhanshu Prasad",
-      date: "15 Nov 2023",
-      time: "12:30 pm",
+      date: "8 Sep '23 10:15",
       email: " sudhanshu.12prasad@gmail.com",
-      tokenUsed: 1,
+      token: 1,
       status: true,
     },
   ]);
+
+  const [displayData1, setDisplayData1] = useState([]);
+  const [displayData2, setDisplayData2] = useState([]);
 
   return (
     <div className="flex flex-col w-full h-full gap-4 ">
@@ -134,9 +127,32 @@ const TokenTransaction = () => {
       {/* token details */}
 
       <TokenData />
+      {TransactiontableData && (
+        <div className="w-full flex justify-end">
+          <Paginator
+            data={TransactiontableData}
+            limit={4}
+            setDisplayData={setDisplayData1}
+          />
+        </div>
+      )}
+      <TokenTransactionTable tableData={displayData1} />
 
-      <TokenTransactionTable tableData={TransactiontableData} />
-      <TokenAllocationTable tableData={AllocationtableData} />
+      <div className="w-full p-2 flex justify-between items-center">
+        <p className="text-[#605D64] text-[16px] font-medium">
+          Allocation History
+        </p>
+        {AllocationtableData && (
+          <div className="">
+            <Paginator
+              data={AllocationtableData}
+              limit={4}
+              setDisplayData={setDisplayData2}
+            />
+          </div>
+        )}
+      </div>
+      <TokenAllocationTable tableData={displayData2} />
     </div>
   );
 };
