@@ -1,12 +1,11 @@
 import { TriangleDownIcon } from "@chakra-ui/icons";
-import {indexWordMap} from "../../SinterFlame/Sinterflame"
+import { indexWordMap } from "../../SinterFlame/Sinterflame";
 
-
-const IndexChart = ({ type, value }) => {
+const IndexChart = ({ accuracy, value }) => {
   const vals = [1, 2, 3, 4, 5];
   return (
-    <div className="flex justify-center items-end sm:items-center h-full w-full">
-      <div className="flex gap-1 w-full">
+    <div className="flex flex-col justify-center items-end sm:items-center h-full w-full">
+      <div className="flex gap-1 w-full h-[40px] items-end">
         {vals.map((i) => {
           return (
             <div
@@ -38,6 +37,12 @@ const IndexChart = ({ type, value }) => {
             </div>
           );
         })}
+      </div>
+      <div className="flex flex-row sm:flex-col md:flex-row items-center gap-1 self-end mt-2">
+        <p className="text-xs text-[#938F96]">Model accuracy</p>
+        <p className="text-sm text-[#69B04B]">
+          {accuracy + "%"}
+        </p>
       </div>
     </div>
   );

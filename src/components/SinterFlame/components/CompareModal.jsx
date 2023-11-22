@@ -190,7 +190,7 @@ const CompareModal = ({ openModal, closeModal, data, setData }) => {
       ) : (
         <Drawer onClose={closeModal} isOpen={openModal} size="full">
           <DrawerOverlay />
-          <DrawerContent height={"fit-content"}>
+          <DrawerContent>
             <DrawerHeader padding="0px">
               <div className="flex justify-center items-center">
                 <img
