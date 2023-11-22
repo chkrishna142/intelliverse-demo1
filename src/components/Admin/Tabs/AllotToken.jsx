@@ -159,7 +159,7 @@ const AllotToken = () => {
 
       {/* pagination */}
 
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-7">
         <Pagination
           data={dummyData}
           limit={4}
