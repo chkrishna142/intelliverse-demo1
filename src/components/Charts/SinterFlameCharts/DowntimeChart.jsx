@@ -7,7 +7,7 @@ const DowntimeChart = ({ data }) => {
       data: [44, 55, 41, 67, 22, 43, 56, 19],
     },
     {
-      name: "Serve Down",
+      name: "Server Down",
       data: [13, 23, 20, 8, 13, 27, 34, 12],
     },
     {
@@ -39,7 +39,7 @@ const DowntimeChart = ({ data }) => {
     },
     colors: ["#212529", "#343a40", "#6c757d"],
     xaxis: {
-      categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
+      categories: ["burner1n", "burner2", "burner3", "burner4", "burner5", "burner6", "burner7", "burner8s"],
       labels: {
         show: true,
         formatter: function (value) {

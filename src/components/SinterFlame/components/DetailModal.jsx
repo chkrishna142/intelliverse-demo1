@@ -157,7 +157,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                           </p>
                           <div className="h-full w-full">
                             <IndexChart
-                              type={"Flame"}
+                              accuracy={modalData?.conf?.toFixed(0)}
                               value={modalData.healthIndex}
                             />
                           </div>
@@ -280,7 +280,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                         </p>
                         <div className="h-full w-full">
                           <IndexChart
-                            type={"Flame"}
+                            accuracy={modalData?.conf?.toFixed(0)}
                             value={modalData.healthIndex}
                           />
                         </div>

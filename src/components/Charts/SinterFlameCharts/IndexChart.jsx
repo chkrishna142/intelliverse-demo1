@@ -39,7 +39,7 @@ const IndexChart = ({ accuracy, value }) => {
         })}
       </div>
       <div className="flex flex-row sm:flex-col md:flex-row items-center gap-1 self-end mt-2">
-        <p className="text-xs text-[#938F96]">Model accuracy</p>
+        <p className="text-xs text-[#938F96]">Confidence</p>
         <p className="text-sm text-[#69B04B]">
           {accuracy + "%"}
         </p>
