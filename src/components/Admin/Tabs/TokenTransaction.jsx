@@ -21,8 +21,8 @@ const TokenTransaction = () => {
     },
     {
       date: "8 Sep '23 10:15",
-      transactionType: "Purchase",
-      amount: 1000,
+      transactionType: "Transfer",
+      amount: 0,
       token: -20,
       status: true,
     },

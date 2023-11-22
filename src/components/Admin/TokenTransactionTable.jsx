@@ -63,7 +63,7 @@ const TokenTransactionTable = ({ tableData }) => {
                   </Td>
                   <Td>
                     <div className="w-full flex justify-center gap-1 ">
-                      ₹{item.amount}
+                      {item.amount == 0 ? "-" : `₹${item.amount}`}
                     </div>
                   </Td>
                   <Td>
