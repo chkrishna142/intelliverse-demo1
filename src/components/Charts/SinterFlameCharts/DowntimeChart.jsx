@@ -1,53 +1,20 @@
 import ReactApexChart from "react-apexcharts";
 
-const map = {
-  "Poor": 1,
-  "Average": 2,
-  "Good": 3,
-  "Better": 4,
-  "Excellent": 5,
-  "No Flame": 0,
-};
-
-const StackBarChart = ({ data }) => {
+const DowntimeChart = ({ data }) => {
   const series = [
     {
-      name: "Poor",
-      data: [],
-    },
-    {
-      name: "Average",
-      data: [],
-    },
-    {
-      name: "Good",
-      data: [],
-    },
-    {
-      name: "Better",
-      data: [],
-    },
-    {
-      name: "Excellent",
-      data: [],
-    },
-    {
       name: "No Flame",
-      data: [],
+      data: [44, 55, 41, 67, 22, 43, 56, 19],
+    },
+    {
+      name: "Serve Down",
+      data: [13, 23, 20, 8, 13, 27, 34, 12],
+    },
+    {
+      name: "Camera Down",
+      data: [11, 17, 15, 15, 21, 14, 34, 19],
     },
   ];
-
-  const burners = [];
-
-  data.map((val) => {
-    burners.push(val.cameraId);
-  });
-
-  series.map((obj, idx) => {
-    data.map((val) => {
-      obj.data.push(val.freqDist[map[obj.name]]);
-    });
-  });
 
   const options = {
     chart: {
@@ -55,8 +22,7 @@ const StackBarChart = ({ data }) => {
         show: false,
       },
       type: "bar",
-      stacked: true,
-      stackType: "100%",
+      stacked: true
     },
     tooltip: {
       x: {
@@ -71,10 +37,9 @@ const StackBarChart = ({ data }) => {
         fontSize: "16px",
       },
     },
-    colors: ["#FF006E", "#FB5607", "#FFBE0B", "#8338EC", "#3A86FF", "#6c757d"],
+    colors: ["#212529", "#343a40", "#6c757d"],
     xaxis: {
-      // categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
-      categories: burners,
+      categories: ["1 (N)", "2", "3", "4", "5", "6", "7", "8 (S)"],
       labels: {
         show: true,
         formatter: function (value) {
@@ -90,8 +55,6 @@ const StackBarChart = ({ data }) => {
     },
     legend: {
       position: "right",
-      offsetX: -30,
-      offsetY: 0,
       fontSize: "14px",
       labels: {
         colors: "#79767D",
@@ -118,4 +81,4 @@ const StackBarChart = ({ data }) => {
   );
 };
 
-export default StackBarChart;
+export default DowntimeChart;

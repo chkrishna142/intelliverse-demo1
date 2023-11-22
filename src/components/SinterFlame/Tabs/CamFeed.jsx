@@ -155,14 +155,14 @@ const CamFeed = ({
                 </p>
               </div>
               <div className="flex flex-col gap-4 w-full h-[80vh] sm:h-[60vh]">
-                <div className="w-full h-[70%] bg-black flex justify-center items-center rounded-lg">
+                <div className="w-full h-full sm:h-[70%] bg-black flex justify-center items-center rounded-lg">
                   <img
                     className="rounded-xl w-auto h-[30vh]"
                     src={camData.annotatedImage}
                   />
                 </div>
                 {!(camData.flags.viewObstructed || camData.flags.flapClosed) ? (
-                  <div className="h-[30%] gap-4 flex flex-col sm:flex-row w-full items-start sm:items-center justify-between">
+                  <div className="h-[150px] sm:h-[30%] gap-4 flex flex-col sm:flex-row w-full items-start sm:items-center justify-between">
                     <div className="py-5 px-5 flex flex-col gap-2 sm:gap-[30px] w-[85vw] xl:w-[40vw] h-full justify-center items-center rounded">
                       <p className="self-start text-sm text-[#605D64] font-medium whitespace-nowrap">
                         Health Index:
