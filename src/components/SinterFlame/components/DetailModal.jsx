@@ -90,7 +90,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
   };
 
   return (
-    modalData.hasOwnProperty("originalImage") && (
+    modalData.hasOwnProperty("annotatedImage") && (
       <>
         {size.width >= 768 ? (
           <Modal isOpen={openModal} onClose={closeModal} isCentered="true">
@@ -147,7 +147,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                           <div className="flex items-center justify-center w-full h-full bg-black rounded-lg">
                             <img
                               className="rounded-lg h-[150px]"
-                              src={modalData.originalImage}
+                              src={modalData.annotatedImage}
                             />
                           </div>
                         </div>
@@ -176,7 +176,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                         <div className="flex items-center justify-center w-full h-full bg-black rounded-lg">
                           <img
                             className="rounded-lg h-[150px]"
-                            src={modalData.originalImage}
+                            src={modalData.annotatedImage}
                           />
                         </div>
                       </div>
@@ -270,7 +270,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                         <div className="flex items-center justify-center w-full h-full bg-black rounded-lg">
                           <img
                             className="rounded-lg h-[150px]"
-                            src={modalData.originalImage}
+                            src={modalData.annotatedImage}
                           />
                         </div>
                       </div>
@@ -295,7 +295,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
                         <div className="flex items-center justify-center w-full h-full bg-black rounded-lg">
                           <img
                             className="rounded-lg h-[150px]"
-                            src={modalData.originalImage}
+                            src={modalData.annotatedImage}
                           />
                         </div>
                       </div>
