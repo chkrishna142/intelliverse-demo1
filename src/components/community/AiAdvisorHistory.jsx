@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import { Spinner } from "@chakra-ui/react";
-import Bargraph from "../../Charts/Admin/Bargraph";
 import TransactionTable from "./TransactionTable";
 import ReadMore from "./ReadMore";
-import Paginator from "../../../util/VisionUtils/Paginator";
 import { useWindowSize } from "@uidotdev/usehooks";
+import FloatingInput from "../../util/VisionUtils/FloatingInput";
+import Paginator from "../../util/VisionUtils/Paginator";
 
 const AiAdvisorHistory = () => {
   const size = useWindowSize();

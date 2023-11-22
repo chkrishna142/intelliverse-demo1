@@ -16,12 +16,6 @@ const TokenAllocationTable = ({ tableData }) => {
 
   return (
     <div>
-      <div className="w-full p-2">
-        <p className="text-[#605D64] text-[16px] font-medium">
-          Allocation History
-        </p>
-      </div>
-
       <div>
         <TableContainer
           className={` !overflow-y-auto ${
@@ -36,12 +30,12 @@ const TokenAllocationTable = ({ tableData }) => {
                     USERNAME
                   </div>
                 </Th>
-                <Th color="#79767D" fontWeight={400} width="150px">
-                  <div className="w-full h-full flex justify-center">DATE</div>
+                <Th color="#79767D" fontWeight={400} width="250px">
+                  <div className="w-full h-full flex justify-center">
+                    DATE/TIME
+                  </div>
                 </Th>
-                <Th color="#79767D" fontWeight={400} width="150px">
-                  <div className="w-full h-full flex justify-center">TIME</div>
-                </Th>
+
                 <Th color="#79767D" fontWeight={400} width="250px">
                   <div className="w-full h-full flex justify-center">EMAIL</div>
                 </Th>
@@ -69,11 +63,7 @@ const TokenAllocationTable = ({ tableData }) => {
                         {item.date}
                       </div>
                     </Td>
-                    <Td>
-                      <div className="w-full flex justify-center ">
-                        {item.time}
-                      </div>
-                    </Td>
+
                     <Td>
                       <div className="w-full flex justify-center gap-1 ">
                         {item.email}
@@ -81,7 +71,7 @@ const TokenAllocationTable = ({ tableData }) => {
                     </Td>
                     <Td>
                       <div className="w-full flex justify-center gap-1 ">
-                        {item.tokenUsed}
+                        {item.token}
                         <img src="/token.svg" alt="coins" />
                       </div>
                     </Td>
