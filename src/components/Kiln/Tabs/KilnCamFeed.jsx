@@ -159,14 +159,14 @@ const KilnCamFeed = ({
                 </div>
                 <div className="h-[40%] gap-4 flex flex-col sm:flex-row w-full items-start sm:items-center justify-between">
                   <div
-                    className="py-5 px-5 flex flex-col gap-2 sm:gap-[30px] w-[70vw] sm:w-[45vw] xl:w-[28vw] h-full justify-center rounded"
+                    className="py-1 sm:py-5 px-0 sm:px-5 flex flex-col gap-4 sm:gap-[30px] w-full sm:w-[45vw] xl:w-[28vw] h-full self-start justify-center rounded"
                     // style={{ backgroundColor: colors[dummy.tag.toLowerCase()] }}
                   >
                     <IndexChart type="Dusty" value={camData.dusty} />
                     <IndexChart type="Hot" value={camData.hot} />
                   </div>
                   <div
-                    className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-center"
+                    className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-start sm:self-center"
                     style={{
                       backgroundColor: colors[camData.tag.toLowerCase()],
                     }}
