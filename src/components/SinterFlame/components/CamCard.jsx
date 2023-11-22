@@ -40,7 +40,7 @@ const CamCard = ({ plantId, cameraName, data, alert }) => {
             Health Index
           </p>
           <IndexChart
-            accuracy={lastGoodData?.conf?.toFixed(2)}
+            accuracy={lastGoodData?.conf?.toFixed(0)}
             value={lastGoodData.healthIndex}
           />
           {/* <ColorCard r={data.rgb.r} g={data.rgb.g} b={data.rgb.b} /> */}
