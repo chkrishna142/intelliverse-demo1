@@ -14,7 +14,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
       <TableContainer className="!text-center  border rounded-md bg-white overflow-x-auto">
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] !text-[#79767D] !text-xs !top-0">
-            <Tr>
+            <Tr >
               <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
                 DATE/TIME
               </Th>
@@ -33,7 +33,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
             {dummyData &&
               dummyData.map((item) => {
                 return (
-                  <Tr>
+                  <Tr key={item.id}>
                     <Td className="!text-center !text-normal !text-[#3E3C42] !text-[14px] flex items-center justify-center gap-2" style={{fontWeight:400}}>
                       <p className="pl-2 pr-2">{item.date}</p>
                       <p className="px-4"> {item.time}</p>
@@ -42,7 +42,7 @@ const TransactionHistoryTable = ({ dummyData }) => {
                       {item.description}
                     </Td>
                     <Td className="!text-center !text-normal !text-[#3E3C42] !text-[14px]" style={{fontWeight:500}}>
-                      {item.description == "Purchase" ? (
+                      {(item.description === "Purchase" || item.description === "Transfer") ? (
                         <div className="w-full flex justify-center gap-1 text-[#7AC958] !text-[14px]">
                           <p>+{item.tokens}</p>
                           <img

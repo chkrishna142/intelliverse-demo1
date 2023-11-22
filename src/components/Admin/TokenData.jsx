@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 const TokenData = () => {
+  
+  const navigate = useNavigate()
+  const handleToken = () => {
+    navigate("/community/advisor/buycredits");
+  };
+
   return (
     <div className="w-full flex justify-between ">
       {/* Total coins */}
@@ -13,9 +21,10 @@ const TokenData = () => {
               {/* coin icons */}
               <img src="/token.svg" alt="coins" />
             </div>
-            <p className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer">
-              Add tokens
-            </p>
+            
+            <div className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer" onClick={handleToken}>
+                Add tokens
+              </div>
           </div>
           <p className="text-[#605D64] text-[14px] ">Total Enterprise Tokens</p>
         </div>

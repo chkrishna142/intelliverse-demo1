@@ -4,11 +4,18 @@ import { useEffect, useState } from "react";
 import TransactionHistoryTable from "./TransactionHistoryTable";
 import Pagination from "./Pagination";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
+import { useContext } from "react";
 
 const TransactionHistory = () => {
   const [alertsChanging, setAlertsChanging] = useState(false);
+  const { auth } = useContext(NavContext);
+
   const [dummyData, setDummyData] = useState([
-    {
+    { 
+      id:1,
       date: "15 Nov '23",
       time: "12:30",
       description: "Purchase",
@@ -16,13 +23,15 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:2,
       date: "16 Nov '23",
       time: "01:30",
       description: "Transfer",
       tokens: "20",
       balance: "20",
     },
-    {
+    { 
+      id:3,
       date: "15 Nov '23",
       time: "12:30",
       description: "AI Advisor usage",
@@ -30,6 +39,7 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:4,
       date: "15 Nov '23",
       time: "17:00",
       description: "Purchase",
@@ -37,6 +47,7 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:5,
       date: "16 Nov '23",
       time: "16:30",
       description: "Transfer",
@@ -44,6 +55,7 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:6,
       date: "15 Nov '23",
       time: "12:30",
       description: "AI Advisor usage",
@@ -51,6 +63,7 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:7,
       date: "16 Nov '23",
       time: "01:30",
       description: "Transfer",
@@ -58,6 +71,7 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:8,
       date: "15 Nov '23",
       time: "12:30",
       description: "AI Advisor usage",
@@ -65,109 +79,19 @@ const TransactionHistory = () => {
       balance: "20",
     },
     {
+      id:9,
       date: "15 Nov '23",
       time: "17:00",
       description: "Purchase",
       tokens: "20",
       balance: "20",
-    },
-    {
-      date: "16 Nov '23",
-      time: "16:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "12:30",
-      description: "Purchase",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "16 Nov '23",
-      time: "01:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "17:00",
-      description: "Purchase",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "16 Nov '23",
-      time: "16:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "16 Nov '23",
-      time: "01:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "17:00",
-      description: "Purchase",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "16 Nov '23",
-      time: "16:30",
-      description: "Transfer",
-      tokens: "20",
-      balance: "20",
-    },
-    {
-      date: "15 Nov '23",
-      time: "12:30",
-      description: "AI Advisor usage",
-      tokens: "20",
-      balance: "20",
-    },
+    }
   ]);
   const [displayData, setDisplayData] = useState([]);
   const navigate = useNavigate();
 
   const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
+    new Date(new Date().getTime() -30 *  24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
       .toISOString()
       .slice(0, 10)
   );
@@ -177,9 +101,18 @@ const TransactionHistory = () => {
       .toISOString()
       .slice(0, 10)
   );
+   
+  const [fromTimeInMs, setFromTimeInMs] = useState(Date.parse(fromTime));
+  const [toTimeInMs, setToTimeInMs] = useState(Date.parse(toTime));
 
   const handleClick = () => {
     setAlertsChanging(false);
+    setFromTimeInMs(Date.parse(fromTime));
+    setToTimeInMs(Date.parse(toTime));
+    console.log("fromTime",fromTime)
+  console.log("toTime",toTime)
+    console.log("fromTimeInMs",fromTimeInMs)
+  console.log("toTimeInMs",toTimeInMs)
   };
 
   const handleClickHistory = () => {
@@ -192,12 +125,28 @@ const TransactionHistory = () => {
 
   useEffect(() => {
     handleClick();
-  }, []);
+    // fetchTransactionHistory();
+  }, [fromTime,toTime,fromTimeInMs,toTimeInMs]);
 
   const handleAdvisorHistory = () => {
     navigate("/community/advisor/history");
   };
 
+  // const fetchTransactionHistory = async () => {
+  //   try {
+  //     const response = await axios.get(baseURL + 'ripiktoken/transactions/100', {
+  //       credentials: 'same-origin',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'X-Auth-Token': auth,
+  //       },
+  //     });
+  //     console.log(response, 'Transaction history data');
+      
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
   return (
     <div className="mt-[3vh]">
       <div className="flex justify-start items-center w-full gap-2">
