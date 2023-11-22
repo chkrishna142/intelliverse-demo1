@@ -45,11 +45,6 @@ const LibraryGrid = ({ plantName, img }) => {
           <p className="text-[#3E3C42] font-medium text-xl capitalize">
             {plantName}
           </p>
-          <p className="text-sm text-[#3E3C42]">
-            {size.width <= 600
-              ? `(${selectedPoints.length}/4)`
-              : `(${selectedPoints.length} prediction selected out of 4)`}
-          </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-1 items-center">
           <Button
@@ -58,7 +53,7 @@ const LibraryGrid = ({ plantName, img }) => {
             size="sm"
             colorScheme="facebook"
           >
-            Compare
+            {`Compare (${selectedPoints.length}/4)`}
           </Button>
           {img.length != 0 && (
             <Paginator data={img} limit={20} setDisplayData={setDisplayData} />

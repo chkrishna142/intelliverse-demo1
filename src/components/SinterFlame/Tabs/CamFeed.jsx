@@ -167,7 +167,7 @@ const CamFeed = ({
                       <p className="self-start text-sm text-[#605D64] font-medium whitespace-nowrap">
                         Health Index:
                       </p>
-                      <IndexChart type="Flame" value={camData.healthIndex} />
+                      <IndexChart accuracy={camData?.conf?.toFixed(0)} value={camData.healthIndex} />
                     </div>
                     {/* <div
                       className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-start sm:self-center"
