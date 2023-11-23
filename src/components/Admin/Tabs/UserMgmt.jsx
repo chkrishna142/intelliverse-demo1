@@ -177,27 +177,26 @@ const UserMgmt = () => {
       role: userRole,
       userid: selectedUser.userid
     });
-    console.log(requestData,'edit api')
-    // const response = await axios
-    //   .patch(
-    //     baseURL + "user",
-    //     requestData,
-    //     {
-    //       credentials: "same-origin",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "X-Auth-Token": auth,
-    //       },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     if (response.status === 200) {
-    //       fetchUsers();
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const response = await axios
+      .patch(
+        baseURL + "iam/users",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          fetchUsers();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   useEffect(() => {
