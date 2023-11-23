@@ -30,7 +30,7 @@ const ExlCsvDownload = ({ order, data }) => {
 
   const exportAsExcel = () => {
     let wb = utils.book_new();
-    let ws = utils.json_to_sheet(exportData);
+    let ws = utils.aoa_to_sheet(exportData);
     utils.book_append_sheet(wb, ws, `report_data`);
     writeFile(wb, `report_data.xlsx`);
   };

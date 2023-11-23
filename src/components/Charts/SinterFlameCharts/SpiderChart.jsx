@@ -39,7 +39,7 @@ const SpiderChart = ({ data }) => {
       data: points,
     },
   ];
-  console.log(series, "data points");
+
   const options = {
     chart: {
       type: "radar",

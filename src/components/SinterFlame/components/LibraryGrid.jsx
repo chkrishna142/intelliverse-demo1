@@ -12,9 +12,14 @@ const LibraryGrid = ({ plantName, img }) => {
   const [displayData, setDisplayData] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const size = useWindowSize();
-  const ImgDownload = (url, idx) => {
-    const blob = new Blob([url], { type: "image/jpeg" });
-    saveAs(url, `image-${idx}.jpg`);
+  const ImgDownload = async (url, idx) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      saveAs(blob, `image-${idx}.jpeg`);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    }
   };
 
   const handleChange = (val) => {
@@ -94,7 +99,7 @@ const LibraryGrid = ({ plantName, img }) => {
                   className="cursor-pointer rounded-full"
                   src="/SizingIcons/DownloadIcon.svg"
                   alt=""
-                  onClick={() => ImgDownload(x.originalImage, x.id)}
+                  onClick={() => ImgDownload(x.annotatedImage, x.id)}
                 />
                 <p className="text-white text-xs p-1 font-semibold bg-black rounded-lg">
                   {x.healthIndex + "/5"}
