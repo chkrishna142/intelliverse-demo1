@@ -135,7 +135,10 @@ const UserMgmt = () => {
   };
 
   const [contact, setContact] = useState();
+  const [fullName,setFullName] = useState("");
   const [whatsapp, setWhatsapp] = useState(false);
+  const [userEmail,setUserEmail] = useState("");
+  const [userRole,setUserRole] = useState("");
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
 
@@ -165,6 +168,37 @@ const UserMgmt = () => {
       console.error(err);
     }
   };
+
+  const patchUser = async () => {
+    const requestData = JSON.stringify({
+      fullname: fullName,
+      email: userEmail,
+      phoneNumber: contact,
+      role: userRole,
+      userid: selectedUser.userid
+    });
+    console.log(requestData,'edit api')
+    // const response = await axios
+    //   .patch(
+    //     baseURL + "user",
+    //     requestData,
+    //     {
+    //       credentials: "same-origin",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         "X-Auth-Token": auth,
+    //       },
+    //     }
+    //   )
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       fetchUsers();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+  }
 
   useEffect(() => {
     console.log(contact);
@@ -258,6 +292,9 @@ const UserMgmt = () => {
                 <Th className="!text-[#79767D] !w-[250px] !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal">
                   USER NAME
                 </Th>
+                <Th className="!text-[#79767D] !w-auto !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal">
+                  FULL NAME
+                </Th>
                 <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   EMAIL
                 </Th>
@@ -281,6 +318,9 @@ const UserMgmt = () => {
                   <Tr className="">
                     <Td className="!px-6 !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
                       {elem.username[0].toUpperCase() + elem.username.slice(1)}
+                    </Td>
+                    <Td className="!font-roboto !px-0 !text-sm whitespace-nowrap capitalize" textAlign={'center'}>
+                      {elem?.fullname}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                       {elem.email}
@@ -317,6 +357,10 @@ const UserMgmt = () => {
                           onClick={() => {
                             setIsOpenE(true);
                             setSelectedUser(elem);
+                            setFullName(elem?.fullname);
+                            setUserEmail(elem?.email);
+                            setUserRole(elem?.role);
+                            setContact(elem?.phoneNumber);
                           }}
                           className="!text-[#3474CA] !bg-white !p-0 !border-0"
                         >
@@ -363,12 +407,10 @@ const UserMgmt = () => {
                   Full Name
                 </div>
                 <input
-                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5 capitalize"
                   placeholder="Enter full name"
-                  value={
-                    selectedUser?.username?.charAt(0)?.toUpperCase() +
-                    selectedUser?.username?.slice(1)
-                  }
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                 />
               </FormControl>
               <FormControl className="!h-12">
@@ -378,7 +420,8 @@ const UserMgmt = () => {
                 <input
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                   placeholder="Enter valid email ID"
-                  value={selectedUser?.email}
+                  value={userEmail}
+                  onChange={(e) => setUserEmail(e.target.value)}
                 />
               </FormControl>
               <FormControl className="!h-12">
@@ -389,7 +432,7 @@ const UserMgmt = () => {
                 <input
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                   placeholder="Enter valid phone number"
-                  value={selectedUser?.phoneNumber}
+                  value={contact}
                   onChange={(event) => setContact(event.target.value)}
                 />
               </FormControl>
@@ -398,7 +441,8 @@ const UserMgmt = () => {
                   Role
                 </div>
                 <select
-                  value={selectedUser?.role}
+                  value={userRole}
+                  onChange={(e) => setUserRole(e.target.value)}
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                 >
                   <option value={'ADMIN'}>Admin</option>
@@ -429,6 +473,7 @@ const UserMgmt = () => {
           <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
             <button
               onClick={() => {
+                patchUser();
                 onCloseE();
               }}
               className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
