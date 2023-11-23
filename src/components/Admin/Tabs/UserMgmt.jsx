@@ -29,6 +29,7 @@ import NavContext from '../../NavContext';
 import axios from 'axios';
 import { baseURL } from '../../..';
 import Paginator from '../../../util/VisionUtils/Paginator';
+import { CSVLink } from 'react-csv';
 
 const UserMgmt = () => {
   const dummyData = {
@@ -72,50 +73,6 @@ const UserMgmt = () => {
     setDisplayUsers(users);
   }, [users]);
 
-  function tableToCSV() {
-    let csv_data = [];
-
-    let csv_headers = [];
-    csv_headers.push('USER NAME');
-    csv_headers.push('EMAIL');
-    csv_headers.push('ROLE');
-    csv_headers.push('LAST LOGIN');
-    csv_headers.push('STATUS');
-    csv_headers.join(',');
-    csv_data.push(csv_headers);
-    users?.map((elem) => {
-      let csv_row = [];
-      csv_row.push(elem.username[0].toUpperCase() + elem.username.slice(1));
-      csv_row.push(elem.email);
-      csv_row.push(elem.role === 'USER' ? 'REGULAR' : elem.role);
-      csv_row.push(dummyData.lastLogin);
-      csv_row.push(
-        elem.isactive === 'false' || !elem.isactive ? 'Inactive' : 'Active'
-      );
-      csv_row.join(',');
-      csv_data.push(csv_row);
-    });
-    csv_data = csv_data.join('\n');
-
-    downloadCSVFile(csv_data);
-  }
-
-  function downloadCSVFile(csv_data) {
-    let CSVFile = new Blob([csv_data], {
-      type: 'text/csv',
-    });
-
-    let temp_link = document.createElement('a');
-    temp_link.download = 'Users.csv';
-    let url = window.URL.createObjectURL(CSVFile);
-    temp_link.href = url;
-    temp_link.style.display = 'none';
-    document.body.appendChild(temp_link);
-
-    temp_link.click();
-    document.body.removeChild(temp_link);
-  }
-
   const [isOpenD, setIsOpenD] = useState(false);
 
   const onCloseD = () => {
@@ -135,12 +92,13 @@ const UserMgmt = () => {
   };
 
   const [contact, setContact] = useState();
-  const [fullName,setFullName] = useState("");
+  const [fullName, setFullName] = useState('');
   const [whatsapp, setWhatsapp] = useState(false);
-  const [userEmail,setUserEmail] = useState("");
-  const [userRole,setUserRole] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [userRole, setUserRole] = useState('');
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const deleteUser = async (userID) => {
     try {
@@ -175,20 +133,16 @@ const UserMgmt = () => {
       email: userEmail,
       phoneNumber: contact,
       role: userRole,
-      userid: selectedUser.userid
+      userid: selectedUser.userid,
     });
     const response = await axios
-      .patch(
-        baseURL + "iam/users",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      )
+      .patch(baseURL + 'iam/users', requestData, {
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Auth-Token': auth,
+        },
+      })
       .then((response) => {
         if (response.status === 200) {
           fetchUsers();
@@ -197,7 +151,7 @@ const UserMgmt = () => {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   useEffect(() => {
     console.log(contact);
@@ -222,7 +176,19 @@ const UserMgmt = () => {
       );
     });
     setDisplayUsers(temp);
-  }, [search]);
+  }, [search, users]);
+
+  const [sortOption, setSortOption] = useState(0);
+
+  useEffect(() => {
+    let temp = users;
+    if (sortOption === 0 && users) {
+      temp.sort((a, b) => a.username.localeCompare(b.username));
+      console.log(temp);
+      setUsers(temp);
+      setDisplayUsers(temp);
+    }
+  }, [sortOption, users]);
 
   return (
     <>
@@ -263,13 +229,35 @@ const UserMgmt = () => {
               />
               <img className="h-5 text-black" src="/search.svg" />
             </div>
-            <Button
-              onClick={tableToCSV}
-              className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
-            >
-              <DownloadIcon />
-              <span>Download Table</span>
-            </Button>
+            <div className="flex items-baseline text-xs md:text-sm text-white font-medium p-[8px] pl-2 h-[35px] pr-2 bg-[#6CA6FC] rounded-[40px]">
+              {selectedOption == 0 ? (
+                <p
+                  className="cursor-pointer"
+                  // onClick={exportAsExcel}
+                >
+                  Download
+                </p>
+              ) : (
+                <CSVLink
+                  data={users}
+                  filename={`report_data.csv`}
+                  className="cursor-pointer"
+                  target="_blank"
+                >
+                  Download
+                </CSVLink>
+              )}
+              <select
+                name="typeSheet"
+                id="typeSheet"
+                className="focus:outline-none bg-[#6CA6FC]"
+                value={selectedOption}
+                onChange={(e) => setSelectedOption(e.target.value)}
+              >
+                <option value={0}>.xlsx</option>
+                <option value={1}>.csv</option>
+              </select>
+            </div>
             <Button
               onClick={() => setIsOpenA(true)}
               className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
@@ -288,7 +276,13 @@ const UserMgmt = () => {
           <Table variant="simple">
             <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
               <Tr>
-                <Th className="!text-[#79767D] !w-[250px] !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal">
+                <Th
+                  onClick={() => setSortOption(0)}
+                  className={
+                    (sortOption == 0 ? '!bg-[#CCDDFF] ' : '') +
+                    'cursor-pointer !text-[#79767D] !w-[250px] !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal'
+                  }
+                >
                   USER NAME
                 </Th>
                 <Th className="!text-[#79767D] !w-auto !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal">
@@ -300,8 +294,14 @@ const UserMgmt = () => {
                 <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   ROLE
                 </Th>
-                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
-                  LAST LOGIN
+                <Th
+                  onClick={() => setSortOption(1)}
+                  className={
+                    (sortOption == 1 ? '!bg-[#CCDDFF] ' : '') +
+                    'cursor-pointer !text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal'
+                  }
+                >
+                  DATE/TIME
                 </Th>
                 <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
                   STATUS
@@ -318,14 +318,17 @@ const UserMgmt = () => {
                     <Td className="!px-6 !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
                       {elem.username[0].toUpperCase() + elem.username.slice(1)}
                     </Td>
-                    <Td className="!font-roboto !px-0 !text-sm whitespace-nowrap capitalize" textAlign={'center'}>
+                    <Td
+                      className="!font-roboto !px-0 !text-sm whitespace-nowrap capitalize"
+                      textAlign={'center'}
+                    >
                       {elem?.fullname}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                       {elem.email}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                      {elem.role === 'USER' ? 'REGULAR' : elem.role}
+                      {elem.role}
                     </Td>
                     <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                       {dummyData.lastLogin}

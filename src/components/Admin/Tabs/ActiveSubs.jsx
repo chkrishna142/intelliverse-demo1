@@ -18,6 +18,43 @@ import { baseURL } from '../../..';
 import Paginator from '../../../util/VisionUtils/Paginator';
 import { useToast } from '@chakra-ui/react';
 import { DownloadIcon } from '@chakra-ui/icons';
+import ExlCsvDownload from '../../../util/VisionUtils/ExlCsvDownload';
+import { CSVLink } from 'react-csv';
+
+const DownloadButton = () => {
+  const [selectedOption, setSelectedOption] = useState(0);
+  return (
+    <div className="flex items-baseline text-xs md:text-sm text-white font-medium p-[8px] pl-2 h-[35px] pr-2 bg-[#6CA6FC] rounded-[40px]">
+      {selectedOption == 0 ? (
+        <p
+          className="cursor-pointer"
+          // onClick={exportAsExcel}
+        >
+          Download
+        </p>
+      ) : (
+        <CSVLink
+          // data={exportData}
+          filename={`report_data.csv`}
+          className="cursor-pointer"
+          target="_blank"
+        >
+          Download
+        </CSVLink>
+      )}
+      <select
+        name="typeSheet"
+        id="typeSheet"
+        className="focus:outline-none bg-[#6CA6FC]"
+        value={selectedOption}
+        onChange={(e) => setSelectedOption(e.target.value)}
+      >
+        <option value={0}>.xlsx</option>
+        <option value={1}>.csv</option>
+      </select>
+    </div>
+  );
+};
 
 const ActiveSubs = () => {
   const [activeSubs, setActiveSubs] = useState([]);
@@ -64,6 +101,8 @@ const ActiveSubs = () => {
 
   const plants = ['Angul', 'Jamshedpur', 'Goa'];
 
+  const order = [''];
+
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex justify-between w-[80%]">
@@ -73,20 +112,14 @@ const ActiveSubs = () => {
           </p>
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
-        <Paginator
-          data={activeSubs}
-          setDisplayData={setDisplayData}
-          limit={10}
-        />
-      </div>
-      <div className="flex justify-end w-[80%]">
-        <Button
-          // onClick={tableToCSV}
-          className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
-        >
-          <DownloadIcon />
-          <span>Download</span>
-        </Button>
+        <div className="flex flex-row items-baseline gap-2">
+          <DownloadButton />
+          <Paginator
+            data={activeSubs}
+            setDisplayData={setDisplayData}
+            limit={10}
+          />
+        </div>
       </div>
       <TableContainer className="w-[80%] !text-center !font-roboto mt-[2vh] border rounded-md shadow-md bg-white">
         <Table variant="simple">
