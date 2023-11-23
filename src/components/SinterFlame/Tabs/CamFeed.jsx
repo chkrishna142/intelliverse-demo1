@@ -101,18 +101,18 @@ const CamFeed = ({
   useEffect(() => {
     if (bulkData.length !== 0) {
       let currentIndex = 0;
-      setTimeout(() => {
-        setLoaded(true);
-      }, [bulkData.length * 1000]);
       const intervalId = setInterval(() => {
         if (currentIndex < bulkData.length) {
-          setCamData(bulkData[currentIndex]);
+          setCamData((prevCamData) => {
+            return bulkData[currentIndex];
+          });
           currentIndex++;
         } else {
           // All items processed, clear the interval
           clearInterval(intervalId);
+          setLoaded(true);
         }
-      }, 1000);
+      }, 100);
       return () => {
         clearInterval(intervalId); // Clear the interval on component unmount
       };
@@ -167,7 +167,10 @@ const CamFeed = ({
                       <p className="self-start text-sm text-[#605D64] font-medium whitespace-nowrap">
                         Health Index:
                       </p>
-                      <IndexChart accuracy={camData?.conf?.toFixed(0)} value={camData.healthIndex} />
+                      <IndexChart
+                        accuracy={camData?.conf?.toFixed(0)}
+                        value={camData.healthIndex}
+                      />
                     </div>
                     {/* <div
                       className="py-5 px-5 flex flex-row sm:flex-col gap-3 items-center sm:items-start rounded self-start sm:self-center"
