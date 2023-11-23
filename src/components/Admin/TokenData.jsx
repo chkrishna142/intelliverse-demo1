@@ -8,9 +8,9 @@ const TokenData = () => {
   };
 
   return (
-    <div className="w-full flex justify-between ">
+    <div className="w-full lg:flex lg:flex-row lg:justify-between flex-col items-center mx-auto">
       {/* Total coins */}
-      <div className="w-[380px] p-0 flex h-full rounded-lg ">
+      <div className="md:w-[380px] w-[300px] mx-auto p-0 flex h-full rounded-lg mb-2">
         <div className="w-[90px] h-[70px] flex justify-center items-center p-2 bg-[#FFFFC4] rounded-tl-lg  rounded-bl-lg">
           <img src="/advisor/totalripiktoken.svg" alt="" />
         </div>
@@ -30,7 +30,7 @@ const TokenData = () => {
         </div>
       </div>
       {/*alloted coins */}
-      <div className="w-[380px] p-0 flex h-full rounded-lg ">
+      <div className="md:w-[380px] w-[300px] mx-auto p-0 flex h-full rounded-lg mb-2">
         <div className="w-[90px] h-[70px] flex justify-center items-center p-2 bg-[#CBE3FB] rounded-tl-lg  rounded-bl-lg">
           <img src="/advisor/alottoken.svg" alt="" />
         </div>
@@ -48,7 +48,7 @@ const TokenData = () => {
       </div>
       {/* unalloted coins */}
 
-      <div className="w-[380px] p-0 flex h-full rounded-lg ">
+      <div className="md:w-[380px] w-[300px] mx-auto mb-2 p-0 flex h-full rounded-lg">
         <div className="w-[90px] h-[70px] flex justify-center items-center p-2 bg-[#CBE3FB] rounded-tl-lg  rounded-bl-lg">
           <img src="/advisor/tokenunallot.svg" alt="" />
         </div>
