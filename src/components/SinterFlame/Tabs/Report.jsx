@@ -6,6 +6,7 @@ import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import NavContext from "../../NavContext";
 import { indexWordMap } from "../Sinterflame";
+import OperatorSelect from "../components/OperatorSelectCard";
 import {
   Table,
   Td,
@@ -195,51 +196,56 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
           )}
         </div>
         {report.hasOwnProperty("data") && (
-          <TableContainer className="!max-h-[80vh] !overflow-y-auto">
-            <Table variant="simple">
-              <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
-                <Tr>
-                  <Th color="#79767D" fontWeight={400}>
-                    SR. NO.
-                  </Th>
-                  {report.order.map((id, idx) => {
+          <div className="flex flex-col gap-0 w-full">
+            {selectedBasis == 1 && <OperatorSelect />}
+            <TableContainer className="!max-h-[80vh] !overflow-y-auto">
+              <Table variant="simple">
+                <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
+                  <Tr>
+                    <Th color="#79767D" fontWeight={400}>
+                      SR. NO.
+                    </Th>
+                    {report.order.map((id, idx) => {
+                      return (
+                        <Th key={idx} color="#79767D" fontWeight={400}>
+                          {id.toUpperCase()}
+                        </Th>
+                      );
+                    })}
+                    <Th color="#79767D" fontWeight={400}>
+                      COMMENT
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {report.data.map((item, index) => {
                     return (
-                      <Th key={idx} color="#79767D" fontWeight={400}>
-                        {id.toUpperCase()}
-                      </Th>
+                      <Tr
+                        key={index}
+                        className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
+                      >
+                        <Td className="">
+                          {String(index + 1).padStart(2, "0")}
+                        </Td>
+                        {report.order.map((x, idx) => {
+                          return (
+                            <Td key={idx} className="">
+                              {x.toLowerCase().includes("time")
+                                ? new Date(item[x]).toLocaleDateString() +
+                                  " " +
+                                  new Date(item[x]).toLocaleTimeString()
+                                : item[x]}
+                            </Td>
+                          );
+                        })}
+                        <Td className="">{getComment(item.healthIndex)}</Td>
+                      </Tr>
                     );
                   })}
-                  <Th color="#79767D" fontWeight={400}>
-                    COMMENT
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {report.data.map((item, index) => {
-                  return (
-                    <Tr
-                      key={index}
-                      className="!text-sm !text-[#3E3C42] !font-medium even:bg-[#FAFAFA] odd:bg-white"
-                    >
-                      <Td className="">{String(index + 1).padStart(2, "0")}</Td>
-                      {report.order.map((x, idx) => {
-                        return (
-                          <Td key={idx} className="">
-                            {x.toLowerCase().includes("time")
-                              ? new Date(item[x]).toLocaleDateString() +
-                                " " +
-                                new Date(item[x]).toLocaleTimeString()
-                              : item[x]}
-                          </Td>
-                        );
-                      })}
-                      <Td className="">{getComment(item.healthIndex)}</Td>
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </div>
         )}
       </div>
     </div>
