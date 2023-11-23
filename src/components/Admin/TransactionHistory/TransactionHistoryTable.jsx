@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 
 const TransactionHistoryTable = ({ tableData }) => {
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -18,7 +17,7 @@ const TransactionHistoryTable = ({ tableData }) => {
     const time = date.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
-      hour12: false
+      hour12: false,
     });
 
     return {
@@ -26,7 +25,7 @@ const TransactionHistoryTable = ({ tableData }) => {
       time: time,
     };
   };
-  // console.log("htable date reversed", tableData.reverse())
+
   return (
     <div className="lg:w-[55vw] md:w-[70vw] sm:w-[80vw] border border-gray-100">
       <TableContainer className="!text-center  border rounded-md bg-white overflow-x-auto">
