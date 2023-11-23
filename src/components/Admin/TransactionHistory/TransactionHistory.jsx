@@ -213,7 +213,7 @@ const TransactionHistory = () => {
             <div className="flex items-center gap-4">
               <div className="flex items-center lg:gap-4 sm:gap-2 px-3 py-1 rounded-sm bg-[#FFFFD8]">
                 <div>
-                  <p className="text-[14px] text-[#605D64] font-normal">
+                  <p className="text-[14px] text-[#605D64] font-normal p-1">
                     Current Balance
                   </p>
                 </div>
@@ -244,7 +244,7 @@ const TransactionHistory = () => {
 
           <TransactionHistoryTable tableData={displayData} />
 
-          <div className="md:pb-0 pb-10 flex items-center gap-4 mb-[10px]">
+          <div className="md:pb-0 pb-10 flex items-center gap-4 mt-2">
             <div
               className="bg-[#447ED4] text-[#FFFFFF] rounded-lg text-[16px] font-semibold"
               onClick={handleAdvisorHistory}
