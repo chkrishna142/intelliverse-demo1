@@ -6,6 +6,8 @@ import NavContext from "../../NavContext";
 import { baseURL } from "../../../index";
 import DetailModal from "../components/DetailModal";
 import Paginator from "../../../util/VisionUtils/Paginator";
+import ConstraintModal from "../components/ConstraintModal";
+import { SettingsIcon } from "@chakra-ui/icons";
 import {
   Select,
   Table,
@@ -17,28 +19,10 @@ import {
   Th,
   Flex,
   Image,
+  Button,
   Spinner,
+  IconButton,
 } from "@chakra-ui/react";
-
-const getImage = (reason) => {
-  if (reason === 0) {
-    return "/SizingIcons/sizing.svg";
-  } else if (reason === 2) {
-    return "/SizingIcons/sizing.svg";
-  } else if (reason === 1) {
-    return "/SizingIcons/sizing.svg";
-  }
-};
-
-const getReason = (reason) => {
-  if (reason === 0) {
-    return "Size";
-  } else if (reason === 2) {
-    return "Size";
-  } else if (reason === 1) {
-    return "Size";
-  }
-};
 
 const getAlertMessage = () => {
   return "Health index is poor";
@@ -51,6 +35,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   let clientId = param.clientId.toLowerCase();
   const indexRef = useRef();
   const [openModal, setOpenModal] = useState(false);
+  const [openConstraintModal, setOpenConstraintModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [alertsChanging, setAlertsChanging] = useState(false);
@@ -119,6 +104,20 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   }, []);
   return (
     <div className="relative flex flex-col">
+      <IconButton
+        position={'absolute'}
+        top={'-20px'}
+        right={0}
+        colorScheme="gray"
+        size={"lg"}
+        rounded={"100px"}
+        color={"#79767D"}
+        zIndex={100}
+        onClick={() => setOpenConstraintModal(true)}
+        icon={<SettingsIcon />}
+      >
+        Update Constraint
+      </IconButton>
       <div className="absolute left-0 right-0 flex justify-center">
         <div className="p-5 pl-6 pr-6 gap-6 flex flex-col md:flex-row items-center bg-white rounded-xl shadow-md">
           <div>
@@ -290,6 +289,12 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           data={displayData}
           index={indexRef.current}
           PlantName={selectedPlant}
+        />
+      )}
+      {openConstraintModal && (
+        <ConstraintModal
+          openModal={openConstraintModal}
+          closeModal={() => setOpenConstraintModal(false)}
         />
       )}
     </div>
