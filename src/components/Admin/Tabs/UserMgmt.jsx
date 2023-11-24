@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Table,
   TableContainer,
@@ -20,24 +20,25 @@ import {
   ModalCloseButton,
   ModalContent,
   Flex,
-} from '@chakra-ui/react';
-import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from '@chakra-ui/icons';
-import { AddNewModal, DeleteUserModal, EditUserModal } from './UserModals';
-import { useState, useContext } from 'react';
-import { useEffect } from 'react';
-import NavContext from '../../NavContext';
-import axios from 'axios';
-import { baseURL } from '../../..';
-import Paginator from '../../../util/VisionUtils/Paginator';
-import { CSVLink } from 'react-csv';
+} from "@chakra-ui/react";
+import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
+import { AddNewModal, DeleteUserModal, EditUserModal } from "./UserModals";
+import { useState, useContext } from "react";
+import { useEffect } from "react";
+import NavContext from "../../NavContext";
+import axios from "axios";
+import { baseURL } from "../../..";
+import Paginator from "../../../util/VisionUtils/Paginator";
+import { CSVLink } from "react-csv";
+import UserMngmtTable from "../Tables/userMngmtTable";
 
 const UserMgmt = () => {
   const dummyData = {
-    userName: 'Sudhanshu Prasad',
-    email: 'sudhanshu.12prasad@gmail.com',
+    userName: "Sudhanshu Prasad",
+    email: "sudhanshu.12prasad@gmail.com",
     lastLogin: "8 Sep '23 10:15 AM",
-    phoneNumber: '9856417823',
-    role: 'Admin',
+    phoneNumber: "9856417823",
+    role: "Admin",
   };
   const { auth } = useContext(NavContext);
 
@@ -48,11 +49,11 @@ const UserMgmt = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get(baseURL + 'iam/users', {
-        credentials: 'same-origin',
+      const response = await axios.get(baseURL + "iam/users", {
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': auth,
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
         },
       });
       setUsers(response?.data);
@@ -92,10 +93,10 @@ const UserMgmt = () => {
   };
 
   const [contact, setContact] = useState();
-  const [fullName, setFullName] = useState('');
+  const [fullName, setFullName] = useState("");
   const [whatsapp, setWhatsapp] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-  const [userRole, setUserRole] = useState('');
+  const [userEmail, setUserEmail] = useState("");
+  const [userRole, setUserRole] = useState("");
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
@@ -107,12 +108,12 @@ const UserMgmt = () => {
       });
 
       let config = {
-        method: 'delete',
+        method: "delete",
         maxBodyLength: Infinity,
-        url: 'https://backend-ripik.com/api/iam/users',
+        url: "https://backend-ripik.com/api/iam/users",
         headers: {
-          'x-auth-token': auth,
-          'Content-Type': 'application/json',
+          "x-auth-token": auth,
+          "Content-Type": "application/json",
         },
         data: data,
       };
@@ -136,11 +137,11 @@ const UserMgmt = () => {
       userid: selectedUser.userid,
     });
     const response = await axios
-      .patch(baseURL + 'iam/users', requestData, {
-        credentials: 'same-origin',
+      .patch(baseURL + "iam/users", requestData, {
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': auth,
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
         },
       })
       .then((response) => {
@@ -163,15 +164,15 @@ const UserMgmt = () => {
     }
   }, [selectedUser]);
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     let temp = users.filter((user) => {
       return (
         user?.username?.slice(0, search?.length)?.toLowerCase() ===
           search?.toLowerCase() ||
-        (user?.email?.includes('@') &&
-          user?.email?.split('@')[1]?.slice(0, search.length)?.toLowerCase() ===
+        (user?.email?.includes("@") &&
+          user?.email?.split("@")[1]?.slice(0, search.length)?.toLowerCase() ===
             search?.toLowerCase())
       );
     });
@@ -272,7 +273,7 @@ const UserMgmt = () => {
             />
           </div>
         </div>
-        <TableContainer className="w-full !text-center mt-4 border rounded-md shadow-md bg-white">
+        {/* <TableContainer className="w-full !text-center mt-4 border rounded-md shadow-md bg-white">
           <Table variant="simple">
             <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
               <Tr>
@@ -376,7 +377,19 @@ const UserMgmt = () => {
             </Tbody>
             <Tfoot></Tfoot>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
+        {displayData && displayData.length != 0 && (
+          <UserMngmtTable
+            rowData={displayData}
+            setIsOpenE={setIsOpenE}
+            setIsOpenD={setIsOpenD}
+            setSelectedUser={setSelectedUser}
+            setFullName={setFullName}
+            setUserEmail={setUserEmail}
+            setUserRole={setUserRole}
+            setContact={setContact}
+          />
+        )}
       </div>
       <DeleteUserModal
         isOpen={isOpenD}
@@ -393,7 +406,7 @@ const UserMgmt = () => {
         isOpen={isOpenE}
         onClose={onCloseE}
         isCentered
-        size={'sm'}
+        size={"sm"}
         width={740}
       >
         <ModalOverlay />
@@ -403,7 +416,7 @@ const UserMgmt = () => {
           </div>
           {/* <ModalCloseButton className="mt-2" color={'white'} /> */}
           <ModalBody className="mt-6">
-            <Flex flexDirection={'column'} gap={'30px'}>
+            <Flex flexDirection={"column"} gap={"30px"}>
               <FormControl className="!h-12">
                 <div className="text-xs text-[#2660B6] mb-2 font-semibold">
                   Full Name
@@ -428,7 +441,7 @@ const UserMgmt = () => {
               </FormControl>
               <FormControl className="!h-12">
                 <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                  Phone Number{' '}
+                  Phone Number{" "}
                   <span className="text-[#CAC5CD] text-xs">(optional)</span>
                 </div>
                 <input
@@ -447,9 +460,9 @@ const UserMgmt = () => {
                   onChange={(e) => setUserRole(e.target.value)}
                   className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
                 >
-                  <option value={'ADMIN'}>Admin</option>
-                  <option value={'USER'}>Regular</option>
-                  <option value={'Super Admin'}>CXO</option>
+                  <option value={"ADMIN"}>Admin</option>
+                  <option value={"USER"}>Regular</option>
+                  <option value={"Super Admin"}>CXO</option>
                 </select>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
