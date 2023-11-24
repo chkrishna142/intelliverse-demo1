@@ -1,0 +1,119 @@
+import { DataGrid } from "@mui/x-data-grid";
+import { createTheme, ThemeProvider, IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+
+const MuiTheme = createTheme();
+
+const UserMngmtTable = ({
+  rowData,
+  setIsOpenE,
+  setIsOpenD,
+  setSelectedUser,
+  setFullName,
+  setUserEmail,
+  setUserRole,
+  setContact,
+}) => {
+  const columns = [
+    {
+      field: "userid",
+      headerName: "SR No.",
+    },
+    {
+      field: "username",
+      headerName: "USER NAME",
+    },
+    {
+      field: "fullname",
+      headerName: "FULL NAME",
+    },
+    {
+      field: "email",
+      headerName: "EMAIL",
+    },
+    {
+      field: "role",
+      headerName: "ROLE",
+    },
+    {
+      field: "dateTime",
+      headerName: "DATE TIME",
+    },
+    {
+      field: "isactive",
+      headerName: "STATUS",
+      renderCell: ({ row }) => {
+        return row.isactive === "false" || !row.isactive ? (
+          <span className="text-[#E46962] text-sm font-semibold">Inactive</span>
+        ) : (
+          <span className="text-[#7AC958] text-sm font-semibold">Active</span>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "ACTION",
+      flex: 1,
+      renderCell: ({ row }) => {
+        return (
+          <div className="flex gap-1 items-center">
+            <IconButton
+              aria-label="delete"
+              color="error"
+              onClick={() => {
+                setIsOpenD(true);
+                setSelectedUser(row);
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+            <IconButton
+              aria-label="edit"
+              color="primary"
+              onClick={() => {
+                setIsOpenE(true);
+                setSelectedUser(row);
+                setFullName(row?.fullname);
+                setUserEmail(row?.email);
+                setUserRole(row?.role);
+                setContact(row?.phoneNumber);
+              }}
+            >
+              <EditNoteIcon />
+            </IconButton>
+          </div>
+        );
+      },
+    },
+  ];
+  const headerClass =
+    "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
+  const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-nowrap";
+  const flexMap = [0, 2, 2, 3, 1, 1, 1, 1];
+  columns.map((val, idx) => {
+    val["headerClassName"] = headerClass;
+    val["cellClassName"] = cellClass;
+    val["flex"] = flexMap[idx];
+  });
+
+  return (
+    <div className="overflow-x-auto mt-2">
+      <ThemeProvider theme={MuiTheme}>
+        <DataGrid
+          rows={rowData}
+          columns={columns}
+          getRowId={(row) => row.userid}
+          columnVisibilityModel={{
+            userid: false,
+            username: false
+          }}
+          hideFooter={true}
+          sx={{ minWidth: "1000px" }}
+        />
+      </ThemeProvider>
+    </div>
+  );
+};
+
+export default UserMngmtTable;
