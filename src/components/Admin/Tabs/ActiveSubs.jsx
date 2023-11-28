@@ -21,40 +21,6 @@ import { DownloadIcon } from '@chakra-ui/icons';
 import ExlCsvDownload from '../../../util/VisionUtils/ExlCsvDownload';
 import { CSVLink } from 'react-csv';
 
-const DownloadButton = () => {
-  const [selectedOption, setSelectedOption] = useState(0);
-  return (
-    <div className="flex items-baseline text-xs md:text-sm text-white font-medium p-[8px] pl-2 h-[35px] pr-2 bg-[#6CA6FC] rounded-[40px]">
-      {selectedOption == 0 ? (
-        <p
-          className="cursor-pointer"
-          // onClick={exportAsExcel}
-        >
-          Download
-        </p>
-      ) : (
-        <CSVLink
-          // data={exportData}
-          filename={`report_data.csv`}
-          className="cursor-pointer"
-          target="_blank"
-        >
-          Download
-        </CSVLink>
-      )}
-      <select
-        name="typeSheet"
-        id="typeSheet"
-        className="focus:outline-none bg-[#6CA6FC]"
-        value={selectedOption}
-        onChange={(e) => setSelectedOption(e.target.value)}
-      >
-        <option value={0}>.xlsx</option>
-        <option value={1}>.csv</option>
-      </select>
-    </div>
-  );
-};
 
 const ActiveSubs = () => {
   const [activeSubs, setActiveSubs] = useState([]);
@@ -102,7 +68,7 @@ const ActiveSubs = () => {
   const plants = ['Angul', 'Jamshedpur', 'Goa'];
 
   const order = [''];
-
+  console.log(displayData,'hello')
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex justify-between w-[80%]">
@@ -113,7 +79,7 @@ const ActiveSubs = () => {
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
         <div className="flex flex-row items-baseline gap-2">
-          <DownloadButton />
+          <ExlCsvDownload data={[""]} order={[""]} enable={true}/>
           <Paginator
             data={activeSubs}
             setDisplayData={setDisplayData}
