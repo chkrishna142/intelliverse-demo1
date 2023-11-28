@@ -21,10 +21,14 @@ import { baseURL } from "../../../index";
 import NavContext from "../../NavContext";
 import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
+import SessionLogsTable from "../Tables/SessionLogsTable";
 
 const SessionLogs = () => {
   const { auth } = useContext(NavContext);
   const [sessions, setSessions] = useState([]);
+  const [order,setOrder] = useState({})
+  
+
   const [displaySessions, setDisplaySessions] = useState([]);
   const [avgDuration, setAvgDuration] = useState({
     duration: 0,
@@ -47,6 +51,7 @@ const SessionLogs = () => {
       });
 
       setSessions(response.data.data);
+      setOrder(response.data)
     } catch (error) {
       console.log(error);
     }
@@ -57,10 +62,10 @@ const SessionLogs = () => {
       setDisplaySessions(
         sessions.filter((session) => {
           return (
-            session?.Email?.slice(0, search.length)?.toLowerCase() ===
+            session?.email?.slice(0, search.length)?.toLowerCase() ===
               search?.toLowerCase() ||
-            (session?.Email?.includes("@") &&
-              session?.Email?.split("@")[1]
+            (session?.email?.includes("@") &&
+              session?.email?.split("@")[1]
                 ?.slice(0, search.length)
                 ?.toLowerCase() === search?.toLowerCase())
           );
@@ -159,35 +164,35 @@ const SessionLogs = () => {
             <img className="h-5 text-black" src="/search.svg" />
           </div>
           <div className="flex flex-col min-[450px]:flex-row items-end gap-6">
-            <ExlCsvDownload data={[""]} order={[""]} orderDetail={[""]} enable={true}/>
+            <ExlCsvDownload data={sessions} order={order.order} orderDetail={order.orderDetail} enable={true}/>
             <Paginator
               data={displaySessions}
-              limit={10}
+              limit={5}
               setDisplayData={setDisplayData}
             />
           </div>
         </div>
       </div>
-      <TableContainer className="w-full !text-center !font-roboto mt-[2vh] border rounded-md shadow-md bg-white overflow-auto">
+      {/* <TableContainer className="w-full !text-center !font-roboto mt-[2vh] border rounded-md shadow-md bg-white overflow-auto">
         <Table variant="simple" className="min-w-[1220px]">
           <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
             <Tr>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
-                LOGIN TIME
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-left !font-roboto !text-sm !font-normal">
+                DATE TIME
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap !w-[300px]  !px-0 !text-center !font-roboto !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap !w-[300px]  !px-0 !text-left !font-roboto !text-sm !font-normal">
                 EMAIL
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-left !font-roboto !text-sm !font-normal">
                 SESSION DURATION
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-[150px] !px-0 !text-center !font-roboto !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-[150px] !px-0 !text-left !font-roboto !text-sm !font-normal">
                 IP ADDRESS
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-center !font-roboto !text-sm !font-normal">
+              <Th className="!text-[#79767D] whitespace-nowrap w-auto !px-0 !text-left !font-roboto !text-sm !font-normal">
                 DEVICE
               </Th>
-              <Th className="!text-[#79767D] whitespace-nowrap w-[200px] !pl-0 !pr-10 !text-start !text-sm !font-normal !font-roboto mr-auto">
+              <Th className="!text-[#79767D] whitespace-nowrap w-[200px] !pl-0 !pr-10 !text-left !text-sm !font-normal !font-roboto mr-auto">
                 LOCATION
               </Th>
             </Tr>
@@ -196,7 +201,7 @@ const SessionLogs = () => {
             {displayData.map((session) => {
               return (
                 <Tr className="!whitespace-normal">
-                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-left !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {new Date(session.loginTime).toLocaleDateString("en-US", {
                       year: "2-digit",
                       month: "short",
@@ -205,10 +210,10 @@ const SessionLogs = () => {
                       " " +
                       new Date(session.loginTime).toLocaleTimeString()}
                   </Td>
-                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-left !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {session.email}
                   </Td>
-                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-left !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {Math.floor(session.sessionDuration / (1000 * 60 * 60)) +
                       " hrs " +
                       Math.floor(
@@ -217,13 +222,13 @@ const SessionLogs = () => {
                       ) +
                       " min"}
                   </Td>
-                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
+                  <Td className="!text-left !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
                     {session.ipAddress}
                   </Td>
-                  <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-normal">
+                  <Td className="!text-left !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-normal">
                     {session.device}
                   </Td>
-                  <Td className="!text-start !pl-0 !pr-10 !text-sm !font-roboto !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
+                  <Td className="!text-left !pl-0 !pr-10 !text-sm !font-roboto !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
                     {session.location}
                   </Td>
                 </Tr>
@@ -231,7 +236,10 @@ const SessionLogs = () => {
             })}
           </Tbody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
+    <div>
+    <SessionLogsTable rowData={displayData} />
+    </div>
     </div>
   );
 };
