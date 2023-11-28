@@ -46,7 +46,7 @@ const SessionLogs = () => {
         },
       });
 
-      setSessions(response.data[0]);
+      setSessions(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +86,7 @@ const SessionLogs = () => {
       };
       const groupedData = {};
       data.forEach((session) => {
-        const weekNumber = new Date(session.LoginTime).getWeek();
+        const weekNumber = new Date(session.loginTime).getWeek();
         if (!groupedData[weekNumber]) {
           groupedData[weekNumber] = [];
         }
@@ -96,7 +96,7 @@ const SessionLogs = () => {
       for (const weekNumber in groupedData) {
         const sessions = groupedData[weekNumber];
         const totalDuration = sessions.reduce(
-          (sum, session) => sum + session.SessionDuration,
+          (sum, session) => sum + session.sessionDuration,
           0
         );
         const averageDuration = totalDuration / sessions.length;
@@ -139,7 +139,7 @@ const SessionLogs = () => {
                   ) : (
                     <SouthEast sx={{ fontSize: "16px" }} />
                   )}
-                  {avgDuration.compare}%
+                  {Math.abs(avgDuration.compare?.toFixed(2))}%
                 </span>
                 {avgDuration.compare > 0
                   ? " increase over last week"
@@ -197,34 +197,34 @@ const SessionLogs = () => {
               return (
                 <Tr className="!whitespace-normal">
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {new Date(session.LoginTime).toLocaleDateString("en-US", {
+                    {new Date(session.loginTime).toLocaleDateString("en-US", {
                       year: "2-digit",
                       month: "short",
                       day: "numeric",
                     }) +
                       " " +
-                      new Date(session.LoginTime).toLocaleTimeString()}
+                      new Date(session.loginTime).toLocaleTimeString()}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {session.Email}
+                    {session.email}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {Math.floor(session.SessionDuration / (1000 * 60 * 60)) +
+                    {Math.floor(session.sessionDuration / (1000 * 60 * 60)) +
                       " hrs " +
                       Math.floor(
-                        (session.SessionDuration % (1000 * 60 * 60)) /
+                        (session.sessionDuration % (1000 * 60 * 60)) /
                           (1000 * 60)
                       ) +
                       " min"}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                    {session.IpAddress}
+                    {session.ipAddress}
                   </Td>
                   <Td className="!text-center !font-roboto !px-0 !text-sm text-[#3E3C42] whitespace-normal">
-                    {session.Device}
+                    {session.device}
                   </Td>
                   <Td className="!text-start !pl-0 !pr-10 !text-sm !font-roboto !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
-                    {session.Location}
+                    {session.location}
                   </Td>
                 </Tr>
               );
