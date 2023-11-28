@@ -6,7 +6,8 @@ import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import NavContext from "../../NavContext";
 import { indexWordMap } from "../Sinterflame";
-import OperatorSelect from "../components/OperatorSelectCard";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import ShiftSelectModal from "../components/ShiftSelectModal";
 import {
   Table,
   Td,
@@ -17,6 +18,7 @@ import {
   Th,
   Select,
   Spinner,
+  IconButton,
 } from "@chakra-ui/react";
 
 const getComment = (val) => {
@@ -27,6 +29,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   const { auth } = useContext(NavContext);
   const [report, setReport] = useState([]);
+  const [shiftSelectOpen, setShiftSelectOpen] = useState(false);
   const [selectedBasis, setSelectedBasis] = useState(0);
   const [reportChanging, setReportChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
@@ -91,6 +94,18 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
 
   return (
     <div className="relative flex flex-col">
+      <IconButton
+        position={"absolute"}
+        top={"-20px"}
+        right={0}
+        colorScheme="gray"
+        size={"lg"}
+        rounded={"100px"}
+        color={"#084298"}
+        zIndex={100}
+        onClick={() => setShiftSelectOpen(true)}
+        icon={<GroupAddIcon />}
+      />
       <div className="absolute left-0 right-0 flex justify-center">
         <div className="p-5 pl-6 pr-6 gap-6 flex flex-col md:flex-row items-center bg-white rounded-xl shadow-md">
           <div>
@@ -197,7 +212,6 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
         </div>
         {report.hasOwnProperty("data") && (
           <div className="flex flex-col gap-0 w-full">
-            {selectedBasis == 1 && <OperatorSelect />}
             <TableContainer className="!max-h-[80vh] !overflow-y-auto">
               <Table variant="simple">
                 <Thead className="bg-[#FAFAFA] !text-xs !sticky !top-0">
@@ -248,6 +262,12 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
           </div>
         )}
       </div>
+      {shiftSelectOpen && (
+        <ShiftSelectModal
+          openModal={shiftSelectOpen}
+          closeModal={() => setShiftSelectOpen(false)}
+        />
+      )}
     </div>
   );
 };

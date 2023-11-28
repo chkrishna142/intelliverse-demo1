@@ -29,6 +29,7 @@ import NavContext from "../../NavContext";
 import axios from "axios";
 import { baseURL } from "../../..";
 import Paginator from "../../../util/VisionUtils/Paginator";
+import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import { CSVLink } from "react-csv";
 import UserMngmtTable from "../Tables/userMngmtTable";
 
@@ -194,7 +195,7 @@ const UserMgmt = () => {
   return (
     <>
       <div className="w-full px-2 !font-roboto">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-col 2xl:flex-row justify-between">
           <div className="flex flex-row justify-start gap-6">
             <div className="flex flex-col">
               <p className="text-lg font-semibold text-[#605D64]">
@@ -221,8 +222,8 @@ const UserMgmt = () => {
               <p className="text-[#938F96]">Deleted</p>
             </div>
           </div>
-          <div className="flex flex-row items-end gap-6">
-            <div className="w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
+          <div className="flex flex-col xl:flex-row justify-end 2xl:justify-start items-end gap-6">
+            <div className="w-full xl:w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
               <input
                 className="w-full focus:outline-none text-sm"
                 placeholder="Search email ID/name"
@@ -230,47 +231,21 @@ const UserMgmt = () => {
               />
               <img className="h-5 text-black" src="/search.svg" />
             </div>
-            <div className="flex items-baseline text-xs md:text-sm text-white font-medium p-[8px] pl-2 h-[35px] pr-2 bg-[#6CA6FC] rounded-[40px]">
-              {selectedOption == 0 ? (
-                <p
-                  className="cursor-pointer"
-                  // onClick={exportAsExcel}
-                >
-                  Download
-                </p>
-              ) : (
-                <CSVLink
-                  data={users}
-                  filename={`report_data.csv`}
-                  className="cursor-pointer"
-                  target="_blank"
-                >
-                  Download
-                </CSVLink>
-              )}
-              <select
-                name="typeSheet"
-                id="typeSheet"
-                className="focus:outline-none bg-[#6CA6FC]"
-                value={selectedOption}
-                onChange={(e) => setSelectedOption(e.target.value)}
+            <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
+              <ExlCsvDownload data={[""]} order={[""]} enable={true} />
+              <Button
+                onClick={() => setIsOpenA(true)}
+                className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
               >
-                <option value={0}>.xlsx</option>
-                <option value={1}>.csv</option>
-              </select>
+                <AddIcon />
+                <span>Add New User</span>
+              </Button>
+              <Paginator
+                data={displayUsers}
+                setDisplayData={setDisplayData}
+                limit={10}
+              />
             </div>
-            <Button
-              onClick={() => setIsOpenA(true)}
-              className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
-            >
-              <AddIcon />
-              <span>Add New User</span>
-            </Button>
-            <Paginator
-              data={displayUsers}
-              setDisplayData={setDisplayData}
-              limit={10}
-            />
           </div>
         </div>
         {/* <TableContainer className="w-full !text-center mt-4 border rounded-md shadow-md bg-white">
