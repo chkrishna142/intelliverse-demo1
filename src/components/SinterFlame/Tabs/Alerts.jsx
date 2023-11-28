@@ -295,6 +295,9 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
         <ConstraintModal
           openModal={openConstraintModal}
           closeModal={() => setOpenConstraintModal(false)}
+          plantName = {selectedPlant}
+          material = {material}
+          clientId = {clientId}
         />
       )}
     </div>

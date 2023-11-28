@@ -28,7 +28,6 @@ import { useState } from "react";
 
 const ShiftSelectModal = ({ openModal, closeModal }) => {
   const columns = [
-    "Date",
     "Shift A (6AM to 2PM)",
     "Shift B (2PM to 10PM)",
     "Shift C (10PM to 6AM)",
@@ -104,17 +103,24 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                   <Table variant="simple">
                     <Thead className="bg-[#CFE2F3] !text-xs !sticky !top-0">
                       <Tr>
+                        <Th
+                          key={"date"}
+                          color="#79767D"
+                          fontWeight={400}
+                          borderX={"1px solid #D3D3D3"}
+                        >
+                          Date
+                        </Th>
+                        <Th
+                          key={"actions"}
+                          color="#79767D"
+                          fontWeight={400}
+                          borderRight={"1px solid #D3D3D3"}
+                        >
+                          Actions
+                        </Th>
                         {columns.map((id, idx) => {
-                          return id == "Date" ? (
-                            <Th
-                              key={idx}
-                              color="#79767D"
-                              fontWeight={400}
-                              borderX={"1px solid #D3D3D3"}
-                            >
-                              {id.toUpperCase()}
-                            </Th>
-                          ) : (
+                          return (
                             <Th
                               key={idx}
                               color="#79767D"
@@ -151,8 +157,6 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                             >
                               {new Date().toLocaleDateString()}
                             </Td>
-                            <OperatorSelect />
-                            <OperatorSelect />
                             <OperatorSelect />
                           </Tr>
                         );
@@ -212,17 +216,24 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                   <Table variant="simple">
                     <Thead className="bg-[#CFE2F3] !text-xs !sticky !top-0">
                       <Tr>
+                        <Th
+                          key={"date"}
+                          color="#79767D"
+                          fontWeight={400}
+                          borderX={"1px solid #D3D3D3"}
+                        >
+                          Date
+                        </Th>
+                        <Th
+                          key={"actions"}
+                          color="#79767D"
+                          fontWeight={400}
+                          borderRight={"1px solid #D3D3D3"}
+                        >
+                          Actions
+                        </Th>
                         {columns.map((id, idx) => {
-                          return id == "Date" ? (
-                            <Th
-                              key={idx}
-                              color="#79767D"
-                              fontWeight={400}
-                              borderX={"1px solid #D3D3D3"}
-                            >
-                              {id.toUpperCase()}
-                            </Th>
-                          ) : (
+                          return (
                             <Th
                               key={idx}
                               color="#79767D"
@@ -259,8 +270,6 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                             >
                               {new Date().toLocaleDateString()}
                             </Td>
-                            <OperatorSelect />
-                            <OperatorSelect />
                             <OperatorSelect />
                           </Tr>
                         );
