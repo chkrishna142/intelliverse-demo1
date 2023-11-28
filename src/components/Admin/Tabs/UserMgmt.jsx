@@ -34,6 +34,9 @@ import { CSVLink } from "react-csv";
 import UserMngmtTable from "../Tables/userMngmtTable";
 
 const UserMgmt = () => {
+  const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9"
+
+
   const dummyData = {
     userName: "Sudhanshu Prasad",
     email: "sudhanshu.12prasad@gmail.com",
@@ -101,7 +104,6 @@ const UserMgmt = () => {
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
-
   const deleteUser = async (userID) => {
     try {
       let data = JSON.stringify({
