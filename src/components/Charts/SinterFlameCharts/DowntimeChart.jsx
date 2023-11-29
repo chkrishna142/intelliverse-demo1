@@ -1,20 +1,30 @@
 import ReactApexChart from "react-apexcharts";
 
 const DowntimeChart = ({ data }) => {
-  const series = [
-    {
-      name: "No Flame",
-      data: [44, 55, 41, 67, 22, 43, 56, 19],
-    },
-    {
-      name: "Server Down",
-      data: [13, 23, 20, 8, 13, 27, 34, 12],
-    },
-    {
-      name: "Camera Down",
-      data: [11, 17, 15, 15, 21, 14, 34, 19],
-    },
+  const series = [];
+  const labels = [];
+  const sortedData = data.sort((a, b) => a.cameraId.localeCompare(b.cameraId));
+  // Extract unique keys other than cameraId
+  const uniqueKeys = [
+    ...new Set(
+      sortedData.flatMap((obj) =>
+        Object.keys(obj).filter((key) => key !== "cameraId")
+      )
+    ),
   ];
+  uniqueKeys.map((key) => {
+    series.push({
+      name: key,
+      data: [],
+    });
+  });
+
+  sortedData.forEach((item) => {
+    uniqueKeys.forEach((key) => {
+      series.find((s) => s.name === key).data.push(item[key]);
+    });
+    labels.push(item.cameraId);
+  });
 
   const options = {
     chart: {
@@ -22,7 +32,8 @@ const DowntimeChart = ({ data }) => {
         show: false,
       },
       type: "bar",
-      stacked: true
+      stacked: true,
+      stackType: "100%",
     },
     tooltip: {
       x: {
@@ -37,9 +48,9 @@ const DowntimeChart = ({ data }) => {
         fontSize: "16px",
       },
     },
-    colors: ["#212529", "#343a40", "#6c757d"],
+    colors: ["#274c77", "#212529", "#343a40", "#6c757d"],
     xaxis: {
-      categories: ["burner1n", "burner2", "burner3", "burner4", "burner5", "burner6", "burner7", "burner8s"],
+      categories: labels,
       labels: {
         show: true,
         formatter: function (value) {
