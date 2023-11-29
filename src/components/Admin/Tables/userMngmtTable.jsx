@@ -37,8 +37,18 @@ const UserMngmtTable = ({
       headerName: "ROLE",
     },
     {
-      field: "dateTime",
-      headerName: "DATE TIME",
+      field: "createdat",
+      headerName: "LOGIN TIME",
+      valueGetter: (params) =>
+        params.row.createdat
+          ? new Date(params.row.createdat).toLocaleDateString("en-US", {
+              year: "2-digit",
+              month: "short",
+              day: "numeric",
+            }) +
+            " " +
+            new Date(params.row.createdat).toLocaleTimeString()
+          : "",
     },
     {
       field: "isactive",
@@ -90,7 +100,7 @@ const UserMngmtTable = ({
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-nowrap";
-  const flexMap = [0, 2, 2, 3, 1, 1, 1, 1];
+  const flexMap = [0, 2, 2, 3, 1, 1.5, 1, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;

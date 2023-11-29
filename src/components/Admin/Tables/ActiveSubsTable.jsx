@@ -7,6 +7,8 @@ import { createTheme, ThemeProvider } from "@mui/material";
 const MuiTheme = createTheme();
 
 const ActiveSubsTable = ({ activeSubs }) => {
+  const extendedRowData = activeSubs.map((row) => ({ ...row, plantName: "ripik" }));
+
   const toast = useToast();
 
   const columns = [
@@ -24,7 +26,7 @@ const ActiveSubsTable = ({ activeSubs }) => {
         return params.row.serv.servCategory;
       },
     },
-    { field: "plant", headerName: "PLANT" },
+    { field: "plantName", headerName: "PLANT" },
     { field: "instance", headerName: "INSTANCE" },
     {
       field: "isActive",
@@ -105,7 +107,7 @@ const ActiveSubsTable = ({ activeSubs }) => {
     <div className="overflow-x-auto mt-2">
       <ThemeProvider theme={MuiTheme}>
         <DataGrid
-          rows={activeSubs}
+          rows={extendedRowData}
           columns={columns}
           getRowId={(row) => row.subscriptionServiceId}
           //   columnVisibilityModel={{
