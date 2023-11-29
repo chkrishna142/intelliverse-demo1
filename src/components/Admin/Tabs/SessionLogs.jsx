@@ -167,7 +167,7 @@ const SessionLogs = () => {
             <ExlCsvDownload data={sessions} order={order.order} orderDetail={order.orderDetail} enable={true}/>
             <Paginator
               data={displaySessions}
-              limit={5}
+              limit={6}
               setDisplayData={setDisplayData}
             />
           </div>

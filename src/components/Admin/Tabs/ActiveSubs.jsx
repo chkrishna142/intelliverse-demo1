@@ -24,269 +24,8 @@ import ActiveSubsTable from '../Tables/ActiveSubsTable';
 
 
 const ActiveSubs = () => {
-  // const [activeSubs, setActiveSubs] = useState([
-  //   {
-  //     "subscriptionServiceId": "1",
-  //     "serv": {
-  //       "servId": "1",
-  //       "servName": "Product 1",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 1,
-  //     "isActive": true,
-  //     "validityEnd": "2023-12-01T00:00:00Z",
-  //     "validityStart": "2023-11-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "2",
-  //     "serv": {
-  //       "servId": "2",
-  //       "servName": "Product 2",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 2,
-  //     "isActive": false,
-  //     "validityEnd": "2024-01-01T00:00:00Z",
-  //     "validityStart": "2023-12-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "3",
-  //     "serv": {
-  //       "servId": "3",
-  //       "servName": "Product 3",
-  //       "servCategory": "Category C"
-  //     },
-  //     "plant": "Plant C",
-  //     "instance": 3,
-  //     "isActive": true,
-  //     "validityEnd": "2023-11-15T00:00:00Z",
-  //     "validityStart": "2023-10-15T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "4",
-  //     "serv": {
-  //       "servId": "4",
-  //       "servName": "Product 4",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 4,
-  //     "isActive": false,
-  //     "validityEnd": "2023-12-10T00:00:00Z",
-  //     "validityStart": "2023-11-10T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "5",
-  //     "serv": {
-  //       "servId": "5",
-  //       "servName": "Product 5",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 5,
-  //     "isActive": true,
-  //     "validityEnd": "2024-02-01T00:00:00Z",
-  //     "validityStart": "2024-01-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "6",
-  //     "serv": {
-  //       "servId": "6",
-  //       "servName": "Product 6",
-  //       "servCategory": "Category C"
-  //     },
-  //     "plant": "Plant C",
-  //     "instance": 6,
-  //     "isActive": false,
-  //     "validityEnd": "2023-12-25T00:00:00Z",
-  //     "validityStart": "2023-11-25T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "7",
-  //     "serv": {
-  //       "servId": "7",
-  //       "servName": "Product 7",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 7,
-  //     "isActive": true,
-  //     "validityEnd": "2024-03-01T00:00:00Z",
-  //     "validityStart": "2024-02-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "8",
-  //     "serv": {
-  //       "servId": "8",
-  //       "servName": "Product 8",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 8,
-  //     "isActive": false,
-  //     "validityEnd": "2023-12-15T00:00:00Z",
-  //     "validityStart": "2023-11-15T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "9",
-  //     "serv": {
-  //       "servId": "9",
-  //       "servName": "Product 9",
-  //       "servCategory": "Category C"
-  //     },
-  //     "plant": "Plant C",
-  //     "instance": 9,
-  //     "isActive": true,
-  //     "validityEnd": "2024-01-15T00:00:00Z",
-  //     "validityStart": "2023-12-15T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "10",
-  //     "serv": {
-  //       "servId": "10",
-  //       "servName": "Product 10",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 10,
-  //     "isActive": false,
-  //     "validityEnd": "2024-04-01T00:00:00Z",
-  //     "validityStart": "2024-03-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "11",
-  //     "serv": {
-  //       "servId": "11",
-  //       "servName": "Product 11",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 11,
-  //     "isActive": true,
-  //     "validityEnd": "2024-01-25T00:00:00Z",
-  //     "validityStart": "2023-12-25T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "12",
-  //     "serv": {
-  //       "servId": "12",
-  //       "servName": "Product 12",
-  //       "servCategory": "Category C"
-  //     },
-  //     "plant": "Plant C",
-  //     "instance": 12,
-  //     "isActive": false,
-  //     "validityEnd": "2024-02-15T00:00:00Z",
-  //     "validityStart": "2024-01-15T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "13",
-  //     "serv": {
-  //       "servId": "13",
-  //       "servName": "Product 13",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 13,
-  //     "isActive": true,
-  //     "validityEnd": "2024-05-01T00:00:00Z",
-  //     "validityStart": "2024-04-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "14",
-  //     "serv": {
-  //       "servId": "14",
-  //       "servName": "Product 14",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 14,
-  //     "isActive": false,
-  //     "validityEnd": "2024-02-25T00:00:00Z",
-  //     "validityStart": "2024-01-25T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "15",
-  //     "serv": {
-  //       "servId": "15",
-  //       "servName": "Product 15",
-  //       "servCategory": "Category C"
-  //     },
-  //     "plant": "Plant C",
-  //     "instance": 15,
-  //     "isActive": true,
-  //     "validityEnd": "2024-03-15T00:00:00Z",
-  //     "validityStart": "2024-02-15T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "16",
-  //     "serv": {
-  //       "servId": "16",
-  //       "servName": "Product 16",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 16,
-  //     "isActive": false,
-  //     "validityEnd": "2024-06-01T00:00:00Z",
-  //     "validityStart": "2024-05-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "17",
-  //     "serv": {
-  //       "servId": "17",
-  //       "servName": "Product 17",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 17,
-  //     "isActive": true,
-  //     "validityEnd": "2024-03-25T00:00:00Z",
-  //     "validityStart": "2024-02-25T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "18",
-  //     "serv": {
-  //       "servId": "18",
-  //       "servName": "Product 18",
-  //       "servCategory": "Category C"
-  //     },
-  //     "plant": "Plant C",
-  //     "instance": 18,
-  //     "isActive": false,
-  //     "validityEnd": "2024-04-15T00:00:00Z",
-  //     "validityStart": "2024-03-15T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "19",
-  //     "serv": {
-  //       "servId": "19",
-  //       "servName": "Product 19",
-  //       "servCategory": "Category A"
-  //     },
-  //     "plant": "Plant A",
-  //     "instance": 19,
-  //     "isActive": true,
-  //     "validityEnd": "2024-07-01T00:00:00Z",
-  //     "validityStart": "2024-06-01T00:00:00Z"
-  //   },
-  //   {
-  //     "subscriptionServiceId": "20",
-  //     "serv": {
-  //       "servId": "20",
-  //       "servName": "Product 20",
-  //       "servCategory": "Category B"
-  //     },
-  //     "plant": "Plant B",
-  //     "instance": 20,
-  //     "isActive": false,
-  //     "validityEnd": "2024-04-25T00:00:00Z",
-  //     "validityStart": "2024-03-25T00:00:00Z"
-  //   }
-  // ]
-  // );
+ 
+  const activeSubsDataList = []
   const [activeSubs,setActiveSubs] = useState([])
   const [displayData, setDisplayData] = useState([]);
   const { auth } = useContext(NavContext);
@@ -301,7 +40,7 @@ const ActiveSubs = () => {
           'X-Auth-Token': auth,
         },
       });
-      console.log(response.data, 'Active subscriptions1');
+      // console.log(response.data, 'Active subscriptions1');
       // if (Array.isArray(response.data?.relSubscriptionServices)) {
       //   let active = new Array(
       //     response.data?.relSubscriptionServices?.length * 3
@@ -320,7 +59,19 @@ const ActiveSubs = () => {
       //   console.log(response.data, 'Active subscriptions');
       //   setActiveSubs(active);
       // }
+
       setActiveSubs(response.data?.relSubscriptionServices)
+      console.log("response.......",response)
+      // response.data?.map(item => {
+      //   let services = item?.relSubscriptionServices;
+
+      //   activeSubsDataList  = activeSubsDataList.concat(services.map(serv=>{
+      //     serv['id'] = item?.subscriptionId + serv.subscriptionServiceId;
+      //     serv['plantName'] = item?.plantName
+      //     return serv;
+      //   }))
+      // })
+
     } catch (e) {
       console.error(e);
     }
@@ -330,12 +81,12 @@ const ActiveSubs = () => {
     fetchActiveSubs();
   }, []);
 
-  
+
   
   const plants = ['Angul', 'Jamshedpur', 'Goa'];
 
   const order = [''];
-
+  // console.log("activeSubsDataList",activeSubsDataList)
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex justify-between w-[80%]">
