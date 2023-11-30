@@ -164,7 +164,7 @@ const SessionLogs = () => {
             <img className="h-5 text-black" src="/search.svg" />
           </div>
           <div className="flex flex-col min-[450px]:flex-row items-end gap-6">
-            <ExlCsvDownload data={sessions} order={order.order} orderDetail={order.orderDetail} enable={true}/>
+            <ExlCsvDownload data={[""]} order={[""]} orderDetail={[""]} enable={true}/>
             <Paginator
               data={displaySessions}
               limit={6}
