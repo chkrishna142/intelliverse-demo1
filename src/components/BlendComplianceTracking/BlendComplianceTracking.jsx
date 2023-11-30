@@ -5,6 +5,7 @@ import Feed from "./Tabs/Feed";
 import Alerts from "./Tabs/Alerts";
 import Status from "./Tabs/Status";
 import Report from "./Tabs/Report";
+import FeedLibrary from "./Tabs/FeedLibrary";
 import { useWindowSize } from "@uidotdev/usehooks";
 
 const BlendComplianceTracking = () => {
@@ -97,7 +98,8 @@ const BlendComplianceTracking = () => {
             />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Feed />
+            {/* <Feed /> */}
+            <FeedLibrary />
           </TabPanel>
         </TabPanels>
       </Tabs>
