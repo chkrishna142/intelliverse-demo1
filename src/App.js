@@ -39,6 +39,7 @@ import EmailActivation from "./components/Admin/EmailActivation";
 import TransactionHistory from "./components/Admin/TransactionHistory/TransactionHistory";
 import AiAdvisorHistory from "./components/community/AiAdvisorHistory";
 import AiExpertHistory from "./components/community/AiExpertHistory";
+import AskAnExpertHistory from "./components/community/AskAnExpertHistory";
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem("logged_in")); // used on Login.jsx to set login provider to true
@@ -213,7 +214,11 @@ function App() {
                     />
                     <Route
                       path="community/askanexpert/history"
-                      element={<AiExpertHistory />}
+                      element={<AskAnExpertHistory />}
+                    />
+                    <Route
+                      path="/community/expert/:questionId"
+                      element={<Expert />}
                     />
                     <Route
                       path="/user/transactionhistory"
@@ -226,10 +231,7 @@ function App() {
           ) : (
             <Routes>
               <Route path="*" element={<Login />} />
-              <Route
-                path="/community/expert/:questionId"
-                element={<Expert />}
-              />
+              
             </Routes>
           )}
         </div>
