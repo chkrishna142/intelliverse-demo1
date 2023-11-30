@@ -85,7 +85,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
             />
           </div>
           <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full hover:scale-105"
             onClick={handleClick}
           >
             {reportChanging ? <Spinner /> : "Show Report"}
@@ -94,10 +94,10 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
       </div>
       <div className="flex flex-col gap-4 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
         <div className="flex justify-end gap-2 pl-4 pr-6 mr-3 overflow-x-auto">
-          {report.hasOwnProperty("order") && (
+          {true && (
             <ExlCsvDownload
-              order={downloadData.order}
-              data={downloadData.data}
+              order={[""]}
+              data={[""]}
             />
           )}
         </div>

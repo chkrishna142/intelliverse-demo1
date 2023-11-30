@@ -176,7 +176,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
             />
           </div>
           <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full"
+            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-full hover:scale-105"
             onClick={handleClick}
           >
             {alertsChanging ? <Spinner /> : "Show Alerts"}

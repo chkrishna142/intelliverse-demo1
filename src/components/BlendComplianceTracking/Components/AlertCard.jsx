@@ -31,7 +31,7 @@
         onClick={handleClick}
       >
         <div
-          className="px-3 py-2 flex gap-2 items-center self-start rounded-t-lg w-full h-[52px]"
+          className="px-4 py-2 flex gap-2 items-center self-start rounded-t-lg w-full h-[42px]"
           style={{ backgroundColor: getColor(count, total) }}
         >
           <p className="text-base text-[#605D64] whitespace-nowrap capitalize">
@@ -39,7 +39,7 @@
           </p>
         </div>
         <div
-          className="py-[10px] px-4 text-center text-2xl font-medium rounded-b-lg w-full h-[70px]"
+          className="py-[10px] px-4 text-center text-2xl font-medium rounded-b-lg w-full h-[55px]"
           style={{ color: getColor(count, total) }}
         >
           {count + "/" + total}
