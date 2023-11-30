@@ -50,7 +50,7 @@ const UserMgmt = () => {
 
   const [displayData, setDisplayData] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
-
+  const [downloadData,setDownloadData] = useState({})
   const fetchUsers = async () => {
     try {
       const response = await axios.get(baseURL + "iam/users", {
@@ -61,13 +61,31 @@ const UserMgmt = () => {
         },
       });
       setUsers(response?.data);
+      console.log("users",response.data)
     } catch (err) {
       console.log(err);
     }
   };
+  const fetchDownloadApi = async () => {
+    const header = {"header":"users"}
+    try {
+      const response = await axios.post(baseURL + "iam/header",header, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-auth-Token": auth,
+        },
+      });
 
+    //setting order for downloading data
+      setDownloadData(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetchUsers();
+    fetchDownloadApi();
   }, []);
 
   // useEffect(() => {
@@ -104,6 +122,7 @@ const UserMgmt = () => {
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
+  
   const deleteUser = async (userID) => {
     try {
       let data = JSON.stringify({
@@ -122,7 +141,7 @@ const UserMgmt = () => {
       };
 
       const response = await axios.request(config);
-      console.log(response);
+      
       if (response.status === 200) {
         fetchUsers();
       }
@@ -193,7 +212,7 @@ const UserMgmt = () => {
       setDisplayUsers(temp);
     }
   }, [sortOption, users]);
-
+  
   return (
     <>
       <div className="w-full px-2 !font-roboto">
@@ -234,7 +253,7 @@ const UserMgmt = () => {
               <img className="h-5 text-black" src="/search.svg" />
             </div>
             <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
-              <ExlCsvDownload data={[""]} order={[""]} enable={true} />
+              <ExlCsvDownload data={displayUsers} order={downloadData?.summary} orderDetail={downloadData?.detail} enable={true} />
               <Button
                 onClick={() => setIsOpenA(true)}
                 className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
@@ -250,111 +269,6 @@ const UserMgmt = () => {
             </div>
           </div>
         </div>
-        {/* <TableContainer className="w-full !text-center mt-4 border rounded-md shadow-md bg-white">
-          <Table variant="simple">
-            <Thead className="bg-[#DDEEFF] text-[#79767D] whitespace-nowrap">
-              <Tr>
-                <Th
-                  onClick={() => setSortOption(0)}
-                  className={
-                    (sortOption == 0 ? '!bg-[#CCDDFF] ' : '') +
-                    'cursor-pointer !text-[#79767D] !w-[250px] !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal'
-                  }
-                >
-                  USER NAME
-                </Th>
-                <Th className="!text-[#79767D] !w-auto !font-roboto whitespace-nowrap  !px-0 !text-center !text-sm !font-normal">
-                  FULL NAME
-                </Th>
-                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
-                  EMAIL
-                </Th>
-                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
-                  ROLE
-                </Th>
-                <Th
-                  onClick={() => setSortOption(1)}
-                  className={
-                    (sortOption == 1 ? '!bg-[#CCDDFF] ' : '') +
-                    'cursor-pointer !text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal'
-                  }
-                >
-                  DATE/TIME
-                </Th>
-                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-auto !px-0 !text-center !text-sm !font-normal">
-                  STATUS
-                </Th>
-                <Th className="!text-[#79767D] !font-roboto whitespace-nowrap w-[300px] !pl-0 !pr-10 !text-start !text-sm !font-normal mr-auto">
-                  ACTION
-                </Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {displayData.map((elem) => {
-                return (
-                  <Tr className="">
-                    <Td className="!px-6 !font-roboto !px-0 !text-sm font-semibold whitespace-nowrap">
-                      {elem.username[0].toUpperCase() + elem.username.slice(1)}
-                    </Td>
-                    <Td
-                      className="!font-roboto !px-0 !text-sm whitespace-nowrap capitalize"
-                      textAlign={'center'}
-                    >
-                      {elem?.fullname}
-                    </Td>
-                    <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                      {elem.email}
-                    </Td>
-                    <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                      {elem.role}
-                    </Td>
-                    <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap">
-                      {dummyData.lastLogin}
-                    </Td>
-                    <Td className="!text-center !px-0 !text-sm text-[#3E3C42] whitespace-nowrap ">
-                      {elem.isactive === 'false' || !elem.isactive ? (
-                        <span className="text-[#E46962] text-sm font-semibold">
-                          Inactive
-                        </span>
-                      ) : (
-                        <span className="text-[#7AC958] text-sm font-semibold">
-                          Active
-                        </span>
-                      )}
-                    </Td>
-                    <Td className="!text-start !pl-0 !pr-10 !text-sm !py-0 text-[#3E3C42] whitespace-nowrap mr-auto">
-                      <span className="flex flex-row gap-1">
-                        <Button
-                          onClick={() => {
-                            setIsOpenD(true);
-                            setSelectedUser(elem);
-                          }}
-                          className="!text-[#E46962] !bg-white !p-0 !border-0"
-                        >
-                          <DeleteIcon h={5} />
-                        </Button>
-                        <Button
-                          onClick={() => {
-                            setIsOpenE(true);
-                            setSelectedUser(elem);
-                            setFullName(elem?.fullname);
-                            setUserEmail(elem?.email);
-                            setUserRole(elem?.role);
-                            setContact(elem?.phoneNumber);
-                          }}
-                          className="!text-[#3474CA] !bg-white !p-0 !border-0"
-                        >
-                          <EditIcon h={5} />
-                        </Button>
-                      </span>
-                    </Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-            <Tfoot></Tfoot>
-          </Table>
-        </TableContainer> */}
         {displayData && displayData.length != 0 && (
           <UserMngmtTable
             rowData={displayData}
