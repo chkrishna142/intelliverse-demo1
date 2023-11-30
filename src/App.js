@@ -11,6 +11,7 @@ import KilnSingleCam from "./components/Kiln/KilnSingleCam";
 import Sinterflame from "./components/SinterFlame/Sinterflame";
 import SinterflameSingle from "./components/SinterFlame/SinterflameSingle";
 import Manpower from "./components/Manpower/Manpower";
+import BlendComplianceTracking from "./components/BlendComplianceTracking/BlendComplianceTracking";
 import WorkforceSafety from "./components/WorkforceSafety/WorkforceSafety";
 import Quality from "./components/QualityTracking/Quality";
 import QualitySingleCam from "./components/QualityTracking/QualitySingleCam";
@@ -128,10 +129,6 @@ function App() {
                       element={<ClientSelect />}
                     />
                     {/*Sizing pages */}
-                    {/* <Route
-                      path="/vision/Sizing/:material"
-                      element={<ClientSelect />}
-                    /> */}
                     <Route
                       path="/vision/Sizing/:material/:clientId"
                       element={<Sizing />}
@@ -141,10 +138,6 @@ function App() {
                       element={<SingleCam />}
                     />
                     {/*Process and Kiln Pages */}
-                    {/* <Route
-                      path="/vision/ProcessMonitoring/:material"
-                      element={<ClientSelect />}
-                    /> */}
                     <Route
                       path="/vision/ProcessMonitoring/kilnhealth/:clientId"
                       element={<Kiln />}
@@ -163,10 +156,6 @@ function App() {
                       element={<SinterflameSingle />}
                     />
                     {/*Quality Tracking pages */}
-                    {/* <Route
-                      path="/vision/qualityTracking/:material"
-                      element={<ClientSelect />}
-                    /> */}
                     <Route
                       path="/vision/qualityTracking/:material/:clientId"
                       element={<Quality />}
@@ -178,10 +167,11 @@ function App() {
                     {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
                     {/*Workforce pages*/}
-                    {/* <Route
-                      path="/vision/workforceMonitoring/:material"
-                      element={<ClientSelect />}
-                    /> */}
+                    <Route
+                      path="/vision/blendComplianceTracking"
+                      element={<BlendComplianceTracking />}
+                    />
+                    {/*Workforce pages*/}
                     <Route
                       path="/vision/workforceMonitoring/:material/:clientId"
                       element={<WorkforceSafety />}

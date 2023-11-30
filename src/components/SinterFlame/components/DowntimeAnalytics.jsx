@@ -50,11 +50,11 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       startDate: new Date(fromTime).getTime(),
       endDate:
         new Date(toTime).getTime() + 11 * 60 * 60 * 1000 + 59 * 60 * 1000,
-      distType: "HEALTHINDEX",
+      distType: "downtimeFlag",
     });
     const response = await axios
       .post(
-        baseURL + "vision/v2/processMonitoring/analytics/distribution/",
+        baseURL + "vision/v2/processMonitoring/analytics/frequency/",
         requestData,
         {
           credentials: "same-origin",
@@ -74,13 +74,23 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   const handleClick = () => {
-    // setSizeDataChanging(true);
-    // apiCall();
+    setSizeDataChanging(true);
+    apiCall();
   };
 
   useEffect(() => {
-    // handleClick();
+    handleClick();
   }, []);
+
+  useEffect(() => {
+    if (selectedRange == 1) {
+      setToTime(
+        new Date(new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10)
+      );
+    }
+  }, [fromTime]);
 
   return (
     <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
@@ -144,6 +154,12 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                 type="date"
                 setDateTime={setToTime}
                 value={toTime}
+                min={fromTime}
+                max={new Date(
+                  new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000
+                )
+                  .toISOString()
+                  .slice(0, 10)}
               />
             </div>
           )}
@@ -160,7 +176,7 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       </p>
       <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
         <div className=" h-[35vh] min-w-[680px] flex-grow">
-          <DowntimeChart />
+          <DowntimeChart data={graphData} />
         </div>
       </div>
     </div>
