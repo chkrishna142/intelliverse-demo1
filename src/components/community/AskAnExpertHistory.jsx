@@ -374,7 +374,7 @@ const AskAnExpertHistory = () => {
           </div>
         </div> */}
         <div className=" flex items-center rounded-lg shadow-md">
-          <div className=" flex items-center gap-3 p-6">
+          <div className=" flex items-center gap-3 p-6 w-1/2">
             <div className="rounded-full">
               <img
                 src="/askanexperthistory.png"
@@ -397,7 +397,7 @@ const AskAnExpertHistory = () => {
               </p>
             </div>
           </div>
-          <div className="bg-[#124CA2] text-[#FAFAFA] w-[45vw] h-[140px] rounded-r-lg flex items-center gap-[56px] pl-[46px]">
+          <div className="bg-[#124CA2] text-[#FAFAFA] w-1/2 h-[140px] rounded-r-lg flex items-center gap-[56px] pl-[46px]">
             <div className="">
               <div className="mb-3">
                 <img src="/questionmarkorange.svg" alt="questionmark" />
