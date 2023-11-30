@@ -82,6 +82,16 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
+  useEffect(() => {
+    if (selectedRange == 1) {
+      setToTime(
+        new Date(new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10)
+      );
+    }
+  }, [fromTime]);
+
   return (
     <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
       <div className="flex justify-start xl:justify-end items-center overflow-x-auto h-[60px]">
@@ -144,6 +154,12 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                 type="date"
                 setDateTime={setToTime}
                 value={toTime}
+                min={fromTime}
+                max={new Date(
+                  new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000
+                )
+                  .toISOString()
+                  .slice(0, 10)}
               />
             </div>
           )}
@@ -160,7 +176,7 @@ const DowntimeAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
       </p>
       <div className="flex gap-1 sm:gap-[40px] items-center overflow-x-auto min-h-[280px]">
         <div className=" h-[35vh] min-w-[680px] flex-grow">
-          <DowntimeChart data={graphData}/>
+          <DowntimeChart data={graphData} />
         </div>
       </div>
     </div>

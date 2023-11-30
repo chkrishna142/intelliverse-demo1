@@ -85,6 +85,16 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
+  useEffect(() => {
+    if (selectedRange == 1) {
+      setToTime(
+        new Date(new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .slice(0, 10)
+      );
+    }
+  }, [fromTime]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">
@@ -174,6 +184,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
                   type="date"
                   setDateTime={setToTime}
                   value={toTime}
+                  min={fromTime}
+                  max={new Date(
+                    new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000
+                  )
+                    .toISOString()
+                    .slice(0, 10)}
                 />
               </div>
             )}

@@ -53,6 +53,8 @@ const FloatingInput = (props) => {
           size="md"
           type={props.type}
           value={props.value}
+          min={props?.min || null}
+          max={props?.max || null}
           onChange={(e) => props?.setDateTime(e.target.value)}
           className="!border-1 !border-[#79767D] !rounded-[5px] !text-[#AEA9B1] !text-base"
         />

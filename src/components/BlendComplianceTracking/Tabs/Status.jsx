@@ -1,12 +1,28 @@
 import { useState } from "react";
 import StatusTable from "../Tables/StatusTable";
 
+const mach = {
+  1: {
+    loader: [4],
+    hopper: [2,3]
+  },
+  3: {
+    loader: [5],
+    hopper: [1]
+  }
+}
+
+const img = {
+  hopper: '/BlendComplianceIcons/images/hopper.jpg',
+  loader: 'https://media.istockphoto.com/id/1283895179/photo/jcb-crane-working-near-sand-quarry.jpg?s=612x612&w=0&k=20&c=DAESMJ9vd1vzUW1JznFoWBSkdZkBUSTM5zyTZPCzLHs='
+}
+
 const Status = () => {
   const [sm, setSm] = useState(1);
   const [type, setType] = useState("hopper");
   const batches = [1, 3];
   const types = ["hopper", "loader"];
-  let active = Math.floor(Math.random() * 3);
+  let active = Math.floor(Math.random() * mach[sm][type]?.length);
   return (
     <div className="flex flex-col gap-3 pb-6 pt-3 px-3 rounded-xl bg-white">
       <div className="flex justify-between items-end">
@@ -73,14 +89,14 @@ const Status = () => {
       </div>
       <div className="flex gap-3">
         <StatusTable />
-        <div className="flex flex-col gap-4 w-[30%] h-[100vh] overflow-y-auto">
-          {[...Array(3)].map((i, idx) => {
+        <div className="flex flex-col gap-4 w-[30%] h-[65vh] overflow-y-auto">
+          {mach[sm][type].map((i, idx) => {
             return (
               <div className="flex flex-col gap-2 capitalize">
-                <p>{type + " " + (idx + 1)}</p>
+                <p>{type + " " + (i)}</p>
                 <div className="w-full h-full bg-black rounded flex justify-center items-center relative">
                   <img
-                    src="https://media.istockphoto.com/id/1283895179/photo/jcb-crane-working-near-sand-quarry.jpg?s=612x612&w=0&k=20&c=DAESMJ9vd1vzUW1JznFoWBSkdZkBUSTM5zyTZPCzLHs="
+                    src={img[type]}
                     alt="no support"
                     className="w-full h-auto rounded"
                   />

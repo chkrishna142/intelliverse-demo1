@@ -54,7 +54,7 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
       {size.width >= 768 ? (
         <Modal isOpen={openModal} onClose={closeModal} isCentered="true">
           <ModalOverlay />
-          <ModalContent style={{ borderRadius: "12px" }} maxW="830px">
+          <ModalContent style={{ borderRadius: "12px" }} maxW="900px">
             <ModalHeader
               padding="0px"
               display={"flex"}

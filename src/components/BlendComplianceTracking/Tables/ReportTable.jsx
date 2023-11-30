@@ -20,11 +20,11 @@ const ReportTable = ({ rowData }) => {
   ];
   return (
     <TableContainer
-      className="w-full"
+      className="w-full !overflow-y-auto max-h-[45vh]"
       rounded={"8px"}
     >
       <Table variant="simple">
-        <Thead className="bg-[#DEF] !text-xs !sticky !top-0" style={{zIndex: 100}}>
+        <Thead className="bg-[#DEF] !text-xs !sticky !top-0" style={{zIndex: 10}}>
           <Tr>
             {columns.map((id, idx) => {
               return (
