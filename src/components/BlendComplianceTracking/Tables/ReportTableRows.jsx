@@ -160,7 +160,7 @@ const ReportTableRows = () => {
                           p={"8px"}
                           textAlign={"center"}
                         >
-                          {id.toUpperCase()}
+                          {/^R\d+$/.test(id) ? "Round " + id[1] : id.toUpperCase()}
                         </Th>
                       );
                     })}
