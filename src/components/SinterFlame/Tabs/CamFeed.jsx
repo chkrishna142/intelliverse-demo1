@@ -159,6 +159,7 @@ const CamFeed = ({
                   <img
                     className="rounded-xl w-auto h-[30vh]"
                     src={camData.annotatedImage}
+                    crossOrigin="anonymous"
                   />
                 </div>
                 {!(camData.flags.viewObstructed || camData.flags.flapClosed) ? (

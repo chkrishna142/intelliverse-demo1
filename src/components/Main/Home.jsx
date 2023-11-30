@@ -157,7 +157,7 @@ const Home = ({ state }) => {
                                         <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/sizing1.svg" /></div>
                                         {particleSizing.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{particleSizing?.deployments} Services</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
                                     </div>
-                                    <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87]'>Sizing Tool</p></div>
+                                    <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Raw Material Sizing</p></div>
                                 </div>
                             </Link>
                             <Link to={process.active === true ? "/vision/ProcessMonitoring" : "/bookdemo/processmonitoring"}><div>

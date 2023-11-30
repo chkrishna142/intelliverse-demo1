@@ -28,9 +28,9 @@ import { useState } from "react";
 
 const ShiftSelectModal = ({ openModal, closeModal }) => {
   const columns = [
+    "Shift C (10PM to 6AM)",
     "Shift A (6AM to 2PM)",
     "Shift B (2PM to 10PM)",
-    "Shift C (10PM to 6AM)",
   ];
   const [dataChanging, setDataChanging] = useState(false);
   const [fromTime, setFromTime] = useState(
