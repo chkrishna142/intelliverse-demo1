@@ -116,7 +116,7 @@ const ActiveSubs = () => {
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
         <div className="flex flex-row items-baseline gap-2">
-          <ExlCsvDownload data={[""]} order={[""]} enable={true}/>
+          <ExlCsvDownload data={[""]} order={[""]} orderDetail={[""]} enable={true}/>
           <Paginator
             data={activeSubs}
             limit={7}
