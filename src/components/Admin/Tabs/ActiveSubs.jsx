@@ -30,6 +30,8 @@ const ActiveSubs = () => {
   const [displayData, setDisplayData] = useState([]);
   const { auth } = useContext(NavContext);
   const toast = useToast();
+  const [downloadData,setDownloadData] = useState({})
+
 
   const fetchActiveSubs = async () => {
     try {
@@ -76,9 +78,26 @@ const ActiveSubs = () => {
       console.error(e);
     }
   };
+  const fetchDownloadApi = async () => {
+    const header = {"header":"logs"}
+    try {
+      const response = await axios.post(baseURL + "iam/header",header, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-auth-Token": auth,
+        },
+      });
 
+    //setting order for downloading data
+      setDownloadData(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetchActiveSubs();
+    fetchDownloadApi();
   }, []);
 
 
@@ -86,7 +105,7 @@ const ActiveSubs = () => {
   const plants = ['Angul', 'Jamshedpur', 'Goa'];
 
   const order = [''];
-  // console.log("activeSubsDataList",activeSubsDataList)
+  console.log("subs",activeSubs)
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex justify-between w-[80%]">
@@ -97,7 +116,7 @@ const ActiveSubs = () => {
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
         <div className="flex flex-row items-baseline gap-2">
-          <ExlCsvDownload data={[""]} order={[""]} enable={true}/>
+          <ExlCsvDownload data={[""]} order={[""]} orderDetail={[""]} enable={true}/>
           <Paginator
             data={activeSubs}
             limit={7}

@@ -50,7 +50,7 @@ const SessionLogsTable = ({ rowData }) => {
       field: "device",
       headerName: "DEVICE",
       renderCell: (params) => {
-        console.log(params);
+        
         return <p className="py-2">{params?.row?.device}</p>;
       },
     },
