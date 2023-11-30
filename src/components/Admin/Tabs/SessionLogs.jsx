@@ -1,18 +1,5 @@
 import React from "react";
-import {
-  Table,
-  TableContainer,
-  TableCaption,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Tfoot,
-  Link,
-  Button,
-  Icon,
-} from "@chakra-ui/react";
+
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
 import { NorthEast, SouthEast } from "@mui/icons-material";
 import { useState, useEffect, useContext } from "react";
@@ -39,9 +26,11 @@ const SessionLogs = () => {
 
   useEffect(() => {
     apiCall();
+    fetchDownloadApi()
   }, []);
 
   const apiCall = async () => {
+    const obj = {"header":"logs"}
     try {
       const response = await axios.get(baseURL + "iam/logs", {
         headers: {
@@ -51,7 +40,26 @@ const SessionLogs = () => {
       });
 
       setSessions(response.data.data);
+     
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchDownloadApi = async () => {
+    const header = {"header":"logs"}
+    try {
+      const response = await axios.post(baseURL + "iam/header",header, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-auth-Token": auth,
+        },
+      });
+
+    //setting order for downloading data
       setOrder(response.data)
+      
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +132,7 @@ const SessionLogs = () => {
       });
     }
   }, [sessions]);
-
+  
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex flex-col min-[1300px]:flex-row justify-between">
@@ -164,7 +172,7 @@ const SessionLogs = () => {
             <img className="h-5 text-black" src="/search.svg" />
           </div>
           <div className="flex flex-col min-[450px]:flex-row items-end gap-6">
-            <ExlCsvDownload data={[""]} order={[""]} orderDetail={[""]} enable={true}/>
+            <ExlCsvDownload data={sessions} order={order.summary} orderDetail={order.detail} enable={true}/>
             <Paginator
               data={displaySessions}
               limit={6}
