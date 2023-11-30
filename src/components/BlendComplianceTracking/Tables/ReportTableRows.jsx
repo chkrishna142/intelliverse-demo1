@@ -122,7 +122,7 @@ const ReportTableRows = () => {
           20 Nov ‘23
         </Td>
         <Td p={"8px"} textAlign={"center"}>
-          A 6pm - 2pm
+          A 6am - 2pm
         </Td>
         <Td p={"8px"} textAlign={"center"}>
           19
