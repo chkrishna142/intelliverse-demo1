@@ -9,9 +9,9 @@ import { baseURL } from "../../..";
 
 const TransactionHistory = () => {
   const [alertsChanging, setAlertsChanging] = useState(false);
-  const authToken = '03ad51d2-2154-41a2-a673-bd2ae52509d9'
+  const authToken = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
   // const [dummyData, setDummyData] = useState([
-  //   { 
+  //   {
   //     id:1,
   //     date: "15 Nov '23",
   //     time: "12:30",
@@ -27,7 +27,7 @@ const TransactionHistory = () => {
   //     tokens: "20",
   //     balance: "20",
   //   },
-  //   { 
+  //   {
   //     id:3,
   //     date: "15 Nov '23",
   //     time: "12:30",
@@ -84,12 +84,14 @@ const TransactionHistory = () => {
   //     balance: "20",
   //   }
   // ]);
-  const [tableData,setTableData] = useState([])
+  const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const navigate = useNavigate();
-  const [currentBalance,SetCurrentBalance] = useState("")
+  const [currentBalance, SetCurrentBalance] = useState("");
   const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() -30 *  24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
+    new Date(
+      new Date().getTime() - 30 * 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000
+    )
       .toISOString()
       .slice(0, 10)
   );
@@ -99,7 +101,7 @@ const TransactionHistory = () => {
       .toISOString()
       .slice(0, 10)
   );
-   
+
   const [fromTimeInMs, setFromTimeInMs] = useState(Date.parse(fromTime));
   const [toTimeInMs, setToTimeInMs] = useState(Date.parse(toTime));
 
@@ -107,10 +109,10 @@ const TransactionHistory = () => {
     setAlertsChanging(false);
     setFromTimeInMs(Date.parse(fromTime));
     setToTimeInMs(Date.parse(toTime));
-    console.log("fromTime",fromTime)
-  console.log("toTime",toTime)
-    console.log("fromTimeInMs",fromTimeInMs)
-  console.log("toTimeInMs",toTimeInMs)
+    console.log("fromTime", fromTime);
+    console.log("toTime", toTime);
+    console.log("fromTimeInMs", fromTimeInMs);
+    console.log("toTimeInMs", toTimeInMs);
   };
 
   const handleClickHistory = () => {
@@ -125,7 +127,7 @@ const TransactionHistory = () => {
     handleClick();
     fetchTransactionHistory();
     fetchCurrentBalance();
-  }, [fromTime,toTime,fromTimeInMs,toTimeInMs]);
+  }, [fromTime, toTime, fromTimeInMs, toTimeInMs]);
 
   const handleAdvisorHistory = () => {
     navigate("/community/advisor/history");
@@ -133,15 +135,18 @@ const TransactionHistory = () => {
 
   const fetchTransactionHistory = async () => {
     try {
-      const response = await axios.get(baseURL + 'ripiktoken/transactions/100', {
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': authToken,
-        },
-      });
-      
-      setTableData(response.data.reverse())
+      const response = await axios.get(
+        baseURL + "ripiktoken/transactions/100",
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": authToken,
+          },
+        }
+      );
+
+      setTableData(response.data.reverse());
     } catch (e) {
       console.error(e);
     }
@@ -149,20 +154,20 @@ const TransactionHistory = () => {
 
   const fetchCurrentBalance = async () => {
     try {
-      const response = await axios.get(baseURL + 'ripiktoken/balance', {
-        credentials: 'same-origin',
+      const response = await axios.get(baseURL + "ripiktoken/balance", {
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': authToken,
+          "Content-Type": "application/json",
+          "X-Auth-Token": authToken,
         },
       });
-    
+
       SetCurrentBalance(response.data.tokenBalance);
     } catch (e) {
       console.error(e);
     }
   };
-  
+
   return (
     <div className="mt-[3vh]">
       <div className="flex justify-start items-center w-full gap-2">
@@ -242,7 +247,9 @@ const TransactionHistory = () => {
 
           {/* Transaction History Table */}
 
-          <TransactionHistoryTable tableData={displayData} />
+          {displayData && displayData.length != 0 && (
+            <TransactionHistoryTable tableData={displayData} />
+          )}
 
           <div className="md:pb-0 pb-10 flex items-center gap-4 mt-2">
             <div
