@@ -60,7 +60,19 @@ const UserMgmt = () => {
           "X-Auth-Token": auth,
         },
       });
-      setUsers(response?.data);
+
+      const sortedUsers = [...response?.data]; // Create a copy to avoid modifying the original data
+      sortedUsers.sort((a, b) => {
+        const dateA = new Date(a.createdat);
+        const dateB = new Date(b.createdat);
+
+        // Compare timestamps in descending order (newest first)
+        return dateB - dateA;
+      });
+
+      console.log("soreted users", sortedUsers);
+      setUsers(sortedUsers);
+
       console.log("users", response.data);
     } catch (err) {
       console.log(err);
@@ -123,7 +135,7 @@ const UserMgmt = () => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState("");
-  const toast = useToast()
+  const toast = useToast();
 
   const deleteUser = async (userID) => {
     try {
@@ -151,7 +163,7 @@ const UserMgmt = () => {
       console.error(err);
     }
   };
-  
+
   useEffect(() => {
     // Enable the button if email and name are not empty
     setDisabled(!(userEmail && fullName));
@@ -165,15 +177,12 @@ const UserMgmt = () => {
   };
 
   const patchUser = async () => {
-
     // Validate email and name before editing user details
     if (!userEmail || !isValidEmail(userEmail) || !fullName) {
       // Display an error message or handle it as per your UI/UX
       setError("Please enter a valid email and name.");
       return;
     }
-
-  
 
     // Clear any previous error
     setError("");
@@ -243,17 +252,17 @@ const UserMgmt = () => {
     setDisplayUsers(temp);
   }, [search, users]);
 
-  const [sortOption, setSortOption] = useState(0);
+  // const [sortOption, setSortOption] = useState(0);
 
-  useEffect(() => {
-    let temp = users;
-    if (sortOption === 0 && users) {
-      temp.sort((a, b) => a.username.localeCompare(b.username));
-      console.log(temp);
-      setUsers(temp);
-      setDisplayUsers(temp);
-    }
-  }, [sortOption, users]);
+  // useEffect(() => {
+  //   let temp = users;
+  //   if (sortOption === 0 && users) {
+  //     temp.sort((a, b) => a.username.localeCompare(b.username));
+  //     console.log(temp);
+  //     setUsers(temp);
+  //     setDisplayUsers(temp);
+  //   }
+  // }, [sortOption, users]); 
 
   return (
     <>
@@ -424,7 +433,7 @@ const UserMgmt = () => {
               </div> */}
               </div>
               {/* Display error message if there is any */}
-          {error && <div className="text-red-500 mt-1">{error}</div>}
+              {error && <div className="text-red-500 mt-1">{error}</div>}
             </Flex>
           </ModalBody>
           <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
@@ -439,24 +448,24 @@ const UserMgmt = () => {
               Save
             </button> */}
             <Button
-            isDisabled={disabled} // Disable the button if there is an error
-            onClick={() => {
-              patchUser();
-              // onCloseE();
-            }}
-            bg="#084298"
-            color="white"
-            size="sm"
-            height="10"
-            px="7"
-            py="2"
-            rounded="md"
-            mb="5"
-            mr="3"
-            _hover={{bg:"#084298",color:"white"}}
-          >
-            Save
-          </Button>
+              isDisabled={disabled} // Disable the button if there is an error
+              onClick={() => {
+                patchUser();
+                // onCloseE();
+              }}
+              bg="#084298"
+              color="white"
+              size="sm"
+              height="10"
+              px="7"
+              py="2"
+              rounded="md"
+              mb="5"
+              mr="3"
+              _hover={{ bg: "#084298", color: "white" }}
+            >
+              Save
+            </Button>
             <button
               onClick={() => {
                 deleteUser(selectedUser?.userid);
