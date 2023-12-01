@@ -107,7 +107,7 @@ function App() {
   useEffect(() => {
     setAuth(localStorage.getItem("auth_token"));
     setEmail(localStorage.getItem("email"));
-    GetLocation(auth);
+    if(login)GetLocation(auth);
   }, [login]);
 
   return (
