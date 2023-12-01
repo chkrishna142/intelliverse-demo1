@@ -10,6 +10,7 @@ import {
   ModalCloseButton,
   ModalContent,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 import axios, { Axios } from "axios";
 import { baseURL } from "../../..";
@@ -108,6 +109,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
   const [role, setRole] = useState("USER");
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState("");
+  const toast = useToast()
 
   useEffect(() => {
     // Enable the button if email and name are not empty
@@ -120,7 +122,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  
+
   const addNewUser = async () => {
     // Validate email and name before adding a new user
     if (!emailID || !isValidEmail(emailID) || !fullName) {
@@ -130,7 +132,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
 
     // Clear any previous error
     setError("");
-
+    
     try {
       let data = JSON.stringify({
         username: fullName,
@@ -160,9 +162,28 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
 
       if (response.status === 200) {
         fetchUsers();
+        setEmailID("")
+        setFullName("")
+        setContact("")
+        setRole("USER")
+        onClose()
+        toast({
+          title: `New User has been added successfully`,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
       }
     } catch (err) {
       console.error(err);
+      toast({
+        title: `Unable to add this user`,
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
     }
   };
 
@@ -239,18 +260,29 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
               </div>
             </div>
           </Flex>
+          {/* Display error message if there is any */}
+          {error && <div className="text-red-500 mt-1">{error}</div>}
         </ModalBody>
         <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
-          <button
+          <Button
+            isDisabled={disabled} // Disable the button if there is an error
             onClick={() => {
               addNewUser();
-              onClose();
+              // onClose();
             }}
-            className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
-            mr={3}
+            bg="#084298"
+            color="white"
+            size="sm"
+            height="10"
+            px="7"
+            py="2"
+            rounded="md"
+            mb="5"
+            mr="3"
+            _hover={{bg:"#084298",color:"white"}}
           >
             Save
-          </button>
+          </Button>
           <button
             onClick={() => {
               onClose();
