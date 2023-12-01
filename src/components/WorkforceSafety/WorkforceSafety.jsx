@@ -1,6 +1,6 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import Feed from "./Tabs/Feed";
 import Alerts from "./Tabs/Alerts";
 import Report from "./Tabs/Report";
@@ -32,7 +32,15 @@ const WorkforceSafety = () => {
           src="https://static.vecteezy.com/system/resources/previews/021/671/856/original/asian-paints-logo-free-png.png"
         />
       </div>
-      <div className="flex justify-between mb-3 mt-6">
+      <div className="flex justify-start gap-2 items-center mb-3 mt-6">
+      <Link
+          to={`/vision/workforceMonitoring/${param.material}`}
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <img src="/backtick.svg" />
+        </Link>
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
           {Capitalize("raw material sampling")}
         </p>

@@ -164,18 +164,42 @@ const Sidebar = () => {
                       Sizing Tool
                     </div>
                   </Link>
-                  <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-12 flex items-center  font-light">
-                    Process Monitoring
-                  </div>
-                  <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
-                    Quality Tracking / Monitoring
-                  </div>
-                  <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-12 flex items-center  font-light">
-                    Workforce Monitoring
-                  </div>
-                  <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
+                  <Link to="/vision/ProcessMonitoring">
+                    <div
+                      className={
+                        location.pathname.includes('/vision/ProcessMonitoring')
+                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
+                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                      }
+                    >
+                      Flare/Flame Monitoring
+                    </div>
+                  </Link>
+                  <Link to="/vision/qualityTracking">
+                    <div
+                      className={
+                        location.pathname.includes('/vision/qualityTracking')
+                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
+                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                      }
+                    >
+                      Quality Tracking / Monitoring
+                    </div>
+                  </Link>
+                  <Link to="/vision/workforceMonitoring">
+                    <div
+                      className={
+                        location.pathname.includes('/vision/workforceMonitoring')
+                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
+                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                      }
+                    >
+                      Workforce Monitoring
+                    </div>
+                  </Link>
+                  {/* <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
                     Automate Data Digitization
-                  </div>
+                  </div> */}
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem className="border-none -mt-4">

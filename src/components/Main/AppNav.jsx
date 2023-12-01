@@ -26,7 +26,7 @@ const AppNav = () => {
                                         <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
                                             <div className='w-full flex justify-center '><img className='mt-0 h-20 w-20 p-3 mt-1' src="/qty.svg" /></div>
                                         </div>
-                                        <div className='mt-4 text-[10px] flex justify-center h-10 w-20'><p className='font-bold text-[#024D87] text-center'>Process Monitoring</p></div>
+                                        <div className='mt-4 text-[10px] flex justify-center h-10 w-20'><p className='font-bold text-[#024D87] text-center'>Flare/Flame Monitoring</p></div>
                                     </div>
                                 </Link>
                                 <Link to="/vision/qualityTracking">
@@ -49,7 +49,7 @@ const AppNav = () => {
                                         <div className='mt-4 flex text-[10px] justify-center h-10 w-20 '><p className='font-bold text-[#024D87] text-center'>Workforce Monitoring</p></div>
                                     </div>
                                 </Link>
-                                <Link to="/vision/datadigitization">
+                                {/* <Link to="/vision/datadigitization">
                                     <div onClick={() => setBar(false)}>
                                         <div className='w-20 h-24 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer '>
 
@@ -58,7 +58,7 @@ const AppNav = () => {
                                         </div>
                                         <div className='mt-4 flex text-[10px] justify-center h-10 w-20 '><p className='font-bold text-[#024D87] text-center'>Automate Data Digitization</p></div>
                                     </div>
-                                </Link>
+                                </Link> */}
                             </div>
                             <div className="mt-4 mb-4 w-full h-[1px] bg-[#AAC3D6] "></div>
                             <div className="text-md text-[#024D87] font-bold ml-3">Scheduling</div>
