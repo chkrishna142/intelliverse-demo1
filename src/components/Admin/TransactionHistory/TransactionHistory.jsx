@@ -209,7 +209,7 @@ const TransactionHistory = () => {
           </button>
         </div>
         <div className="lg:pl-6 flex flex-col gap-4 pr-2">
-          <div className="flex items-center lg:w-[55vw] md:w-[70vw] justify-between">
+          <div className="flex items-center lg:w-[65vw] md:w-[70vw] justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center lg:gap-4 sm:gap-2 px-3 py-1 rounded-sm bg-[#FFFFD8]">
                 <div>

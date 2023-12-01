@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   Flex,
   Button,
@@ -10,10 +10,10 @@ import {
   ModalCloseButton,
   ModalContent,
   Spinner,
-} from '@chakra-ui/react';
-import axios, { Axios } from 'axios';
-import { baseURL } from '../../..';
-import NavContext from '../../NavContext';
+} from "@chakra-ui/react";
+import axios, { Axios } from "axios";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
 
 const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
   const { auth } = useContext(NavContext);
@@ -25,12 +25,12 @@ const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
       });
 
       let config = {
-        method: 'delete',
+        method: "delete",
         maxBodyLength: Infinity,
-        url: 'https://backend-ripik.com/api/iam/users',
+        url: "https://backend-ripik.com/api/iam/users",
         headers: {
-          'x-auth-token': auth,
-          'Content-Type': 'application/json',
+          "x-auth-token": auth,
+          "Content-Type": "application/json",
         },
         data: data,
       };
@@ -50,7 +50,7 @@ const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'} width={740}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size={"sm"} width={740}>
       <ModalOverlay />
       <ModalContent>
         <div className="text-white w-full h-10 flex bg-[#E46962] font-semibold justify-center items-center rounded-t-md">
@@ -99,34 +99,57 @@ const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
 };
 
 const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
-  const [fullName, setFullName] = useState('');
-  const [emailID, setEmailID] = useState('');
-  const [contact, setContact] = useState('');
+  const [fullName, setFullName] = useState("");
+  const [emailID, setEmailID] = useState("");
+  const [contact, setContact] = useState("");
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
   const { auth } = useContext(NavContext);
-  const [role, setRole] = useState('USER');
+  const [role, setRole] = useState("USER");
+  const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState("");
 
+  useEffect(() => {
+    // Enable the button if email and name are not empty
+    setDisabled(!(emailID && fullName));
+  }, [emailID, fullName]);
+
+  // Function to validate email using regex
+  const isValidEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+  
   const addNewUser = async () => {
+    // Validate email and name before adding a new user
+    if (!emailID || !isValidEmail(emailID) || !fullName) {
+      setError("Please enter a valid email and name.");
+      return;
+    }
+
+    // Clear any previous error
+    setError("");
+
     try {
       let data = JSON.stringify({
         username: fullName,
         fullname: fullName,
-        jobtitle: '',
+        jobtitle: "",
         email: emailID,
-        department: '',
-        location: '',
+        department: "",
+        location: "",
         phoneNumber: contact,
         services: [],
       });
 
       let config = {
-        method: 'post',
+        method: "post",
         maxBodyLength: Infinity,
-        url: baseURL + 'iam/adduser',
+        url: baseURL + "iam/adduser",
         headers: {
-          'x-auth-token': auth,
-          'Content-Type': 'application/json',
+          "x-auth-token": auth,
+          "Content-Type": "application/json",
         },
         data: data,
       };
@@ -144,7 +167,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size={'sm'} width={740}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered size={"sm"} width={740}>
       <ModalOverlay />
       <ModalContent>
         <div className="text-white w-full h-10 flex bg-[#2660B6] font-semibold justify-center items-center rounded-t-md">
@@ -152,7 +175,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
         </div>
         {/* <ModalCloseButton className="mt-2" color={'white'} /> */}
         <ModalBody className="mt-6">
-          <Flex flexDirection={'column'} gap={'30px'}>
+          <Flex flexDirection={"column"} gap={"30px"}>
             <FormControl className="!h-12">
               <div className="text-xs text-[#2660B6] mb-2 font-semibold">
                 Full Name
@@ -175,7 +198,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
             </FormControl>
             <FormControl className="!h-12">
               <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                Phone Number{' '}
+                Phone Number{" "}
                 <span className="text-[#CAC5CD] text-xs">(optional)</span>
               </div>
               <input
@@ -192,9 +215,9 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
                 onChange={(e) => setRole(e.target.value)}
                 className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
               >
-                <option value={'USER'}>Regular</option>
-                <option value={'ADMIN'}>Admin</option>
-                <option value={'CXO'}>CXO</option>
+                <option value={"USER"}>Regular</option>
+                <option value={"ADMIN"}>Admin</option>
+                <option value={"CXO"}>CXO</option>
               </select>
               {/* <Input placeholder="Enter Your Name" /> */}
             </FormControl>
