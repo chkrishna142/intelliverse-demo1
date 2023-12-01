@@ -1,7 +1,7 @@
 import MaterialCard from "./MaterialCard";
 import NavContext from "../components/NavContext";
 import { baseURL, bseURL } from "../index";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ const useCase = {
   ProcessMonitoring: ["Colour scheme analysis"],
   qualityTracking: ["Counting and Tracking", "Quality Check"],
   workforceMonitoring: ["Object Monitoring"],
-  datadigitization: ["Automated Data Digitization"],
+  // datadigitization: ["Automated Data Digitization"],
 };
 
 const categoryChecker = (val, match) => {
@@ -86,7 +86,15 @@ const MaterialSelect = () => {
     <div className="h-full">
       <div className="bg-white rounded-xl shadow-md p-4 mt-5 border">
         <div className="flex flex-col gap-5">
-          <div className="flex justify-start mt-2 ml-3 mr-3 mb-3">
+          <div className="flex items-center justify-start mt-2 ml-3 mr-3 mb-3 gap-2">
+            <Link
+              to="/home"
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <img src="/backtick.svg" />
+            </Link>
             <img className="h-6" src="/vision.svg" />
           </div>
           <div className="flex flex-wrap gap-8 items-center ml-3 mb-5">
