@@ -9,6 +9,7 @@ import {
   CircularProgress,
   CircularProgressLabel,
 } from "@chakra-ui/react";
+import TableCell from "./StatusTableCell";
 
 const dummy = [
   {
@@ -95,17 +96,21 @@ const dummy = [
     R6: "0.12",
     Total: "88.54",
   },
+  {
+    Concentrate: "Total",
+    "Blend Ratio": "100%",
+    Bay: "-",
+    Section: "-",
+    "200 MT": "200",
+    R1: "203.22",
+    R2: "202.68",
+    R3: "202.53",
+    R4: "202.06",
+    R5: "203.16",
+    R6: "202.71",
+    Total: "1216.36",
+  },
 ];
-
-const calTotal = (param, data) => {
-  if (param == "Concentrate") return "Total";
-  else if (param == "Blend Ratio") return "100%";
-  else if (["Bay", "Section"].includes(param)) return "-";
-  const sum = data.reduce((a, b) => {
-    return a + parseFloat(b[param]);
-  }, 0);
-  return sum.toFixed(2);
-};
 
 const StatusTable = () => {
   const columns = [
@@ -152,39 +157,25 @@ const StatusTable = () => {
                 fontWeight={600}
                 fontSize={"14px"}
               >
-                {columns.map((x) => {
-                  return /^R\d+$/.test(x) ? (
-                    <Td p={"8px"} textAlign={"center"}>
-                      <CircularProgress value={100} color="#6CA6FC">
-                        <CircularProgressLabel color="gray">
-                          + {item[x]}
-                        </CircularProgressLabel>
-                      </CircularProgress>
-                    </Td>
-                  ) : (
-                    <Td p={"8px"} textAlign={"center"}>
-                      {item[x]}
-                    </Td>
-                  );
-                })}
+                {columns.length > 0 &&
+                  columns.map((x, idx) => {
+                    var percentage =
+                      Math.random() < 0.5
+                        ? 100
+                        : Math.ceil(Math.random() * 99);
+                    return (
+                      <TableCell
+                        data={dummy}
+                        val={x}
+                        item={item}
+                        index={index}
+                        percentage={percentage}
+                      />
+                    );
+                  })}
               </Tr>
             );
           })}
-          {/*Total row*/}
-          <Tr
-            className="!bg-white"
-            color={"#3E3C42"}
-            fontWeight={600}
-            fontSize={"14px"}
-          >
-            {columns.map((x) => {
-              return (
-                <Td p={"8px"} textAlign={"center"}>
-                  {calTotal(x, dummy)}
-                </Td>
-              );
-            })}
-          </Tr>
         </Tbody>
       </Table>
     </TableContainer>
