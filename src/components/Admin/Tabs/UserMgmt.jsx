@@ -20,6 +20,7 @@ import {
   ModalCloseButton,
   ModalContent,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
 import { AddNewModal, DeleteUserModal, EditUserModal } from "./UserModals";
@@ -120,6 +121,9 @@ const UserMgmt = () => {
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
+  const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState("");
+  const toast = useToast()
 
   const deleteUser = async (userID) => {
     try {
@@ -147,8 +151,33 @@ const UserMgmt = () => {
       console.error(err);
     }
   };
+  
+  useEffect(() => {
+    // Enable the button if email and name are not empty
+    setDisabled(!(userEmail && fullName));
+  }, [userEmail, fullName]);
+
+  // Function to validate email using regex
+  const isValidEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const patchUser = async () => {
+
+    // Validate email and name before editing user details
+    if (!userEmail || !isValidEmail(userEmail) || !fullName) {
+      // Display an error message or handle it as per your UI/UX
+      setError("Please enter a valid email and name.");
+      return;
+    }
+
+  
+
+    // Clear any previous error
+    setError("");
+
     const requestData = JSON.stringify({
       fullname: fullName,
       email: userEmail,
@@ -167,10 +196,25 @@ const UserMgmt = () => {
       .then((response) => {
         if (response.status === 200) {
           fetchUsers();
+          onCloseE();
+          toast({
+            title: `User details has been Edited`,
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+          });
         }
       })
       .catch((error) => {
         console.log(error);
+        toast({
+          title: `Unable to edit this user's details`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
       });
   };
 
@@ -379,10 +423,12 @@ const UserMgmt = () => {
                 Send Invitation Email
               </div> */}
               </div>
+              {/* Display error message if there is any */}
+          {error && <div className="text-red-500 mt-1">{error}</div>}
             </Flex>
           </ModalBody>
           <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
-            <button
+            {/* <button
               onClick={() => {
                 patchUser();
                 onCloseE();
@@ -391,7 +437,26 @@ const UserMgmt = () => {
               mr={3}
             >
               Save
-            </button>
+            </button> */}
+            <Button
+            isDisabled={disabled} // Disable the button if there is an error
+            onClick={() => {
+              patchUser();
+              // onCloseE();
+            }}
+            bg="#084298"
+            color="white"
+            size="sm"
+            height="10"
+            px="7"
+            py="2"
+            rounded="md"
+            mb="5"
+            mr="3"
+            _hover={{bg:"#084298",color:"white"}}
+          >
+            Save
+          </Button>
             <button
               onClick={() => {
                 deleteUser(selectedUser?.userid);

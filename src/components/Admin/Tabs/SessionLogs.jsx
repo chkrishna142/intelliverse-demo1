@@ -13,8 +13,7 @@ import SessionLogsTable from "../Tables/SessionLogsTable";
 const SessionLogs = () => {
   const { auth } = useContext(NavContext);
   const [sessions, setSessions] = useState([]);
-  const [order,setOrder] = useState({})
-  
+  const [order, setOrder] = useState({});
 
   const [displaySessions, setDisplaySessions] = useState([]);
   const [avgDuration, setAvgDuration] = useState({
@@ -26,11 +25,11 @@ const SessionLogs = () => {
 
   useEffect(() => {
     apiCall();
-    fetchDownloadApi()
+    fetchDownloadApi();
   }, []);
 
   const apiCall = async () => {
-    const obj = {"header":"logs"}
+    const obj = { header: "logs" };
     try {
       const response = await axios.get(baseURL + "iam/logs", {
         headers: {
@@ -40,26 +39,23 @@ const SessionLogs = () => {
       });
 
       setSessions(response.data.data);
-     
-      
     } catch (error) {
       console.log(error);
     }
   };
 
   const fetchDownloadApi = async () => {
-    const header = {"header":"logs"}
+    const header = { header: "logs" };
     try {
-      const response = await axios.post(baseURL + "iam/header",header, {
+      const response = await axios.post(baseURL + "iam/header", header, {
         headers: {
           "Content-Type": "application/json",
           "X-auth-Token": auth,
         },
       });
 
-    //setting order for downloading data
-      setOrder(response.data)
-      
+      //setting order for downloading data
+      setOrder(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +69,8 @@ const SessionLogs = () => {
             session?.email?.slice(0, search.length)?.toLowerCase() ===
               search?.toLowerCase() ||
             (session?.email?.includes("@") &&
-              session?.email?.split("@")[1]
+              session?.email
+                ?.split("@")[1]
                 ?.slice(0, search.length)
                 ?.toLowerCase() === search?.toLowerCase())
           );
@@ -126,13 +123,14 @@ const SessionLogs = () => {
           ) +
           " min",
         compare: averageDurations[latestWeek - 1]
-          ? (averageDurations[latestWeek] - averageDurations[latestWeek - 1])*100 /
+          ? ((averageDurations[latestWeek] - averageDurations[latestWeek - 1]) *
+              100) /
             averageDurations[latestWeek - 1]
           : 100,
       });
     }
   }, [sessions]);
-  console.log("session",sessions)
+  console.log("session", sessions);
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex flex-col min-[1300px]:flex-row justify-between">
@@ -172,7 +170,14 @@ const SessionLogs = () => {
             <img className="h-5 text-black" src="/search.svg" />
           </div>
           <div className="flex flex-col min-[450px]:flex-row items-end gap-6">
-            {sessions.length > 0 && <ExlCsvDownload data={sessions} order={order.summary} orderDetail={order.detail} enable={true}/>}
+            {sessions.length > 0 && (
+              <ExlCsvDownload
+                data={sessions}
+                order={order.summary}
+                orderDetail={order.detail}
+                enable={true}
+              />
+            )}
             <Paginator
               data={displaySessions}
               limit={6}
@@ -181,9 +186,11 @@ const SessionLogs = () => {
           </div>
         </div>
       </div>
-    <div>
-    <SessionLogsTable rowData={displayData} />
-    </div>
+      <div>
+        {displayData && displayData.length != 0 && (
+          <SessionLogsTable rowData={displayData} />
+        )}
+      </div>
     </div>
   );
 };
