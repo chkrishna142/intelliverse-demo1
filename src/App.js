@@ -41,6 +41,63 @@ import TransactionHistory from "./components/Admin/TransactionHistory/Transactio
 import AiAdvisorHistory from "./components/community/AiAdvisorHistory";
 import AiExpertHistory from "./components/community/AiExpertHistory";
 import AskAnExpertHistory from "./components/community/AskAnExpertHistory";
+import axios from "axios";
+import { baseURL } from ".";
+
+const GetLocation = (auth) => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const params = {
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+          apiKey: "f001a33b39864ec595b55de89431c1fb",
+        };
+        await axios
+          .get("https://api.geoapify.com/v1/geocode/reverse", {
+            params: params,
+          })
+          .then(async (response) => {
+            let data = response.data?.features[0]?.properties;
+            console.log(response.data.features[0].properties, "location");
+            const reqBody = JSON.stringify({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+              state: data?.state,
+              city: data?.city,
+              country: data?.country,
+              address_line1: data?.address_line1,
+              address_line2: data?.address_line2,
+              postcode: data?.postcode,
+              state_code: data?.state_code,
+              county: data?.county,
+            });
+            axios
+              .post(baseURL + "iam/sessionlog", reqBody, {
+                headers: {
+                  "Content-Type": "application/json",
+                  "X-Auth-Token": auth,
+                },
+              })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+      (error) => {
+        console.error("Error getting location:", error.message);
+      }
+    );
+  } else {
+    console.error("Geolocation is not supported by your browser");
+  }
+};
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem("logged_in")); // used on Login.jsx to set login provider to true
@@ -50,6 +107,7 @@ function App() {
   useEffect(() => {
     setAuth(localStorage.getItem("auth_token"));
     setEmail(localStorage.getItem("email"));
+    GetLocation(auth);
   }, [login]);
 
   return (
@@ -221,7 +279,6 @@ function App() {
           ) : (
             <Routes>
               <Route path="*" element={<Login />} />
-              
             </Routes>
           )}
         </div>
