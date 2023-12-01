@@ -34,7 +34,15 @@ const ClientSelect = () => {
         <div className="h-full">
             <div className="bg-white rounded-xl shadow-md p-4 mt-5 border">
                 <div className="flex flex-col gap-5">
-                    <div className="flex justify-start mt-3 ml-3 mr-3 mb-3 text-semibold text-2xl">
+                    <div className="flex justify-start mt-3 ml-3 mr-3 mb-3 text-semibold text-2xl gap-2 items-center">
+                    <Link
+                        to={`/vision/${param.category}`}
+                        style={{
+                            textDecoration: "none",
+                        }}
+                    >
+                        <img src="/backtick.svg"/>
+                    </Link>
                         Please choose a client
                     </div>
                     <div className="flex w-full flex-wrap gap-4 ml-3 mb-5">

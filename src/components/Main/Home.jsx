@@ -165,7 +165,7 @@ const Home = ({ state }) => {
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24  p-2' src="/qty.svg" /></div>
                                     {process.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{process?.deployments} Services</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
                                 </div>
-                                <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Process Monitoring</p></div>
+                                <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Flare/Flame Monitoring</p></div>
                             </div>
                             </Link>
                             <Link to={quality.active === true ? "/vision/qualityTracking" : "/bookdemo/qualitymonitoring"} style={{ textDecoration: 'none' }}><div>
@@ -184,7 +184,7 @@ const Home = ({ state }) => {
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Workforce Monitoring</p></div>
                             </div>
                             </Link>
-                            <Link to={ocr.active === true ? "/vision/datadigitization" : "/bookdemo/datadigitization"}><div>
+                            {/* <Link to={ocr.active === true ? "/vision/datadigitization" : "/bookdemo/datadigitization"}><div>
                                 <div className={ocr.active === true ? subscribed : not_subscribed}>
                                     <div className='w-full flex justify-center '><img className='mt-4 h-20 w-24 p-2' src="/automation.svg" /></div>
                                     {ocr.active === true ? <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs flex justify-center'>{ocr?.deployments} Service</div></div> : <div className='w-full flex justify-center text-white text-xs'><div className='bg-[#79767D] px-2 py-1 w-full font-bold text-xs'>Not Subscribed</div></div>}
@@ -197,7 +197,7 @@ const Home = ({ state }) => {
                                     <div className='w-full flex justify-center text-[#024D87]  text-xs'><div className='bg-[#CCEAFF] px-2 py-1 w-full font-bold text-xs'>2 Deployments</div></div>
                                 </div>
                                 <div className='mt-4 flex justify-center h-10 w-28'><p className='font-bold text-[#024D87] text-center'>Automate Data Digitization </p></div>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div> : null}

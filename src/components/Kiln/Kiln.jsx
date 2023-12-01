@@ -1,6 +1,6 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useWindowSize } from "@uidotdev/usehooks";
 import KilnFeed from "./Tabs/KilnFeed";
 import Alerts from "./Tabs/Alerts";
@@ -27,7 +27,15 @@ const Kiln = () => {
       className="pl-5 pr-5  font-poppins flex flex-col rounded-lg"
       style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
-      <div className="flex justify-between mb-3 mt-6">
+      <div className="flex justify-start gap-2 items-center mb-3 mt-6">
+        <Link
+          to={`/vision/ProcessMonitoring/kilnhealth`}
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <img src="/backtick.svg" />
+        </Link>
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
           {Capitalize("kiln Vision")}
         </p>
