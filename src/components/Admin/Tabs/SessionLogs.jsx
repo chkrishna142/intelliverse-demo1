@@ -132,7 +132,7 @@ const SessionLogs = () => {
       });
     }
   }, [sessions]);
-  
+  console.log("session",sessions)
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex flex-col min-[1300px]:flex-row justify-between">
@@ -172,7 +172,7 @@ const SessionLogs = () => {
             <img className="h-5 text-black" src="/search.svg" />
           </div>
           <div className="flex flex-col min-[450px]:flex-row items-end gap-6">
-            <ExlCsvDownload data={displaySessions} order={order.summary} orderDetail={order.detail} enable={true}/>
+            {sessions.length > 0 && <ExlCsvDownload data={sessions} order={order.summary} orderDetail={order.detail} enable={true}/>}
             <Paginator
               data={displaySessions}
               limit={6}

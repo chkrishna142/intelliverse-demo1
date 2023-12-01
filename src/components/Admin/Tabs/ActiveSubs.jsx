@@ -31,7 +31,7 @@ const ActiveSubs = () => {
   const { auth } = useContext(NavContext);
   const toast = useToast();
   const [downloadData,setDownloadData] = useState({})
-
+  const [downloadProp,setDownloadProp] = useState([])
 
   const fetchActiveSubs = async () => {
     try {
@@ -62,7 +62,6 @@ const ActiveSubs = () => {
       //   setActiveSubs(active);
       // }
 
-      setActiveSubs(response.data?.relSubscriptionServices)
       console.log("response.......",response)
       // response.data?.map(item => {
       //   let services = item?.relSubscriptionServices;
@@ -73,13 +72,27 @@ const ActiveSubs = () => {
       //     return serv;
       //   }))
       // })
+      let originalData = response.data?.relSubscriptionServices
+      let extractedData = originalData.map((item) => {
+        return {
+          isActive: item.serv.isActive,
+          servName: item.serv.servName,
+          servCategory: item.serv.servCategory,
+          plantName: item.serv.servDescription,
+          validityStart: new Date(item.validityStart).getTime(),
+          validityEnd: new Date(item.validityEnd).getTime(),
+        };
+      });
+      
+     setDownloadProp(extractedData)
+     setActiveSubs(response.data?.relSubscriptionServices)
 
     } catch (e) {
       console.error(e);
     }
   };
   const fetchDownloadApi = async () => {
-    const header = {"header":"logs"}
+    const header = {"header":"subscribed"}
     try {
       const response = await axios.post(baseURL + "iam/header",header, {
         headers: {
@@ -105,7 +118,7 @@ const ActiveSubs = () => {
   const plants = ['Angul', 'Jamshedpur', 'Goa'];
 
   const order = [''];
-  console.log("subs",activeSubs)
+
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex justify-between w-[80%]">
@@ -116,7 +129,7 @@ const ActiveSubs = () => {
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
         <div className="flex flex-row items-baseline gap-2">
-          <ExlCsvDownload data={[""]} order={[""]} orderDetail={[""]} enable={true}/>
+          {downloadProp.length > 0 && <ExlCsvDownload data={downloadProp} order={downloadData.summary} orderDetail={downloadData.detail} enable={true}/>}
           <Paginator
             data={activeSubs}
             limit={7}
