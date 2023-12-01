@@ -20,6 +20,7 @@ import {
   ModalCloseButton,
   ModalContent,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
 import { AddNewModal, DeleteUserModal, EditUserModal } from "./UserModals";
@@ -34,8 +35,7 @@ import { CSVLink } from "react-csv";
 import UserMngmtTable from "../Tables/userMngmtTable";
 
 const UserMgmt = () => {
-  const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9"
-
+  const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
 
   const dummyData = {
     userName: "Sudhanshu Prasad",
@@ -50,7 +50,7 @@ const UserMgmt = () => {
 
   const [displayData, setDisplayData] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
-  const [downloadData,setDownloadData] = useState({})
+  const [downloadData, setDownloadData] = useState({});
   const fetchUsers = async () => {
     try {
       const response = await axios.get(baseURL + "iam/users", {
@@ -61,24 +61,23 @@ const UserMgmt = () => {
         },
       });
       setUsers(response?.data);
-      console.log("users",response.data)
+      console.log("users", response.data);
     } catch (err) {
       console.log(err);
     }
   };
   const fetchDownloadApi = async () => {
-    const header = {"header":"users"}
+    const header = { header: "users" };
     try {
-      const response = await axios.post(baseURL + "iam/header",header, {
+      const response = await axios.post(baseURL + "iam/header", header, {
         headers: {
           "Content-Type": "application/json",
           "X-auth-Token": auth,
         },
       });
 
-    //setting order for downloading data
-      setDownloadData(response.data)
-      
+      //setting order for downloading data
+      setDownloadData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +121,10 @@ const UserMgmt = () => {
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
-  
+  const [disabled, setDisabled] = useState(true);
+  const [error, setError] = useState("");
+  const toast = useToast()
+
   const deleteUser = async (userID) => {
     try {
       let data = JSON.stringify({
@@ -141,7 +143,7 @@ const UserMgmt = () => {
       };
 
       const response = await axios.request(config);
-      
+
       if (response.status === 200) {
         fetchUsers();
       }
@@ -149,8 +151,33 @@ const UserMgmt = () => {
       console.error(err);
     }
   };
+  
+  useEffect(() => {
+    // Enable the button if email and name are not empty
+    setDisabled(!(userEmail && fullName));
+  }, [userEmail, fullName]);
+
+  // Function to validate email using regex
+  const isValidEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const patchUser = async () => {
+
+    // Validate email and name before editing user details
+    if (!userEmail || !isValidEmail(userEmail) || !fullName) {
+      // Display an error message or handle it as per your UI/UX
+      setError("Please enter a valid email and name.");
+      return;
+    }
+
+  
+
+    // Clear any previous error
+    setError("");
+
     const requestData = JSON.stringify({
       fullname: fullName,
       email: userEmail,
@@ -169,10 +196,25 @@ const UserMgmt = () => {
       .then((response) => {
         if (response.status === 200) {
           fetchUsers();
+          onCloseE();
+          toast({
+            title: `User details has been Edited`,
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top-right",
+          });
         }
       })
       .catch((error) => {
         console.log(error);
+        toast({
+          title: `Unable to edit this user's details`,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
       });
   };
 
@@ -212,7 +254,7 @@ const UserMgmt = () => {
       setDisplayUsers(temp);
     }
   }, [sortOption, users]);
-  
+
   return (
     <>
       <div className="w-full px-2 !font-roboto">
@@ -253,7 +295,14 @@ const UserMgmt = () => {
               <img className="h-5 text-black" src="/search.svg" />
             </div>
             <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
-              <ExlCsvDownload data={displayUsers} order={downloadData?.summary} orderDetail={downloadData?.detail} enable={true} />
+              {displayUsers.length > 0 && (
+                <ExlCsvDownload
+                  data={displayUsers}
+                  order={downloadData?.summary}
+                  orderDetail={downloadData?.detail}
+                  enable={true}
+                />
+              )}
               <Button
                 onClick={() => setIsOpenA(true)}
                 className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
@@ -374,10 +423,12 @@ const UserMgmt = () => {
                 Send Invitation Email
               </div> */}
               </div>
+              {/* Display error message if there is any */}
+          {error && <div className="text-red-500 mt-1">{error}</div>}
             </Flex>
           </ModalBody>
           <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
-            <button
+            {/* <button
               onClick={() => {
                 patchUser();
                 onCloseE();
@@ -386,7 +437,26 @@ const UserMgmt = () => {
               mr={3}
             >
               Save
-            </button>
+            </button> */}
+            <Button
+            isDisabled={disabled} // Disable the button if there is an error
+            onClick={() => {
+              patchUser();
+              // onCloseE();
+            }}
+            bg="#084298"
+            color="white"
+            size="sm"
+            height="10"
+            px="7"
+            py="2"
+            rounded="md"
+            mb="5"
+            mr="3"
+            _hover={{bg:"#084298",color:"white"}}
+          >
+            Save
+          </Button>
             <button
               onClick={() => {
                 deleteUser(selectedUser?.userid);

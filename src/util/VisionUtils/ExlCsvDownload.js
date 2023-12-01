@@ -25,7 +25,7 @@ const ExlCsvDownload = ({ order, data, enable = false, orderDetail = [] }) => {
       data?.forEach((item) => {
         setExportData((prev) => [
           ...prev,
-          fileColumns.map((i) => {
+          fileColumns?.map((i) => {
             return i.toLowerCase().includes("time")
               ? new Date(item[i])
                   .toISOString()
