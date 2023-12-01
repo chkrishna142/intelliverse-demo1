@@ -34,8 +34,7 @@ import { CSVLink } from "react-csv";
 import UserMngmtTable from "../Tables/userMngmtTable";
 
 const UserMgmt = () => {
-  const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9"
-
+  const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
 
   const dummyData = {
     userName: "Sudhanshu Prasad",
@@ -50,7 +49,7 @@ const UserMgmt = () => {
 
   const [displayData, setDisplayData] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
-  const [downloadData,setDownloadData] = useState({})
+  const [downloadData, setDownloadData] = useState({});
   const fetchUsers = async () => {
     try {
       const response = await axios.get(baseURL + "iam/users", {
@@ -61,24 +60,23 @@ const UserMgmt = () => {
         },
       });
       setUsers(response?.data);
-      console.log("users",response.data)
+      console.log("users", response.data);
     } catch (err) {
       console.log(err);
     }
   };
   const fetchDownloadApi = async () => {
-    const header = {"header":"users"}
+    const header = { header: "users" };
     try {
-      const response = await axios.post(baseURL + "iam/header",header, {
+      const response = await axios.post(baseURL + "iam/header", header, {
         headers: {
           "Content-Type": "application/json",
           "X-auth-Token": auth,
         },
       });
 
-    //setting order for downloading data
-      setDownloadData(response.data)
-      
+      //setting order for downloading data
+      setDownloadData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +120,7 @@ const UserMgmt = () => {
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
-  
+
   const deleteUser = async (userID) => {
     try {
       let data = JSON.stringify({
@@ -141,7 +139,7 @@ const UserMgmt = () => {
       };
 
       const response = await axios.request(config);
-      
+
       if (response.status === 200) {
         fetchUsers();
       }
@@ -212,7 +210,7 @@ const UserMgmt = () => {
       setDisplayUsers(temp);
     }
   }, [sortOption, users]);
-  
+
   return (
     <>
       <div className="w-full px-2 !font-roboto">
@@ -253,7 +251,14 @@ const UserMgmt = () => {
               <img className="h-5 text-black" src="/search.svg" />
             </div>
             <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
-              {displayUsers.length > 0 && <ExlCsvDownload data={displayUsers} order={downloadData?.summary} orderDetail={downloadData?.detail} enable={true} />}
+              {displayUsers.length > 0 && (
+                <ExlCsvDownload
+                  data={displayUsers}
+                  order={downloadData?.summary}
+                  orderDetail={downloadData?.detail}
+                  enable={true}
+                />
+              )}
               <Button
                 onClick={() => setIsOpenA(true)}
                 className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"

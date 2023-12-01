@@ -314,9 +314,11 @@ const Sidebar = () => {
                       AI Advisor
                     </div>
                   </Link>
+                  <a href="https://community.ripikintelliverse.com/" target="_blank">
                   <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Community
                   </div>
+                  </a>
                 </AccordionPanel>
               </AccordionItem>
               <AccordionItem className="border-none -mt-4">
