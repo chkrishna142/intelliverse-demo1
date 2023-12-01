@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from "react";
 import {
   Table,
   TableContainer,
@@ -11,35 +11,33 @@ import {
   Tfoot,
   Link,
   Button,
-} from '@chakra-ui/react';
-import axios from 'axios';
-import NavContext from '../../NavContext';
-import { baseURL } from '../../..';
-import Paginator from '../../../util/VisionUtils/Paginator';
-import { useToast } from '@chakra-ui/react';
-import { DownloadIcon } from '@chakra-ui/icons';
-import ExlCsvDownload from '../../../util/VisionUtils/ExlCsvDownload';
-import { CSVLink } from 'react-csv';
-import ActiveSubsTable from '../Tables/ActiveSubsTable';
-
+} from "@chakra-ui/react";
+import axios from "axios";
+import NavContext from "../../NavContext";
+import { baseURL } from "../../..";
+import Paginator from "../../../util/VisionUtils/Paginator";
+import { useToast } from "@chakra-ui/react";
+import { DownloadIcon } from "@chakra-ui/icons";
+import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
+import { CSVLink } from "react-csv";
+import ActiveSubsTable from "../Tables/ActiveSubsTable";
 
 const ActiveSubs = () => {
- 
-  const activeSubsDataList = []
-  const [activeSubs,setActiveSubs] = useState([])
+  const activeSubsDataList = [];
+  const [activeSubs, setActiveSubs] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const { auth } = useContext(NavContext);
   const toast = useToast();
-  const [downloadData,setDownloadData] = useState({})
-  const [downloadProp,setDownloadProp] = useState([])
+  const [downloadData, setDownloadData] = useState({});
+  const [downloadProp, setDownloadProp] = useState([]);
 
   const fetchActiveSubs = async () => {
     try {
-      const response = await axios.get(baseURL + 'fetch/subscribed', {
-        credentials: 'same-origin',
+      const response = await axios.get(baseURL + "fetch/subscribed", {
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': auth,
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
         },
       });
       // console.log(response.data, 'Active subscriptions1');
@@ -62,7 +60,7 @@ const ActiveSubs = () => {
       //   setActiveSubs(active);
       // }
 
-      console.log("response.......",response)
+      console.log("response.......", response);
       // response.data?.map(item => {
       //   let services = item?.relSubscriptionServices;
 
@@ -72,7 +70,7 @@ const ActiveSubs = () => {
       //     return serv;
       //   }))
       // })
-      let originalData = response.data?.relSubscriptionServices
+      let originalData = response.data?.relSubscriptionServices;
       let extractedData = originalData.map((item) => {
         return {
           isActive: item.serv.isActive,
@@ -83,27 +81,25 @@ const ActiveSubs = () => {
           validityEnd: new Date(item.validityEnd).getTime(),
         };
       });
-      
-     setDownloadProp(extractedData)
-     setActiveSubs(response.data?.relSubscriptionServices)
 
+      setDownloadProp(extractedData);
+      setActiveSubs(response.data?.relSubscriptionServices);
     } catch (e) {
       console.error(e);
     }
   };
   const fetchDownloadApi = async () => {
-    const header = {"header":"subscribed"}
+    const header = { header: "subscribed" };
     try {
-      const response = await axios.post(baseURL + "iam/header",header, {
+      const response = await axios.post(baseURL + "iam/header", header, {
         headers: {
           "Content-Type": "application/json",
           "X-auth-Token": auth,
         },
       });
 
-    //setting order for downloading data
-      setDownloadData(response.data)
-      
+      //setting order for downloading data
+      setDownloadData(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -113,11 +109,9 @@ const ActiveSubs = () => {
     fetchDownloadApi();
   }, []);
 
+  const plants = ["Angul", "Jamshedpur", "Goa"];
 
-  
-  const plants = ['Angul', 'Jamshedpur', 'Goa'];
-
-  const order = [''];
+  const order = [""];
 
   return (
     <div className="w-full px-2 !font-roboto">
@@ -129,7 +123,14 @@ const ActiveSubs = () => {
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
         <div className="flex flex-row items-baseline gap-2">
-          {downloadProp.length > 0 && <ExlCsvDownload data={downloadProp} order={downloadData.summary} orderDetail={downloadData.detail} enable={true}/>}
+          {downloadProp.length > 0 && (
+            <ExlCsvDownload
+              data={downloadProp}
+              order={downloadData.summary}
+              orderDetail={downloadData.detail}
+              enable={true}
+            />
+          )}
           <Paginator
             data={activeSubs}
             limit={7}
@@ -137,7 +138,9 @@ const ActiveSubs = () => {
           />
         </div>
       </div>
-      <ActiveSubsTable activeSubs={displayData}/>
+      {displayData && displayData.length != 0 && (
+        <ActiveSubsTable activeSubs={displayData} />
+      )}
     </div>
   );
 };

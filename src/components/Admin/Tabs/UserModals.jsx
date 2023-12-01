@@ -165,7 +165,6 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
         setEmailID("")
         setFullName("")
         setContact("")
-        setRole("USER")
         onClose()
         toast({
           title: `New User has been added successfully`,
