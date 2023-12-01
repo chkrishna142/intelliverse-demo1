@@ -253,7 +253,7 @@ const UserMgmt = () => {
               <img className="h-5 text-black" src="/search.svg" />
             </div>
             <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
-              <ExlCsvDownload data={displayUsers} order={downloadData?.summary} orderDetail={downloadData?.detail} enable={true} />
+              {displayUsers.length > 0 && <ExlCsvDownload data={displayUsers} order={downloadData?.summary} orderDetail={downloadData?.detail} enable={true} />}
               <Button
                 onClick={() => setIsOpenA(true)}
                 className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
