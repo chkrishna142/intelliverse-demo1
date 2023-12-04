@@ -266,12 +266,20 @@ const AskAnExpertHistory = () => {
                 value={selectedRange}
               >
                 <option
-                  key="Last 7 days"
+                  key="All Time"
                   value={0}
                   className="bg-white hover:bg-blue-200"
                 >
                   All time
                 </option>
+                <option
+                  key="Last Seven Days"
+                  value={0}
+                  className="bg-white hover:bg-blue-200"
+                >
+                  Last Seven Days
+                </option>
+                
                 <option
                   key="This Month"
                   value={1}
@@ -305,7 +313,7 @@ const AskAnExpertHistory = () => {
                   value={5}
                   className="bg-white hover:bg-blue-200"
                 >
-                  Custom
+                  Custom Range
                 </option>
               </Select>
             </div>
@@ -436,6 +444,16 @@ const AskAnExpertHistory = () => {
               <p className="text-[#605D64]">All</p>
             </button>
             <button
+              className={`w-[120px] flex justify-center items-center ${
+                changingbutton == "Inprogress"
+                  ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
+                  : "border-[#EBEBEB]"
+              } border-[2px]  rounded-full px-[16px] py-[8px] `}
+              onClick={()=>handleStatus("Inprogress")}
+            >
+              <p className="text-[#605D64]">In progress</p>
+            </button>
+            <button
               className={`w-[80px] flex justify-center items-center ${
                 changingbutton == "Pending"
                   ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
@@ -445,16 +463,7 @@ const AskAnExpertHistory = () => {
             >
               <p className="text-[#605D64]">Pending</p>
             </button>
-            <button
-              className={`w-[150px] flex justify-center items-center ${
-                changingbutton == "Inprogress"
-                  ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
-                  : "border-[#EBEBEB]"
-              } border-[2px]  rounded-full px-[16px] py-[8px] `}
-              onClick={()=>handleStatus("Inprogress")}
-            >
-              <p className="text-[#605D64]">In progress</p>
-            </button>
+            
             <button
               className={`w-[100px] flex justify-center items-center ${
                 changingbutton == "Answered"
