@@ -22,7 +22,10 @@ const SessionLogsTable = ({ rowData }) => {
               day: "numeric",
             }) +
             " " +
-            new Date(params.row.loginTime).toLocaleTimeString()
+            new Date(params.row.loginTime).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit'
+            })
           : "",
     },
     {
