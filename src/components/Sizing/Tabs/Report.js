@@ -79,6 +79,12 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
+  useEffect(() => {
+    if(!disable & selectedPlant != 'All Plants'){
+      setSelectedCam('All Cams')
+    }
+  },[selectedPlant])
+
   return (
     <div className="relative flex flex-col">
       <div className="absolute left-0 right-0 flex justify-center">

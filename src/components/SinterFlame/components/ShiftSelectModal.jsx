@@ -24,30 +24,82 @@ import {
 import OperatorSelect from "./OperatorSelect";
 import { useWindowSize } from "@uidotdev/usehooks";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { baseURL } from "../../../index";
+import NavContext from "../../NavContext";
 
-const ShiftSelectModal = ({ openModal, closeModal }) => {
+const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
   const columns = [
     "Shift C (10PM to 6AM)",
     "Shift A (6AM to 2PM)",
     "Shift B (2PM to 10PM)",
   ];
+  const { auth } = useContext(NavContext);
   const [dataChanging, setDataChanging] = useState(false);
+  const [data, setData] = useState([]);
   const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0]
+    new Date(new Date()).toISOString().split("T")[0]
   );
   const [toTime, setToTime] = useState(
-    new Date(new Date().getTime() + 5.5 * 60 * 60 * 1000)
+    new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000)
       .toISOString()
       .split("T")[0]
   );
   const size = useWindowSize();
 
-  const handleClick = () => {
-    console.log("clicked");
+  const apiCall = async () => {
+    const requestBody = JSON.stringify({
+      clientId: clientId,
+      useCase: "SINTERFLAME",
+      plantName: "chanderia",
+      type: "day",
+      startDate: new Date(fromTime).getTime(),
+      endDate: new Date(toTime).getTime() + 23.99*60*60*1000,
+    });
+    try {
+      const response = await axios.post(
+        baseURL + "vision/v2/processMonitoring/workerInfo/shift/get/",
+        requestBody,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      setDataChanging(false);
+      setData(response.data);
+    } catch (error) {
+      setDataChanging(false);
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    const fromTimeDate = new Date(fromTime);
+    const currentDate = new Date();
+
+    fromTimeDate.setHours(0, 0, 0, 0);
+    currentDate.setHours(0, 0, 0, 0);
+
+    if (fromTimeDate < currentDate) {
+      setToTime(
+        new Date(new Date(fromTime).getTime() + 7 * 24 * 60 * 60 * 1000)
+          .toISOString()
+          .split("T")[0]
+      );
+    }
+  }, [fromTime]);
+
+  const handleClick = () => {
+    setDataChanging(true);
+    apiCall();
+  };
+
+  useEffect(() => {
+    handleClick();
+  }, []);
 
   return (
     <>
@@ -84,6 +136,22 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                     type="date"
                     setDateTime={setToTime}
                     value={toTime}
+                    min={fromTime}
+                    max={
+                      new Date(fromTime).getDate() >= new Date().getDate()
+                        ? new Date(
+                            new Date(fromTime).getTime() +
+                              30 * 24 * 60 * 60 * 1000
+                          )
+                            .toISOString()
+                            .split("T")[0]
+                        : new Date(
+                            new Date(fromTime).getTime() +
+                              7 * 24 * 60 * 60 * 1000
+                          )
+                            .toISOString()
+                            .split("T")[0]
+                    }
                   />
                 </div>
                 <button
@@ -142,7 +210,7 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {[...Array(5)].map((val, idx) => {
+                      {data.map((val, idx) => {
                         return (
                           <Tr
                             key={idx}
@@ -155,9 +223,11 @@ const ShiftSelectModal = ({ openModal, closeModal }) => {
                               fontWeight={400}
                               borderX={"1px solid #D3D3D3"}
                             >
-                              {new Date().toLocaleDateString()}
+                              {new Date(
+                                val?.startTs * 1000
+                              ).toLocaleDateString()}
                             </Td>
-                            <OperatorSelect />
+                            <OperatorSelect data={val} clientId={clientId} />
                           </Tr>
                         );
                       })}

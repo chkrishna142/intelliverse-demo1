@@ -179,6 +179,12 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   };
 
   useEffect(() => {
+    if(!disable & selectedPlant != 'All Plants'){
+      setSelectedCam('All Cams')
+    }
+  },[selectedPlant])
+
+  useEffect(() => {
     handleClick();
   }, []);
   return (

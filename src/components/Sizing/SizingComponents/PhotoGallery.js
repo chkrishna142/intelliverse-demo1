@@ -62,6 +62,12 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
+  useEffect(() => {
+    if(!disable){
+      setSelectedCam(plantCamMap[selectedPlant][0])
+    }
+  },[selectedPlant])
+
   return (
     <div className="bg-white pl-6 pr-6 flex flex-col gap-6">
       <div className="flex pt-5 gap-4 items-center overflow-x-auto">

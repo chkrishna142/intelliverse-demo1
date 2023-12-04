@@ -269,7 +269,7 @@ const Feed = () => {
           {bays.map((val) => {
             return (
               <div
-                className={`rounded-[32px] px-4 py-[6px] text-[#605D64] text-base cursor-pointer ${
+                className={`rounded-[32px] px-4 py-[6px] text-[#605D64] text-base cursor-pointer whitespace-nowrap ${
                   selectedBay != val
                     ? "bg-white border border-gray-300"
                     : "bg-[#e2edfe] border border-[#6CA6FC]"
@@ -405,11 +405,11 @@ const Feed = () => {
         </>
       ) : (
         <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col min-[815px]:flex-row items-start min-[815px]:items-center gap-4">
             <p className="text-[#605D64] text-lg font-medium">
               Weighment Inspection Protocol
             </p>
-            <div className="px-4 py-1 rounded-md bg-[#FAFAFA] border border-[#EBEBEB] flex gap-7 items-center">
+            <div className="px-4 py-1 rounded-md bg-[#FAFAFA] border border-[#EBEBEB] flex gap-7 items-center whitespace-nowrap">
               <p className="text-[#605D64] text-sm flex gap-2 items-center">
                 Date{" "}
                 <p className="text-[#3E3C42] text-base font-medium">
@@ -422,10 +422,10 @@ const Feed = () => {
               </p>
             </div>
           </div>
-          <div className="flex gap-8 items-start">
-            <div className="grid grid-cols-1 h-full gap-4">
+          <div className="flex flex-col-reverse lg:flex-row gap-8 items-start h-auto">
+            <div className="flex flex-col sm:flex-row lg:flex-col justify-between h-full gap-4">
               {[...Array(2)].map((i,idx) => {
-                return <WeighmentCard reason={idx}/>
+                return <WeighmentCard reason={idx} num={idx+1}/>
               })}
             </div>
             <div className="p-4 rounded-lg flex flex-col gap-2 bg-[#F5F5F5]">
@@ -438,7 +438,7 @@ const Feed = () => {
                   autoPlay
                   loop
                   crossOrigin="anonymous"
-                  className="w-[60vw] lg:w-[40vw] rounded-xl"
+                  className="w-full lg:w-[40vw] rounded-xl"
                 >
                   <source
                     src={
