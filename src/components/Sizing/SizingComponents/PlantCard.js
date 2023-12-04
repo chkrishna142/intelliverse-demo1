@@ -16,17 +16,21 @@ const PlantCard = ({ PlantName, CamData }) => {
   let totalAlerts = [];
   let totalData = [];
   Object.keys(CamData).map((cam) => {
-    if (CamData[cam][0].noCoal !== 1){
+    if (CamData[cam][0].noCoal !== 1) {
       totalAlerts.push(CamData[cam][0]["alertMessages"].length);
-      if(CamData[cam][0]["alertMessages"].length > 0)totalData.push(CamData[cam][0]);
-    }
-    else totalAlerts.push(0);
+      if (CamData[cam][0]["alertMessages"].length > 0)
+        totalData.push(CamData[cam][0]);
+    } else totalAlerts.push(0);
   });
   let sum = totalAlerts.reduce((accumulator, currentValue) => {
     return accumulator + currentValue;
   }, 0);
   return (
-    <div className="flex flex-col bg-white rounded-xl pt-4 gap-1">
+    <div
+      className={`flex flex-col bg-white rounded-xl pt-4 gap-1 col-span-2 ${
+        Object.keys(CamData).length > 1 ? "xl:col-span-2" : "xl:col-span-1"
+      }`}
+    >
       <div className="flex justify-between pl-6 pr-6">
         <p className="text-xl font-medium">{Capitalize(PlantName)}</p>
         {sum !== 0 && (
@@ -45,13 +49,17 @@ const PlantCard = ({ PlantName, CamData }) => {
                 openModal={openModal}
                 closeModal={() => setOpenModal(false)}
                 data={totalData}
-                index = {0}
+                index={0}
               />
             )}
           </div>
         )}
       </div>
-      <div className="grid grid-cols-1  xl:grid-cols-2">
+      <div
+        className={`grid grid-cols-1 xl:grid-cols-${
+          Object.keys(CamData).length > 1 ? "2" : "1"
+        }`}
+      >
         {Object.keys(CamData).map((cam, idx) => {
           return (
             <CamCard

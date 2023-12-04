@@ -124,6 +124,12 @@ const Analytics = ({ plantId, cameraId, disable, plantCamMap }) => {
     }
   }, [typeRef.current, sizeData]);
 
+  useEffect(() => {
+    if(!disable && selectedPlant != 'All Plants'){
+      setSelectedCam('All Cams')
+    }
+  },[selectedPlant])
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col p-6 pt-4 bg-white rounded-xl">

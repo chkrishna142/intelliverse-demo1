@@ -49,7 +49,7 @@ const ClientSelect = () => {
                         {clients?.map((item, index) => {
                             return (
                                 <Link to={`./${item}`} style={{ textDecoration: 'none' }}>
-                                    <div key={index} className="h-32 w-32 border items-center uppercase text-[#024D87] font-bold rounded-md flex justify-center shadow-md hover:bg-gray-100 hover:transition duration-200 cursor-pointer">
+                                    <div key={index} className="h-32 w-32 border items-center uppercase text-[#024D87] font-bold rounded-md flex justify-center shadow-md hover:bg-gray-100 hover:transition duration-200 cursor-pointer text-center">
                                         {item}
                                     </div>
                                 </Link>
