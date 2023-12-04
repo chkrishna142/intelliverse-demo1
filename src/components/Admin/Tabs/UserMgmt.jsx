@@ -61,7 +61,7 @@ const UserMgmt = () => {
         },
       });
 
-      const sortedUsers = [...response?.data]; // Create a copy to avoid modifying the original data
+      const sortedUsers = [...response?.data]; 
       sortedUsers.sort((a, b) => {
         const dateA = new Date(a.createdat);
         const dateB = new Date(b.createdat);
@@ -70,10 +70,8 @@ const UserMgmt = () => {
         return dateB - dateA;
       });
 
-      console.log("soreted users", sortedUsers);
       setUsers(sortedUsers);
-
-      console.log("users", response.data);
+      
     } catch (err) {
       console.log(err);
     }

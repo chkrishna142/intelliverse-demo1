@@ -37,8 +37,13 @@ const SessionLogs = () => {
           "X-auth-Token": auth,
         },
       });
+      const sortedUsers = [...response?.data.data];
+      sortedUsers.sort((a, b) => {
+        // Compare timestamps in descending order (newest first)
+        return b.loginTime - a.loginTime;
+      });
 
-      setSessions(response.data.data);
+      setSessions(sortedUsers);
     } catch (error) {
       console.log(error);
     }
@@ -130,7 +135,7 @@ const SessionLogs = () => {
       });
     }
   }, [sessions]);
-  console.log("session", sessions);
+
   return (
     <div className="w-full px-2 !font-roboto">
       <div className="flex flex-col min-[1300px]:flex-row justify-between">

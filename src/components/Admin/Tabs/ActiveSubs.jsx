@@ -11,6 +11,7 @@ import {
   Tfoot,
   Link,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
 import NavContext from "../../NavContext";
@@ -30,6 +31,7 @@ const ActiveSubs = () => {
   const toast = useToast();
   const [downloadData, setDownloadData] = useState({});
   const [downloadProp, setDownloadProp] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchActiveSubs = async () => {
     try {
@@ -138,7 +140,17 @@ const ActiveSubs = () => {
           />
         </div>
       </div>
-      {displayData && displayData.length != 0 && (
+      {/* {displayData && displayData.length != 0 && (
+        <ActiveSubsTable activeSubs={displayData} />
+      )} */}
+      {!displayData || displayData.length === 0 ? (
+        <div className="ml-[50vw]">
+          <Spinner
+          speed="0.65s"
+        />
+        </div>
+      ) : (
+        // Render table or any other content when not loading
         <ActiveSubsTable activeSubs={displayData} />
       )}
     </div>

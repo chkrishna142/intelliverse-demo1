@@ -41,7 +41,7 @@ const ActiveSubsTable = ({ activeSubs }) => {
     },
     {
       field: "validityEnd",
-      headerName: "RENEWS ON",
+      headerName: "EXPIRES ON",
 
       valueGetter: (params) =>
         params.row.validityEnd
