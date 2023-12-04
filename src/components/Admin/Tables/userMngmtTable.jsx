@@ -47,7 +47,10 @@ const UserMngmtTable = ({
               day: "numeric",
             }) +
             " " +
-            new Date(params.row.createdat).toLocaleTimeString()
+            new Date(params.row.createdat).toLocaleTimeString([], {
+              hour: '2-digit',
+              minute: '2-digit'
+            })
           : "",
     },
     {
