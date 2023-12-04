@@ -77,6 +77,12 @@ const BoxPlotAnalysis = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   },[]);
 
+  useEffect(() => {
+    if(!disable){
+      setSelectedCam(plantCamMap[selectedPlant][0])
+    }
+  },[selectedPlant])
+
   return (
     <div className="relative flex flex-col gap-4 rounded-xl bg-white">
       <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center gap-2 pt-6">

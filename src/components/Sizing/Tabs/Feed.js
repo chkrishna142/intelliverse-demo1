@@ -6,7 +6,7 @@ import NavContext from "../../NavContext";
 
 const Feed = ({ material, clientId, setPlantCamMap }) => {
   const [plantData, setPlantData] = useState("noPlant");
-  const {auth} = useContext(NavContext);
+  const { auth } = useContext(NavContext);
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: clientId,
@@ -15,17 +15,13 @@ const Feed = ({ material, clientId, setPlantCamMap }) => {
       plantName: "all",
     });
     const response = await axios
-      .post(
-        baseURL + "vision/v2/sizing/analysis/overview/",
-        requestData,
-        {
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth
-          },
-        }
-      )
+      .post(baseURL + "vision/v2/sizing/analysis/overview/", requestData, {
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      })
       .then((response) => {
         setPlantData(response.data.plants);
       })
@@ -40,7 +36,13 @@ const Feed = ({ material, clientId, setPlantCamMap }) => {
       Object.keys(plantData).map((plant) => {
         plantCamMap[plant] = Object.keys(plantData[plant][material]);
       });
-      setPlantCamMap(plantCamMap);
+      const sortedData = Object.entries(plantCamMap)
+        .sort((a, b) => b[1].length - a[1].length)
+        .reduce((acc, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+      setPlantCamMap(sortedData);
     }
   }, [plantData]);
 
@@ -55,7 +57,7 @@ const Feed = ({ material, clientId, setPlantCamMap }) => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="grid grid-cols-2 gap-4">
       {plantData &&
         plantData !== "noPlant" &&
         Object.keys(plantData).map((plant) => {

@@ -266,6 +266,7 @@ const Report = ({ plantId, cameraId, disable, plantCamMap }) => {
         <ShiftSelectModal
           openModal={shiftSelectOpen}
           closeModal={() => setShiftSelectOpen(false)}
+          clientId={param.clientId.toLowerCase()}
         />
       )}
     </div>
