@@ -4,6 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 const MuiTheme = createTheme();
 
@@ -17,11 +18,11 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     },
     {
       field: "queries",
-      headerName: "QUERIES",
+      headerName: "QUESTIONS",
     },
     {
       field: "company",
-      headerName: "COMPANY",
+      headerName: "Organisation",
       renderCell: (params) => (
         <div className="flex items-center w-[28px]">
           <img
@@ -54,6 +55,19 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
         </div>
       ),
     },
+    
+    {
+      field: "viewAnswer",
+      headerName: "View Answer",
+      renderCell: () => (
+        <IconButton
+          onClick={handleViewAnswerClick}
+          style={{ color: "#2196F3",marginLeft:"30px"}}  
+        >
+          <InfoOutlineIcon />
+        </IconButton>
+      ),
+    },
   ];
   const getStatusStyles = (status) => {
     switch (status) {
@@ -72,7 +86,7 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm text-[#3E3C42] whitespace-nowrap hover:cursor-pointer";
-  const flexMap = [0, 3, 1, 1, 1, 1, 1];
+  const flexMap = [0, 3, 1, 1, 1, 1, 1,1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
@@ -92,7 +106,15 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     }
 
     // Navigate to a specific route when any row is clicked
-    navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
+    // navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
+  };
+
+  const handleViewAnswerClick = ( event) => {
+    if (event.target.tagName.toLowerCase() === "button") {
+      return;
+    }
+        navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
+
   };
   return (
     <div className="overflow-x-auto mt-2">
@@ -106,12 +128,6 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
             id: false,
           }}
           onRowClick={handleRowClick}
-          // pagination
-          // initialState={{
-          //   pagination: {
-          //     paginationModel: { pageSize: 25, page: 0 },
-          //   },
-          // }}
           hideFooter={true}
           sx={{ minWidth: "1000px" }}
         />

@@ -65,7 +65,7 @@ const SessionLogsTable = ({ rowData }) => {
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-normal";
-  const flexMap = [ 0,1.5, 2, 1.5, 2, 3, 2];
+  const flexMap = [ 0,1.5, 2, 1.5, 2, 3, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;

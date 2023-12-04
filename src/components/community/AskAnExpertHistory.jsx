@@ -407,25 +407,25 @@ const AskAnExpertHistory = () => {
           </div>
           <div className="bg-[#124CA2] text-[#FAFAFA] w-1/2 h-[140px] rounded-r-lg flex items-center gap-[56px] pl-[46px]">
             <div className="">
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <img src="/questionmarkorange.svg" alt="questionmark" />
-              </div>
-              <p className="text-[24px] font-[500]">2</p>
+              </div> */}
+              <p className="text-[40px] font-[500]">2</p>
               <p className="text-[14px] font-[400]">In Progress</p>
             </div>
             <div>
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <img src="/questionmarkgreen.svg" alt="questionmark" />
-              </div>
-              <p className="text-[24px] font-[500]">2</p>
+              </div> */}
+              <p className="text-[40px] font-[500]">2</p>
 
               <p className="text-[14px] font-[400]">Pending</p>
             </div>
             <div>
-              <div className="mb-3">
+              {/* <div className="mb-3">
                 <img src="/questionmarkblue.svg" alt="questionmark" />
-              </div>
-              <p className="text-[24px] font-[500]">6</p>
+              </div> */}
+              <p className="text-[40px] font-[500]">6</p>
               <p className="text-[14px] font-[400]">Answered questions</p>
             </div>
           </div>
