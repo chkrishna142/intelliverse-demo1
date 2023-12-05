@@ -11,8 +11,8 @@ import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
 const OperatorSelect = ({ data, clientId }) => {
-  const a = ["Skipper", "Private", "King", "Mermen", "Classified"]; //incharge
-  const b = ["Rico", "Kowloski", "Alex"]; //operator
+  const a = ["","Skipper", "Private", "King", "Mermen", "Classified"]; //incharge
+  const b = ["","Rico", "Kowloski", "Alex"]; //operator
   const shifts = ["C", "A", "B"];
   const [editing, setEditing] = useState(false);
   const [rowData, setRowData] = useState(data);
