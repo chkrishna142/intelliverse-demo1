@@ -34,8 +34,8 @@ const OperatorSelect = ({ data, clientId }) => {
   const apiCall = async () => {
     const startDate = new Date(rowData.startTs * 1000);
     const endDate = new Date(rowData.startTs * 1000);
-    startDate.setHours(0, 0, 0, 0);
-    endDate.setHours(23, 59, 59, 0);
+    endDate.setHours(endDate.getHours() + 23);
+    endDate.setMinutes(endDate.getMinutes() + 59);
     const requestBody = JSON.stringify({
       clientId: clientId,
       useCase: "SINTERFLAME",

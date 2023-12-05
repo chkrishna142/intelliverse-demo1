@@ -55,7 +55,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
       plantName: "chanderia",
       type: "day",
       startDate: new Date(fromTime).getTime(),
-      endDate: new Date(toTime).getTime() + 23.99*60*60*1000,
+      endDate: new Date(toTime).getTime() + 23.99 * 60 * 60 * 1000,
     });
     try {
       const response = await axios.post(
@@ -223,9 +223,12 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
                               fontWeight={400}
                               borderX={"1px solid #D3D3D3"}
                             >
-                              {new Date(
-                                val?.startTs * 1000
-                              ).toLocaleDateString()}
+                              {new Date(val?.startTs * 1000).toLocaleDateString(
+                                "en-US",
+                                {
+                                  timeZone: "UTC", // Specify UTC timezone
+                                }
+                              )}
                             </Td>
                             <OperatorSelect data={val} clientId={clientId} />
                           </Tr>
