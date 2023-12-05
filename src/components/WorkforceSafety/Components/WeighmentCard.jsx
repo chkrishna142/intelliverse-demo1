@@ -10,7 +10,7 @@ const BgColorHandler = (data) => {
 const WeighmentCard = ({ reason, num }) => {
   return (
     <div className="flex flex-col gap-1 w-full items-center">
-      <p className="text-[#3E3C42] text-base font-bold self-start">Truck {num}</p>
+      <p className="text-[#3E3C42] text-base font-bold self-start">{num}</p>
       <div className="flex flex-col gap-0 min-w-[240px] w-full h-[120px] shadow-md rounded-lg">
         <div
           className="py-3 pl-2 text-[#605D64] text-sm font-medium w-full rounded-t-lg capitalize flex gap-3 items-center"
