@@ -7,10 +7,10 @@ import { EditIcon } from '@chakra-ui/icons';
 import FloatingInput from './FloatingInput';
 import NavContext from '../NavContext';
 import { useContext } from 'react';
+import mixpanel from 'mixpanel-browser';
 
 const Login = () => {
-
-  const { setLogin, login } = useContext(NavContext)
+  const { setLogin, login } = useContext(NavContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,21 +24,30 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('');
   const [email, setEmail] = useState('');
-  const [authToken, setAuthToken] = useState("")
+  const [authToken, setAuthToken] = useState('');
 
   //OTP States
   const [sentOTP, setSentOTP] = useState(false);
   const [sendingOTP, setSendingOTP] = useState(false);
-  const [submittingOTP, setSubmittingOTP] = useState(false)
+  const [submittingOTP, setSubmittingOTP] = useState(false);
   const [errorOTP, setErrorOTP] = useState('');
 
   const handleSubmitOTP = (e) => {
     e.preventDefault();
     setSendingOTP(false);
-    setSubmittingOTP(true)
+    setSubmittingOTP(true);
     let user_type = userType;
-    login_action({ email, password, user_type, plant, authToken, setLogin, setErrorOTP, setPassword, setSubmittingOTP })
-
+    login_action({
+      email,
+      password,
+      user_type,
+      plant,
+      authToken,
+      setLogin,
+      setErrorOTP,
+      setPassword,
+      setSubmittingOTP,
+    });
   };
 
   const sendOTPCall = async () => {
@@ -47,17 +56,15 @@ const Login = () => {
         credentials: 'same-origin',
         method: 'POST',
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(
-          {
-            "email": emailRef?.current?.value,
-          }
-        )
-      })
-      if (data.status === 202) { 
+        body: JSON.stringify({
+          email: emailRef?.current?.value,
+        }),
+      });
+      if (data.status === 202) {
         //console.log(data?.headers?.get('x-auth-token'))
-        setAuthToken(data?.headers?.get('x-auth-token'))
+        setAuthToken(data?.headers?.get('x-auth-token'));
         setSendingOTP(false);
         setSentOTP(true);
         setEmail(emailRef.current?.value);
@@ -83,43 +90,94 @@ const Login = () => {
     sendOTPCall();
   };
 
-  const login_action =
-    async ({ email, password, user_type, plant, authToken, setLogin, setErrorOTP, setPassword, setSubmittingOTP }) => {
-      try {
-        console.log('making a post request for login');
-        const login_response = await fetch("https://backend-ripik.com/api/verify", {
+  const login_action = async ({
+    email,
+    password,
+    user_type,
+    plant,
+    authToken,
+    setLogin,
+    setErrorOTP,
+    setPassword,
+    setSubmittingOTP,
+  }) => {
+    try {
+      console.log('making a post request for login');
+      const login_response = await fetch(
+        'https://backend-ripik.com/api/verify',
+        {
           credentials: 'same-origin',
           method: 'POST',
           headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": authToken
+            'Content-Type': 'application/json',
+            'X-Auth-Token': authToken,
           },
-          body: JSON.stringify(
-            {
-              "otp": password
-            }
-          )
-        })
-        const data = login_response.status;
-        if (data === 202) {
-          localStorage.setItem('logged_in', true)
-          localStorage.setItem('auth_token', authToken)
-          localStorage.setItem('email', email)
-          console.log('token', authToken)
-          setLogin(true)
-          setSubmittingOTP(false)
-        } else if (data === 403) {
-          setErrorOTP("Please check the OTP you have entered!")
-          setPassword("")
-          setSubmittingOTP(false)
+          body: JSON.stringify({
+            otp: password,
+          }),
         }
-      } catch (err) {
-        setErrorOTP('Error: Please try again!')
-        setSubmittingOTP(false)
-        setPassword("")
-
+      );
+      const data = login_response.status;
+      if (data === 202) {
+        localStorage.setItem('logged_in', true);
+        localStorage.setItem('auth_token', authToken);
+        localStorage.setItem('email', email);
+        console.log('token', authToken);
+        fetchUserProfile();
+        setSubmittingOTP(false);
+      } else if (data === 403) {
+        setErrorOTP('Please check the OTP you have entered!');
+        setPassword('');
+        setSubmittingOTP(false);
       }
-    };
+    } catch (err) {
+      setErrorOTP('Error: Please try again!');
+      setSubmittingOTP(false);
+      setPassword('');
+    }
+  };
+
+  const fetchUserProfile = async () => {
+    try {
+      const data = await fetch(baseURL + 'user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Auth-Token': localStorage.getItem('auth_token'),
+        },
+      });
+      const res = await data.json();
+      localStorage.setItem('user_type', res?.data?.role);
+      localStorage.setItem('organisation', res?.data?.organisation);
+      localStorage.setItem('location', res?.data?.location);
+      localStorage.setItem('fullname', res?.data?.fullname);
+      localStorage.setItem(
+        'phone',
+        res?.data?.phoneNumber ? res?.data?.phoneNumber : ''
+      );
+      mixpanel.identify(email);
+      mixpanel.people.set('$email', email);
+      mixpanel.people.set('$name', res?.data?.fullname);
+      mixpanel.people.set('organisation', res?.data?.organisation);
+      mixpanel.people.set('role', res?.data?.role);
+      mixpanel.people.set('$region', res?.data?.location);
+      mixpanel.people.set(
+        '$phone',
+        res?.data?.phoneNumber ? res?.data?.phoneNumber : ''
+      );
+      mixpanel.register({
+        email: email,
+        role: res?.data?.role,
+        organisation: res?.data?.organisation,
+      });
+      mixpanel.track('User login', {
+        location: res?.data?.location,
+      });
+      setLogin(true);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="bg-gradient-to-tl w-screen h-screen from-[#0B295E] to-[#3C8FD4]">
@@ -134,7 +192,7 @@ const Login = () => {
             {sentOTP === false ? (
               <>
                 <p className="text-xl mb-6 text-center justify-self-center">
-                  <img className='w-44' src="/verse.jpg" />
+                  <img className="w-44" src="/verse.jpg" />
                 </p>
                 {/* <Input
                   type="email"
@@ -183,7 +241,7 @@ const Login = () => {
                   )}
                 </div> */}
                   <button
-                    type='submit'
+                    type="submit"
                     className="w-[200px] !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
                     onClick={handleSubmitForm}
                     style={{ textAlign: 'center' }}
@@ -191,7 +249,9 @@ const Login = () => {
                     {sendingOTP ? <Spinner /> : 'Get OTP'}
                   </button>
                 </form>
-                <p className="text-red-500 mt-4 text-sm flex justify-center">{errorOTP}</p>
+                <p className="text-red-500 mt-4 text-sm flex justify-center">
+                  {errorOTP}
+                </p>
               </>
             ) : (
               <>
@@ -211,64 +271,52 @@ const Login = () => {
                     }}
                   />
                 </span>
-                  <OTPInput
-                    // className="w-[200px]"
-                    value={password}
-                    onChange={setPassword}
-                    type="number"
-                    numInputs={6}
-                    renderSeparator={<span>{'  '}</span>}
-                    renderInput={(props) => <input {...props} />}
-                    inputStyle={{
-                      border: '0.5px solid #79767D',
-                      padding: '8px',
-                      width: '25%',
-                      borderRadius: '5px',
-                      // backgroundColor: '#f5f5f5',
-                    }}
-                    containerStyle={{
-                      width: '220px',
-                      gap: '5px',
-                      marginBottom: '32px',
-                      justifySelf: 'center',
-                    }}
-                  />
-                  <button
-                    type='submit'
-                    className="w-full !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
-                    onClick={handleSubmitOTP}
-                    appearance='primary'
-                  >
-                    {submittingOTP === false ? 'Login' : <Spinner />}
-                  </button>
-               
+                <OTPInput
+                  // className="w-[200px]"
+                  value={password}
+                  onChange={setPassword}
+                  type="number"
+                  numInputs={6}
+                  renderSeparator={<span>{'  '}</span>}
+                  renderInput={(props) => <input {...props} />}
+                  inputStyle={{
+                    border: '0.5px solid #79767D',
+                    padding: '8px',
+                    width: '25%',
+                    borderRadius: '5px',
+                    // backgroundColor: '#f5f5f5',
+                  }}
+                  containerStyle={{
+                    width: '220px',
+                    gap: '5px',
+                    marginBottom: '32px',
+                    justifySelf: 'center',
+                  }}
+                />
+                <button
+                  type="submit"
+                  className="w-full !rounded-full !justify-center !text-center bg-[#3D8FD2] text-white px-2 py-2 cursor-pointer hover:bg-[#0B295E] hover:transition duration-200 "
+                  onClick={handleSubmitOTP}
+                  appearance="primary"
+                >
+                  {submittingOTP === false ? 'Login' : <Spinner />}
+                </button>
+
                 <p className="text-red-500 mt-4 text-sm">{errorOTP}</p>
               </>
             )}
           </div>
-
         </div>
-        <div className='lg:bg-[#0B295E] lg:rounded-r-xl lg:grid lg:grid-rows-3 hidden'>
-          <div className='-ml-10'><img
-            src="/loginT.svg"
-            className=''
-
-            alt="login top svg"
-          /></div>
-          <div className='-mt-12'><img
-            src="/loginR.svg"
-            className='pl-10'
-
-            alt="login top svg"
-          />
+        <div className="lg:bg-[#0B295E] lg:rounded-r-xl lg:grid lg:grid-rows-3 hidden">
+          <div className="-ml-10">
+            <img src="/loginT.svg" className="" alt="login top svg" />
           </div>
-          <div className='mt-24 pt-1'><img
-            src="/loginB.svg"
-            className=''
-
-            alt="login top svg"
-          /></div>
-
+          <div className="-mt-12">
+            <img src="/loginR.svg" className="pl-10" alt="login top svg" />
+          </div>
+          <div className="mt-24 pt-1">
+            <img src="/loginB.svg" className="" alt="login top svg" />
+          </div>
         </div>
       </div>
     </div>
