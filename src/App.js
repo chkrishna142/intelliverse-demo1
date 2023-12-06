@@ -41,6 +41,7 @@ import TransactionHistory from "./components/Admin/TransactionHistory/Transactio
 import AiAdvisorHistory from "./components/community/AiAdvisorHistory";
 import AiExpertHistory from "./components/community/AiExpertHistory";
 import AskAnExpertHistory from "./components/community/AskAnExpertHistory";
+import Dashboard from "./components/SelfService/Dashboard";
 import axios from "axios";
 import { baseURL } from ".";
 
@@ -256,6 +257,7 @@ function App() {
                       path="/admin/activatesubscription"
                       element={<EmailActivation />}
                     />
+                    {/*Community pages */}
                     <Route
                       path="/community/advisor/history"
                       element={<AiAdvisorHistory />}
@@ -271,6 +273,11 @@ function App() {
                     <Route
                       path="/user/transactionhistory"
                       element={<TransactionHistory />}
+                    />
+                    {/*Self service pages */}
+                    <Route
+                      path="/Sandbox"
+                      element={<Dashboard />}
                     />
                   </Routes>
                 </div>
