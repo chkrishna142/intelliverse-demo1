@@ -122,7 +122,7 @@ const LineChart = ({ data, timeStamps, labels, noCoal, color }) => {
           fontSize: "14px",
         },
         formatter: function (value) {
-          return value + "%";
+          return value?.toFixed(2) + "%";
         }
       },
     },

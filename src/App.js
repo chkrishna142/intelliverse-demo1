@@ -40,7 +40,8 @@ import TransactionHistory from './components/Admin/TransactionHistory/Transactio
 import AiAdvisorHistory from './components/community/AiAdvisorHistory';
 import AiExpertHistory from './components/community/AiExpertHistory';
 import AskAnExpertHistory from './components/community/AskAnExpertHistory';
-import Dashboard from './components/SelfService/Dashboard';
+import Dashboard from './components/SelfService/pages/Dashboard';
+import CreateNew from './components/SelfService/pages/CreateNew';
 import axios from 'axios';
 import { baseURL } from '.';
 import mixpanel from 'mixpanel-browser';
@@ -312,6 +313,7 @@ function App() {
                     />
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />
+                    <Route path="/Sandbox/Create" element={<CreateNew />} />
                   </Routes>
                 </div>
               </div>

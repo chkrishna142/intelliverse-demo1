@@ -1,7 +1,13 @@
-import ProjectCard from "./Components/ProjectCard";
-import { badges } from "./Badges";
+import ProjectCard from "../Components/ProjectCard";
+import { badges } from "../Badges";
+import axios from "axios";
+import { baseURL } from "../../../index";
+import NavContext from "../../NavContext";
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
+  const [projects, setProjects] = useState([]);
   const intro = [
     {
       title: "Upload data set",
@@ -19,6 +25,28 @@ const Dashboard = () => {
       icon: "/selfServiceIcons/testModel.svg",
     },
   ];
+  const { auth } = useContext(NavContext);
+  const getAll = async () => {
+    try {
+      const response = await axios.get(
+        baseURL + "selfserve/v1/project/v2/getAll/",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      setProjects(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAll();
+  }, []);
+
   return (
     <div className="flex flex-col gap-6 my-6 font-roboto bg-[#fafafa]">
       <div
@@ -33,9 +61,9 @@ const Dashboard = () => {
         </p>
         <div className="flex flex-col gap-4 whitespace-nowrap">
           <p className="text-[#FAFAFA] text-base whitespace-normal w-[80%]">
-            Here you can do create your own AI projects, bring your own data,
-            explore Ripik's proprietary AI models as well as test standard AI
-            models on your data, to generate quick insights
+            Maximize your AI projects with Ripik's platform. Bring your data,
+            use our models, or test industry standards for quick, tailored
+            insights. Empowering innovation and quick decision-making.
           </p>
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-[54px] items-start lg:items-center">
             {intro.map((item) => {
@@ -81,13 +109,15 @@ const Dashboard = () => {
                   "-4px -4px 24px 0px rgba(0, 0, 0, 0.07), 4px 4px 24px 0px rgba(0, 0, 0, 0.07)",
               }}
             >
-              <div className="p-[10px] bg-[#DEF] text-center rounded cursor-pointer">
-                <img src="/selfServiceIcons/add.svg" alt="add" />
-              </div>
+              <Link to={'/Sandbox/Create'}>
+                <div className="p-[10px] bg-[#DEF] text-center rounded cursor-pointer hover:scale-105">
+                  <img src="/selfServiceIcons/add.svg" alt="add" />
+                </div>
+              </Link>
               Create new project
             </div>
-            {[...Array(3)].map((x) => {
-              return <ProjectCard />;
+            {projects.map((x) => {
+              return <ProjectCard data={x} />;
             })}
           </div>
         </div>
