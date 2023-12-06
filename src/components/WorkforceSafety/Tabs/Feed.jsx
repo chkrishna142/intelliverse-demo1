@@ -424,9 +424,8 @@ const Feed = () => {
           </div>
           <div className="flex flex-col-reverse lg:flex-row gap-8 items-start h-auto">
             <div className="flex flex-col sm:flex-row lg:flex-col justify-between h-full gap-4">
-              {[...Array(2)].map((i,idx) => {
-                return <WeighmentCard reason={idx} num={idx+1}/>
-              })}
+              <WeighmentCard reason={0} num={"Left Bridge"} />
+              <WeighmentCard reason={1} num={"Right Bridge"} />
             </div>
             <div className="p-4 rounded-lg flex flex-col gap-2 bg-[#F5F5F5]">
               <p className="text-[#605D64] font-medium text-sm">

@@ -38,6 +38,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
   const { auth } = useContext(NavContext);
   const [dataChanging, setDataChanging] = useState(false);
   const [data, setData] = useState([]);
+  const [missingDates, setMissingDates] = useState([]);
   const [fromTime, setFromTime] = useState(
     new Date(new Date()).toISOString().split("T")[0]
   );
@@ -55,7 +56,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
       plantName: "chanderia",
       type: "day",
       startDate: new Date(fromTime).getTime(),
-      endDate: new Date(toTime).getTime() + 23.99*60*60*1000,
+      endDate: new Date(toTime).getTime() + 23.99 * 60 * 60 * 1000,
     });
     try {
       const response = await axios.post(
@@ -70,6 +71,44 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
       );
       setDataChanging(false);
       setData(response.data);
+      let missing = [];
+      for (
+        let date = new Date(fromTime);
+        date <= new Date(toTime);
+        date.setDate(date.getDate() + 1)
+      ) {
+        const dateString = date.toISOString().split("T")[0];
+
+        // Check if the date exists in the data array
+        const dateExists = response.data.some(
+          (entry) =>
+            new Date(entry.startTs * 1000).toISOString().split("T")[0] ===
+            dateString
+        );
+
+        // If the date doesn't exist, add it to the filledDatesArray
+        if (!dateExists) {
+          missing.push({
+            startTs: new Date(dateString).getTime()/1000,
+            workers: {
+              C: {
+                fieldOperator: "",
+                shiftIncharge: "",
+              },
+              A: {
+                fieldOperator: "",
+                shiftIncharge: "",
+              },
+              B: {
+                fieldOperator: "",
+                shiftIncharge: "",
+              },
+            },
+            // Add default values for other properties if needed
+          });
+        }
+      }
+      setMissingDates(missing);
     } catch (error) {
       setDataChanging(false);
       console.log(error);
@@ -223,14 +262,42 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
                               fontWeight={400}
                               borderX={"1px solid #D3D3D3"}
                             >
-                              {new Date(
-                                val?.startTs * 1000
-                              ).toLocaleDateString()}
+                              {new Date(val?.startTs * 1000).toLocaleDateString(
+                                "en-US",
+                                {
+                                  timeZone: "UTC", // Specify UTC timezone
+                                }
+                              )}
                             </Td>
                             <OperatorSelect data={val} clientId={clientId} />
                           </Tr>
                         );
                       })}
+                      {missingDates.length > 0 &&
+                        missingDates.map((val, idx) => {
+                          return (
+                            <Tr
+                              key={idx}
+                              className="!text-sm !text-[#3E3C42] even:bg-[#FAFAFA] odd:bg-white"
+                            >
+                              <Td
+                                className=""
+                                padding={0}
+                                px={2}
+                                fontWeight={400}
+                                borderX={"1px solid #D3D3D3"}
+                              >
+                                {new Date(val?.startTs*1000).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    timeZone: "UTC", // Specify UTC timezone
+                                  }
+                                )}
+                              </Td>
+                              <OperatorSelect data={val} clientId={clientId} />
+                            </Tr>
+                          );
+                        })}
                     </Tbody>
                   </Table>
                 </TableContainer>
