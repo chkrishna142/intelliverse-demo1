@@ -39,20 +39,38 @@ const UserMngmtTable = ({
     {
       field: "createdat",
       headerName: "LOGIN TIME",
-      valueGetter: (params) =>
-        params.row.createdat
-          ? new Date(params.row.createdat).toLocaleDateString("en-US", {
-              year: "2-digit",
-              month: "short",
-              day: "numeric",
-            }) +
-            " " +
-            new Date(params.row.createdat).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit'
-            })
-          : "",
-    },
+    //   valueGetter: (params) =>
+    //     params.row.createdat
+    //       ? new Date(params.row.createdat).toLocaleDateString("en-US", {
+    //           year: "2-digit",
+    //           month: "short",
+    //           day: "numeric",
+    //         }) +
+    //         " " +
+    //         new Date(params.row.createdat).toLocaleTimeString([], {
+    //           hour: '2-digit',
+    //           minute: '2-digit'
+    //         })
+    //       : "",
+    // },
+    valueGetter: (params) =>
+    params.row.createdat
+      ? new Date(params.row.createdat).toDateString().split(" ")[2] +
+        " " +
+        new Date(params.row.createdat).toDateString().split(" ")[1] +
+        " '" +
+        new Date(params.row.createdat)
+          .toDateString()
+          .split(" ")[3]
+          .slice(2, 4) +
+        " " +
+        new Date(params.row.createdat).toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12:false
+        })
+      : "",
+},
     {
       field: "isactive",
       headerName: "STATUS",

@@ -9,10 +9,15 @@ import Paginator from "../../util/VisionUtils/Paginator";
 import ExlCsvDownload from "../../util/VisionUtils/ExlCsvDownload";
 import AskAnExpertHistoryTable from "./AskAnExpertHistoryTable";
 import { filter } from "d3-array";
+import axios from "axios";
+import NavContext from ".././NavContext";
+import { baseURL } from "../../index";
 
 const AskAnExpertHistory = () => {
+  const { auth } = useContext(NavContext);
+
   const [tableData, setTableData] = useState([]);
-  const [filteredData,setFilteredData] = useState([])
+  const [filteredData, setFilteredData] = useState([]);
   const [selectedRange, setSelectedRange] = useState(0);
 
   const [stateChanging, setStateChanging] = useState(false);
@@ -23,238 +28,305 @@ const AskAnExpertHistory = () => {
     badgeTag: "Proficient Inquirer",
   });
 
-  const [fromTime, setFromTime] = useState(
-    new Date(new Date().getTime() - 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000)
-      .toISOString()
-      .slice(0, 10)
-  );
-  const [toTime, setToTime] = useState(
-    new Date(new Date().getTime() + 5.5 * 60 * 60 * 1000)
-      .toISOString()
-      .slice(0, 10)
-  );
+  const [startDate, setFromTime] = useState("");
+  const [endDate, setToTime] = useState("");
+  const [customStartDate, setCustomFromTime] = useState("");
+  const [customEndDate, setCustomToTime] = useState("");
 
   const handleClick = () => {
     setStateChanging(false);
     // apiCall();
+    // Convert custom dates to milliseconds
+    const customStartTimeInMs = new Date(customStartDate).getTime();
+    const customEndTimeInMs = new Date(customEndDate).getTime();
+
+    // Call API with custom values
+    fetchQueries(customStartTimeInMs, customEndTimeInMs);
   };
 
   const handleRangeSelect = (e) => {
     setSelectedRange(e.target.value);
-    // for alltime e=0
-    if (e.target.value == 0) {
-      setFromTime(
-        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-      setToTime(
-        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
+
+    // Get the current time
+    const currentTime = new Date().getTime();
+
+    // Calculate start and end times based on the selected range
+    let startTime, endTime;
+
+    switch (e.target.value) {
+      case "0": // All Time
+        // Set startTime to the beginning of the year 2022
+        startTime = new Date("2022-01-01T00:00:00").getTime();
+        // Set endTime to the current time
+        endTime = currentTime;
+        break;
+
+      case "1": // Last Seven Days
+        startTime = currentTime - 7 * 24 * 60 * 60 * 1000;
+        endTime = currentTime;
+        console.log("1", startTime, endTime);
+        break;
+
+      case "2": // This Month
+        const startOfMonth = new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          1,
+          0,
+          0,
+          0
+        ).getTime();
+        startTime = startOfMonth;
+        endTime = currentTime;
+        break;
+
+      case "3": // This Quarter
+        let currentMonth = new Date(currentTime).getMonth();
+        let startQuarter = currentMonth - (currentMonth % 3);
+        startTime = new Date(
+          new Date().getFullYear(),
+          startQuarter,
+          1,
+          0,
+          0,
+          0
+        ).getTime();
+        endTime = currentTime;
+        break;
+
+      case "4": // Previous Quarter
+        let currentMonthPre = new Date(currentTime).getMonth();
+
+        const startPreviousQuarter =
+          currentMonthPre - (currentMonthPre % 3) - 3;
+        startTime = new Date(
+          new Date().getFullYear(),
+          startPreviousQuarter,
+          1,
+          0,
+          0,
+          0
+        ).getTime();
+        endTime = new Date(
+          new Date().getFullYear(),
+          startPreviousQuarter + 2,
+          31,
+          23,
+          59,
+          59
+        ).getTime();
+        break;
+
+      case "5": // This Year
+        const startOfYear = new Date(
+          new Date().getFullYear(),
+          0,
+          1,
+          0,
+          0,
+          0
+        ).getTime();
+        startTime = startOfYear;
+        endTime = currentTime;
+        break;
+
+      // case "6": // Custom Range
+      //   // Use the selected startDate and endDate
+      //   startTime = new Date(customStartDate).getTime();
+      //   endTime = new Date(customEndDate).getTime();
+      //   setCustomFromTime(startTime);
+      //   setCustomToTime(endTime)
+      //   console.log("cust", startTime,endTime)
+      //   break;
+
+      default:
+        break;
     }
-    // for this month e=1
-    if (e.target.value == 1) {
-      setFromTime(
-        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-      setToTime(
-        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-    }
-    // for this quarter e=2
-    if (e.target.value == 2) {
-      setFromTime(
-        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-      setToTime(
-        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-    }
-    // for previous quarter e=3
-    if (e.target.value == 3) {
-      setFromTime(
-        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-      setToTime(
-        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-    }
-    // for this year e=4
-    if (e.target.value == 4) {
-      setFromTime(
-        new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
-      setToTime(
-        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-          .toISOString()
-          .slice(0, 10)
-      );
+
+    // Update state with the calculated start and end times
+    setFromTime(startTime);
+    setToTime(endTime);
+    console.log("www", startTime, endTime);
+    // Call API when a new range is selected
+    if (e.target.value !== "6") {
+      fetchQueries(startTime, endTime);
     }
   };
-  
+
   const [displayData, setDisplayData] = useState([]);
 
-  const fetchQueries = async () => {
+  const fetchQueries = async (startTime = null, endTime = null) => {
     try {
-      let data = [
+      // let data = [
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1701770400,
+      //     time: "12:30 pm",
+      //     status: "Pending",
+      //     company: "Asianpaints",
+      //     queries:
+      //       "What steps can we take to reduce our environmental impact and comply with regulation ?",
+      //     deadline: "72 Hours",
+      //     id: 1,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Inprogress",
+      //     company: "Asianpaints",
+      //     queries: "How can we improve our product quality?",
+      //     deadline: "48 Hours",
+      //     id: 2,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Answered",
+      //     company: "Asianpaints",
+      //     queries: "What is the best marketing strategy for our new product?",
+      //     deadline: "24 Hours",
+      //     id: 3,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Pending",
+      //     company: "Asianpaints",
+      //     queries: "How can we optimize our software development process?",
+      //     deadline: "72 Hours",
+      //     id: 4,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Inprogress",
+      //     company: "Asianpaints",
+      //     queries: "Discussing potential collaboration opportunities",
+      //     deadline: "48 Hours",
+      //     id: 5,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Answered",
+      //     company: "Asianpaints",
+      //     queries: "Seeking advice on adopting new technologies",
+      //     deadline: "24 Hours",
+      //     id: 6,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Answered",
+      //     company: "Asianpaints",
+      //     queries: "Seeking advice on adopting new technologies",
+      //     deadline: "24 Hours",
+      //     id: 7,
+      //   },
+      //   {
+      //     enquirer: "Sudhanshu Kumar",
+      //     date: 1699147800,
+      //     time: "12:30 pm",
+      //     status: "Answered",
+      //     company: "Asianpaints",
+      //     queries: "Seeking advice on adopting new technologies",
+      //     deadline: "24 Hours",
+      //     id: 8,
+      //   },
+      //   {
+      //       enquirer: "Sudhanshu Kumar",
+      //       date: 1699147800,
+      //       time: "12:30 pm",
+      //       status: "Answered",
+      //       company: "Asianpaints",
+      //       queries: "Seeking advice on adopting new technologies",
+      //       deadline: "24 Hours",
+      //       id: 9,
+      //     },
+      //     {
+      //       enquirer: "Sudhanshu Kumar",
+      //       date: 1699147800,
+      //       time: "12:30 pm",
+      //       status: "Answered",
+      //       company: "Asianpaints",
+      //       queries: "Seeking advice on adopting new technologies",
+      //       deadline: "24 Hours",
+      //       id: 10,
+      //     },
+      // ];
+      let requestData = null;
+
+      if (startTime != null && endTime !== null) {
+        // If startTime and endTime are provided, create the request data
+        requestData = {
+          startDate: startTime,
+          endDate: endTime,
+        };
+      }
+      // if (customStartDate !== null && customEndDate !== null) {
+      //   // If startTime and endTime are provided, create the request data
+      //   requestData = {
+      //     startDate: customStartDate,
+      //     endDate: customEndDate,
+      //   };
+      // }
+      const response = await axios.post(
+        baseURL + "questions/expert",
+        requestData,
         {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Pending",
-          company: "Asianpaints",
-          queries:
-            "What steps can we take to reduce our environmental impact and comply with regulation ?",
-          deadline: "72 Hours",
-          id: 1,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Inprogress",
-          company: "Asianpaints",
-          queries: "How can we improve our product quality?",
-          deadline: "48 Hours",
-          id: 2,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Answered",
-          company: "Asianpaints",
-          queries: "What is the best marketing strategy for our new product?",
-          deadline: "24 Hours",
-          id: 3,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Pending",
-          company: "Asianpaints",
-          queries: "How can we optimize our software development process?",
-          deadline: "72 Hours",
-          id: 4,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Inprogress",
-          company: "Asianpaints",
-          queries: "Discussing potential collaboration opportunities",
-          deadline: "48 Hours",
-          id: 5,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Answered",
-          company: "Asianpaints",
-          queries: "Seeking advice on adopting new technologies",
-          deadline: "24 Hours",
-          id: 6,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Answered",
-          company: "Asianpaints",
-          queries: "Seeking advice on adopting new technologies",
-          deadline: "24 Hours",
-          id: 7,
-        },
-        {
-          enquirer: "Sudhanshu Kumar",
-          date: "2023-11-28",
-          time: "12:30 pm",
-          status: "Answered",
-          company: "Asianpaints",
-          queries: "Seeking advice on adopting new technologies",
-          deadline: "24 Hours",
-          id: 8,
-        },
-        {
-            enquirer: "Sudhanshu Kumar",
-            date: "2023-11-28",
-            time: "12:30 pm",
-            status: "Answered",
-            company: "Asianpaints",
-            queries: "Seeking advice on adopting new technologies",
-            deadline: "24 Hours",
-            id: 9,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
-          {
-            enquirer: "Sudhanshu Kumar",
-            date: "2023-11-28",
-            time: "12:30 pm",
-            status: "Answered",
-            company: "Asianpaints",
-            queries: "Seeking advice on adopting new technologies",
-            deadline: "24 Hours",
-            id: 10,
-          },
-      ];
+        }
+      );
+
       const statusOrder = ["Pending", "Inprogress", "Answered"];
 
       // Custom sort function
-      data = data.sort(
+      const data = response?.data.data.sort(
         (a, b) => statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status)
       );
       setTableData(data);
-      setFilteredData(data)
+      setFilteredData(data);
+      // console.log("date in fetch ", requestData);
+     
     } catch (e) {
       console.error(e);
     }
   };
 
-
   useEffect(() => {
     fetchQueries();
   }, []);
 
-  const handleStatus =(selectedStatus)=>{
-
-    setChangingbutton(selectedStatus)
+  useEffect(() => {
+    fetchQueries();
+  }, []);
+  const handleStatus = (selectedStatus) => {
+    setChangingbutton(selectedStatus);
     if (selectedStatus === "All") {
-        setFilteredData(tableData)
-      } else {
-        let filtered = tableData.filter((item) => item.status === selectedStatus);
-        setFilteredData(filtered);
-      }
-  }
+      setFilteredData(tableData);
+    } else {
+      let filtered = tableData.filter((item) => item.status === selectedStatus);
+      setFilteredData(filtered);
+    }
+  };
+  
 
   return (
     <div className="mt-[3vh] flex flex-col w-full gap-2">
-      <div className="w-full flex gap-[8px]">
+      <div className="w-full flex justify-between items-center">
         <p className="text-[20px] sm:text-[20px] font-semibold text-[#024D87]">
-          Expert Dashboard
+          Luc's Dashboard
         </p>
-      </div>
-      {/* bottom white background part */}
-      <div className="flex flex-col w-full h-full gap-[18px]  bg-white p-4 rounded-xl   ">
-        <div className="w-full flex justify-end h-10 p-0 items-center">
-          <div className="flex gap-2">
+        <div className="">
             <div className="flex min-w-[110px]  items-center">
               <Select
                 borderColor="#CAC5CD"
@@ -274,57 +346,56 @@ const AskAnExpertHistory = () => {
                 </option>
                 <option
                   key="Last Seven Days"
-                  value={0}
+                  value={1}
                   className="bg-white hover:bg-blue-200"
                 >
                   Last Seven Days
                 </option>
-                
                 <option
                   key="This Month"
-                  value={1}
+                  value={2}
                   className="bg-white hover:bg-blue-200"
                 >
                   This Month
                 </option>
                 <option
                   key="This Quarter"
-                  value={2}
+                  value={3}
                   className="bg-white hover:bg-blue-200"
                 >
                   This Quarter
                 </option>
                 <option
                   key="Previous Quarter"
-                  value={3}
+                  value={4}
                   className="bg-white hover:bg-blue-200"
                 >
                   Previous Quarter
                 </option>
                 <option
                   key="This Year"
-                  value={4}
+                  value={5}
                   className="bg-white hover:bg-blue-200"
                 >
                   This Year
                 </option>
                 <option
                   key="custom"
-                  value={5}
+                  value={6}
                   className="bg-white hover:bg-blue-200"
                 >
                   Custom Range
                 </option>
               </Select>
             </div>
-            {selectedRange == 5 && (
-              <div className="w-[300px] gap-2 flex justify-end">
+            {selectedRange == 6 && (
+              <div className="gap-2 flex justify-end">
                 <div className="min-w-[110px]">
                   <FloatingInput
                     text="From"
                     type="date"
-                    setDateTime={setFromTime}
-                    value={fromTime}
+                    setDateTime={setCustomFromTime}
+                    value={customStartDate}
                   />
                 </div>
 
@@ -332,21 +403,25 @@ const AskAnExpertHistory = () => {
                   <FloatingInput
                     text="To"
                     type="date"
-                    setDateTime={setToTime}
-                    value={toTime}
+                    setDateTime={setCustomToTime}
+                    value={customEndDate}
                   />
+                </div>
+                <div>
+                  <button
+                    className="text-center py-2 px-2 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-md min-w-[80px]"
+                    onClick={handleClick}
+                  >
+                    Apply
+                  </button>
                 </div>
               </div>
             )}
-
-            {/* <button
-              className="text-center py-2 px-4 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-full min-w-[80px]"
-              onClick={handleClick}
-            >
-              Apply
-            </button> */}
           </div>
-        </div>
+      </div>
+      {/* bottom white background part */}
+      <div className="flex flex-col w-full h-full gap-[18px]  bg-white p-4 rounded-xl">
+        
 
         {/* <div className="w-full flex justify-evenly">
         
@@ -439,7 +514,7 @@ const AskAnExpertHistory = () => {
                   ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
                   : "border-[#EBEBEB]"
               } border-[2px]  rounded-full px-[16px] py-[8px] `}
-              onClick={()=>handleStatus("All")}
+              onClick={() => handleStatus("All")}
             >
               <p className="text-[#605D64]">All</p>
             </button>
@@ -449,7 +524,7 @@ const AskAnExpertHistory = () => {
                   ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
                   : "border-[#EBEBEB]"
               } border-[2px]  rounded-full px-[16px] py-[8px] `}
-              onClick={()=>handleStatus("Inprogress")}
+              onClick={() => handleStatus("Inprogress")}
             >
               <p className="text-[#605D64]">In progress</p>
             </button>
@@ -459,18 +534,18 @@ const AskAnExpertHistory = () => {
                   ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
                   : "border-[#EBEBEB]"
               } border-[2px]  rounded-full px-[16px] py-[8px] `}
-              onClick={()=>handleStatus("Pending")}
+              onClick={() => handleStatus("Pending")}
             >
               <p className="text-[#605D64]">Pending</p>
             </button>
-            
+
             <button
               className={`w-[100px] flex justify-center items-center ${
                 changingbutton == "Answered"
                   ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
                   : "border-[#EBEBEB]"
               } border-[2px]  rounded-full px-[16px] py-[8px] `}
-              onClick={()=>handleStatus("Answered")}
+              onClick={() => handleStatus("Answered")}
             >
               <p className="text-[#605D64]">Answered</p>
             </button>
@@ -484,19 +559,19 @@ const AskAnExpertHistory = () => {
               enable={true}
             />
             <div className="flex justify-end gap-3 ">
-              
-                <Paginator
-                  data={filteredData}
-                  limit={4}
-                  setDisplayData={setDisplayData}
-                />
-              
+              <Paginator
+                data={filteredData}
+                limit={5}
+                setDisplayData={setDisplayData}
+              />
             </div>
           </div>
         </div>
 
         <div>
-          <AskAnExpertHistoryTable rowData={displayData} />
+          {displayData && displayData.length != 0 && (
+            <AskAnExpertHistoryTable rowData={displayData} />
+          )}
         </div>
       </div>
     </div>

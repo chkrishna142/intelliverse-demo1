@@ -382,8 +382,12 @@ const AskAnExpert = () => {
             </div>
 
             {selected ? (
+              
               <div>
-                <div className="w-full font-light mt-6">
+                <div className='mt-6 font-bold'>Subject</div>
+                <input type="text" placeholder='Be concise and describe the query' className='w-[44vw] mt-1 h-10 px-4 rounded-md border'/>
+                <div className='mt-4 font-bold'>Detailed Description</div>
+                <div className="w-full font-light mt-1 text-sm" >
                   Please provide a detailed description of your question or
                   issue. Include relevant background information, any steps
                   you've already taken to address the problem, and any specific

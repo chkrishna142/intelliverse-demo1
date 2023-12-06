@@ -31,8 +31,8 @@ const ActiveSubs = () => {
   const toast = useToast();
   const [downloadData, setDownloadData] = useState({});
   const [downloadProp, setDownloadProp] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  
   const fetchActiveSubs = async () => {
     try {
       const response = await axios.get(baseURL + "fetch/subscribed", {
@@ -86,7 +86,9 @@ const ActiveSubs = () => {
 
       setDownloadProp(extractedData);
       setActiveSubs(response.data?.relSubscriptionServices);
+      setLoading(false)
     } catch (e) {
+      setLoading(false)
       console.error(e);
     }
   };
@@ -107,6 +109,7 @@ const ActiveSubs = () => {
     }
   };
   useEffect(() => {
+    setLoading(true);
     fetchActiveSubs();
     fetchDownloadApi();
   }, []);
@@ -143,8 +146,8 @@ const ActiveSubs = () => {
       {/* {displayData && displayData.length != 0 && (
         <ActiveSubsTable activeSubs={displayData} />
       )} */}
-      {!displayData || displayData.length === 0 ? (
-        <div className="ml-[50vw]">
+      {loading ? (
+        <div className="left-[50%]">
           <Spinner
           speed="0.65s"
         />
