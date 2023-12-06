@@ -11,8 +11,12 @@ import {
 } from "@chakra-ui/react";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../util/Buttons/TonalButton";
+import axios from "axios";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
+import { useContext } from "react";
 
-const ProjectCard = () => {
+const ProjectCard = ({ data }) => {
   const info = [
     {
       type: "Model",
@@ -35,6 +39,33 @@ const ProjectCard = () => {
       icon: "/selfServiceIcons/share.svg",
     },
   ];
+  const { auth } = useContext(NavContext);
+
+  const getSingle = async () => {
+    try {
+      const param = {
+        projectId: data?.projectId,
+      };
+      const resposne = await axios.get(
+        baseURL + "selfserve/v1/project/v2/getSingle/",
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      console.log(resposne.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClick = () => {
+    getSingle();
+  };
+
   return (
     <div
       className="h-[210px] px-4 py-5 rounded flex flex-col gap-10 relative bg-white"
@@ -45,11 +76,13 @@ const ProjectCard = () => {
     >
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-0">
-          <p className="text-[#3E3C42] text-base font-medium">
-            Palm API for chat
-          </p>
+          <p className="text-[#3E3C42] text-base font-medium">{data?.name}</p>
           <p className="text-[#79767D] text-xs font-medium">
-            12th September 2023
+            {new Date(data?.createdAt)?.toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
           </p>
         </div>
         <div className="flex gap-9 items-center">
@@ -67,8 +100,8 @@ const ProjectCard = () => {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <PrimaryButton text={"View"}/>
-        <TonalButton text={"Duplicate"}/>
+        <PrimaryButton text={"View"} onClick={() => handleClick()} />
+        <TonalButton text={"Duplicate"} />
       </div>
       <Menu>
         <MenuButton
@@ -89,9 +122,9 @@ const ProjectCard = () => {
           gap={"16px"}
           minWidth={"fit-content"}
           w={"180px"}
-          position={'absolute'}
-          right={'-50px'}
-          top={'-15px'}
+          position={"absolute"}
+          right={"-50px"}
+          top={"-15px"}
         >
           {options.map((item) => {
             return (
