@@ -8,7 +8,7 @@ const MuiTheme = createTheme();
 const SessionLogsTable = ({ rowData }) => {
   const columns = [
     {
-      field: "userid",
+      field: "logId",
       headerName: "USER ID",
     },
     {
@@ -16,15 +16,19 @@ const SessionLogsTable = ({ rowData }) => {
       headerName: "DATE TIME",
       valueGetter: (params) =>
         params.row.loginTime
-          ? new Date(params.row.loginTime).toLocaleDateString("en-US", {
-              year: "2-digit",
-              month: "short",
-              day: "numeric",
-            }) +
+          ? new Date(params.row.loginTime).toDateString().split(" ")[2] +
+            " " +
+            new Date(params.row.loginTime).toDateString().split(" ")[1] +
+            " '" +
+            new Date(params.row.loginTime)
+              .toDateString()
+              .split(" ")[3]
+              .slice(2, 4) +
             " " +
             new Date(params.row.loginTime).toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit'
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
             })
           : "",
     },
@@ -53,7 +57,6 @@ const SessionLogsTable = ({ rowData }) => {
       field: "device",
       headerName: "DEVICE",
       renderCell: (params) => {
-        
         return <p className="py-2">{params?.row?.device}</p>;
       },
     },
@@ -65,7 +68,7 @@ const SessionLogsTable = ({ rowData }) => {
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-normal";
-  const flexMap = [ 0,1.5, 2, 1.5, 2, 3, 1];
+  const flexMap = [0, 1.5, 2, 1.5, 2, 3, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
@@ -73,20 +76,18 @@ const SessionLogsTable = ({ rowData }) => {
   });
 
   return (
-    <div
-      className="mt-2 overflow-auto"
-    >
+    <div className="mt-2 overflow-auto">
       <ThemeProvider theme={MuiTheme}>
         <DataGrid
-        // scro
+          // scro
           rows={rowData}
           columns={columns}
-          getRowId={(row) => row.userid}
+          getRowId={(row) => row.logId}
           getRowHeight={() => {
             return "auto";
           }}
           columnVisibilityModel={{
-            userid: false,
+            logId: false,
           }}
           hideFooter={true}
           sx={{ minWidth: "1000px", margin: 0, padding: 0 }}
