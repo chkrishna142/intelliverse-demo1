@@ -13,23 +13,23 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
   const navigate = useNavigate()
   const columns = [
     {
-      field: "id",
+      field: "queryId",
       headerName: "ID",
     },
     {
-      field: "queries",
+      field: "query",
       headerName: "QUESTIONS",
     },
     {
-      field: "company",
+      field: "organisation",
       headerName: "Organisation",
       renderCell: (params) => (
         <div className="flex items-center w-[28px]">
-          <img
+          {/* <img
             src="/asianpaints.png"
             alt="Company Logo"
             className="mr-2 w-full" // Adjust margin as needed
-          />
+          /> */}
           <span>{params.value}</span>
         </div>
       ),
@@ -39,12 +39,18 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
       headerName: "ENQUIRER",
     },
     {
-      field: "time",
+      field: "dateTime",
       headerName: "TIME OF ENQUIRY",
+      renderCell: (params) => (
+        <div>{formatTime(params.row.dateTime)}</div>
+      ),
     },
     {
-      field: "deadline",
+      field: "deadLine",
       headerName: "DEADLINE IN",
+      renderCell: (params) => (
+        <div>{formatDeadline(params.row.deadLine)}</div>
+      ),
     },
     {
       field: "status",
@@ -59,9 +65,9 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     {
       field: "viewAnswer",
       headerName: "View Answer",
-      renderCell: () => (
+      renderCell: ({row}) => (
         <IconButton
-          onClick={handleViewAnswerClick}
+          onClick={(e)=>handleViewAnswerClick(row.queryId,e)}
           style={{ color: "#2196F3",marginLeft:"30px"}}  
         >
           <InfoOutlineIcon />
@@ -109,23 +115,79 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     // navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
   };
 
-  const handleViewAnswerClick = ( event) => {
+  const handleViewAnswerClick = ( queryId,event) => {
     if (event.target.tagName.toLowerCase() === "button") {
       return;
     }
-        navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
+        navigate(`/community/expert/${queryId}`);
 
   };
+
+  const isTodayOrYesterday = (timestamp) => {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+
+    const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+
+    return (
+      date.getDate() === today.getDate() || date.getDate() === yesterday.getDate()
+    );
+  };
+
+  const formatTime = (dateTime) => {
+    const date = new Date(dateTime);
+  
+    if (isTodayOrYesterday(date.getTime() / 1000)) {
+      if (date.getDate() === new Date().getDate()) {
+        // If today, display "Today"
+        return "Today " + date.toLocaleString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        });
+      } else {
+        // If yesterday, display "Yesterday" and month and time
+        return date.toLocaleString("en-US", {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          hour12: true,
+        });
+      }
+    } else {
+      // For other days, display month and time
+      return date.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+    }
+  };
+  
+  const formatDeadline = (deadline) => {
+    if (deadline >= 0) {
+      return `${deadline} Hours`;
+    } else {
+      return "Time Over";
+    }
+  };
+  
+  
+
   return (
     <div className="overflow-x-auto mt-2">
       <ThemeProvider theme={MuiTheme}>
         <DataGrid
           rows={rowData}
           columns={columns}
-          getRowId={(row)=>row.id}
+          getRowId={(row)=>row.queryId}
           getRowClassName={getRowClassName}
           columnVisibilityModel={{
-            id: false,
+            queryId: false,
           }}
           onRowClick={handleRowClick}
           hideFooter={true}
