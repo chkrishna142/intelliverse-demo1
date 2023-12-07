@@ -24,12 +24,13 @@ const SessionLogs = () => {
   const [displayData, setDisplayData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
-    if(auth){
+    if (auth) {
       setLoading(true);
       apiCall();
-    fetchDownloadApi()}
+      fetchDownloadApi();
+    }
   }, [auth]);
 
   const apiCall = async () => {
@@ -48,9 +49,9 @@ const SessionLogs = () => {
       });
 
       setSessions(sortedUsers);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.log(error);
     }
   };
@@ -189,11 +190,6 @@ const SessionLogs = () => {
                 enable={true}
               />
             )}
-            <Paginator
-              data={displaySessions}
-              limit={6}
-              setDisplayData={setDisplayData}
-            />
           </div>
         </div>
       </div>
@@ -202,18 +198,27 @@ const SessionLogs = () => {
           <SessionLogsTable rowData={displayData} />
         )} */}
         {loading ? (
-        <div className="ml-[50%]">
-          <Spinner speed="0.65s" />
+          <div className="ml-[50%]">
+            <Spinner speed="0.65s" />
+          </div>
+        ) : (
+          <React.Fragment>
+            {displayData && displayData.length !== 0 ? (
+              <SessionLogsTable rowData={displayData} />
+            ) : (
+              <p className="ml-[45%]">No data available.</p>
+            )}
+          </React.Fragment>
+        )}
+      </div>
+      <div className="flex items-end justify-end">
+        <div>
+          <Paginator
+            data={displaySessions}
+            limit={6}
+            setDisplayData={setDisplayData}
+          />
         </div>
-      ) : (
-        <React.Fragment>
-          {displayData && displayData.length !== 0 ? (
-          <SessionLogsTable rowData={displayData} />
-           ) : (
-            <p className="ml-[45%]">No data available.</p>
-          )} 
-        </React.Fragment>
-      )}
       </div>
     </div>
   );
