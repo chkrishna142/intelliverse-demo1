@@ -6,18 +6,26 @@ import {
   CheckboxGroup,
   useToast,
 } from "@chakra-ui/react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import SecondaryButton from "../../../util/Buttons/SecondaryButton";
 import TextButton from "../../../util/Buttons/TextButton";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../util/Buttons/TonalButton";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseURL } from "../../../index";
+import NavContext from "../../NavContext";
 
 const CreateNew = () => {
   const [selectedType, setSelectedType] = useState("Image");
+  const projectNameRef = useRef(null);
+  const modelLinkRef = useRef(null);
+  const bucketLinkRef = useRef(null);
   const [prepareData, setPrepareData] = useState("No");
+  const { auth } = useContext(NavContext);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [selectedModel, setSelectedModel] = useState([]);
+  const [selectedModel, setSelectedModel] = useState();
+  const [ownModel, setOwnModel] = useState(false);
   const [file, setFile] = useState(null);
   const navigate = useNavigate();
   const toast = useToast();
@@ -75,6 +83,63 @@ const CreateNew = () => {
     }
   };
 
+  const apiCall = async () => {
+    try {
+      const requestBody = JSON.stringify({
+        name: projectNameRef.current.value,
+        remarks: "Fruit Vision",
+        clientId: "ripik",
+        dataSetType: selectedType.toUpperCase(),
+        toAutoAnnotate: selectedOptions.includes("Auto-annotate"),
+        toAutoClean: selectedOptions.includes("Auto-clean"),
+        toAutoClassify: selectedOptions.includes("Auto-classify"),
+        modelType: "PREDEFINED",
+        modelId: "1asd21fsd3",
+        uploadRefId: "4asd2343asd",
+      });
+      const response = await axios.post(
+        baseURL + "selfserve/v1/project/v2/add/",
+        requestBody,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      if (response.status == 200) {
+        navigate("/Sandbox/View");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (ownModel) {
+      setSelectedModel("");
+    }
+  }, [ownModel]);
+
+  const handleSubmit = () => {
+    if (
+      projectNameRef.current.value != "" &&
+      (file || bucketLinkRef.current.value != "") &&
+      (selectedModel != "" || bucketLinkRef.current.value != "")
+    ) {
+      apiCall();
+    } else {
+      toast({
+        title: "Error",
+        description: "Some necessary fields are empty",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
+
   return (
     <div className="font-roboto flex flex-col gap-2 mt-6">
       <p className="text-[#084298] font-medium text-xl">Create new project</p>
@@ -82,7 +147,7 @@ const CreateNew = () => {
         <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#79767D] text-sm font-medium">Project name</p>
           <div style={{ width: "fit-content" }}>
-            <Input type="text" />
+            <Input type="text" ref={projectNameRef} />
           </div>
         </div>
         <div className="p-6 flex flex-col gap-3 bg-white rounded-lg">
@@ -227,9 +292,13 @@ const CreateNew = () => {
                 />
                 <p>or</p>
                 <div className="flex items-center gap-0">
-                  <TextButton text={'Link Bucket'} width={'fit-content'}/>
+                  <TextButton text={"Link Bucket"} width={"fit-content"} />
                   <div style={{ width: "fit-content" }}>
-                    <Input type="text" placeholder="Supported Aws"/>
+                    <Input
+                      type="text"
+                      placeholder="Supported Aws"
+                      ref={bucketLinkRef}
+                    />
                   </div>
                 </div>
               </div>
@@ -251,9 +320,8 @@ const CreateNew = () => {
                   return (
                     <div
                       style={{
-                        backgroundColor: selectedModel.includes(x)
-                          ? "#DDEEFF80"
-                          : "#FFF",
+                        backgroundColor:
+                          selectedModel == x ? "#DDEEFF80" : "#FFF",
                         borderRadius: "8px",
                       }}
                     >
@@ -272,6 +340,7 @@ const CreateNew = () => {
                         _hover={{
                           borderColor: "#6CA6FC",
                         }}
+                        isDisabled={ownModel}
                       >
                         {x}
                       </Radio>
@@ -282,16 +351,84 @@ const CreateNew = () => {
             </RadioGroup>
             <p className="text-[#3E3C42] text-sm font-medium">OR</p>
             <div className="flex flex-col gap-3">
-              <p className="text-[#79767D] text-sm font-medium">Model link</p>
+              <Checkbox
+                py={"8px"}
+                pl={"8px"}
+                pr={"12px"}
+                fontSize={"14px"}
+                fontWeight={500}
+                color={"#79767D"}
+                rounded={"8px"}
+                _checked={{
+                  bg: "#DDEEFF80",
+                }}
+                _hover={{
+                  borderColor: "#6CA6FC",
+                }}
+                onChange={() => setOwnModel((prev) => !prev)}
+                width={"fit-content"}
+              >
+                Import your model
+              </Checkbox>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" />
+                <Input type="text" disabled={!ownModel} ref={modelLinkRef} />
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className="flex gap-[10px] items-center mt-2">
-        <PrimaryButton text={"Train model"} width={"fit-content"} />
+        <PrimaryButton
+          text={"Train"}
+          width={"fit-content"}
+          disable={ownModel}
+          onClick={() => {
+            if((selectedModel != '') && (file || bucketLinkRef.current.value != '' )){
+            const examplePromise = new Promise((resolve, reject) => {
+              setTimeout(() => resolve(200), 5000);
+            });
+            toast.promise(examplePromise, {
+              success: {
+                title: "Training Complete",
+                description: "Click on save changes to view results",
+                position: 'top-right'
+              },
+              error: {
+                title: "Promise rejected",
+                description: "Something wrong",
+                position: 'top-right'
+              },
+              loading: {
+                title: "Model is training",
+                description: "Please wait",
+                position: 'top-right'
+              },
+            });
+          }else {
+            toast({
+              title: "Error",
+              description: "model , dataset or both is/are missing",
+              status: "error",
+              position: "top-right",
+              duration: 2000,
+              isClosable: true,
+            });
+          }
+          }}
+        />
+        <PrimaryButton
+          text={"Test"}
+          width={"fit-content"}
+          disable={!ownModel}
+          onClick={() => {
+            navigate("/Sandbox/View");
+          }}
+        />
+        <TonalButton
+          text={"Save Changes"}
+          width={"fit-content"}
+          onClick={handleSubmit}
+        />
         <TonalButton
           text={"Discard"}
           width={"fit-content"}

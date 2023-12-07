@@ -15,6 +15,7 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ data }) => {
   const info = [
@@ -39,6 +40,7 @@ const ProjectCard = ({ data }) => {
       icon: "/selfServiceIcons/share.svg",
     },
   ];
+  const navigate = useNavigate();
   const { auth } = useContext(NavContext);
 
   const getSingle = async () => {
@@ -64,6 +66,7 @@ const ProjectCard = ({ data }) => {
 
   const handleClick = () => {
     getSingle();
+    navigate('/Sandbox/View')
   };
 
   return (
