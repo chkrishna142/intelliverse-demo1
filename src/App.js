@@ -237,7 +237,14 @@ function App() {
                     {/*Workforce pages*/}
                     <Route
                       path="/vision/workforceMonitoring/:material/:clientId"
-                      element={<WorkforceSafety />}
+                      element={
+                        pathname.split('/')[3].toLowerCase() ===
+                        'blendcompliancetracking' ? (
+                          <BlendComplianceTracking />
+                        ) : (
+                          <WorkforceSafety />
+                        )
+                      }
                     />
                     {/* Profile Pages */}
                     <Route path="/contactus" element={<ConatctUs />} />
