@@ -4,8 +4,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-
+import { InfoIcon, InfoOutlineIcon, StarIcon } from "@chakra-ui/icons";
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 const MuiTheme = createTheme();
 
 const AskAnExpertHistoryTable = ({ rowData }) => {
@@ -15,6 +16,18 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     {
       field: "queryId",
       headerName: "ID",
+    },
+    {
+      field: "star",
+      headerName: "",
+      renderCell: ({ row }) => (
+        <IconButton
+          // onClick={(e) => handleStarClick(row.queryId, e)}
+           // Adjust the color as needed
+        >
+          <StarOutlineIcon />
+        </IconButton>
+      ),
     },
     {
       field: "query",
@@ -57,20 +70,21 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
       headerName: "STATUS",
       renderCell: ({ value }) => (
         <div className={`w-full flex gap-1 ${getStatusStyles(value)}`}>
-          {value === "Inprogress" ? "In progress": value}
+          {value === "In Progress" ? "In Progress": value}
         </div>
       ),
     },
     
     {
       field: "viewAnswer",
-      headerName: "View Answer",
+      headerName: "View",
       renderCell: ({row}) => (
         <IconButton
           onClick={(e)=>handleViewAnswerClick(row.queryId,e)}
-          style={{ color: "#2196F3",marginLeft:"30px"}}  
+          style={{ color: "#2196F3"}}  
         >
           <InfoOutlineIcon />
+          {/* <VisibilityIcon /> */}
         </IconButton>
       ),
     },
@@ -79,7 +93,7 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     switch (status) {
       case "Pending":
         return "text-[#FFC107] text-[14px] font-[700]";
-      case "Inprogress":
+      case "In Progress":
         return "text-[#69B04B] text-[14px] font-[500]";
       case "Answered":
         return "text-[#6CA6FC] text-[14px] font-[500]";
@@ -91,8 +105,8 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
 
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
-  const cellClass = "text-sm text-[#3E3C42] whitespace-nowrap hover:cursor-pointer";
-  const flexMap = [0, 3, 1, 1, 1, 1, 1,1];
+  const cellClass = "text-sm text-[#3E3C42] whitespace-nowrap";
+  const flexMap = [0,0.5, 3, 1, 1, 1, 1, 1,1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
