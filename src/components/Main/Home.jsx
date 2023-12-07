@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import NewUseCaseModal from './NewUseCaseModal';
-import { useWindowSize } from '@uidotdev/usehooks';
-import { baseURL } from '../..';
-import mixpanel from 'mixpanel-browser';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import NewUseCaseModal from "./NewUseCaseModal";
+import { useWindowSize } from "@uidotdev/usehooks";
+import { baseURL } from "../..";
+import mixpanel from "mixpanel-browser";
 
 const Home = ({ state }) => {
   const [alert, setAlert] = useState(false);
@@ -11,13 +11,13 @@ const Home = ({ state }) => {
   const size = useWindowSize();
   const [services, setServices] = useState([]);
   useEffect(() => {
-    mixpanel.track(state + ' page visited');
+    mixpanel.track(state + " page visited");
   }, []);
 
   const subscribed =
-    'w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer';
+    "w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 hover:transition duration-200 cursor-pointer";
   const not_subscribed =
-    'w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer';
+    "w-28 h-32 rounded-xl shadow-md border border-gray-200 hover:bg-blue-100 bg-gray-200 hover:transition duration-200 cursor-pointer";
 
   const [particleSizing, setParticleSizing] = useState({
     active: false,
@@ -79,11 +79,11 @@ const Home = ({ state }) => {
   }, []);
 
   const getSubscriptions = async () => {
-    const data = await fetch(baseURL + 'fetch/subscribed', {
-      method: 'GET',
+    const data = await fetch(baseURL + "fetch/subscribed", {
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        'X-Auth-Token': localStorage.getItem('auth_token'),
+        "Content-Type": "application/json",
+        "X-Auth-Token": localStorage.getItem("auth_token"),
       },
     });
     const res = await data.json();
@@ -115,68 +115,68 @@ const Home = ({ state }) => {
       //Vision
       if (
         res?.relSubscriptionServices[i]?.serv?.servCategory ===
-        'Particle Sizing'
+        "Particle Sizing"
       ) {
         visionCount = visionCount + 1;
         setParticleSizing({ active: true, deployments: visionCount });
       }
       if (
         res?.relSubscriptionServices[i]?.serv?.servCategory ===
-        'Colour scheme analysis'
+        "Colour scheme analysis"
       ) {
         processCount = processCount + 1;
         setProcess({ active: true, deployments: processCount });
       }
       if (
         res?.relSubscriptionServices[i]?.serv?.servCategory ===
-        'Object Monitoring'
+        "Object Monitoring"
       ) {
         workforce_count = workforce_count + 1;
         setWorkforce({ active: true, deployments: workforce_count });
       }
       if (
         res?.relSubscriptionServices[i]?.serv?.servCategory ===
-          'Counting and Tracking' ||
-        res?.relSubscriptionServices[i]?.serv?.servCategory === 'Quality Check'
+          "Counting and Tracking" ||
+        res?.relSubscriptionServices[i]?.serv?.servCategory === "Quality Check"
       ) {
         qualityCount = qualityCount + 1;
         setQuality({ active: true, deployments: qualityCount });
       }
       if (
         res?.relSubscriptionServices[i]?.serv?.servCategory ===
-        'Automated Data Digitization'
+        "Automated Data Digitization"
       ) {
         ocrCount = ocrCount + 1;
         setOcr({ active: true, deployments: ocrCount });
       }
       //Optimus
       if (
-        res?.relSubscriptionServices[i]?.serv?.servName === 'Line balancing'
+        res?.relSubscriptionServices[i]?.serv?.servName === "Line balancing"
       ) {
         prodCount = prodCount + 1;
         setProduction({ active: true, deployments: prodCount });
       }
-      if (res?.relSubscriptionServices[i]?.serv?.servName === 'QC Scheduling') {
+      if (res?.relSubscriptionServices[i]?.serv?.servName === "QC Scheduling") {
         qcCount = qcCount + 1;
         setQc({ active: true, deployments: qcCount });
       }
-      if (res?.relSubscriptionServices[i]?.serv?.servName === 'Manpower') {
+      if (res?.relSubscriptionServices[i]?.serv?.servName === "Manpower") {
         manCount = manCount + 1;
         setManpower({ active: true, deployments: manCount });
       }
-      if (res?.relSubscriptionServices[i]?.serv?.servName === 'Blast Furnace') {
+      if (res?.relSubscriptionServices[i]?.serv?.servName === "Blast Furnace") {
         bfCount = bfCount + 1;
         setBf({ active: true, deployments: bfCount });
       }
       if (
-        res?.relSubscriptionServices[i]?.serv?.servName === 'Potline Optimizer'
+        res?.relSubscriptionServices[i]?.serv?.servName === "Potline Optimizer"
       ) {
         potCount = potCount + 1;
         setPotline({ active: true, deployments: potCount });
       }
       if (
-        res?.relSubscriptionServices[i]?.serv?.servName === 'Kiln Health' &&
-        res?.relSubscriptionServices[i]?.serv?.servParent === 'Optimus'
+        res?.relSubscriptionServices[i]?.serv?.servName === "Kiln Health" &&
+        res?.relSubscriptionServices[i]?.serv?.servParent === "Optimus"
       ) {
         kilnCount = kilnCount + 1;
         setKiln({ active: true, deployments: kilnCount });
@@ -204,10 +204,22 @@ const Home = ({ state }) => {
         ) : null}
       </div>
       <div>
-        {state === 'vision' || state === 'home' ? (
+        {state === "vision" || state === "home" ? (
           <div className="border shadow-md mt-6 px-4 py-4 pl-5 rounded-md bg-white ">
             <div className="mt-2 mr-3 ml-3 flex justify-between">
-              <img className="h-6 " src="/vision.svg" />
+              <div className="flex justify-start items-center gap-2">
+                {state == "vision" && (
+                  <Link
+                    to={`/home`}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <img src="/backtick.svg" />
+                  </Link>
+                )}
+                <img className="h-6 " src="/vision.svg" />
+              </div>
               <div
                 onClick={() => setIsOpen(true)}
                 className=" md:flex flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2 h-8 border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  "
@@ -221,10 +233,10 @@ const Home = ({ state }) => {
                 <Link
                   to={
                     particleSizing.active === true
-                      ? '/vision/Sizing'
-                      : '/bookdemo/particlesizing'
+                      ? "/vision/Sizing"
+                      : "/bookdemo/particlesizing"
                   }
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                 >
                   <div>
                     <div
@@ -264,8 +276,8 @@ const Home = ({ state }) => {
                 <Link
                   to={
                     process.active === true
-                      ? '/vision/ProcessMonitoring'
-                      : '/bookdemo/processmonitoring'
+                      ? "/vision/ProcessMonitoring"
+                      : "/bookdemo/processmonitoring"
                   }
                 >
                   <div>
@@ -301,10 +313,10 @@ const Home = ({ state }) => {
                 <Link
                   to={
                     quality.active === true
-                      ? '/vision/qualityTracking'
-                      : '/bookdemo/qualitymonitoring'
+                      ? "/vision/qualityTracking"
+                      : "/bookdemo/qualitymonitoring"
                   }
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                 >
                   <div>
                     <div
@@ -339,8 +351,8 @@ const Home = ({ state }) => {
                 <Link
                   to={
                     workforce.active === true
-                      ? '/vision/workforceMonitoring'
-                      : '/bookdemo/workforce'
+                      ? "/vision/workforceMonitoring"
+                      : "/bookdemo/workforce"
                   }
                 >
                   <div>
@@ -394,10 +406,23 @@ const Home = ({ state }) => {
             </div>
           </div>
         ) : null}
-        {state === 'optimus' || state === 'home' ? (
+        {state === "optimus" || state === "home" ? (
           <div className="border shadow-md px-4 py-4 md:pb-5 pl-5 rounded-md text-sm mt-6 bg-white">
             <div className="mt-0 mr-3 -ml-0 flex justify-between ">
-              <img className="md:h-8 h-6" src="/optimus.svg" />
+              <div className="flex justify-start items-center gap-2">
+                {state == "optimus" && (
+                  <Link
+                    to={`/home`}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <img src="/backtick.svg" />
+                  </Link>
+                )}
+                <img className="md:h-8 h-6" src="/optimus.svg" />
+              </div>
+
               <div
                 onClick={() => setIsOpen(true)}
                 className=" md:flex h-8 flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2  border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  "
@@ -466,17 +491,17 @@ const Home = ({ state }) => {
                     </div>
                     <div className="mt-4 flex justify-center h-10 w-28">
                       <p className="font-bold text-[#024D87] text-center">
-                        QC Scheduling{' '}
+                        QC Scheduling{" "}
                       </p>
                     </div>
                   </div>
                   <Link
                     to={
                       manpower.active === true
-                        ? '/Optimus/Manpower'
-                        : '/bookdemo/manpowerscheduling'
+                        ? "/Optimus/Manpower"
+                        : "/bookdemo/manpowerscheduling"
                     }
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                   >
                     <div>
                       <div
@@ -518,10 +543,10 @@ const Home = ({ state }) => {
                   <Link
                     to={
                       bf.active === true
-                        ? '/optimus/blastfurnace'
-                        : '/bookdemo/blastfurnacetool'
+                        ? "/optimus/blastfurnace"
+                        : "/bookdemo/blastfurnacetool"
                     }
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                   >
                     <div>
                       <div
@@ -548,12 +573,12 @@ const Home = ({ state }) => {
                       </div>
                       <div className="mt-4 flex justify-center h-10 w-28">
                         <p className="font-bold text-[#024D87] text-center">
-                          Blast Furnace{' '}
+                          Blast Furnace{" "}
                         </p>
                       </div>
                     </div>
                   </Link>
-                  <Link to={kiln.active === true ? '' : '/bookdemo/kilntool'}>
+                  <Link to={kiln.active === true ? "" : "/bookdemo/kilntool"}>
                     <div>
                       <div
                         className={
@@ -582,13 +607,13 @@ const Home = ({ state }) => {
                       </div>
                       <div className="mt-4 flex justify-center h-10 w-28">
                         <p className="font-bold text-[#024D87] text-center">
-                          Kiln{' '}
+                          Kiln{" "}
                         </p>
                       </div>
                     </div>
                   </Link>
                   <Link
-                    to={potline.active === true ? '' : '/bookdemo/potlinetool'}
+                    to={potline.active === true ? "" : "/bookdemo/potlinetool"}
                   >
                     <div>
                       <div
@@ -615,7 +640,7 @@ const Home = ({ state }) => {
                       </div>
                       <div className="mt-4 flex justify-center h-10 w-28">
                         <p className="font-bold text-[#024D87] text-center">
-                          Potline{' '}
+                          Potline{" "}
                         </p>
                       </div>
                     </div>
@@ -625,10 +650,22 @@ const Home = ({ state }) => {
             </div>
           </div>
         ) : null}
-        {state === 'community' || state === 'home' ? (
+        {state === "community" || state === "home" ? (
           <div className="border shadow-md mt-4 px-4 py-4 pb-20 md:pb-5 pl-5 rounded-md text-sm mt-6 bg-white">
             <div className="mt-0 mr-3 -ml-0 flex justify-between ">
-              <img className="lg:h-14 h-10 ml-2" src="/community.svg" />
+              <div className="flex justify-start items-center gap-2">
+                {state == "community" && (
+                  <Link
+                    to={`/home`}
+                    style={{
+                      textDecoration: "none",
+                    }}
+                  >
+                    <img src="/backtick.svg" />
+                  </Link>
+                )}
+                <img className="lg:h-14 h-10 ml-2" src="/community.svg" />
+              </div>
               <div
                 onClick={() => setIsOpen(true)}
                 className=" md:flex md:mt-0 mt-3 flex h-8 items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2  border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  "
@@ -669,7 +706,7 @@ const Home = ({ state }) => {
                     </div>
                     <div className="mt-4 flex justify-center h-10 w-28">
                       <p className="font-bold text-[#024D87] text-center">
-                        AI Advisor{' '}
+                        AI Advisor{" "}
                       </p>
                     </div>
                   </Link>
@@ -716,13 +753,13 @@ const Home = ({ state }) => {
         <NewUseCaseModal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
-          size={'2xl'}
+          size={"2xl"}
         />
       ) : (
         <NewUseCaseModal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
-          size={'xs'}
+          size={"xs"}
         />
       )}
     </div>
