@@ -70,7 +70,6 @@ const MaterialSelect = () => {
             }
           });
           setMaterials(dummy);
-          console.log(dummy);
         }
       })
       .catch((error) => {
@@ -100,7 +99,6 @@ const MaterialSelect = () => {
           </div>
           <div className="flex flex-wrap gap-8 items-center ml-3 mb-5">
             {materials.map((x, idx) => {
-              console.log('Material', x, materialData);
               return (
                 <MaterialCard
                   material={x}
