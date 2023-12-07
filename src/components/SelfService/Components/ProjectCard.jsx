@@ -35,7 +35,7 @@ const ProjectCard = ({ data }) => {
       icon: "/selfServiceIcons/download.svg",
     },
     {
-      type: "Share",
+      type: "Share access",
       icon: "/selfServiceIcons/share.svg",
     },
   ];
