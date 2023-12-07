@@ -43,6 +43,7 @@ import AskAnExpertHistory from './components/community/AskAnExpertHistory';
 import Dashboard from './components/SelfService/pages/Dashboard';
 import CreateNew from './components/SelfService/pages/CreateNew';
 import mixpanel from 'mixpanel-browser';
+import AddClients from './components/SuperAdmin/AddClients/AddClients';
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem('logged_in')); // used on Login.jsx to set login provider to true
@@ -258,6 +259,11 @@ function App() {
                     <Route
                       path="/user/transactionhistory"
                       element={<TransactionHistory />}
+                    />
+                    {/*Super admin pages */}
+                    <Route
+                      path="/superadmin/addclient"
+                      element={<AddClients />}
                     />
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />
