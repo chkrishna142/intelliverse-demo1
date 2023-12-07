@@ -10,7 +10,7 @@ const AddClients = ()=>{
     const data = [
         {
             "id": 1,
-            "founded": "12th sepetember 2023",
+            "founded": "12th September 2023",
             "name": "orange detection",
             "client": "AsianPaints",
             "vision": "4",
@@ -20,7 +20,7 @@ const AddClients = ()=>{
         },
         {
             "id": 2,
-            "founded": "12th sepetember 2023",
+            "founded": "12th September 2023",
             "name": "orange detection",
             "client": "AsianPaints",
             "vision": "4",
@@ -30,7 +30,7 @@ const AddClients = ()=>{
         },
         {
             "id": 2,
-            "founded": "12th sepetember 2023",
+            "founded": "12th September 2023",
             "name": "orange detection",
             "client": "AsianPaints",
             "vision": "4",
@@ -54,7 +54,7 @@ const AddClients = ()=>{
                   <img src="/selfServiceIcons/add.svg" alt="add" />
                 </div>
               </Link>
-              Create new project
+              <p className="font-bold">Add new client</p>
             </div>
             {data.map((x) => {
               return <ProjectCard data={x} />;

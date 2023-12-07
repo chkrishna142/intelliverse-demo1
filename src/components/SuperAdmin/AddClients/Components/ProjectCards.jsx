@@ -13,7 +13,7 @@ import { useContext } from "react";
 import NavContext from "../../../NavContext";
 import PrimaryButton from "../../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../../util/Buttons/TonalButton";
-
+import DownloadIcon from '@mui/icons-material/Download';
 const ProjectCard = ({ data }) => {
   const info = [
     {
@@ -55,15 +55,58 @@ const ProjectCard = ({ data }) => {
             <img src="/asianpaints.png" alt="" />
           </div>
           <div className="ml-3">
-            <p className="text-[#3E3C42] text-base font-medium">
+            <p className="text-[#3E3C42] text-[16px] font-medium">
               {data.client}
             </p>
-            <p className="text-[#79767D] text-sm font-medium">
-              Since {data.founded}
+            <p className=" text-sm font-medium">
+              <span className="text-[#79767D]">Since</span> {data.founded}
             </p>
           </div>
+          <div>
+          <Menu>
+        <MenuButton
+          as={IconButton}
+          aria-label="Options"
+          icon={<img src="/selfServiceIcons/menu.svg" alt="menu" />}
+          variant="simple"
+          position={"absolute"}
+          top={"20px"}
+          right={"8px"}
+        />
+        <MenuList
+          px={"12px"}
+          py={"16px"}
+          rounded={"8px"}
+          display={"flex"}
+          flexDirection={"column"}
+          gap={"16px"}
+          minWidth={"fit-content"}
+          w={"180px"}
+          position={"absolute"}
+          right={"-50px"}
+          top={"-15px"}
+        >
+          
+              <MenuItem
+                icon={<DownloadIcon />}
+                textColor={"#605D64"}
+                fontSize={"14px"}
+                fontWeight={500}
+                p={"8px"}
+                _hover={{ bg: "#DDEEFF80", borderRadius: "4px" }}
+                _focus={{ bg: "#DDEEFF80", borderRadius: "4px" }}
+              >
+                {"Download"}
+              </MenuItem>
+           
+        </MenuList>
+      </Menu>
+          </div>
+          <div>
+
+          </div>
         </div>
-        <div className="flex  items-center justify-evenly">
+        <div className="flex  items-center justify-between">
           <div className="flex items-center justify-center">
             <div className="flex flex-col items-center justify-center">
               <p className="text-[#938F96]">Vision</p>
