@@ -32,7 +32,7 @@ const ActiveSubs = () => {
   const [downloadData, setDownloadData] = useState({});
   const [downloadProp, setDownloadProp] = useState([]);
   const [loading, setLoading] = useState(false);
-  
+
   const fetchActiveSubs = async () => {
     try {
       const response = await axios.get(baseURL + "fetch/subscribed", {
@@ -42,27 +42,7 @@ const ActiveSubs = () => {
           "X-Auth-Token": auth,
         },
       });
-      // console.log(response.data, 'Active subscriptions1');
-      // if (Array.isArray(response.data?.relSubscriptionServices)) {
-      //   let active = new Array(
-      //     response.data?.relSubscriptionServices?.length * 3
-      //   )
-      //     .fill(0)
-      //     .map((_, i) =>
-      //       response.data?.relSubscriptionServices?.at(
-      //         i % response.data?.relSubscriptionServices?.length
-      //       )
-      //     );
-      //   active?.sort(
-      //     (first, second) =>
-      //       new Date(first?.validityEnd).getTime() -
-      //       new Date(second?.validityEnd).getTime()
-      //   );
-      //   console.log(response.data, 'Active subscriptions');
-      //   setActiveSubs(active);
-      // }
 
-      console.log("response.......", response);
       // response.data?.map(item => {
       //   let services = item?.relSubscriptionServices;
 
@@ -86,12 +66,13 @@ const ActiveSubs = () => {
 
       setDownloadProp(extractedData);
       setActiveSubs(response.data?.relSubscriptionServices);
-      setLoading(false)
+      setLoading(false);
     } catch (e) {
-      setLoading(false)
+      setLoading(false);
       console.error(e);
     }
   };
+
   const fetchDownloadApi = async () => {
     const header = { header: "subscribed" };
     try {
@@ -108,15 +89,16 @@ const ActiveSubs = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    setLoading(true);
-    fetchActiveSubs();
-    fetchDownloadApi();
-  }, []);
+    if(auth){setLoading(true);
+      fetchActiveSubs();
+      fetchDownloadApi();}
+  }, [auth]);
 
-  const plants = ["Angul", "Jamshedpur", "Goa"];
 
-  const order = [""];
+  console.log("active subs h", activeSubs);
+  console.log("display data h", displayData);
 
   return (
     <div className="w-full px-2 !font-roboto">
@@ -143,18 +125,19 @@ const ActiveSubs = () => {
           />
         </div>
       </div>
-      {/* {displayData && displayData.length != 0 && (
-        <ActiveSubsTable activeSubs={displayData} />
-      )} */}
+
       {loading ? (
-        <div className="left-[50%]">
-          <Spinner
-          speed="0.65s"
-        />
+        <div className="ml-[50%]">
+          <Spinner speed="0.65s" />
         </div>
       ) : (
-        // Render table or any other content when not loading
-        <ActiveSubsTable activeSubs={displayData} />
+        <React.Fragment>
+          {displayData && displayData.length !== 0 ? (
+          <ActiveSubsTable activeSubs={displayData} />
+           ) : (
+            <p className="ml-[45%]">No data available.</p>
+          )} 
+        </React.Fragment>
       )}
     </div>
   );
