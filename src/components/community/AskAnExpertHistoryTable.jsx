@@ -3,15 +3,19 @@ import { createTheme, ThemeProvider, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { InfoIcon, InfoOutlineIcon, StarIcon } from "@chakra-ui/icons";
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import axios from "axios";
+import NavContext from ".././NavContext";
+
 const MuiTheme = createTheme();
 
 const AskAnExpertHistoryTable = ({ rowData }) => {
+  const { auth } = useContext(NavContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const columns = [
     {
       field: "queryId",
@@ -22,8 +26,8 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
       headerName: "",
       renderCell: ({ row }) => (
         <IconButton
-          // onClick={(e) => handleStarClick(row.queryId, e)}
-           // Adjust the color as needed
+        // onClick={(e) => handleStarClick(row.queryId, e)}
+        // Adjust the color as needed
         >
           <StarOutlineIcon />
         </IconButton>
@@ -54,34 +58,30 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     {
       field: "dateTime",
       headerName: "TIME OF ENQUIRY",
-      renderCell: (params) => (
-        <div>{formatTime(params.row.dateTime)}</div>
-      ),
+      renderCell: (params) => <div>{formatTime(params.row.dateTime)}</div>,
     },
     {
       field: "deadLine",
       headerName: "DEADLINE IN",
-      renderCell: (params) => (
-        <div>{formatDeadline(params.row.deadLine)}</div>
-      ),
+      renderCell: (params) => <div>{formatDeadline(params.row.deadLine)}</div>,
     },
     {
       field: "status",
       headerName: "STATUS",
       renderCell: ({ value }) => (
         <div className={`w-full flex gap-1 ${getStatusStyles(value)}`}>
-          {value === "In Progress" ? "In Progress": value}
+          {value === "In Progress" ? "In Progress" : value}
         </div>
       ),
     },
-    
+
     {
       field: "viewAnswer",
       headerName: "View",
-      renderCell: ({row}) => (
+      renderCell: ({ row }) => (
         <IconButton
-          onClick={(e)=>handleViewAnswerClick(row.queryId,e)}
-          style={{ color: "#2196F3"}}  
+          onClick={(e) => handleViewAnswerClick(row.queryId, e)}
+          style={{ color: "#2196F3" }}
         >
           {/* <InfoOutlineIcon /> */}
           <VisibilityIcon />
@@ -106,7 +106,7 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm text-[#3E3C42] whitespace-nowrap";
-  const flexMap = [0,0.5, 3, 1, 1, 1, 1, 1,1];
+  const flexMap = [0, 0.5, 3, 1, 1, 1, 1, 1, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
@@ -114,9 +114,8 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
   });
 
   const getRowClassName = (params) => {
-    
     const isPendingRow = params?.row?.status === "Pending";
-   
+
     return isPendingRow ? "font-bold" : "";
   };
   const handleRowClick = (params, event) => {
@@ -129,12 +128,30 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     // navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
   };
 
-  const handleViewAnswerClick = ( queryId,event) => {
+  const handleViewAnswerClick = async (queryId, event) => {
     if (event.target.tagName.toLowerCase() === "button") {
       return;
     }
-        navigate(`/community/expert/${queryId}`);
+    try {
+      const response = await axios.patch(
+        `https://backend-ripik.com/api/questions/status/${queryId}?status=0`,
 
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+
+      console.log("API Response:", response.data);
+
+      // Navigate to the desired route (if needed)
+      navigate(`/community/expert/${queryId}`);
+    } catch (error) {
+      console.error(error);
+    }
+    // navigate(`/community/expert/${queryId}`);
   };
 
   const isTodayOrYesterday = (timestamp) => {
@@ -145,21 +162,25 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
     const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
 
     return (
-      date.getDate() === today.getDate() || date.getDate() === yesterday.getDate()
+      date.getDate() === today.getDate() ||
+      date.getDate() === yesterday.getDate()
     );
   };
 
   const formatTime = (dateTime) => {
     const date = new Date(dateTime);
-  
+
     if (isTodayOrYesterday(date.getTime() / 1000)) {
       if (date.getDate() === new Date().getDate()) {
         // If today, display "Today"
-        return "Today " + date.toLocaleString("en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          hour12: true,
-        });
+        return (
+          "Today " +
+          date.toLocaleString("en-US", {
+            hour: "numeric",
+            minute: "numeric",
+            hour12: true,
+          })
+        );
       } else {
         // If yesterday, display "Yesterday" and month and time
         return date.toLocaleString("en-US", {
@@ -181,7 +202,7 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
       });
     }
   };
-  
+
   const formatDeadline = (deadline) => {
     if (deadline >= 0) {
       return `${deadline} Hours`;
@@ -189,8 +210,6 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
       return "Time Over";
     }
   };
-  
-  
 
   return (
     <div className="overflow-x-auto mt-2">
@@ -198,7 +217,7 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
         <DataGrid
           rows={rowData}
           columns={columns}
-          getRowId={(row)=>row.queryId}
+          getRowId={(row) => row.queryId}
           getRowClassName={getRowClassName}
           columnVisibilityModel={{
             queryId: false,

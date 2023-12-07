@@ -13,6 +13,7 @@ import axios from "axios";
 import NavContext from ".././NavContext";
 import { baseURL } from "../../index";
 import TopEnquirerChart from "./AskAnExpertCharts/TopEnquirerChart";
+import TopClientsChart from "./AskAnExpertCharts/TopClientsChart";
 
 const AskAnExpertHistory = () => {
   const { auth } = useContext(NavContext);
@@ -39,6 +40,8 @@ const AskAnExpertHistory = () => {
   const [displayData, setDisplayData] = useState([]);
   const [fullName, setFullName] = useState("");
   const [downloadData, setDownloadData] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const handleClick = () => {
     setStateChanging(false);
     // apiCall();
@@ -212,6 +215,7 @@ const AskAnExpertHistory = () => {
 
       setTableData(sortedData);
       setFilteredData(sortedData);
+      setLoading(false);
       console.log("date in fetch ", requestData);
     } catch (e) {
       console.error(e);
@@ -236,9 +240,12 @@ const AskAnExpertHistory = () => {
     }
   };
   useEffect(() => {
-    fetchQueries();
-    fetchUser();
-  }, []);
+    if (auth) {
+      setLoading(true);
+      fetchQueries();
+      fetchUser();
+    }
+  }, [auth]);
 
   const handleStatus = (selectedStatus) => {
     setChangingbutton(selectedStatus);
@@ -395,16 +402,14 @@ const AskAnExpertHistory = () => {
           </div>
 
           <div className="flex flex-1 bg-blue-100 justify-evenly rounded-r-lg h-[200px]">
-            <div className=" flex flex-col mt-5 items-center">
-              <div className="text-[20px] font-md mb-3">Top Clients</div>
-              <div className="">
-                <p className="mb-2">Client 1</p>
-                <p className="mb-2">Client 2</p>
-                <p className="mb-2">Client 3</p>
+          <div className=" flex flex-col justify-center mt-5 items-center ">
+              <div className="text-[20px] font-md">Top 3 Clients</div>
+              <div className="text-[#fff]">
+                <TopClientsChart />
               </div>
             </div>
             <div className=" flex flex-col justify-center mt-5 items-center ">
-              <div className="text-[20px] font-md">Top Enquirers</div>
+              <div className="text-[20px] font-md">Top 3 Enquirers</div>
               <div className="text-[#fff]">
                 <TopEnquirerChart />
               </div>
@@ -484,15 +489,32 @@ const AskAnExpertHistory = () => {
         </div>
 
         <div>
-          {displayData && displayData.length != 0 && (
+          {/* {displayData && displayData.length != 0 && (
             <AskAnExpertHistoryTable rowData={displayData} />
-          )}
-          <div className="flex justify-end gap-3 ">
-            <Paginator
-              data={filteredData}
-              limit={5}
-              setDisplayData={setDisplayData}
-            />
+          )} */}
+          <div>
+            {loading ? (
+              <div className="ml-[50%]">
+                <Spinner speed="0.65s" />
+              </div>
+            ) : (
+              <React.Fragment>
+                {displayData && displayData.length !== 0 ? (
+                  <AskAnExpertHistoryTable rowData={displayData} />
+                ) : (
+                  <p className="ml-[45%]">No data available!</p>
+                )}
+              </React.Fragment>
+            )}
+          </div>
+          <div className="flex justify-end">
+            <div>
+              <Paginator
+                data={filteredData}
+                limit={5}
+                setDisplayData={setDisplayData}
+              />
+            </div>
           </div>
         </div>
       </div>

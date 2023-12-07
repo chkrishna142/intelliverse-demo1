@@ -45,6 +45,7 @@ import CreateNew from './components/SelfService/pages/CreateNew';
 import axios from 'axios';
 import { baseURL } from '.';
 import mixpanel from 'mixpanel-browser';
+import AddClients from './components/SuperAdmin/AddClients/AddClients';
 
 const GetLocation = (auth) => {
   if (navigator.geolocation) {
@@ -316,6 +317,11 @@ function App() {
                     <Route
                       path="/user/transactionhistory"
                       element={<TransactionHistory />}
+                    />
+                    {/*Super admin pages */}
+                    <Route
+                      path="/superadmin/addclient"
+                      element={<AddClients />}
                     />
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />

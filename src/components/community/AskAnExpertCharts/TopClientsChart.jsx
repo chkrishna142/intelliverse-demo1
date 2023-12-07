@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopEnquirerChart = () => {
+const TopClientsChart = () => {
   const [chartOptions, setChartOptions] = useState({
     chart: {
       type: "bar",
@@ -9,13 +9,14 @@ const TopEnquirerChart = () => {
     },
 
     xaxis: {
-      categories: ["John", "Luc", "Fabian"],
+      categories: ["Client 1", "Client 2", "Client 3"],
+
       showLines: false,
       labels: {
+        show: false,
         style: {
           fontSize: "15px",
         },
-        show: false,
       },
       title: {
         text: "Number of Questions",
@@ -47,7 +48,7 @@ const TopEnquirerChart = () => {
   const [seriesData, setSeriesData] = useState([
     {
       name: "Series 1",
-      data: [6, 3, 2],
+      data: [30, 23, 15],
     },
   ]);
 
@@ -63,4 +64,4 @@ const TopEnquirerChart = () => {
   );
 };
 
-export default TopEnquirerChart;
+export default TopClientsChart;
