@@ -114,7 +114,7 @@ const AskAnExpert = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'https://backend-ripik.com/api/questions',
+      url: baseURL + 'questions',
       headers: {
         'X-Auth-Token': auth,
       },

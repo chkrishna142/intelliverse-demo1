@@ -148,7 +148,7 @@ const UserMgmt = () => {
       let config = {
         method: "delete",
         maxBodyLength: Infinity,
-        url: "https://backend-ripik.com/api/iam/users",
+        url: baseURL + "iam/users",
         headers: {
           "x-auth-token": auth,
           "Content-Type": "application/json",

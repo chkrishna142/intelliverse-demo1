@@ -113,7 +113,7 @@ const Expert = () => {
       credentials: "same-origin",
       maxBodyLength: Infinity,
       redirect: "follow",
-      url: `https://backend-ripik.com/api/questions/answer/${param.questionId}`,
+      url: baseURL + `questions/answer/${param.questionId}`,
       data: data,
     };
     axios
@@ -130,7 +130,7 @@ const Expert = () => {
 
   const downloadAsset = async (asset) => {
     axios({
-      url: `https://backend-ripik.com/api/attachment/download?key=${asset}`, //your url
+      url: baseURL + `attachment/download?key=${asset}`, //your url
       method: "GET",
       responseType: "blob", // important
     }).then((response) => {
