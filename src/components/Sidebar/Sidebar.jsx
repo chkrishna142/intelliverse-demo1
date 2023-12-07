@@ -390,6 +390,49 @@ const Sidebar = () => {
               </AccordionItem>
               <AccordionItem className="border-none -mt-4">
                 <h2>
+                  <Link to="/superadmin/addclient">
+                    <AccordionButton
+                      _hover={false}
+                      className="flex justify-center items-center "
+                    >
+                      <div
+                        className={
+                          location.pathname.includes('/superadmin')
+                            ? 'w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]'
+                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                        }
+                      >
+                        <div className="w-full flex justify-center">
+                          <img
+                            className={
+                              location.pathname.includes('/superadmin')
+                                ? 'w-7 pb-2'
+                                : 'w-7 pb-2'
+                            }
+                            src={
+                              location.pathname.includes('/superadmin')
+                                ? '/superblue.png'
+                                : '/superwhite.png'
+                            }
+                            alt="home logo"
+                          />
+                        </div>
+                        <p
+                          className={
+                            location.pathname.includes('/superadmin')
+                              ? 'font-bold text-xs text-[#024D87] -mt-1'
+                              : 'font-light text-xs -mt-1'
+                          }
+                        >
+                          Super Admin
+                        </p>
+                      </div>
+                    </AccordionButton>
+                  </Link>
+                </h2>
+              </AccordionItem>
+              <AccordionItem className="border-none -mt-4">
+                <h2>
                   <Link to="/Sandbox">
                     <AccordionButton
                       _hover={false}
