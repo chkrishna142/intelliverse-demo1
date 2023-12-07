@@ -388,16 +388,16 @@ const Sidebar = () => {
                   </Link>
                 </h2>
               </AccordionItem>
-              {/* <AccordionItem className="border-none -mt-4">
+              <AccordionItem className="border-none -mt-4">
                 <h2>
-                  <Link to="/admin/usermanagement">
+                  <Link to="/Sandbox">
                     <AccordionButton
                       _hover={false}
                       className="flex justify-center items-center "
                     >
                       <div
                         className={
-                          location.pathname.includes('/admin')
+                          location.pathname.includes('/Sandbox')
                             ? 'w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]'
                             : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
                         }
@@ -405,32 +405,32 @@ const Sidebar = () => {
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/admin')
+                              location.pathname.includes('/Sandbox')
                                 ? 'w-7 pb-2'
                                 : 'w-7 pb-2'
                             }
                             src={
-                              location.pathname.includes('/admin')
-                                ? '/admin_selected.svg'
-                                : '/admin.svg'
+                              location.pathname.includes('/Sandbox')
+                                ? '/selfService_selected.svg'
+                                : '/selfService.svg'
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/admin')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes('/Sandbox')
+                              ? 'font-bold text-xs text-[#024D87] -mt-1 text-center'
+                              : 'font-light text-xs -mt-1 text-center'
                           }
                         >
-                          Admin
+                          AI Sandbox
                         </p>
                       </div>
                     </AccordionButton>
                   </Link>
                 </h2>
-              </AccordionItem> */}
+              </AccordionItem>
             </Accordion>
             {/* <div className="w-full mt-4 cursor-pointer hover:scale-110 hover:transition duration-200">
           <div className="w-full flex justify-center"><img  src="/bot.svg" alt="home logo" /></div>

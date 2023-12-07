@@ -4,28 +4,36 @@ import {
   RadioGroup,
   Checkbox,
   CheckboxGroup,
+  useToast,
 } from "@chakra-ui/react";
 import { useState, useRef } from "react";
 import SecondaryButton from "../../../util/Buttons/SecondaryButton";
 import TextButton from "../../../util/Buttons/TextButton";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
+import TonalButton from "../../../util/Buttons/TonalButton";
+import { useNavigate } from "react-router-dom";
 
 const CreateNew = () => {
   const [selectedType, setSelectedType] = useState("Image");
   const [prepareData, setPrepareData] = useState("No");
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedModel, setSelectedModel] = useState([]);
+  const [file, setFile] = useState(null);
+  const navigate = useNavigate();
+  const toast = useToast();
   const fileInputRef = useRef(null);
   const dataPrepare = ["Yes", "No"];
   const dataOptions = {
     Image: {
       formats: ["jpg", "jpeg", "png"],
       option: ["Auto-clean", "Auto-annotate", "Auto-classify"],
-      models: [],
+      models: ["Azure", "YoloV8", "Ultralytics"],
       enable: true,
     },
     Video: {
       formats: ["mp4"],
       option: ["Auto-clean", "Auto-annotate", "Auto-classify"],
-      models: [],
+      models: ["Azure"],
       enable: true,
     },
     Text: {
@@ -40,13 +48,29 @@ const CreateNew = () => {
         return selectedType.toLowerCase() + "/" + ext;
       });
       if (acceptedTypes.includes(selectedFile.type)) {
-        console.log("File type is accepted:", selectedFile.type);
+        setFile(selectedFile);
+        toast({
+          title: "Uploaded",
+          description: "File succesfully uploaded",
+          status: "success",
+          position: "top-right",
+          duration: 2000,
+          isClosable: true,
+        });
       } else {
-        console.log(
-          "Invalid file type. Please choose a different file.",
-          selectedFile.type,
-          acceptedTypes
-        );
+        toast({
+          title: "Error",
+          description: (
+            <div>
+              <p>{`Accepted formats: [${acceptedTypes.join(", ")}]`}</p>
+              <p>{`Uploaded file: ${selectedFile.type}`}</p>
+            </div>
+          ),
+          status: "error",
+          position: "top-right",
+          duration: 6000,
+          isClosable: true,
+        });
       }
     }
   };
@@ -57,11 +81,11 @@ const CreateNew = () => {
       <div className="flex flex-col gap-3">
         <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#79767D] text-sm font-medium">Project name</p>
-          <div className="w-[310px]">
+          <div style={{ width: "fit-content" }}>
             <Input type="text" />
           </div>
         </div>
-        <div className="p-6 flex flex-col gap-3 bg-white">
+        <div className="p-6 flex flex-col gap-3 bg-white rounded-lg">
           <p className="text-[#3E3C42] text-lg font-medium">Data set</p>
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-3">
@@ -182,7 +206,8 @@ const CreateNew = () => {
                   <span className="text-[#DC362E]">*</span>
                 </p>
                 <p className="text-[#AEA9B1] text-sm">
-                  Supported formats: {dataOptions[selectedType].formats.join(", ")}
+                  Supported formats:{" "}
+                  {dataOptions[selectedType].formats.join(", ")}
                 </p>
               </div>
               <div className="flex gap-4 text-[#AEA9B1] text-sm items-center">
@@ -201,14 +226,79 @@ const CreateNew = () => {
                   }}
                 />
                 <p>or</p>
-                <TextButton
-                  text={"Connect to cloud bucket"}
-                  width={"fit-content"}
-                />
+                <div className="flex items-center gap-0">
+                  <TextButton text={'Link Bucket'} width={'fit-content'}/>
+                  <div style={{ width: "fit-content" }}>
+                    <Input type="text" placeholder="Supported Aws"/>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="p-6 bg-white rounded-lg flex flex-col gap-3">
+          <p className="text-[#3E3C42] text-lg font-medium">Model</p>
+          <div className="flex flex-col gap-3">
+            <p className="text-[#79767D] text-sm font-medium">
+              Select the model
+            </p>
+            <RadioGroup onChange={setSelectedModel} value={selectedModel}>
+              <div
+                className="grid grid-cols-4 gap-2"
+                style={{ width: "fit-content" }}
+              >
+                {dataOptions[selectedType].models.map((x) => {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor: selectedModel.includes(x)
+                          ? "#DDEEFF80"
+                          : "#FFF",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <Radio
+                        value={x}
+                        py={"8px"}
+                        pl={"8px"}
+                        pr={"12px"}
+                        fontSize={"14px"}
+                        fontWeight={500}
+                        color={"#3E3C42"}
+                        _checked={{
+                          bg: "#6CA6FC",
+                          borderColor: "#6CA6FC",
+                        }}
+                        _hover={{
+                          borderColor: "#6CA6FC",
+                        }}
+                      >
+                        {x}
+                      </Radio>
+                    </div>
+                  );
+                })}
+              </div>
+            </RadioGroup>
+            <p className="text-[#3E3C42] text-sm font-medium">OR</p>
+            <div className="flex flex-col gap-3">
+              <p className="text-[#79767D] text-sm font-medium">Model link</p>
+              <div style={{ width: "fit-content" }}>
+                <Input type="text" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex gap-[10px] items-center mt-2">
+        <PrimaryButton text={"Train model"} width={"fit-content"} />
+        <TonalButton
+          text={"Discard"}
+          width={"fit-content"}
+          onClick={() => {
+            navigate("/Sandbox");
+          }}
+        />
       </div>
     </div>
   );

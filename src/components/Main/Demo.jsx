@@ -1,6 +1,7 @@
 import { Spinner } from '@chakra-ui/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
+import { baseURL } from '../..';
 
 const Demo = () => {
 
@@ -16,7 +17,7 @@ const Demo = () => {
 
     const getDemo = async () => {
         try {
-            const data = await fetch(`https://backend-ripik.com/api/demo/get/${param.product}`, {
+            const data = await fetch(baseURL + `demo/get/${param.product}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

@@ -104,7 +104,7 @@ const Login = () => {
     try {
       console.log('making a post request for login');
       const login_response = await fetch(
-        'https://backend-ripik.com/api/verify',
+        baseURL + 'verify',
         {
           credentials: 'same-origin',
           method: 'POST',
