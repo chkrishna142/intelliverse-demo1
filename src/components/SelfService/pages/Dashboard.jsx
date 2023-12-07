@@ -101,7 +101,10 @@ const Dashboard = () => {
           <p className="text-[#605D64] text-lg font-medium">
             Your list of projects
           </p>
-          <div className="bg-[#fafafa] overflow-y-auto h-[50vh] sm:h-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1440px]:grid-cols-4 min-[1750px]:grid-cols-5 min-[2150px]:grid-cols-6 gap-6 text-base font-medium text-[#3E3C42]">
+          <div
+            className="bg-[#fafafa] p-2 overflow-y-auto max-h-[50vh] sm:max-h-max grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1440px]:grid-cols-4 min-[1750px]:grid-cols-5 min-[2150px]:grid-cols-6 gap-6 text-base font-medium text-[#3E3C42]"
+            style={{ height: "fit-content" }}
+          >
             <div
               className="rounded p-3 w-full h-[210px] flex flex-col justify-center gap-3 items-center bg-white"
               style={{
@@ -109,7 +112,7 @@ const Dashboard = () => {
                   "-4px -4px 24px 0px rgba(0, 0, 0, 0.07), 4px 4px 24px 0px rgba(0, 0, 0, 0.07)",
               }}
             >
-              <Link to={'/Sandbox/Create'}>
+              <Link to={"/Sandbox/Create"}>
                 <div className="p-[10px] bg-[#DEF] text-center rounded cursor-pointer hover:scale-105">
                   <img src="/selfServiceIcons/add.svg" alt="add" />
                 </div>
