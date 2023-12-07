@@ -83,8 +83,8 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
           onClick={(e)=>handleViewAnswerClick(row.queryId,e)}
           style={{ color: "#2196F3"}}  
         >
-          <InfoOutlineIcon />
-          {/* <VisibilityIcon /> */}
+          {/* <InfoOutlineIcon /> */}
+          <VisibilityIcon />
         </IconButton>
       ),
     },
