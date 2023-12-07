@@ -213,7 +213,7 @@ const Expert = () => {
                       {question[0]?.question}
                     </p>
                     <div className="mt-2 flex items-center gap-2">
-                      <p className="font-semibold">User Attachments: </p>
+                      <p className="font-semibold">User Provided Attachments: </p>
                       {attachments?.map((item, index) => {
                         return (
                           <p
