@@ -238,8 +238,7 @@ function App() {
                     <Route
                       path="/vision/workforceMonitoring/:material/:clientId"
                       element={
-                        pathname.split('/')[3].toLowerCase() ===
-                        'blendcompliancetracking' ? (
+                        pathname.split('/')[3] === 'blendcompliancetracking' ? (
                           <BlendComplianceTracking />
                         ) : (
                           <WorkforceSafety />
