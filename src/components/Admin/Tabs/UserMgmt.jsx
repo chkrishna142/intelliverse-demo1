@@ -21,6 +21,7 @@ import {
   ModalContent,
   Flex,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
 import { AddNewModal, DeleteUserModal, EditUserModal } from "./UserModals";
@@ -51,6 +52,8 @@ const UserMgmt = () => {
   const [displayData, setDisplayData] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
   const [downloadData, setDownloadData] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const fetchUsers = async () => {
     try {
       const response = await axios.get(baseURL + "iam/users", {
@@ -76,6 +79,7 @@ const UserMgmt = () => {
       console.log(err);
     }
   };
+
   const fetchDownloadApi = async () => {
     const header = { header: "users" };
     try {
@@ -88,18 +92,18 @@ const UserMgmt = () => {
 
       //setting order for downloading data
       setDownloadData(response.data);
+      setLoading(false)
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
+    if(auth){setLoading(true)
     fetchUsers();
-    fetchDownloadApi();
-  }, []);
+    fetchDownloadApi();}
+  }, [auth]);
 
-  // useEffect(() => {
-  //   setDisplayData(displayUsers);
-  // }, [displayUsers]);
+ 
 
   useEffect(() => {
     setDisplayUsers(users);
@@ -325,7 +329,7 @@ const UserMgmt = () => {
             </div>
           </div>
         </div>
-        {displayData && displayData.length != 0 && (
+        {/* {displayData && displayData.length != 0 && (
           <UserMngmtTable
             rowData={displayData}
             setIsOpenE={setIsOpenE}
@@ -336,7 +340,29 @@ const UserMgmt = () => {
             setUserRole={setUserRole}
             setContact={setContact}
           />
-        )}
+        )} */}
+        {loading ? (
+        <div className="ml-[50%]">
+          <Spinner speed="0.65s" />
+        </div>
+      ) : (
+        <React.Fragment>
+          {displayData && displayData.length !== 0 ? (
+          <UserMngmtTable
+          rowData={displayData}
+          setIsOpenE={setIsOpenE}
+          setIsOpenD={setIsOpenD}
+          setSelectedUser={setSelectedUser}
+          setFullName={setFullName}
+          setUserEmail={setUserEmail}
+          setUserRole={setUserRole}
+          setContact={setContact}
+        />
+           ) : (
+            <p className="ml-[45%]">No data available!</p>
+          )} 
+        </React.Fragment>
+      )}
       </div>
       <DeleteUserModal
         isOpen={isOpenD}

@@ -102,7 +102,7 @@ const ActiveSubsTable = ({ activeSubs }) => {
     val["cellClassName"] = cellClass;
     val["flex"] = flexMap[idx];
   });
-  console.log("active subs",activeSubs)
+  console.log("active subs table",activeSubs)
   return (
     <div className="overflow-x-auto mt-2">
       <ThemeProvider theme={MuiTheme}>

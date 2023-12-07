@@ -9,6 +9,7 @@ import NavContext from "../../NavContext";
 import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import SessionLogsTable from "../Tables/SessionLogsTable";
+import { Spinner } from "@chakra-ui/react";
 
 const SessionLogs = () => {
   const { auth } = useContext(NavContext);
@@ -22,11 +23,15 @@ const SessionLogs = () => {
   });
   const [displayData, setDisplayData] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    apiCall();
-    fetchDownloadApi();
-  }, []);
+    if (auth) {
+      setLoading(true);
+      apiCall();
+      fetchDownloadApi();
+    }
+  }, [auth]);
 
   const apiCall = async () => {
     const obj = { header: "logs" };
@@ -44,7 +49,9 @@ const SessionLogs = () => {
       });
 
       setSessions(sortedUsers);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -183,18 +190,35 @@ const SessionLogs = () => {
                 enable={true}
               />
             )}
-            <Paginator
-              data={displaySessions}
-              limit={6}
-              setDisplayData={setDisplayData}
-            />
           </div>
         </div>
       </div>
       <div>
-        {displayData && displayData.length != 0 && (
+        {/* {displayData && displayData.length != 0 && (
           <SessionLogsTable rowData={displayData} />
+        )} */}
+        {loading ? (
+          <div className="ml-[50%]">
+            <Spinner speed="0.65s" />
+          </div>
+        ) : (
+          <React.Fragment>
+            {displayData && displayData.length !== 0 ? (
+              <SessionLogsTable rowData={displayData} />
+            ) : (
+              <p className="ml-[45%]">No data available.</p>
+            )}
+          </React.Fragment>
         )}
+      </div>
+      <div className="flex items-end justify-end">
+        <div>
+          <Paginator
+            data={displaySessions}
+            limit={6}
+            setDisplayData={setDisplayData}
+          />
+        </div>
       </div>
     </div>
   );

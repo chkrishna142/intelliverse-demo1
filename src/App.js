@@ -74,21 +74,27 @@ function App() {
 
   useEffect(() => {
     if (login) {
-      mixpanel.identify(email);
-      mixpanel.people.set('$email', email);
-      mixpanel.people.set('$name', fullName);
-      mixpanel.people.set('organisation', organisation) &&
-        console.log('Mixpanel organisation', organisation);
-      mixpanel.people.set('role', userType);
-      mixpanel.people.set('$region', location);
-      mixpanel.people.set('$phone', phoneNumber);
+      mixpanel.identify(localStorage.getItem('email'));
+      mixpanel.people.set('$email', localStorage.getItem('email'));
+      mixpanel.people.set('$name', localStorage.getItem('fullname'));
+      mixpanel.people.set(
+        'organisation',
+        localStorage.getItem('organisation')
+      ) &&
+        console.log(
+          'Mixpanel organisation',
+          localStorage.getItem('organisation')
+        );
+      mixpanel.people.set('role', localStorage.getItem('user_type'));
+      mixpanel.people.set('$region', localStorage.getItem('location'));
+      mixpanel.people.set('$phone', localStorage.getItem('phone'));
       mixpanel.register({
-        email: email,
-        role: userType,
-        organisation: organisation,
+        email: localStorage.getItem('email'),
+        role: localStorage.getItem('user_type'),
+        organisation: localStorage.getItem('organisation'),
       });
     }
-  }, [login]);
+  }, [login, organisation, fullName, phoneNumber, userType, location]);
 
   return (
     <>
