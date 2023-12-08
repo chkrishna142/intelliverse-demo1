@@ -44,7 +44,7 @@ const AdminHome = () => {
               }
               onClick={() => setPage("activesubs")}
             >
-              Active subscriptions
+              Subscriptions
             </Tab>
             <Tab
               className={

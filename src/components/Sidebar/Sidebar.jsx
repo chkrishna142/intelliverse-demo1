@@ -411,8 +411,8 @@ const Sidebar = () => {
                             }
                             src={
                               location.pathname.includes('/superadmin')
-                                ? '/superblue.png'
-                                : '/superwhite.png'
+                                ? '/supericon1.png'
+                                : '/supericon2.png'
                             }
                             alt="home logo"
                           />

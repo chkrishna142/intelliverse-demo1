@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 const TokenData = () => {
-  
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleToken = () => {
     navigate("/community/advisor/buycredits");
   };
@@ -21,10 +20,13 @@ const TokenData = () => {
               {/* coin icons */}
               <img src="/token.svg" alt="coins" />
             </div>
-            
-            <div className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer" onClick={handleToken}>
-                Add tokens
-              </div>
+
+            <div
+              className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer"
+              onClick={handleToken}
+            >
+              Buy Tokens
+            </div>
           </div>
           <p className="text-[#605D64] text-[14px] ">Total Enterprise Tokens</p>
         </div>
@@ -43,7 +45,7 @@ const TokenData = () => {
             </div>
             <p className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer"></p>
           </div>
-          <p className="text-[#605D64] text-[14px] ">Allotted to users</p>
+          <p className="text-[#605D64] text-[14px] ">Allocated to users</p>
         </div>
       </div>
       {/* unalloted coins */}
@@ -61,7 +63,7 @@ const TokenData = () => {
             </div>
             <p className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer"></p>
           </div>
-          <p className="text-[#605D64] text-[14px] ">Unallotted Tokens</p>
+          <p className="text-[#605D64] text-[14px] ">Unallocated Tokens</p>
         </div>
       </div>
     </div>
