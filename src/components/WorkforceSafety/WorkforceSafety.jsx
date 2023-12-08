@@ -34,7 +34,7 @@ const WorkforceSafety = () => {
       </div>
       <div className="flex justify-start gap-2 items-center mb-3 mt-6">
       <Link
-          to={`/vision/workforceMonitoring/${param.material}`}
+          to={`/vision/workforceMonitoring/workforcesafety`}
           style={{
             textDecoration: "none",
           }}
@@ -85,7 +85,7 @@ const WorkforceSafety = () => {
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
             <Feed
-              material={param.material.toLowerCase()}
+              material={'workforcesafety'}
               clientId={param.clientId.toLowerCase()}
               setPlantCamMap={setPlantCamMap}
             />

@@ -75,7 +75,7 @@ const Feed = () => {
   const LiveAlertsApi = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
+      useCase: 'WORKFORCESAFETY',
       plantName: "khandala",
       cameraGpId: selectedBay,
       endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
@@ -110,7 +110,7 @@ const Feed = () => {
   const BaysApiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
+      useCase: 'WORKFORCESAFETY',
       plantName: "khandala",
       cameraGpId: "all",
     });
@@ -166,7 +166,7 @@ const Feed = () => {
   const LiveSummaryApi = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
+      useCase: 'WORKFORCESAFETY',
       plantName: "khandala",
       cameraGpId: selectedBay,
       endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
