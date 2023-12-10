@@ -29,7 +29,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const AlertApi = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
+      useCase: 'WORKFORCESAFETY',
       plantName: "khandala",
       cameraGpId: "all",
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,

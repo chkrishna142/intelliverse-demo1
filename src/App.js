@@ -115,6 +115,9 @@ function App() {
       pathname === '/vision/workforceMonitoring/workforcesafety/asianpaints'
     ) {
       mixpanel.track('Asianpaints workforcesafety page visited');
+    } else if (pathname) {
+      let str = pathname.split('/').slice(1).reverse().join(' ');
+      mixpanel.track(`${str} page visited`);
     }
   }, [pathname]);
 
@@ -233,20 +236,15 @@ function App() {
                     {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
                     {/*Workforce pages*/}
+                    {/*Workforcesafety */}
                     <Route
-                      path="/vision/blendComplianceTracking"
-                      element={<BlendComplianceTracking />}
+                      path="/vision/workforceMonitoring/workforcesafety/:clientId"
+                      element={<WorkforceSafety />}
                     />
-                    {/*Workforce pages*/}
+                    {/*Workforcesafety */}
                     <Route
-                      path="/vision/workforceMonitoring/:material/:clientId"
-                      element={
-                        pathname.split('/')[3] === 'blendcompliancetracking' ? (
-                          <BlendComplianceTracking />
-                        ) : (
-                          <WorkforceSafety />
-                        )
-                      }
+                      path="/vision/workforceMonitoring/blendcompliance/:clientId"
+                      element={<BlendComplianceTracking />}
                     />
                     {/* Profile Pages */}
                     <Route path="/contactus" element={<ConatctUs />} />

@@ -1,15 +1,15 @@
-import MaterialCard from './MaterialCard';
-import NavContext from '../components/NavContext';
-import { baseURL, bseURL } from '../index';
-import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useContext, useEffect, useState } from 'react';
+import MaterialCard from "./MaterialCard";
+import NavContext from "../components/NavContext";
+import { baseURL, bseURL } from "../index";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 
 const useCase = {
-  Sizing: ['Particle Sizing'],
-  ProcessMonitoring: ['Colour scheme analysis'],
-  qualityTracking: ['Counting and Tracking', 'Quality Check'],
-  workforceMonitoring: ['Object Monitoring'],
+  Sizing: ["Particle Sizing"],
+  ProcessMonitoring: ["Colour scheme analysis"],
+  qualityTracking: ["Counting and Tracking", "Quality Check"],
+  workforceMonitoring: ["Object Monitoring"],
   // datadigitization: ["Automated Data Digitization"],
 };
 
@@ -35,11 +35,11 @@ const MaterialSelect = () => {
       category: param.category.toLowerCase(),
     });
     const response = await axios
-      .post(baseURL + 'vision/v2/product/overview/', requestData, {
-        credentials: 'same-origin',
+      .post(baseURL + "vision/v2/product/overview/", requestData, {
+        credentials: "same-origin",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': auth,
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
         },
       })
       .then((response) => {
@@ -52,10 +52,10 @@ const MaterialSelect = () => {
 
   const apiCallinit = async () => {
     const response = await axios
-      .get(baseURL + 'service/getallServ', {
+      .get(baseURL + "service/getallServ", {
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': auth,
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
         },
       })
       .then((response) => {
@@ -90,7 +90,7 @@ const MaterialSelect = () => {
             <Link
               to="/home"
               style={{
-                textDecoration: 'none',
+                textDecoration: "none",
               }}
             >
               <img src="/backtick.svg" />
@@ -104,19 +104,11 @@ const MaterialSelect = () => {
                   material={x}
                   alerts={0}
                   deployments={
-                    x === 'blend compliance tracking'
-                      ? materialData.hasOwnProperty(
-                          x.split(' ').slice(0, 3).join('').toLowerCase()
-                        )
-                        ? materialData[
-                            x.split(' ').slice(0, 3).join('').toLowerCase()
-                          ].deployments
-                        : 0
-                      : materialData.hasOwnProperty(
-                          x.split(' ').slice(0, 2).join('').toLowerCase()
-                        )
+                    materialData.hasOwnProperty(
+                      x.split(" ").slice(0, 2).join("").toLowerCase()
+                    )
                       ? materialData[
-                          x.split(' ').slice(0, 2).join('').toLowerCase()
+                          x.split(" ").slice(0, 2).join("").toLowerCase()
                         ].deployments
                       : 0
                   }
