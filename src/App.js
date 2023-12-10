@@ -45,6 +45,9 @@ import CreateNew from './components/SelfService/pages/CreateNew';
 import mixpanel from 'mixpanel-browser';
 import DetailView from './components/SelfService/pages/DetailView';
 import AddClients from './components/SuperAdmin/AddClients/AddClients';
+import CreateClient from './components/SuperAdmin/AddClients/CreateClient';
+import ViewClient from './components/SuperAdmin/AddClients/ViewClient';
+import UpdateClient from './components/SuperAdmin/AddClients/UpdateClient';
 
 function App() {
   const [login, setLogin] = useState(localStorage.getItem('logged_in')); // used on Login.jsx to set login provider to true
@@ -288,6 +291,18 @@ function App() {
                     <Route
                       path="/superadmin/addclient"
                       element={<AddClients />}
+                    />
+                    <Route
+                      path="/superadmin/addclient/add"
+                      element={<CreateClient />}
+                    />
+                    <Route
+                      path="/superadmin/viewClient/:clientId"
+                      element={<ViewClient />}
+                    />
+                    <Route
+                      path="/superadmin/update/:clientId"
+                      element={<UpdateClient />}
                     />
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />

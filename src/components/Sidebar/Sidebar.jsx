@@ -402,12 +402,12 @@ const Sidebar = () => {
                             : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
                         }
                       >
-                        <div className="w-full flex justify-center">
+                        <div className="w-full flex">
                           <img
                             className={
                               location.pathname.includes('/superadmin')
-                                ? 'w-7 pb-2'
-                                : 'w-7 pb-2'
+                                ? 'w-9 pb-2 ml-2'
+                                : 'w-9 pb-2 ml-1'
                             }
                             src={
                               location.pathname.includes('/superadmin')
@@ -420,8 +420,8 @@ const Sidebar = () => {
                         <p
                           className={
                             location.pathname.includes('/superadmin')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1'
-                              : 'font-light text-xs -mt-1'
+                              ? 'font-bold text-xs text-[#024D87] -mt-1 mr-1'
+                              : 'font-light text-xs -mt-1 mr-1'
                           }
                         >
                           Super Admin
