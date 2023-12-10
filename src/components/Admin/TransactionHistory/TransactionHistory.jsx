@@ -231,7 +231,7 @@ const TransactionHistory = () => {
               </div>
               <div onClick={handleToken}>
                 <p className="text-[#3A74CA] font-bold text-[14px] cursor-pointer">
-                  Add Tokens
+                Buy Tokens
                 </p>
               </div>
             </div>
