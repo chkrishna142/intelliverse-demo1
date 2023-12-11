@@ -11,39 +11,7 @@ import axios from "axios";
 const AddClients = () => {
   const { auth } = useContext(NavContext);
   const [clients, setClients] = useState([]);
-  // const data = [
-  //   {
-  //     id: 1,
-  //     founded: "12th September 2023",
-  //     name: "orange detection",
-  //     client: "AsianPaints",
-  //     vision: "4",
-  //     optimus: "3",
-  //     users: "4",
-  //     locations: ["baska", "Halol", "Pathankot", "pathankot"],
-  //   },
-  //   {
-  //     id: 2,
-  //     founded: "12th September 2023",
-  //     name: "orange detection",
-  //     client: "AsianPaints",
-  //     vision: "4",
-  //     optimus: "3",
-  //     users: "4",
-  //     locations: ["baska", "Halol", "Pathankot", "pathankot"],
-  //   },
-  //   {
-  //     id: 2,
-  //     founded: "12th September 2023",
-  //     name: "orange detection",
-  //     client: "AsianPaints",
-  //     vision: "4",
-  //     optimus: "3",
-  //     users: "4",
-  //     locations: ["baska", "Halol", "Pathankot", "pathankot"],
-  //   },
-  // ];
-
+ 
   const fetchClients = async () => {
     try {
       const response = await axios.get(baseURL + "iam/fetchClient", {
@@ -76,9 +44,9 @@ const AddClients = () => {
   console.log("cl",clients)
   return (
     <div className="mt-[3vh] flex rounded-lg bg-white p-5 border ">
-      <div className="bg-[#fafafa] p-4 w-[75%] overflow-y-auto sm:h-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1440px]:grid-cols-4 min-[1750px]:grid-cols-4 min-[2150px]:grid-cols-5 gap-4 text-base font-medium text-[#3E3C42]">
+      <div className="bg-[#fafafa]  p-4 w-[75%] overflow-y-auto sm:h-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1440px]:grid-cols-4 min-[1750px]:grid-cols-4 min-[2150px]:grid-cols-5 gap-4 text-base font-medium text-[#3E3C42]">
         <div
-          className="rounded p-3 w-full flex flex-col justify-center gap-3 items-center bg-white"
+          className="rounded p-3 w-full flex flex-col justify-center gap-3 items-center bg-white min-h-[250px]"
           style={{
             boxShadow:
               "-4px -4px 24px 0px rgba(0, 0, 0, 0.07), 4px 4px 24px 0px rgba(0, 0, 0, 0.07)",
@@ -91,7 +59,7 @@ const AddClients = () => {
           </Link>
           <p className="font-bold">Add new client</p>
         </div>
-        {clients && clients.length !=0 && clients.map((items) => {
+        {clients && clients.length !=0 && clients?.map((items) => {
           return <ProjectCard data={items} fetchClientsFun={fetchClients}/>;
         })}
       </div>

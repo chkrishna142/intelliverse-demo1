@@ -18,6 +18,7 @@ import {
   ModalFooter,
   ModalBody,
   Button,
+  Text,
 } from "@chakra-ui/react";
 import { useState, useRef, useEffect, useContext } from "react";
 import SecondaryButton from "../../../util/Buttons/SecondaryButton";
@@ -57,7 +58,7 @@ const UpdateClient = () => {
   const [purchaseOrderCode, setPurchaseOrderCode] = useState("");
   const [remarks, setRemarks] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSubmitDisable, setSubmitDisable] = useState(true);
+  const [submitClicked, setSubmitClicked] = useState(false);
 
   const [selectedCountryCodeClient, setSelectedCountryCodeClient] =
     useState("+91");
@@ -66,9 +67,7 @@ const UpdateClient = () => {
 
   const toast = useToast();
   const [relationDate, setRelationDate] = useState(
-    new Date(
-      new Date().getTime() - 30 * 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000
-    )
+    new Date(new Date().getTime() + 5.5 * 60 * 60 * 1000)
       .toISOString()
       .slice(0, 10)
   );
@@ -112,6 +111,10 @@ const UpdateClient = () => {
     navigate("/superadmin/addclient");
   };
   const handleSubmit = async () => {
+    
+    setSubmitClicked(true);
+
+
     const formattedClientPhoneNumber = clientPhoneNumber.startsWith(
       selectedCountryCodeClient
     )
@@ -143,8 +146,9 @@ const UpdateClient = () => {
       !ripikEmail ||
       !ripikPhoneNumber ||
       !ripikSecContactName ||
-      !relationDate
-      // Add more conditions for other required fields
+      !relationDate ||
+      !purchaseOrderCode
+      
     ) {
       // Show a toast if any required field is empty
       toast({
@@ -203,7 +207,7 @@ const UpdateClient = () => {
       //   isClosable: true,
       //   position: 'top',
       // });
-     navigate(`/superadmin/viewClient/${clientId}`)
+      navigate("/superadmin/addclient");
       // console.log("submit", response);
     } catch (error) {
       // toast({
@@ -297,8 +301,18 @@ const UpdateClient = () => {
                   type="text"
                   value={clientName}
                   required
+                  borderColor={
+                    submitClicked && !clientName ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setClientName(e.target.value)}
+
                 />
+                {submitClicked && !clientName && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the client name.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -368,8 +382,17 @@ const UpdateClient = () => {
                   type="text"
                   value={industryValue}
                   required
+                  borderColor={
+                    submitClicked && !industryValue ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setIndustryValue(e.target.value)}
                 />
+                {submitClicked && !industryValue && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the industry.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -381,6 +404,7 @@ const UpdateClient = () => {
                   type="text"
                   value={subIndustryValue}
                   required
+                 
                   onChange={(e) => setSubIndustryValue(e.target.value)}
                 />
               </div>
@@ -450,8 +474,17 @@ const UpdateClient = () => {
               <Input
                 type="text"
                 value={numberOfUsers}
+                borderColor={
+                  submitClicked && !numberOfUsers ? "red.500" : "gray.300"
+                }
+                borderWidth={"2px"}
                 onChange={(e) => setNumberOfUsers(e.target.value)}
               />
+              {submitClicked && !numberOfUsers && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter number Of users.
+                  </Text>
+                )}
             </div>
           </div>
         </div>
@@ -469,8 +502,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={clientHqLocation}
+                  borderColor={
+                    submitClicked && !clientHqLocation ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setClientHqLocation(e.target.value)}
                 />
+                {submitClicked && !clientHqLocation && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the Client HQ location.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -482,6 +524,7 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={hqLocationAddress}
+                 
                   onChange={(e) => setHqLocationAddress(e.target.value)}
                 />
               </div>
@@ -497,8 +540,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={totalClientLocations}
+                  borderColor={
+                    submitClicked && !totalClientLocations ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setTotalClientLocations(e.target.value)}
                 />
+                {submitClicked && !totalClientLocations && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                   Total client locations.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -512,8 +564,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={allLocations}
+                  borderColor={
+                    submitClicked && !allLocations ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setAllLocations(e.target.value)}
                 />
+                {submitClicked && !allLocations && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter Enter all locations.
+                  </Text>
+                )}
               </div>
             </div>
           </div>
@@ -532,8 +593,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={clientPrimaryContactName}
+                  borderColor={
+                    submitClicked && !clientPrimaryContactName ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setClientPrimaryContactName(e.target.value)}
                 />
+                {submitClicked && !clientPrimaryContactName && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter Primary contact name.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -542,8 +612,17 @@ const UpdateClient = () => {
                 <Input
                   type="email"
                   value={clientEmail}
+                  borderColor={
+                    submitClicked && !clientEmail ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setClientEmail(e.target.value)}
                 />
+                {submitClicked && !clientEmail && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the E-mail.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -570,9 +649,18 @@ const UpdateClient = () => {
                   <Input
                     type="tel"
                     value={clientPhoneNumber}
+                    borderColor={
+                      submitClicked && !clientPhoneNumber ? "red.500" : "gray.300"
+                    }
+                    borderWidth={"2px"}
                     onChange={(e) => setClientPhoneNumber(e.target.value)}
                   />
                 </div>
+                {submitClicked && !clientPhoneNumber && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the Phone number.
+                  </Text>
+                )}
               </div>
             </div>
           </div>
@@ -585,8 +673,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={clientSecContactName}
+                  borderColor={
+                    submitClicked && !clientSecContactName ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setClientSecContactName(e.target.value)}
                 />
+                {submitClicked && !clientSecContactName && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter secondary contact name.
+                  </Text>
+                )}
               </div>
             </div>
           </div>
@@ -605,8 +702,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={ripikPrimaryContactName}
+                  borderColor={
+                    submitClicked && !ripikPrimaryContactName ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setRipikPrimaryContactName(e.target.value)}
                 />
+                {submitClicked && !ripikPrimaryContactName && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter Primary contact name.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -615,8 +721,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={ripikEmail}
+                  borderColor={
+                    submitClicked && !ripikEmail ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setRipikEmail(e.target.value)}
                 />
+                {submitClicked && !ripikEmail && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the E-mail.
+                  </Text>
+                )}
               </div>
             </div>
             <div>
@@ -647,9 +762,19 @@ const UpdateClient = () => {
                 <Input
                   type="tel"
                   value={ripikPhoneNumber}
+                  borderColor={
+                    submitClicked && !ripikPhoneNumber ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setRipikPhoneNumber(e.target.value)}
                 />
+                
               </div>
+              {submitClicked && !ripikPhoneNumber && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter the Phone number.
+                  </Text>
+                )}
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -661,8 +786,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={ripikSecContactName}
+                  borderColor={
+                    submitClicked && !ripikSecContactName ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setRipikSecContactName(e.target.value)}
                 />
+                {submitClicked && !ripikSecContactName && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter Secondary contact name.
+                  </Text>
+                )}
               </div>
             </div>
           </div>
@@ -724,8 +858,17 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={purchaseOrderCode}
+                  borderColor={
+                    submitClicked && !purchaseOrderCode ? "red.500" : "gray.300"
+                  }
+                  borderWidth={"2px"}
                   onChange={(e) => setPurchaseOrderCode(e.target.value)}
                 />
+                {submitClicked && !purchaseOrderCode && (
+                  <Text color="red.500" fontSize="sm" mt="1">
+                    Please enter First purchase order code.
+                  </Text>
+                )}
               </div>
             </div>
           </div>

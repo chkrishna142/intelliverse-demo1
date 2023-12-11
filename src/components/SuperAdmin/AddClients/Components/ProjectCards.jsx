@@ -105,7 +105,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
   const handleUpdate = () => {
     navigate(`/superadmin/update/${data.clientId}`);
   };
-  const locationString = data.totalClientLocation;
+  const locationString = data.enterAllLocation;
   const locations = locationString.split(",");
   const maxLocationsToShow = 3;
 
