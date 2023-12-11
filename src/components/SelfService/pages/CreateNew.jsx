@@ -20,10 +20,11 @@ const CreateNew = () => {
   const [selectedType, setSelectedType] = useState("Image");
   const projectNameRef = useRef(null);
   const modelLinkRef = useRef(null);
+  const userTextref = useRef(null);
   const bucketLinkRef = useRef(null);
   const [prepareData, setPrepareData] = useState("No");
   const { auth } = useContext(NavContext);
-  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState();
   const [selectedModel, setSelectedModel] = useState();
   const [ownModel, setOwnModel] = useState(false);
   const [file, setFile] = useState(null);
@@ -34,7 +35,7 @@ const CreateNew = () => {
   const dataOptions = {
     Image: {
       formats: ["jpg", "jpeg", "png"],
-      option: ["Auto-clean", "Auto-annotate", "Auto-classify"],
+      option: ["Detection", "Segmentation", "Classification"],
       models: ["Azure", "YoloV8", "Ultralytics"],
       enable: true,
     },
@@ -150,9 +151,11 @@ const CreateNew = () => {
             <Input type="text" ref={projectNameRef} />
           </div>
         </div>
+        {/*Data enter and prepare */}
         <div className="p-6 flex flex-col gap-3 bg-white rounded-lg">
           <p className="text-[#3E3C42] text-lg font-medium">Data set</p>
           <div className="flex flex-col gap-6">
+            {/*Data Type*/}
             <div className="flex flex-col gap-3">
               <p className="text-[#79767D] text-sm font-medium">
                 Select data type
@@ -193,6 +196,60 @@ const CreateNew = () => {
                 </div>
               </RadioGroup>
             </div>
+            {/*Text field what is to be done */}
+            <div className="flex flex-col gap-3">
+              <p className="text-[#79767D] text-sm font-medium">
+                What are you trying to detect?
+              </p>
+              <div style={{ width: "fit-content" }}>
+                <Input
+                  type="text"
+                  placeholder="Describe problem statement"
+                  ref={userTextref}
+                />
+              </div>
+            </div>
+            {/*Upload data */}
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <p className="text-[#79767D] text-sm font-medium">
+                  Upload {selectedType}
+                  <span className="text-[#DC362E]">*</span>
+                </p>
+                <p className="text-[#AEA9B1] text-sm">
+                  Supported formats:{" "}
+                  {dataOptions[selectedType].formats.join(", ")}
+                </p>
+              </div>
+              <div className="flex gap-4 text-[#AEA9B1] text-sm items-center">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+                <SecondaryButton
+                  Icon={<img src="/selfServiceIcons/upload.svg" alt="upload" />}
+                  text={"Upload files"}
+                  width={"fit-content"}
+                  onClick={() => {
+                    fileInputRef.current.click();
+                  }}
+                />
+                <p>or</p>
+                <div className="flex items-center gap-0">
+                  <TextButton text={"Link Bucket"} width={"fit-content"} />
+                  <div style={{ width: "fit-content" }}>
+                    <Input
+                      type="text"
+                      placeholder="Supported Aws"
+                      ref={bucketLinkRef}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/*Ask annotation*/}
             <div className="flex flex-col gap-3">
               <p className="text-[#79767D] text-sm font-medium">
                 Would you like to prepare data?
@@ -233,75 +290,44 @@ const CreateNew = () => {
                 </div>
               </RadioGroup>
               {prepareData == "Yes" && (
-                <CheckboxGroup
+                <RadioGroup
                   onChange={setSelectedOptions}
                   value={selectedOptions}
                 >
                   <div className="flex gap-1 items-center">
                     {dataOptions[selectedType].option.map((x) => {
                       return (
-                        <Checkbox
-                          value={x}
-                          py={"8px"}
-                          pl={"8px"}
-                          pr={"12px"}
-                          fontSize={"14px"}
-                          fontWeight={500}
-                          color={"#3E3C42"}
-                          rounded={"8px"}
-                          _checked={{
-                            bg: "#DDEEFF80",
-                          }}
-                          _hover={{
-                            borderColor: "#6CA6FC",
+                        <div
+                          style={{
+                            backgroundColor:
+                              x == selectedOptions ? "#DDEEFF80" : "#FFF",
+                            borderRadius: "8px",
                           }}
                         >
-                          {x}
-                        </Checkbox>
+                          <Radio
+                            value={x}
+                            py={"8px"}
+                            pl={"8px"}
+                            pr={"12px"}
+                            fontSize={"14px"}
+                            fontWeight={500}
+                            color={"#3E3C42"}
+                            _checked={{
+                              bg: "#6CA6FC",
+                              borderColor: "#6CA6FC",
+                            }}
+                            _hover={{
+                              borderColor: "#6CA6FC",
+                            }}
+                          >
+                            {x}
+                          </Radio>
+                        </div>
                       );
                     })}
                   </div>
-                </CheckboxGroup>
+                </RadioGroup>
               )}
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <p className="text-[#79767D] text-sm font-medium">
-                  Upload {selectedType}
-                  <span className="text-[#DC362E]">*</span>
-                </p>
-                <p className="text-[#AEA9B1] text-sm">
-                  Supported formats:{" "}
-                  {dataOptions[selectedType].formats.join(", ")}
-                </p>
-              </div>
-              <div className="flex gap-4 text-[#AEA9B1] text-sm items-center">
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                />
-                <SecondaryButton
-                  Icon={<img src="/selfServiceIcons/upload.svg" alt="upload" />}
-                  text={"Upload files"}
-                  width={"fit-content"}
-                  onClick={() => {
-                    fileInputRef.current.click();
-                  }}
-                />
-                <p>or</p>
-                <div className="flex items-center gap-0">
-                  <TextButton text={"Link Bucket"} width={"fit-content"} />
-                  <div style={{ width: "fit-content" }}>
-                    <Input
-                      type="text"
-                      placeholder="Supported Aws"
-                      ref={bucketLinkRef}
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -383,37 +409,40 @@ const CreateNew = () => {
           width={"fit-content"}
           disable={ownModel}
           onClick={() => {
-            if((selectedModel != '') && (file || bucketLinkRef.current.value != '' )){
-            const examplePromise = new Promise((resolve, reject) => {
-              setTimeout(() => resolve(200), 5000);
-            });
-            toast.promise(examplePromise, {
-              success: {
-                title: "Training Complete",
-                description: "Click on save changes to view results",
-                position: 'top-right'
-              },
-              error: {
-                title: "Promise rejected",
-                description: "Something wrong",
-                position: 'top-right'
-              },
-              loading: {
-                title: "Model is training",
-                description: "Please wait",
-                position: 'top-right'
-              },
-            });
-          }else {
-            toast({
-              title: "Error",
-              description: "model , dataset or both is/are missing",
-              status: "error",
-              position: "top-right",
-              duration: 2000,
-              isClosable: true,
-            });
-          }
+            if (
+              selectedModel != "" &&
+              (file || bucketLinkRef.current.value != "")
+            ) {
+              const examplePromise = new Promise((resolve, reject) => {
+                setTimeout(() => resolve(200), 5000);
+              });
+              toast.promise(examplePromise, {
+                success: {
+                  title: "Training Complete",
+                  description: "Click on save changes to view results",
+                  position: "top-right",
+                },
+                error: {
+                  title: "Promise rejected",
+                  description: "Something wrong",
+                  position: "top-right",
+                },
+                loading: {
+                  title: "Model is training",
+                  description: "Please wait",
+                  position: "top-right",
+                },
+              });
+            } else {
+              toast({
+                title: "Error",
+                description: "model , dataset or both is/are missing",
+                status: "error",
+                position: "top-right",
+                duration: 2000,
+                isClosable: true,
+              });
+            }
           }}
         />
         <PrimaryButton
