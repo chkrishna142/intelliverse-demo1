@@ -13,13 +13,13 @@ import {
 } from '@chakra-ui/react';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({userRole}) => {
   const location = useLocation();
   const size = useWindowSize();
   const InitialRoute = location.pathname === '/report' ? 'report' : 'real';
   const [route, setRoute] = useState(InitialRoute);
-  //const plantName = window.location.href.split("/")[3];
 
+  //const plantName = window.location.href.split("/")[3];
   return (
     <>
       {size.width >= 768 ? (
@@ -345,7 +345,7 @@ const Sidebar = () => {
                   </a>
                 </AccordionPanel>
               </AccordionItem>
-              <AccordionItem className="border-none -mt-4">
+              {userRole === "ADMIN" && (<AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/admin/usermanagement">
                     <AccordionButton
@@ -387,8 +387,8 @@ const Sidebar = () => {
                     </AccordionButton>
                   </Link>
                 </h2>
-              </AccordionItem>
-              <AccordionItem className="border-none -mt-4">
+              </AccordionItem>)}
+              {userRole === "SUPERADMIN" && (<AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/superadmin/addclient">
                     <AccordionButton
@@ -430,7 +430,7 @@ const Sidebar = () => {
                     </AccordionButton>
                   </Link>
                 </h2>
-              </AccordionItem>
+              </AccordionItem>)}
               <AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/Sandbox">
