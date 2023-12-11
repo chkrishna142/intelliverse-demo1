@@ -42,6 +42,7 @@ import AiExpertHistory from "./components/community/AiExpertHistory";
 import AskAnExpertHistory from "./components/community/AskAnExpertHistory";
 import Dashboard from "./components/SelfService/pages/Dashboard";
 import CreateNew from "./components/SelfService/pages/CreateNew";
+import CreateForm from "./components/SelfService/pages/CreateForm"
 import mixpanel from "mixpanel-browser";
 import DetailView from "./components/SelfService/pages/DetailView";
 import AddClients from "./components/SuperAdmin/AddClients/AddClients";
@@ -286,7 +287,7 @@ function App() {
                     />
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />
-                    <Route path="/Sandbox/Create" element={<CreateNew />} />
+                    <Route path="/Sandbox/Create" element={<CreateForm />} />
                     <Route path="/Sandbox/View" element={<DetailView />} />
                   </Routes>
                 </div>
