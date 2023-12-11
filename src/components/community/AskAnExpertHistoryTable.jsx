@@ -3,19 +3,61 @@ import { createTheme, ThemeProvider, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import { InfoIcon, InfoOutlineIcon, StarIcon } from "@chakra-ui/icons";
+import { useContext, useEffect, useState } from "react";
+import { InfoIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import NavContext from ".././NavContext";
-
+import { baseURL } from "../../index";
+import StarIcon from '@mui/icons-material/Star';
 const MuiTheme = createTheme();
 
-const AskAnExpertHistoryTable = ({ rowData }) => {
+const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
   const { auth } = useContext(NavContext);
 
   const navigate = useNavigate();
+  const [isStarredMap, setIsStarredMap] = useState({});
+  
+  useEffect(() => {
+    const initialStarredMap = {};
+    rowData.forEach((row) => {
+      initialStarredMap[row.queryId] = row.starred;
+    });
+    setIsStarredMap(initialStarredMap);
+  }, [rowData]);
+
+  const handleStarClick = async (queryId, event) => {
+    // Prevent the click from triggering when clicking on a button inside the row
+    if (event.target.tagName.toLowerCase() === "button") {
+      return;
+    }
+
+    try {
+      const response = await axios.patch(
+        baseURL + `questions/starred/${queryId}`,
+        null,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+
+      if(response.status == 200){
+        // setIsStarredMap((prevMap) => ({
+        //   ...prevMap,
+        //   [queryId]: !prevMap[queryId],
+        // }));
+        fetchQueries();
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const columns = [
     {
       field: "queryId",
@@ -25,11 +67,12 @@ const AskAnExpertHistoryTable = ({ rowData }) => {
       field: "star",
       headerName: "",
       renderCell: ({ row }) => (
-        <IconButton
-        // onClick={(e) => handleStarClick(row.queryId, e)}
-        // Adjust the color as needed
-        >
-          <StarOutlineIcon />
+        <IconButton onClick={(e) => handleStarClick(row.queryId, e)}>
+          {row.starred ? (
+            <StarIcon style={{ color: "#FFC107" }} />
+          ) : (
+            <StarOutlineIcon />
+          )}
         </IconButton>
       ),
     },

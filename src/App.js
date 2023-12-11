@@ -131,7 +131,7 @@ function App() {
             <>
               <Navbar />
               <NavBox />
-              <Sidebar />
+              <Sidebar userRole={userType}/>
               <div className="!font-roboto" style={{ display: 'flex' }}>
                 <div className="md:ml-32 md:mr-10 md:mt-[12vh] w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
                   <Routes>
@@ -286,7 +286,7 @@ function App() {
                       element={<TransactionHistory />}
                     />
                     {/*Super admin pages */}
-                    <Route
+                    {userType === "SUPERADMIN" && ( <><Route
                       path="/superadmin/addclient"
                       element={<AddClients />}
                     />
@@ -301,7 +301,7 @@ function App() {
                     <Route
                       path="/superadmin/update/:clientId"
                       element={<UpdateClient />}
-                    />
+                    /></>)}
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />
                     <Route path="/Sandbox/Create" element={<CreateNew />} />
