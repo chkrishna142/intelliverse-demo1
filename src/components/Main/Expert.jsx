@@ -8,21 +8,25 @@ import React, {
 import Navbar from "../Navbar";
 import { useNavigate, useParams } from "react-router-dom";
 import { baseURL } from "../..";
-import { Spinner } from "@chakra-ui/react";
+import { Input, Spinner } from "@chakra-ui/react";
 import NavContext from "../NavContext";
 import axios from "axios";
+import PrimaryButton from "../../util/Buttons/PrimaryButton";
 
 const Expert = () => {
   const [submitted, setSubmitted] = useState(false);
   const [reply, setReply] = useState("");
   const [review, setReview] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState(localStorage.getItem('fullname'));
   let param = useParams();
 
   const [spinner, setSpinner] = useState(false);
   const [question, setQuestion] = useState([]);
   const [attachments, setAttachments] = useState([]);
   const [send, setSend] = useState([]);
+  const [answer, setAnswer] = useState("");
+  const [comment, setComment] = useState("");
 
   const { login } = useContext(NavContext);
 
@@ -56,24 +60,27 @@ const Expert = () => {
         method: "GET",
       }
     );
-    const res = await data.json();
+    const res = await data?.json();
     setAttachments(res);
     console.log(res);
   };
 
   const getData = async () => {
-    const data = await fetch(baseURL + "questions", {
+    const data = await fetch(baseURL + `questions/${param.questionId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
     const res = await data.json();
-    setQuestion(
-      res?.filter((item) => {
-        return item.questionId.toLowerCase().includes(param.questionId);
-      })
-    );
+    // setQuestion(
+    //   res?.filter((item) => {
+    //     return item.questionId.toLowerCase().includes(param.questionId);
+    //   })
+    // );
+    setQuestion(res?.question);
+    setAnswer(res?.answer);
+    console.log(res);
   };
 
   const postAnswer = async () => {
@@ -168,15 +175,19 @@ const Expert = () => {
       filename
     );
   }
- const handleBackButton=()=>{
-    navigate("/community/askanexpert/history")
- }
+  const handleBackButton = () => {
+    navigate("/community/askanexpert/history");
+  };
+  const handleComments = () =>{
+console.log("Comment added")
+  }
+  //  console.log("answer",answer)
   return (
     <>
       <Navbar />
       <div className={login === false ? "mt-20 mx-10" : "mt-10"}>
         {submitted === false ? (
-          <div className="w-full border shadow-md bg-white rounded-md mb-5 ">
+          <div className="w-full border shadow-md bg-white rounded-md mb-5">
             <div className="flex justify-start items-center w-full gap-2 mt-4">
               <div className="cursor-pointer" onClick={handleBackButton}>
                 <img
@@ -186,10 +197,10 @@ const Expert = () => {
                 />
               </div>
               <p className="text-black text-xl font-medium">
-              {"Subject will be displayed here"}
-            </p>
+                {"Subject will be displayed here"}
+              </p>
             </div>
-            
+
             <div>
               {/* <p className="mt-5 ml-7 font-bold">
                 Hello {expertName(question[0]?.expertId)},
@@ -210,13 +221,14 @@ const Expert = () => {
                   <p className="text-[#034C85] font-bold mt-4">User’s Query</p>
                   <div>
                     <p className="mt-2 font-bold">
-                      Dear {expertName(question[0]?.expertId)},
+                      {/* Dear {expertName(question[0]?.expertId)}, */}
+                      Dear {fullName}
                     </p>
-                    <p className="w-full font-light mt-2">
-                      {question[0]?.question}
-                    </p>
+                    <p className="w-full font-light mt-2">{question}</p>
                     <div className="mt-2 flex items-center gap-2">
-                      <p className="font-semibold">User Provided Attachments: </p>
+                      <p className="font-semibold text-[#034C85]">
+                        User Provided Attachments:{" "}
+                      </p>
                       {attachments?.map((item, index) => {
                         return (
                           <p
@@ -234,7 +246,7 @@ const Expert = () => {
                 {/* <p className="font-light mt-5">
                   Here's a summary of the information you provided:
                 </p> */}
-                <p className="mt-2 text-[#034C85] font-bold">Attached Files:</p>
+                {/* <p className="mt-2 text-[#034C85] font-bold">Attached Files:</p> */}
                 <div className="mt-3 flex gap-3 items-center">
                   {send?.map((item, index) => {
                     return (
@@ -251,7 +263,7 @@ const Expert = () => {
               </div>
               {review === false ? (
                 <div className="w-full mt-4">
-                  <textarea
+                  {/* <textarea
                     ref={textbox}
                     value={reply}
                     onChange={(e) => {
@@ -260,58 +272,96 @@ const Expert = () => {
                     }}
                     placeholder="Enter your reply here..."
                     className="w-full border rounded-md px-2 py-2"
-                  />
-
-                  <div className="mx-2">
-                    <div className="relative w-full bg-white -mt-12 h-10 px-2 py-2 flex items-center gap-2">
-                      <img
-                        className="cursor-pointer -mr-2"
-                        src="/abc.svg"
-                        alt="abc"
-                      />
-                      {/* <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
-                                <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} /> */}
-                      <label for="image">
-                        <input
-                          onChange={(e) => selectPicture(e)}
-                          type="file"
-                          name="image"
-                          id="image"
-                          style={{ display: "none" }}
+                  /> */}
+                  {answer == null || answer.length == 0 ? (
+                    <textarea
+                      ref={textbox}
+                      value={reply}
+                      onChange={(e) => {
+                        setReply(e.target.value);
+                        handleKeyDown();
+                      }}
+                      placeholder="Enter your reply here..."
+                      className="w-full border rounded-md px-2 py-2"
+                    />
+                  ) : (
+                    <div>
+                      <div className="w-full h-20 rounded-md px-0 py-2 overflow-y-auto border mb-3">
+                        <p className="ml-2">Dear {"(Enquire's name)"}</p>
+                        <p className="ml-2">{answer}</p>
+                      </div>
+                      <div className="flex gap-2 items-center justify-center mb-2">
+                        <Input
+                          type="text"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          placeholder="Add your comments here..."
+                          className="w-full border rounded-md px-2 py-2 mt-2"
                         />
+                        <div className="w-15 mt-2">
+                        <PrimaryButton
+                          text={"Add"}
+                          onClick={() => handleComments()}
+                        />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {answer == null || answer.length == 0 ? (
+                    <div className="mx-2">
+                      <div className="relative w-full bg-white -mt-12 h-10 px-2 py-2 flex items-center gap-2">
+                        <img
+                          className="cursor-pointer -mr-2"
+                          src="/abc.svg"
+                          alt="abc"
+                        />
+                        {/* <img className='cursor-pointer' src="/attachment.svg" alt="attach" />
+                                <input className="opacity-0 cursor-pointer" type="file" onChange={(e) => selectPicture(e)} /> */}
+                        <label for="image">
+                          <input
+                            onChange={(e) => selectPicture(e)}
+                            type="file"
+                            name="image"
+                            id="image"
+                            style={{ display: "none" }}
+                          />
+                          <img
+                            className="cursor-pointer"
+                            src="/attachment.svg"
+                            alt="attach"
+                          />
+                        </label>
                         <img
                           className="cursor-pointer"
-                          src="/attachment.svg"
-                          alt="attach"
+                          src="/sharing.svg"
+                          alt="abc"
                         />
-                      </label>
-                      <img
-                        className="cursor-pointer"
-                        src="/sharing.svg"
-                        alt="abc"
-                      />
-                      {/* <img
+                        {/* <img
                         className="cursor-pointer"
                         src="/emoji.svg"
                         alt="attach"
                       /> */}
-                      <img
-                        className="cursor-pointer"
-                        src="/drive.svg"
-                        alt="attach"
-                      />
-                      <img
-                        className="cursor-pointer"
-                        src="/image.svg"
-                        alt="attach"
-                      />
-                      <img
-                        className="cursor-pointer"
-                        src="/pen.svg"
-                        alt="attach"
-                      />
+                        <img
+                          className="cursor-pointer"
+                          src="/drive.svg"
+                          alt="attach"
+                        />
+                        <img
+                          className="cursor-pointer"
+                          src="/image.svg"
+                          alt="attach"
+                        />
+                        <img
+                          className="cursor-pointer"
+                          src="/pen.svg"
+                          alt="attach"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               ) : null}
               {review === true ? (
@@ -322,39 +372,43 @@ const Expert = () => {
                   </div>
                 </div>
               ) : null}
-              <div className="w-full flex justify-start items-center gap-6 mt-5 mb-5">
-                {review === false ? (
-                  <button className="text-white px-6 py-3 bg-[#084298] rounded-md">
-                    Save Answer
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setReview(false)}
-                    className="text-white px-6 py-3 bg-[#084298] rounded-md"
-                  >
-                    Back To Editing
-                  </button>
-                )}
-                {review === false ? (
-                  <button
-                    onClick={() => setReview(true)}
-                    className="text-white px-6 py-3 bg-[#084298] rounded-md"
-                  >
-                    Review Answer
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => postAnswer()}
-                    className="text-white px-6 py-3 bg-[#084298] rounded-md"
-                  >
-                    {spinner === false ? (
-                      <span>Submit Answer</span>
-                    ) : (
-                      <Spinner />
-                    )}
-                  </button>
-                )}
-              </div>
+              {answer == null || answer.length == 0 ? (
+                <div className="w-full flex justify-start items-center gap-6 mt-5 mb-5">
+                  {review === false ? (
+                    <button className="text-white px-6 py-3 bg-[#084298] rounded-md">
+                      Save Answer
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setReview(false)}
+                      className="text-white px-6 py-3 bg-[#084298] rounded-md"
+                    >
+                      Back To Editing
+                    </button>
+                  )}
+                  {review === false ? (
+                    <button
+                      onClick={() => setReview(true)}
+                      className="text-white px-6 py-3 bg-[#084298] rounded-md"
+                    >
+                      Review Answer
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => postAnswer()}
+                      className="text-white px-6 py-3 bg-[#084298] rounded-md"
+                    >
+                      {spinner === false ? (
+                        <span>Submit Answer</span>
+                      ) : (
+                        <Spinner />
+                      )}
+                    </button>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         ) : (

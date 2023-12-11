@@ -144,7 +144,8 @@ const ViewClient = () => {
                 Client name
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={clientName} readOnly />
+                <Input type="text" value={clientName} readOnly border={"none"} p={0}/>
+                {/* <p>{clientName}</p> */}
               </div>
             </div>
             <div>
@@ -153,7 +154,7 @@ const ViewClient = () => {
                 <span className="text-[#AEA9B1]">(if applicable)</span>
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={parentCompany} readOnly />
+                <Input type="text" value={parentCompany} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -161,7 +162,7 @@ const ViewClient = () => {
             <p className="text-[#3E3C42] text-lg font-medium">Company Type</p>
 
             <div style={{ width: "fit-content" }}>
-              <Input type="text" value={companyType} readOnly />
+              <Input type="text" value={companyType} readOnly border={"none"} p={0}/>
             </div>
           </div>
           <div className="flex items-center gap-4 mt-5">
@@ -170,7 +171,7 @@ const ViewClient = () => {
                 Industry
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={industryValue} readOnly />
+                <Input type="text" value={industryValue} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
@@ -178,7 +179,7 @@ const ViewClient = () => {
                 Sub-Industry <span className="text-[#AEA9B1]">(optional)</span>
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={subIndustryValue} readOnly />
+                <Input type="text" value={subIndustryValue} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -191,7 +192,7 @@ const ViewClient = () => {
               Company Size
             </p>
             <div style={{ width: "fit-content" }}>
-              <Input type="text" value={companySize} readOnly />
+              <Input type="text" value={companySize} readOnly border={"none"} p={0}/>
             </div>
           </div>
 
@@ -200,7 +201,7 @@ const ViewClient = () => {
               Number of users
             </p>
             <div style={{ width: "fit-content" }}>
-              <Input type="text" value={numberOfUsers} readOnly />
+              <Input type="text" value={numberOfUsers} readOnly border={"none"} p={0}/>
             </div>
           </div>
         </div>
@@ -215,7 +216,7 @@ const ViewClient = () => {
                 Client HQ location
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={clientHqLocation} readOnly />
+                <Input type="text" value={clientHqLocation} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
@@ -224,7 +225,7 @@ const ViewClient = () => {
                 <span className="text-[#AEA9B1]">(if applicable)</span>
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={hqLocationAddress} readOnly />
+                <Input type="text" value={hqLocationAddress} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -235,7 +236,7 @@ const ViewClient = () => {
                 <span className="text-[#AEA9B1]">(count) </span>{" "}
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={totalClientLocations} readOnly />
+                <Input type="text" value={totalClientLocations} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
@@ -246,7 +247,7 @@ const ViewClient = () => {
                 </span>
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={allLocations} readOnly />
+                <Input type="text" value={allLocations} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -262,13 +263,13 @@ const ViewClient = () => {
                 Primary contact name
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={clientPrimaryContactName} readOnly />
+                <Input type="text" value={clientPrimaryContactName} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">E-mail</p>
               <div style={{ width: "fit-content" }}>
-                <Input type="email" value={clientEmail} readOnly />
+                <Input type="email" value={clientEmail} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
@@ -276,7 +277,7 @@ const ViewClient = () => {
                 Phone number
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="email" value={clientPhoneNumber} readOnly />
+                <Input type="email" value={clientPhoneNumber} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -286,7 +287,7 @@ const ViewClient = () => {
                 Secondary contact name{" "}
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={clientSecContactName} readOnly />
+                <Input type="text" value={clientSecContactName} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -302,13 +303,13 @@ const ViewClient = () => {
                 Primary contact name
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={ripikPrimaryContactName} readOnly />
+                <Input type="text" value={ripikPrimaryContactName} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">E-mail</p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={ripikEmail} readOnly />
+                <Input type="text" value={ripikEmail} readOnly border={"none"} p={0}/>
               </div>
             </div>
             <div>
@@ -323,7 +324,7 @@ const ViewClient = () => {
                   />
                 </div> */}
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={ripikPhoneNumber} readOnly />
+                <Input type="text" value={ripikPhoneNumber} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -333,7 +334,7 @@ const ViewClient = () => {
                 Secondary contact name
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={ripikSecContactName} readOnly />
+                <Input type="text" value={ripikSecContactName} readOnly border={"none"} p={0} />
               </div>
             </div>
           </div>
@@ -353,6 +354,8 @@ const ViewClient = () => {
                   placeholder="₹"
                   value={relationDate}
                   readOnly
+                  border={"none"}
+                  p={0}
                 />
               </div>
             </div>
@@ -366,6 +369,8 @@ const ViewClient = () => {
                   placeholder="₹"
                   value={productDate}
                   readOnly
+                  border={"none"}
+                  p={0}
                 />
               </div>
             </div>
@@ -377,7 +382,7 @@ const ViewClient = () => {
                 <span className="text-[#AEA9B1]">(optional)</span>
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" placeholder="₹" value={dealValue} readOnly />
+                <Input type="text" placeholder="₹" value={dealValue} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
@@ -387,7 +392,7 @@ const ViewClient = () => {
                 First purchase order code
               </p>
               <div style={{ width: "fit-content" }}>
-                <Input type="text" value={purchaseOrderCode} readOnly />
+                <Input type="text" value={purchaseOrderCode} readOnly border={"none"} p={0} />
               </div>
             </div>
           </div>
@@ -398,7 +403,7 @@ const ViewClient = () => {
                 <span className="text-[#AEA9B1]">(optional)</span>
               </p>
               <div style={{ width: "" }}>
-                <Textarea style={{ width: "60vw" }} value={remarks} readOnly />
+                <Textarea style={{ width: "60vw" }} value={remarks} readOnly border={"none"} p={0}/>
               </div>
             </div>
           </div>
