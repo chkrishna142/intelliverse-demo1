@@ -41,7 +41,7 @@ const AskAnExpertHistory = () => {
   const [fullName, setFullName] = useState("");
   const [downloadData, setDownloadData] = useState({});
   const [loading, setLoading] = useState(false);
-
+  
   const handleClick = () => {
     setStateChanging(false);
     // apiCall();
@@ -69,6 +69,7 @@ const AskAnExpertHistory = () => {
 
     switch (e.target.value) {
       case "0": // All Time
+
         // Set startTime to the beginning of the year 2022
         startTime = new Date("2022-01-01T00:00:00").getTime();
         // Set endTime to the current time
@@ -144,15 +145,6 @@ const AskAnExpertHistory = () => {
         endTime = currentTime;
         break;
 
-      // case "6": // Custom Range
-      //   // Use the selected startDate and endDate
-      //   startTime = new Date(customStartDate).getTime();
-      //   endTime = new Date(customEndDate).getTime();
-      //   setCustomFromTime(startTime);
-      //   setCustomToTime(endTime)
-      //   console.log("cust", startTime,endTime)
-      //   break;
-
       default:
         break;
     }
@@ -160,7 +152,7 @@ const AskAnExpertHistory = () => {
     // Update state with the calculated start and end times
     setFromTime(startTime);
     setToTime(endTime);
-    console.log("www", startTime, endTime);
+    
     // Call API when a new range is selected
     if (e.target.value !== "6") {
       fetchQueries(startTime, endTime);
@@ -216,7 +208,7 @@ const AskAnExpertHistory = () => {
       setTableData(sortedData);
       setFilteredData(sortedData);
       setLoading(false);
-      console.log("date in fetch ", requestData);
+      // console.log("date in fetch ", requestData);
     } catch (e) {
       console.error(e);
     }
@@ -239,6 +231,9 @@ const AskAnExpertHistory = () => {
       console.error(e);
     }
   };
+
+  
+
   useEffect(() => {
     if (auth) {
       setLoading(true);
@@ -251,8 +246,13 @@ const AskAnExpertHistory = () => {
     setChangingbutton(selectedStatus);
     if (selectedStatus === "All") {
       setFilteredData(tableData);
+    } else if (selectedStatus === "starred") {
+      // Filter data based on the "starred" status
+      const starredData = tableData.filter((item) => item.starred);
+      setFilteredData(starredData);
     } else {
-      let filtered = tableData.filter((item) => item.status === selectedStatus);
+      // Filter data based on other statuses
+      const filtered = tableData.filter((item) => item.status === selectedStatus);
       setFilteredData(filtered);
     }
   };
@@ -286,35 +286,35 @@ const AskAnExpertHistory = () => {
                 value={1}
                 className="bg-white hover:bg-blue-200"
               >
-                Last Seven Days
+                This Week
               </option>
               <option
                 key="This Month"
                 value={2}
                 className="bg-white hover:bg-blue-200"
               >
-                This Month
+                Month to Date
               </option>
               <option
                 key="This Quarter"
                 value={3}
                 className="bg-white hover:bg-blue-200"
               >
-                This Quarter
+                Quarter to Date
               </option>
-              <option
+              {/* <option
                 key="Previous Quarter"
                 value={4}
                 className="bg-white hover:bg-blue-200"
               >
                 Previous Quarter
-              </option>
+              </option> */}
               <option
                 key="This Year"
                 value={5}
                 className="bg-white hover:bg-blue-200"
               >
-                This Year
+                Year to Date
               </option>
               <option
                 key="custom"
@@ -466,11 +466,11 @@ const AskAnExpertHistory = () => {
             </button>
             <button
               className={`w-[100px] flex justify-center items-center ${
-                changingbutton == "Starred"
+                changingbutton == "starred"
                   ? "bg-[#DDEEFF] text-[#605D64] border-[#6CA6FC]"
                   : "border-[#EBEBEB]"
               } border-[2px]  rounded-full px-[16px] py-[8px]`}
-              onClick={() => handleStatus("Starred")}
+              onClick={() => handleStatus("starred")}
             >
               <p className="text-[#605D64]">Starred</p>
             </button>
@@ -500,7 +500,7 @@ const AskAnExpertHistory = () => {
             ) : (
               <React.Fragment>
                 {displayData && displayData.length !== 0 ? (
-                  <AskAnExpertHistoryTable rowData={displayData} />
+                  <AskAnExpertHistoryTable rowData={displayData} fetchQueries={fetchQueries} handleStatus={handleStatus}/>
                 ) : (
                   <p className="ml-[45%]">No data available!</p>
                 )}

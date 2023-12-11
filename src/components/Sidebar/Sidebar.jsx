@@ -13,13 +13,13 @@ import {
 } from '@chakra-ui/react';
 import './Sidebar.css';
 
-const Sidebar = () => {
+const Sidebar = ({userRole}) => {
   const location = useLocation();
   const size = useWindowSize();
   const InitialRoute = location.pathname === '/report' ? 'report' : 'real';
   const [route, setRoute] = useState(InitialRoute);
-  //const plantName = window.location.href.split("/")[3];
 
+  //const plantName = window.location.href.split("/")[3];
   return (
     <>
       {size.width >= 768 ? (
@@ -345,7 +345,7 @@ const Sidebar = () => {
                   </a>
                 </AccordionPanel>
               </AccordionItem>
-              <AccordionItem className="border-none -mt-4">
+              {userRole === "ADMIN" && (<AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/admin/usermanagement">
                     <AccordionButton
@@ -387,8 +387,8 @@ const Sidebar = () => {
                     </AccordionButton>
                   </Link>
                 </h2>
-              </AccordionItem>
-              <AccordionItem className="border-none -mt-4">
+              </AccordionItem>)}
+              {userRole === "SUPERADMIN" && (<AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/superadmin/addclient">
                     <AccordionButton
@@ -402,17 +402,17 @@ const Sidebar = () => {
                             : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
                         }
                       >
-                        <div className="w-full flex justify-center">
+                        <div className="w-full flex">
                           <img
                             className={
                               location.pathname.includes('/superadmin')
-                                ? 'w-7 pb-2'
-                                : 'w-7 pb-2'
+                                ? 'w-9 pb-2 ml-2'
+                                : 'w-9 pb-2 ml-1'
                             }
                             src={
                               location.pathname.includes('/superadmin')
-                                ? '/superblue.png'
-                                : '/superwhite.png'
+                                ? '/supericon1.png'
+                                : '/supericon2.png'
                             }
                             alt="home logo"
                           />
@@ -420,8 +420,8 @@ const Sidebar = () => {
                         <p
                           className={
                             location.pathname.includes('/superadmin')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1'
-                              : 'font-light text-xs -mt-1'
+                              ? 'font-bold text-xs text-[#024D87] -mt-1 mr-1'
+                              : 'font-light text-xs -mt-1 mr-1'
                           }
                         >
                           Super Admin
@@ -430,7 +430,7 @@ const Sidebar = () => {
                     </AccordionButton>
                   </Link>
                 </h2>
-              </AccordionItem>
+              </AccordionItem>)}
               <AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/Sandbox">

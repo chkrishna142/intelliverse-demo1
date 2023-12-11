@@ -185,24 +185,27 @@ const Expert = () => {
                   alt="backarrow_img"
                 />
               </div>
-              <p className="text-black text-xl font-semibold">
-              Ask An Expert
+              <p className="text-black text-xl font-medium">
+              {"Subject will be displayed here"}
             </p>
             </div>
             
             <div>
-              <p className="mt-5 ml-7 font-bold">
+              {/* <p className="mt-5 ml-7 font-bold">
                 Hello {expertName(question[0]?.expertId)},
-              </p>
+              </p> */}
+              {/* <p className="mt-2 ml-7">
+                Subject will be displayed here
+              </p> */}
             </div>
             <div className="mx-7">
               <div className="w-full font-light mt-2">
-                You can see the user's question and reply using the text box
+                {/* You can see the user's question and reply using the text box
                 below. Feel free to request additional information from the user
                 if necessary, but aim to resolve the query in your initial
                 Remember to save your work by clicking 'Save' if you need to
                 leave temporarily. Your response will be sent after you click
-                'Review Answer' and then 'Submit Answer.'
+                'Review Answer' and then 'Submit Answer.' */}
                 <div>
                   <p className="text-[#034C85] font-bold mt-4">User’s Query</p>
                   <div>
@@ -228,9 +231,9 @@ const Expert = () => {
                     </div>
                   </div>
                 </div>
-                <p className="font-light mt-5">
+                {/* <p className="font-light mt-5">
                   Here's a summary of the information you provided:
-                </p>
+                </p> */}
                 <p className="mt-2 text-[#034C85] font-bold">Attached Files:</p>
                 <div className="mt-3 flex gap-3 items-center">
                   {send?.map((item, index) => {
@@ -287,11 +290,11 @@ const Expert = () => {
                         src="/sharing.svg"
                         alt="abc"
                       />
-                      <img
+                      {/* <img
                         className="cursor-pointer"
                         src="/emoji.svg"
                         alt="attach"
-                      />
+                      /> */}
                       <img
                         className="cursor-pointer"
                         src="/drive.svg"
