@@ -197,7 +197,7 @@ console.log("Comment added")
                 />
               </div>
               <p className="text-black text-xl font-medium">
-                {"Subject will be displayed here"}
+                {"Session testing"}
               </p>
             </div>
 

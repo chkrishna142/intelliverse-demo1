@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopClientsChart = () => {
+const TopClientsChart = ({top3clients}) => {
+
+  // const [names,setNames]=useState([...top3clients?.names])
   const [chartOptions, setChartOptions] = useState({
     chart: {
       type: "bar",
@@ -9,7 +11,7 @@ const TopClientsChart = () => {
     },
 
     xaxis: {
-      categories: ["Client 1", "Client 2", "Client 3"],
+      categories: [...top3clients?.names],
 
       showLines: false,
       labels: {
@@ -38,6 +40,7 @@ const TopClientsChart = () => {
       bar: {
         borderRadius: 4,
         horizontal: true,
+        barHeight: '30%',
       },
     },
     export: {
@@ -48,7 +51,7 @@ const TopClientsChart = () => {
   const [seriesData, setSeriesData] = useState([
     {
       name: "Series 1",
-      data: [30, 23, 15],
+      data: [...top3clients?.questions],
     },
   ]);
 
