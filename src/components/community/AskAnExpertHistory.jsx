@@ -489,9 +489,9 @@ const AskAnExpertHistory = () => {
           </div>
           {/* paginator */}
           <div className="">
-            {displayData && displayData.length != 0 && (
+            {filteredData && filteredData.length != 0 && (
               <ExlCsvDownload
-                data={displayData}
+                data={filteredData}
                 order={downloadData.summary}
                 orderDetail={downloadData.details}
                 enable={true}
