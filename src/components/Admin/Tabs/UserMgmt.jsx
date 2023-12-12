@@ -76,7 +76,7 @@ const UserMgmt = () => {
 
       setUsers(sortedUsers);
       const organisation = sortedUsers[0].organisation;
-      setOrganisation(organisation) //setting organisation
+      setOrganisation(organisation); //setting organisation
     } catch (err) {
       console.log(err);
     }
@@ -103,15 +103,15 @@ const UserMgmt = () => {
     if (auth) {
       setLoading(true);
       fetchUsers();
-      fetchDownloadApi(); 
-      fetchStatus(); 
+      fetchDownloadApi();
+      fetchStatus();
     }
   }, [auth]);
 
   useEffect(() => {
     setDisplayUsers(users);
   }, [users]);
-  
+
   const [isOpenD, setIsOpenD] = useState(false);
 
   const onCloseD = () => {
@@ -143,7 +143,6 @@ const UserMgmt = () => {
   const toast = useToast();
 
   const fetchStatus = async () => {
-
     try {
       const response = await axios.get(
         baseURL + `iam/status?organisation=${organisation}`,
@@ -155,7 +154,7 @@ const UserMgmt = () => {
         }
       );
       // console.log("stats",response.data)
-      setStatus(response?.data)
+      setStatus(response?.data);
     } catch (error) {
       console.log(error);
     }
@@ -249,7 +248,7 @@ const UserMgmt = () => {
         });
       });
   };
-  
+
   useEffect(() => {
     console.log(contact);
   }, [contact]);
@@ -297,7 +296,6 @@ const UserMgmt = () => {
               <p className="text-lg font-semibold text-[#605D64]">
                 {/* {users?.length} */}
                 {status.Total}
-
               </p>
               <p className="text-[#938F96]">Total</p>
             </div>
@@ -348,11 +346,11 @@ const UserMgmt = () => {
                 <AddIcon />
                 <span>Add New User</span>
               </Button>
-              <Paginator
+              {/* <Paginator
                 data={displayUsers}
                 setDisplayData={setDisplayData}
                 limit={10}
-              />
+              /> */}
             </div>
           </div>
         </div>
@@ -390,7 +388,15 @@ const UserMgmt = () => {
             )}
           </React.Fragment>
         )}
+        <div className="flex justify-end">
+          <Paginator
+            data={displayUsers}
+            setDisplayData={setDisplayData}
+            limit={10}
+          />
+        </div>
       </div>
+
       <DeleteUserModal
         isOpen={isOpenD}
         onClose={onCloseD}
