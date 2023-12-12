@@ -1,4 +1,4 @@
-import { Input } from "@chakra-ui/react";
+import { Input, useToast } from "@chakra-ui/react";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import { useRef, useState } from "react";
 import TonalButton from "../../../util/Buttons/TonalButton";
@@ -11,7 +11,19 @@ const ProjectDetails = ({
 }) => {
   const nameRef = useRef();
   const [disable, setDisable] = useState(false);
+  const toast = useToast();
   const handlSave = () => {
+    if (nameRef.current.value == "") {
+      toast({
+        title: "Error",
+        description: "Please enter project name",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
     setUSerData((prev) => {
       let newData = { ...prev };
       newData["name"] = nameRef.current.value;

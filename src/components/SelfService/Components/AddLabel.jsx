@@ -1,5 +1,5 @@
 import {
-  Checkbox,
+  Radio,
   Input,
   IconButton,
   Menu,
@@ -11,7 +11,14 @@ import {
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 
-const AddLabel = ({ x, assign, setLabels, setAssign }) => {
+const AddLabel = ({
+  x,
+  assign,
+  setLabels,
+  setAssign,
+  setAnnotatedImages,
+  setAllImages,
+}) => {
   const [editing, setEditing] = useState(false);
   const labelRef = useRef();
 
@@ -23,12 +30,18 @@ const AddLabel = ({ x, assign, setLabels, setAssign }) => {
         newData[idx] = labelRef.current.value;
         return newData;
       });
-      if (assign.includes(x)) {
+      setAnnotatedImages((prev) => {
+        let newData = [...prev];
+        newData.forEach((item) => {
+          if (item.label == x) {
+            item.label = labelRef.current.value;
+          }
+        });
+        return newData;
+      });
+      if (assign == x) {
         setAssign((prev) => {
-          let newData = [...prev];
-          let idx = newData.findIndex((item) => item == x);
-          newData[idx] = labelRef.current.value;
-          return newData;
+          return labelRef.current.value;
         });
       }
       setEditing(false);
@@ -42,10 +55,29 @@ const AddLabel = ({ x, assign, setLabels, setAssign }) => {
       newData.splice(idx, 1);
       return newData;
     });
-    setAssign((prev) => {
+    setAssign('');
+    let remove = [];
+    setAnnotatedImages((prev) => {
       let newData = [...prev];
-      let idx = newData.findIndex((item) => item == x);
-      newData.splice(idx, 1);
+      newData.forEach((item, idx) => {
+        if (item.label == x) {
+          let val = item;
+          delete val.label;
+          remove.push(val);
+        }
+      });
+      remove.forEach((item) => {
+        newData.splice(
+          newData.findIndex((val) => val.id == item.id),
+          1
+        );
+      });
+      return newData;
+    });
+    console.log(remove,'add in org array')
+    setAllImages((prev) => {
+      let newData = [...prev];
+      newData = newData.concat([...remove]);
       return newData;
     });
   };
@@ -53,18 +85,22 @@ const AddLabel = ({ x, assign, setLabels, setAssign }) => {
   return (
     <div
       style={{
-        backgroundColor: assign.includes(x) ? "#DDEEFF80" : "#FFF",
+        backgroundColor: assign == x ? "#DDEEFF80" : "#FFF",
         borderRadius: "2px",
       }}
       className="flex gap-2 items-center relative pl-[6px] border border-[#EBEBEB]"
     >
       {!editing && (
-        <Checkbox
+        <Radio
           value={x}
           p={0}
           fontSize={"14px"}
           fontWeight={500}
           color={"#3E3C42"}
+          _checked={{
+            bg: "#6CA6FC",
+            borderColor: "#6CA6FC",
+          }}
           _hover={{
             borderColor: "#6CA6FC",
           }}

@@ -41,7 +41,6 @@ import AiAdvisorHistory from './components/community/AiAdvisorHistory';
 import AiExpertHistory from './components/community/AiExpertHistory';
 import AskAnExpertHistory from './components/community/AskAnExpertHistory';
 import Dashboard from './components/SelfService/pages/Dashboard';
-import CreateNew from './components/SelfService/pages/CreateNew';
 import CreateForm from "./components/SelfService/pages/CreateForm"
 import mixpanel from 'mixpanel-browser';
 import DetailView from './components/SelfService/pages/DetailView';

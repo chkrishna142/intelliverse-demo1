@@ -1,22 +1,23 @@
 import TextButton from "../../../util/Buttons/TextButton";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import SecondaryButton from "../../../util/Buttons/SecondaryButton";
-import TonalButton from "../../../util/Buttons/TonalButton";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  Checkbox,
-  CheckboxGroup,
   Input,
   InputGroup,
   InputRightElement,
+  RadioGroup,
 } from "@chakra-ui/react";
 import AddLabel from "./AddLabel";
 import ImageSelector from "./ImageSelector";
 
-const AnnotateData = ({ userData, setUSerData, setActiveStep }) => {
-  const [labels, setLabels] = useState(["Cat", "Dog", "Goat"]);
+const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
+  const [labels, setLabels] = useState([]);
+  const [page, setPage] = useState("Unannotated");
   const [selectedImages, setSelectedImages] = useState([]);
-  const [assign, setAssign] = useState([]);
+  const [annotatedImages, setAnnotatedImages] = useState([]);
+  const [allImages, setAllImages] = useState([]);
+  const [assign, setAssign] = useState("");
   const [add, setAdd] = useState(false);
   const addLabelRef = useRef();
 
@@ -31,12 +32,65 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep }) => {
     }
   };
 
+  const handleAssign = () => {
+    setAnnotatedImages((prev) => {
+      let newData = [...prev];
+      selectedImages.forEach((item) => {
+        newData.push({
+          img: item.img,
+          id: item.id,
+          label: assign,
+        });
+      });
+      return newData;
+    });
+    setAllImages((prev) => {
+      let newData = [...prev];
+      selectedImages.forEach((item) => {
+        let idx = newData.findIndex((x) => x.id == item.id);
+        newData.splice(idx, 1);
+      });
+      return newData;
+    });
+    setAssign("");
+    setSelectedImages([]);
+    setPage("Annotated");
+  };
+
+  const handleSubmit = () => {
+    setUSerData((prev) => {
+      let newData = { ...prev };
+      newData.annotatedData = annotatedImages;
+      return newData;
+    });
+  };
+
+  useEffect(() => {
+    if (userData.uploadedFiles != null) {
+      setAllImages(
+        userData.uploadedFiles.map((file, idx) => {
+          return {
+            img: file,
+            id: idx,
+          };
+        })
+      );
+      setAnnotatedImages([]);
+      setSelectedImages([]);
+      setAssign("");
+      setLabels([]);
+    }
+  }, [userData.uploadedFiles]);
   return (
-    <div className="p-6 flex flex-col gap-6 bg-white">
+    <div
+      className={`p-6 flex flex-col gap-6 bg-white transition-all duration-700 ease-in ${
+        show ? "opacity-100" : "opacity-0"
+      }`}
+    >
       <p className="text-[#3E3C42] text-2xl font-medium">Assign labels</p>
       <div className="flex gap-[47px]">
         {/* Label selection and additon */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 whitespace-nowrap">
           <div className="self-end">
             <TextButton
               text={"Add labels"}
@@ -45,7 +99,7 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep }) => {
               onClick={() => setAdd(true)}
             />
           </div>
-          <CheckboxGroup onChange={setAssign} value={assign}>
+          <RadioGroup onChange={setAssign} value={assign}>
             <div className="flex flex-col gap-3">
               {labels.map((x) => {
                 return (
@@ -54,6 +108,8 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep }) => {
                     assign={assign}
                     setLabels={setLabels}
                     setAssign={setAssign}
+                    setAnnotatedImages={setAnnotatedImages}
+                    setAllImages={setAllImages}
                   />
                 );
               })}
@@ -75,13 +131,32 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep }) => {
                 </InputRightElement>
               </InputGroup>
             )}
-          </CheckboxGroup>
-          <SecondaryButton text={"Assign label"} width={"fit-content"} disable={assign.length == 0}/>
+          </RadioGroup>
+          <SecondaryButton
+            text={"Assign label"}
+            width={"fit-content"}
+            disable={assign == ""}
+            onClick={handleAssign}
+          />
         </div>
         {/* Image selection area */}
         <ImageSelector
           selectedImages={selectedImages}
           setSelectedImages={setSelectedImages}
+          annotatedImages={annotatedImages}
+          setAnnotatedImages={setAnnotatedImages}
+          images={allImages}
+          setImages={setAllImages}
+          page={page}
+          setPage={setPage}
+        />
+      </div>
+      <div className="flex gap-2 items-center">
+        <PrimaryButton
+          text={"Submit"}
+          width={"fit-content"}
+          disable={annotatedImages.length == 0}
+          onClick={handleSubmit}
         />
       </div>
     </div>
