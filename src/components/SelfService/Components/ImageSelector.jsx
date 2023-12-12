@@ -48,7 +48,7 @@ const ImageSelector = ({
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <p className="text-[#3E3C42] text-sm font-medium">
           Select min 10, Selected: {annotatedImages.length}
         </p>
@@ -69,7 +69,7 @@ const ImageSelector = ({
           })}
         </div>
       </div>
-      <div className="w-full h-fit max-h-screen overflow-y-auto grid grid-cols-4 gap-5">
+      <div className="w-full h-fit max-h-screen overflow-y-auto grid-cols-1 grid min-[430px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-5">
         {displayData.map((item, idx) => {
           return (
             <div className="w-full h-auto bg-black relative rounded flex items-center justify-center">

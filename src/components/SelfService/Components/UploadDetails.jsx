@@ -193,7 +193,7 @@ const UploadDetails = ({
               Supported formats: {format[userData.dataType]?.join(", ")}
             </p>
           </div>
-          <div className="flex gap-4 text-[#AEA9B1] text-sm items-center">
+          <div className="flex flex-col sm:flex-row gap-4 text-[#AEA9B1] text-sm items-start sm:items-center">
             <input
               ref={fileInputRef}
               type="file"
