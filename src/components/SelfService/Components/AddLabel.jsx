@@ -18,6 +18,8 @@ const AddLabel = ({
   setAssign,
   setAnnotatedImages,
   setAllImages,
+  userData,
+  confirm
 }) => {
   const [editing, setEditing] = useState(false);
   const labelRef = useRef();
@@ -55,7 +57,7 @@ const AddLabel = ({
       newData.splice(idx, 1);
       return newData;
     });
-    setAssign('');
+    setAssign("");
     let remove = [];
     setAnnotatedImages((prev) => {
       let newData = [...prev];
@@ -74,7 +76,7 @@ const AddLabel = ({
       });
       return newData;
     });
-    console.log(remove,'add in org array')
+    console.log(remove, "add in org array");
     setAllImages((prev) => {
       let newData = [...prev];
       newData = newData.concat([...remove]);
@@ -90,7 +92,7 @@ const AddLabel = ({
       }}
       className="flex gap-2 items-center relative pl-[6px] border border-[#EBEBEB]"
     >
-      {!editing && (
+      {!editing && userData.annotationType == "Classify" && (
         <Radio
           value={x}
           p={0}
@@ -123,7 +125,7 @@ const AddLabel = ({
       ) : (
         <p className="w-[190px] h-[40px] flex items-center">{x}</p>
       )}
-      {!editing && (
+      {!confirm && !editing && (
         <Menu>
           <MenuButton
             as={IconButton}
