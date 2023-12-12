@@ -29,12 +29,32 @@ const UploadDetails = ({
   };
 
   const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
+    const selectedFile = Array.from(event.target.files);
     if (selectedFile) {
       const acceptedTypes = format[userData.dataType].map((ext) => {
         return userData.dataType.toLowerCase() + "/" + ext;
       });
-      if (acceptedTypes.includes(selectedFile.type)) {
+      let goodToGo = true;
+      selectedFile.map((file) => {
+        if (!acceptedTypes.includes(file.type)) {
+          toast({
+            title: "Error",
+            description: (
+              <div>
+                <p>{`Accepted formats: [${acceptedTypes.join(", ")}]`}</p>
+                <p>{`Uploaded file: ${file.type}`}</p>
+              </div>
+            ),
+            status: "error",
+            position: "top-right",
+            duration: 6000,
+            isClosable: true,
+          });
+          goodToGo = false;
+          return;
+        }
+      });
+      if (goodToGo) {
         handleChange("uploadedFiles", selectedFile);
         toast({
           title: "Uploaded",
@@ -44,26 +64,24 @@ const UploadDetails = ({
           duration: 2000,
           isClosable: true,
         });
-      } else {
-        toast({
-          title: "Error",
-          description: (
-            <div>
-              <p>{`Accepted formats: [${acceptedTypes.join(", ")}]`}</p>
-              <p>{`Uploaded file: ${selectedFile.type}`}</p>
-            </div>
-          ),
-          status: "error",
-          position: "top-right",
-          duration: 6000,
-          isClosable: true,
-        });
       }
     }
   };
 
   const handleSave = () => {
-    if (activeStep < 2) setActiveStep((prev) => prev + 1);
+    if (userData.annotationType == "" || userData.uploadedFiles == null) {
+      toast({
+        title: "Error",
+        description:
+          "Please check files are uploaded and all fields are filled",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+    if (activeStep < 3) setActiveStep((prev) => prev + 1);
     setDisable(true);
   };
 
@@ -75,50 +93,6 @@ const UploadDetails = ({
     >
       <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
       <div className="flex flex-col gap-6">
-        {/*Upload data*/}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <p className="text-[#79767D] text-sm font-medium">
-              Upload {userData.dataType}
-              <span className="text-[#DC362E]">*</span>
-            </p>
-            <p className="text-[#AEA9B1] text-sm">
-              Supported formats: {format[userData.dataType]?.join(", ")}
-            </p>
-          </div>
-          <div className="flex gap-4 text-[#AEA9B1] text-sm items-center">
-            <input
-              ref={fileInputRef}
-              type="file"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-            <SecondaryButton
-              Icon={<img src="/selfServiceIcons/upload.svg" alt="upload" />}
-              text={"Upload files"}
-              width={"fit-content"}
-              onClick={() => {
-                fileInputRef.current.click();
-              }}
-              disable={disable}
-            />
-            <p>or</p>
-            <div className="flex items-center gap-0">
-              <TextButton
-                text={"Link Bucket"}
-                width={"fit-content"}
-                disable={disable}
-              />
-              <div style={{ width: "fit-content" }}>
-                <Input
-                  type="text"
-                  placeholder="Supported Aws"
-                  isDisabled={disable}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
         {/*Is annotated*/}
         <div className="flex flex-col gap-3">
           <p className="text-[#3E3C42] text-sm font-medium">
@@ -164,52 +138,95 @@ const UploadDetails = ({
           </RadioGroup>
         </div>
         {/*annotation type */}
-        {userData.isAnnotated == "No" && (
-          <div className="flex flex-col gap-3">
-            <p className="text-[#3E3C42] text-sm font-medium">
-              Select annotation type
-            </p>
-            <RadioGroup
-              onChange={(e) => handleChange("annotationType", e)}
-              value={userData.annotationType}
-              isDisabled={disable}
-            >
-              <div className="flex gap-1 items-center">
-                {["Classify", "Detect", "Segment"].map((x) => {
-                  return (
-                    <div
-                      style={{
-                        backgroundColor:
-                          x == userData.annotationType ? "#DDEEFF80" : "#FFF",
-                        borderRadius: "8px",
+        <div className="flex flex-col gap-3">
+          <p className="text-[#3E3C42] text-sm font-medium">
+            Select annotation type
+          </p>
+          <RadioGroup
+            onChange={(e) => handleChange("annotationType", e)}
+            value={userData.annotationType}
+            isDisabled={disable}
+          >
+            <div className="flex gap-1 items-center">
+              {["Classify", "Detect", "Segment"].map((x) => {
+                return (
+                  <div
+                    style={{
+                      backgroundColor:
+                        x == userData.annotationType ? "#DDEEFF80" : "#FFF",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <Radio
+                      value={x}
+                      py={"8px"}
+                      pl={"8px"}
+                      pr={"12px"}
+                      fontSize={"14px"}
+                      fontWeight={500}
+                      color={"#3E3C42"}
+                      _checked={{
+                        bg: "#6CA6FC",
+                        borderColor: "#6CA6FC",
                       }}
+                      _hover={{
+                        borderColor: "#6CA6FC",
+                      }}
+                      isDisabled={disable}
                     >
-                      <Radio
-                        value={x}
-                        py={"8px"}
-                        pl={"8px"}
-                        pr={"12px"}
-                        fontSize={"14px"}
-                        fontWeight={500}
-                        color={"#3E3C42"}
-                        _checked={{
-                          bg: "#6CA6FC",
-                          borderColor: "#6CA6FC",
-                        }}
-                        _hover={{
-                          borderColor: "#6CA6FC",
-                        }}
-                        isDisabled={disable}
-                      >
-                        {x}
-                      </Radio>
-                    </div>
-                  );
-                })}
-              </div>
-            </RadioGroup>
+                      {x}
+                    </Radio>
+                  </div>
+                );
+              })}
+            </div>
+          </RadioGroup>
+        </div>
+        {/*Upload data*/}
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <p className="text-[#79767D] text-sm font-medium">
+              Upload {userData.dataType}
+              <span className="text-[#DC362E]">*</span>
+            </p>
+            <p className="text-[#AEA9B1] text-sm">
+              Supported formats: {format[userData.dataType]?.join(", ")}
+            </p>
           </div>
-        )}
+          <div className="flex gap-4 text-[#AEA9B1] text-sm items-center">
+            <input
+              ref={fileInputRef}
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              multiple
+            />
+            <SecondaryButton
+              Icon={<img src="/selfServiceIcons/upload.svg" alt="upload" />}
+              text={"Upload files"}
+              width={"fit-content"}
+              onClick={() => {
+                fileInputRef.current.click();
+              }}
+              disable={disable}
+            />
+            <p>or</p>
+            <div className="flex items-center gap-0">
+              <TextButton
+                text={"Link Bucket"}
+                width={"fit-content"}
+                disable={disable}
+              />
+              <div style={{ width: "fit-content" }}>
+                <Input
+                  type="text"
+                  placeholder="Supported Aws"
+                  isDisabled={disable}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="flex gap-2 items-center mt-2">
         <PrimaryButton

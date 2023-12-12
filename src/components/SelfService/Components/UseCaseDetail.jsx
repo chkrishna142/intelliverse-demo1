@@ -1,4 +1,4 @@
-import { Input, Radio, RadioGroup } from "@chakra-ui/react";
+import { Textarea, Input, Radio, RadioGroup, useToast } from "@chakra-ui/react";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../util/Buttons/TonalButton";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const UseCaseDetail = ({
   show,
 }) => {
   const descRef = useRef();
+  const toast = useToast();
   const [disable, setDisable] = useState(false);
   const handleChange = (name, value) => {
     setUSerData((prev) => {
@@ -21,6 +22,17 @@ const UseCaseDetail = ({
     });
   };
   const handleSave = () => {
+    if (descRef.current.value == "" || userData.dataType == "") {
+      toast({
+        title: "Error",
+        description: "Some fields are unfilled",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
     setUSerData((prev) => {
       let newData = { ...prev };
       newData["whatToDetect"] = descRef.current.value;
@@ -84,7 +96,7 @@ const UseCaseDetail = ({
           <p className="text-sm text-[#3E3C42] font-medium">
             What do you want to detect?
           </p>
-          <Input
+          <Textarea
             placeholder="Ex. I want to detect the size of coal"
             width={"300px"}
             name="whatToDetect"
