@@ -30,6 +30,7 @@ const Expert = () => {
   const [answer, setAnswer] = useState("");
   const [comment, setComment] = useState("");
   const [savedAnswer, setSavedAnswer] = useState("");
+  const [subject, setSubject] = useState("");
 
   const { login } = useContext(NavContext);
 
@@ -62,8 +63,8 @@ const Expert = () => {
           },
         }
       );
-
-      console.log("saved", response?.data);
+      setSavedAnswer(response?.data)
+      // console.log("saved", response?.data);
     } catch (e) {
       console.error(e);
     }
@@ -224,7 +225,7 @@ const Expert = () => {
   const handleComments = () => {
     console.log("Comment added");
   };
-  //  console.log("answer",answer)
+   console.log("savedAnswer",reply)
   return (
     <>
       <Navbar />
@@ -319,7 +320,7 @@ const Expert = () => {
                   {answer == null || answer.length == 0 ? (
                     <textarea
                       ref={textbox}
-                      value={reply}
+                      value={reply || savedAnswer}
                       onChange={(e) => {
                         setReply(e.target.value);
                         handleKeyDown();
@@ -352,7 +353,7 @@ const Expert = () => {
                   )}
 
                   {answer == null || answer.length == 0 ? (
-                    <div className="mx-2">
+                    <div className="mx-2 mt-10">
                       <div className="relative w-full bg-white -mt-12 h-10 px-2 py-2 flex items-center gap-2">
                         <img
                           className="cursor-pointer -mr-2"
@@ -411,7 +412,7 @@ const Expert = () => {
                 <div className="w-full mt-4">
                   <p className="text-[#034C85]">Your Reply</p>
                   <div className="w-full h-20  rounded-md px-0 py-2">
-                    {reply}
+                    {reply || savedAnswer}
                   </div>
                 </div>
               ) : null}
