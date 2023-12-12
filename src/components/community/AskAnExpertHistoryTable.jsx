@@ -13,19 +13,19 @@ import { baseURL } from "../../index";
 import StarIcon from '@mui/icons-material/Star';
 const MuiTheme = createTheme();
 
-const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
+const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
   const { auth } = useContext(NavContext);
 
   const navigate = useNavigate();
   const [isStarredMap, setIsStarredMap] = useState({});
   
-  useEffect(() => {
-    const initialStarredMap = {};
-    rowData.forEach((row) => {
-      initialStarredMap[row.queryId] = row.starred;
-    });
-    setIsStarredMap(initialStarredMap);
-  }, [rowData]);
+  // useEffect(() => {
+  //   const initialStarredMap = {};
+  //   rowData.forEach((row) => {
+  //     initialStarredMap[row.queryId] = row.starred;
+  //   });
+  //   setIsStarredMap(initialStarredMap);
+  // }, [rowData]);
 
   const handleStarClick = async (queryId, event) => {
     // Prevent the click from triggering when clicking on a button inside the row
@@ -37,7 +37,6 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       const response = await axios.patch(
         baseURL + `questions/starred/${queryId}`,
         null,
-
         {
           headers: {
             "Content-Type": "application/json",
@@ -132,6 +131,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       ),
     },
   ];
+  
   const getStatusStyles = (status) => {
     switch (status) {
       case "Pending":
@@ -266,7 +266,13 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
             queryId: false,
           }}
           onRowClick={handleRowClick}
-          hideFooter={true}
+          // hideFooter={true}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+            // sorting: {
+            //   sortModel: [{ field: 'status', sort: 'asc' }],
+            // },
+          }}
           sx={{ minWidth: "1000px" }}
         />
       </ThemeProvider>
