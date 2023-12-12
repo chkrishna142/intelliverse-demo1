@@ -29,6 +29,7 @@ const CreateForm = () => {
       { title: "Upload data", description: "Fill info about data set" },
       { title: "Annotate", description: "Annotate data for training" },
     ],
+    annotatedData: null,
   };
   const [userState, setUserState] = useState(initState);
   const [activeStep, setActiveStep] = useState(0);
@@ -62,6 +63,7 @@ const CreateForm = () => {
           userData={userState}
           setUSerData={setUserState}
           setActiveStep={setActiveStep}
+          show={activeStep >= 3}
         />
       </div>
     </div>
