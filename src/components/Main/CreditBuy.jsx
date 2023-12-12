@@ -112,9 +112,22 @@ const CreditBuy = () => {
       const converted = atob(res);
       const txn_id = converted.split(',')[0];
       setLoader(true);
-      setInterval(() => {
+
+      const intervalDuration = 2000; // Interval duration in milliseconds
+      const duration = 120000; // 2 minutes in milliseconds
+      let elapsedTime = 0;
+      const intervalId = setInterval(() => {
+        // Your code to execute on each interval
         getPaymentStatus(txn_id);
-      }, 2000);
+        // Update elapsed time
+        elapsedTime += intervalDuration; 
+        // Check if 2 minutes have passed
+        if (elapsedTime >= duration) {
+          // Stop the interval
+          clearInterval(intervalId);
+          setLoader(false);
+        }
+      }, intervalDuration);
     } catch (e) {
       console.log(e);
     }

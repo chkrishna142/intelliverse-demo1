@@ -29,7 +29,7 @@ const Dashboard = () => {
   const getAll = async () => {
     try {
       const response = await axios.get(
-        baseURL + "selfserve/v1/project/v2/getAll/",
+        baseURL + "selfserve/v1/project/v1/getAll/",
         {
           headers: {
             "Content-Type": "application/json",

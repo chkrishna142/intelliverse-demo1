@@ -10,12 +10,14 @@ import {
 } from "@chakra-ui/react";
 import AddLabel from "./AddLabel";
 import ImageSelector from "./ImageSelector";
+import DetectSegment from "./DetectSegment";
 
 const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
   const [labels, setLabels] = useState([]);
   const [page, setPage] = useState("Unannotated");
   const [selectedImages, setSelectedImages] = useState([]);
   const [annotatedImages, setAnnotatedImages] = useState([]);
+  const [confirm, setConfirm] = useState(false);
   const [allImages, setAllImages] = useState([]);
   const [assign, setAssign] = useState("");
   const [add, setAdd] = useState(false);
@@ -81,6 +83,8 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
       setLabels([]);
     }
   }, [userData.uploadedFiles]);
+
+  console.log(annotatedImages,'data')
   return (
     <div
       className={`p-6 flex flex-col gap-6 bg-white transition-all duration-700 ease-in ${
@@ -88,19 +92,19 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
       }`}
     >
       <p className="text-[#3E3C42] text-2xl font-medium">Assign labels</p>
-      <div className="flex gap-[47px]">
+      <div className="flex flex-col lg:flex-row gap-[47px] relative">
         {/* Label selection and additon */}
         <div className="flex flex-col gap-3 whitespace-nowrap">
-          <div className="self-end">
+          <div className="self-start lg:self-end">
             <TextButton
               text={"Add labels"}
               width={"fit-content"}
-              disable={add}
+              disable={add || confirm}
               onClick={() => setAdd(true)}
             />
           </div>
           <RadioGroup onChange={setAssign} value={assign}>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 max-w-[250px]">
               {labels.map((x) => {
                 return (
                   <AddLabel
@@ -110,6 +114,8 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
                     setAssign={setAssign}
                     setAnnotatedImages={setAnnotatedImages}
                     setAllImages={setAllImages}
+                    userData={userData}
+                    confirm={confirm}
                   />
                 );
               })}
@@ -132,24 +138,47 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
               </InputGroup>
             )}
           </RadioGroup>
-          <SecondaryButton
-            text={"Assign label"}
-            width={"fit-content"}
-            disable={assign == ""}
-            onClick={handleAssign}
-          />
+          {userData.annotationType == "Classify" ? (
+            <SecondaryButton
+              text={"Assign label"}
+              width={"fit-content"}
+              disable={assign == ""}
+              onClick={handleAssign}
+            />
+          ) : (
+            <SecondaryButton
+              text={"Confirm"}
+              width={"fit-content"}
+              disable={labels.length == 0 || confirm}
+              onClick={() => setConfirm(true)}
+            />
+          )}
         </div>
         {/* Image selection area */}
-        <ImageSelector
-          selectedImages={selectedImages}
-          setSelectedImages={setSelectedImages}
-          annotatedImages={annotatedImages}
-          setAnnotatedImages={setAnnotatedImages}
-          images={allImages}
-          setImages={setAllImages}
-          page={page}
-          setPage={setPage}
-        />
+        {userData.annotationType == "Classify" ? (
+          <ImageSelector
+            selectedImages={selectedImages}
+            setSelectedImages={setSelectedImages}
+            annotatedImages={annotatedImages}
+            setAnnotatedImages={setAnnotatedImages}
+            images={allImages}
+            setImages={setAllImages}
+            page={page}
+            setPage={setPage}
+          />
+        ) : (
+          <DetectSegment
+            labels={labels}
+            setAnnotatedImages={setAnnotatedImages}
+            allImages={allImages}
+            options={
+              userData.annotationType == "Detect"
+                ? ["select", "create-box"]
+                : ["select", "create-polygon"]
+            }
+            confirm={confirm}
+          />
+        )}
       </div>
       <div className="flex gap-2 items-center">
         <PrimaryButton
