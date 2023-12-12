@@ -345,7 +345,7 @@ const Sidebar = ({userRole}) => {
                   </a>
                 </AccordionPanel>
               </AccordionItem>
-              {userRole === "ADMIN" && (<AccordionItem className="border-none -mt-4">
+              {(userRole === "ADMIN" || userRole === "SUPERADMIN") && (<AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/admin/usermanagement">
                     <AccordionButton

@@ -91,25 +91,26 @@ const ActiveSubs = () => {
   };
 
   useEffect(() => {
-    if(auth){setLoading(true);
+    if (auth) {
+      setLoading(true);
       fetchActiveSubs();
-      fetchDownloadApi();}
+      fetchDownloadApi();
+    }
   }, [auth]);
 
-
-  console.log("active subs h", activeSubs);
-  console.log("display data h", displayData);
+  // console.log("active subs h", activeSubs);
+  // console.log("display data h", displayData);
 
   return (
     <div className="w-full px-2 !font-roboto">
-      <div className="flex justify-between w-[80%]">
+      <div className="flex justify-between">
         <div>
           <p className="text-lg font-semibold text-[#605D64]">
             {activeSubs?.length}
           </p>
           <p className="text-[#938F96]">Tools subscribed</p>
         </div>
-        <div className="flex flex-row items-baseline gap-2">
+        <div className="flex flex-row items-baseline gap-2 ">
           {downloadProp.length > 0 && (
             <ExlCsvDownload
               data={downloadProp}
@@ -118,11 +119,6 @@ const ActiveSubs = () => {
               enable={true}
             />
           )}
-          <Paginator
-            data={activeSubs}
-            limit={7}
-            setDisplayData={setDisplayData}
-          />
         </div>
       </div>
 
@@ -133,12 +129,21 @@ const ActiveSubs = () => {
       ) : (
         <React.Fragment>
           {displayData && displayData.length !== 0 ? (
-          <ActiveSubsTable activeSubs={displayData} />
-           ) : (
+            <ActiveSubsTable activeSubs={displayData} />
+          ) : (
             <p className="ml-[45%]">No data available.</p>
-          )} 
+          )}
         </React.Fragment>
       )}
+      <div className="flex items-end justify-end">
+        <div>
+          <Paginator
+            data={activeSubs}
+            limit={7}
+            setDisplayData={setDisplayData}
+          />
+        </div>
+      </div>
     </div>
   );
 };

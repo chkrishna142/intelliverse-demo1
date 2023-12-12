@@ -41,7 +41,9 @@ const AskAnExpertHistory = () => {
   const [fullName, setFullName] = useState("");
   const [downloadData, setDownloadData] = useState({});
   const [loading, setLoading] = useState(false);
-  
+  const [top3clients, setTopClients] = useState([]);
+  const [top3Enquirers, setTopEnquirers] = useState([]);
+
   const handleClick = () => {
     setStateChanging(false);
     // apiCall();
@@ -69,7 +71,6 @@ const AskAnExpertHistory = () => {
 
     switch (e.target.value) {
       case "0": // All Time
-
         // Set startTime to the beginning of the year 2022
         startTime = new Date("2022-01-01T00:00:00").getTime();
         // Set endTime to the current time
@@ -152,7 +153,7 @@ const AskAnExpertHistory = () => {
     // Update state with the calculated start and end times
     setFromTime(startTime);
     setToTime(endTime);
-    
+
     // Call API when a new range is selected
     if (e.target.value !== "6") {
       fetchQueries(startTime, endTime);
@@ -207,8 +208,11 @@ const AskAnExpertHistory = () => {
 
       setTableData(sortedData);
       setFilteredData(sortedData);
+      setTopEnquirers(response?.data.top3enquirer);
+      setTopClients(response?.data.top3client);
+
       setLoading(false);
-      // console.log("date in fetch ", requestData);
+      console.log("date in fetch ", data);
     } catch (e) {
       console.error(e);
     }
@@ -232,8 +236,6 @@ const AskAnExpertHistory = () => {
     }
   };
 
-  
-
   useEffect(() => {
     if (auth) {
       setLoading(true);
@@ -252,10 +254,14 @@ const AskAnExpertHistory = () => {
       setFilteredData(starredData);
     } else {
       // Filter data based on other statuses
-      const filtered = tableData.filter((item) => item.status === selectedStatus);
+      const filtered = tableData.filter(
+        (item) => item.status === selectedStatus
+      );
       setFilteredData(filtered);
     }
   };
+  console.log("clients", top3clients);
+  console.log("enq", top3Enquirers);
 
   return (
     <div className="mt-[3vh] flex flex-col w-full gap-1">
@@ -402,16 +408,22 @@ const AskAnExpertHistory = () => {
           </div>
 
           <div className="flex flex-1 bg-blue-100 justify-evenly rounded-r-lg h-[200px]">
-          <div className=" flex flex-col justify-center mt-5 items-center ">
+            <div className=" flex flex-col justify-center mt-5 items-center ">
               <div className="text-[20px] font-md">Top 3 Clients</div>
               <div className="text-[#fff]">
-                <TopClientsChart />
+                {top3clients && top3clients.names && top3clients.questions && (
+                  <TopClientsChart top3clients={top3clients} />
+                )}
               </div>
             </div>
             <div className=" flex flex-col justify-center mt-5 items-center ">
               <div className="text-[20px] font-md">Top 3 Enquirers</div>
               <div className="text-[#fff]">
-                <TopEnquirerChart />
+                {top3Enquirers &&
+                  top3Enquirers.names &&
+                  top3Enquirers.questions && (
+                    <TopEnquirerChart top3Enquirers={top3Enquirers} />
+                  )}
               </div>
             </div>
           </div>
@@ -477,9 +489,9 @@ const AskAnExpertHistory = () => {
           </div>
           {/* paginator */}
           <div className="">
-            {displayData && displayData.length != 0 && (
+            {filteredData && filteredData.length != 0 && (
               <ExlCsvDownload
-                data={displayData}
+                data={filteredData}
                 order={downloadData.summary}
                 orderDetail={downloadData.details}
                 enable={true}
@@ -499,8 +511,11 @@ const AskAnExpertHistory = () => {
               </div>
             ) : (
               <React.Fragment>
-                {displayData && displayData.length !== 0 ? (
-                  <AskAnExpertHistoryTable rowData={displayData} fetchQueries={fetchQueries} handleStatus={handleStatus}/>
+                {filteredData && filteredData.length !== 0 ? (
+                  <AskAnExpertHistoryTable
+                    rowData={filteredData}
+                    fetchQueries={fetchQueries}
+                  />
                 ) : (
                   <p className="ml-[45%]">No data available!</p>
                 )}
@@ -509,11 +524,11 @@ const AskAnExpertHistory = () => {
           </div>
           <div className="flex justify-end">
             <div>
-              <Paginator
+              {/* <Paginator
                 data={filteredData}
                 limit={5}
                 setDisplayData={setDisplayData}
-              />
+              /> */}
             </div>
           </div>
         </div>

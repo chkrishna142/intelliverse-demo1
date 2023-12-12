@@ -12,13 +12,15 @@ import { Input, Spinner } from "@chakra-ui/react";
 import NavContext from "../NavContext";
 import axios from "axios";
 import PrimaryButton from "../../util/Buttons/PrimaryButton";
+// import { baseURL } from "../../index";
 
 const Expert = () => {
+  const { auth } = useContext(NavContext);
   const [submitted, setSubmitted] = useState(false);
   const [reply, setReply] = useState("");
   const [review, setReview] = useState(false);
   const navigate = useNavigate();
-  const [fullName, setFullName] = useState(localStorage.getItem('fullname'));
+  const [fullName, setFullName] = useState(localStorage.getItem("fullname"));
   let param = useParams();
 
   const [spinner, setSpinner] = useState(false);
@@ -27,6 +29,8 @@ const Expert = () => {
   const [send, setSend] = useState([]);
   const [answer, setAnswer] = useState("");
   const [comment, setComment] = useState("");
+  const [savedAnswer, setSavedAnswer] = useState("");
+  const [subject, setSubject] = useState("");
 
   const { login } = useContext(NavContext);
 
@@ -48,9 +52,49 @@ const Expert = () => {
     adjustHeight();
   }
 
+  const fetchSavedAnswer = async () => {
+    try {
+      const response = await axios.get(
+        baseURL + `questions/saveAnswer/${param.questionId}`,
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setSavedAnswer(response?.data)
+      // console.log("saved", response?.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const handleSave = async () => {
+    const data = {
+      answer: reply,
+    };
+    try {
+      const response = await axios.post(
+        baseURL + `questions/saveAnswer/${param.questionId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+
+      console.log("saved", response?.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     getData();
     getAttachments();
+    fetchSavedAnswer();
   }, []);
 
   const getAttachments = async () => {
@@ -178,10 +222,10 @@ const Expert = () => {
   const handleBackButton = () => {
     navigate("/community/askanexpert/history");
   };
-  const handleComments = () =>{
-console.log("Comment added")
-  }
-  //  console.log("answer",answer)
+  const handleComments = () => {
+    console.log("Comment added");
+  };
+   console.log("savedAnswer",reply)
   return (
     <>
       <Navbar />
@@ -197,7 +241,7 @@ console.log("Comment added")
                 />
               </div>
               <p className="text-black text-xl font-medium">
-                {"Subject will be displayed here"}
+                {"Session testing"}
               </p>
             </div>
 
@@ -276,7 +320,7 @@ console.log("Comment added")
                   {answer == null || answer.length == 0 ? (
                     <textarea
                       ref={textbox}
-                      value={reply}
+                      value={reply || savedAnswer}
                       onChange={(e) => {
                         setReply(e.target.value);
                         handleKeyDown();
@@ -286,7 +330,7 @@ console.log("Comment added")
                     />
                   ) : (
                     <div>
-                      <div className="w-full h-20 rounded-md px-0 py-2 overflow-y-auto border mb-3">
+                      <div className="w-full h-20 rounded-md px-0 py-2 overflow-y-auto mb-3">
                         <p className="ml-2">Dear {"(Enquire's name)"}</p>
                         <p className="ml-2">{answer}</p>
                       </div>
@@ -299,17 +343,17 @@ console.log("Comment added")
                           className="w-full border rounded-md px-2 py-2 mt-2"
                         />
                         <div className="w-15 mt-2">
-                        <PrimaryButton
-                          text={"Add"}
-                          onClick={() => handleComments()}
-                        />
+                          <PrimaryButton
+                            text={"Add"}
+                            onClick={() => handleComments()}
+                          />
                         </div>
                       </div>
                     </div>
                   )}
 
                   {answer == null || answer.length == 0 ? (
-                    <div className="mx-2">
+                    <div className="mx-2 mt-10">
                       <div className="relative w-full bg-white -mt-12 h-10 px-2 py-2 flex items-center gap-2">
                         <img
                           className="cursor-pointer -mr-2"
@@ -368,14 +412,17 @@ console.log("Comment added")
                 <div className="w-full mt-4">
                   <p className="text-[#034C85]">Your Reply</p>
                   <div className="w-full h-20  rounded-md px-0 py-2">
-                    {reply}
+                    {reply || savedAnswer}
                   </div>
                 </div>
               ) : null}
               {answer == null || answer.length == 0 ? (
                 <div className="w-full flex justify-start items-center gap-6 mt-5 mb-5">
                   {review === false ? (
-                    <button className="text-white px-6 py-3 bg-[#084298] rounded-md">
+                    <button
+                      className="text-white px-6 py-3 bg-[#084298] rounded-md"
+                      onClick={handleSave}
+                    >
                       Save Answer
                     </button>
                   ) : (

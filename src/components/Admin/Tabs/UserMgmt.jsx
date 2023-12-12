@@ -53,7 +53,8 @@ const UserMgmt = () => {
   const [displayUsers, setDisplayUsers] = useState([]);
   const [downloadData, setDownloadData] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const [organisation, setOrganisation] = useState("");
+  const [status, setStatus] = useState([]);
   const fetchUsers = async () => {
     try {
       const response = await axios.get(baseURL + "iam/users", {
@@ -64,7 +65,7 @@ const UserMgmt = () => {
         },
       });
 
-      const sortedUsers = [...response?.data]; 
+      const sortedUsers = [...response?.data];
       sortedUsers.sort((a, b) => {
         const dateA = new Date(a.createdat);
         const dateB = new Date(b.createdat);
@@ -74,7 +75,8 @@ const UserMgmt = () => {
       });
 
       setUsers(sortedUsers);
-      
+      const organisation = sortedUsers[0].organisation;
+      setOrganisation(organisation) //setting organisation
     } catch (err) {
       console.log(err);
     }
@@ -92,23 +94,24 @@ const UserMgmt = () => {
 
       //setting order for downloading data
       setDownloadData(response.data);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    if(auth){setLoading(true)
-    fetchUsers();
-    fetchDownloadApi();}
+    if (auth) {
+      setLoading(true);
+      fetchUsers();
+      fetchDownloadApi(); 
+      fetchStatus(); 
+    }
   }, [auth]);
-
- 
 
   useEffect(() => {
     setDisplayUsers(users);
   }, [users]);
-
+  
   const [isOpenD, setIsOpenD] = useState(false);
 
   const onCloseD = () => {
@@ -139,6 +142,24 @@ const UserMgmt = () => {
   const [error, setError] = useState("");
   const toast = useToast();
 
+  const fetchStatus = async () => {
+
+    try {
+      const response = await axios.get(
+        baseURL + `iam/status?organisation=${organisation}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-auth-Token": auth,
+          },
+        }
+      );
+      // console.log("stats",response.data)
+      setStatus(response?.data)
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const deleteUser = async (userID) => {
     try {
       let data = JSON.stringify({
@@ -228,7 +249,7 @@ const UserMgmt = () => {
         });
       });
   };
-
+  
   useEffect(() => {
     console.log(contact);
   }, [contact]);
@@ -264,7 +285,8 @@ const UserMgmt = () => {
   //     setUsers(temp);
   //     setDisplayUsers(temp);
   //   }
-  // }, [sortOption, users]); 
+  // }, [sortOption, users]);
+  // console.log("st",status)
 
   return (
     <>
@@ -273,25 +295,30 @@ const UserMgmt = () => {
           <div className="flex flex-row justify-start gap-6">
             <div className="flex flex-col">
               <p className="text-lg font-semibold text-[#605D64]">
-                {users?.length}
+                {/* {users?.length} */}
+                {status.Total}
+
               </p>
               <p className="text-[#938F96]">Total</p>
             </div>
             <div className="flex flex-col">
               <p className="text-lg font-semibold text-[#605D64]">
-                {users?.filter((elem) => elem?.isactive).length}
+                {/* {users?.filter((elem) => elem?.isactive).length} */}
+                {status.Active}
               </p>
               <p className="text-[#938F96]">Active</p>
             </div>
             <div className="flex flex-col">
               <p className="text-lg font-semibold text-[#605D64]">
-                {users?.filter((elem) => !elem?.isactive).length}
+                {/* {users?.filter((elem) => !elem?.isactive).length} */}
+                {status.InActive}
               </p>
               <p className="text-[#938F96]">Inactive Last Week</p>
             </div>
             <div className="flex flex-col">
               <p className="text-lg font-semibold text-[#605D64]">
-                {users?.filter((elem) => elem?.isDeleted).length}
+                {/* {users?.filter((elem) => elem?.isDeleted).length} */}
+                {status.Deleted}
               </p>
               <p className="text-[#938F96]">Deleted</p>
             </div>
@@ -342,27 +369,27 @@ const UserMgmt = () => {
           />
         )} */}
         {loading ? (
-        <div className="ml-[50%]">
-          <Spinner speed="0.65s" />
-        </div>
-      ) : (
-        <React.Fragment>
-          {displayData && displayData.length !== 0 ? (
-          <UserMngmtTable
-          rowData={displayData}
-          setIsOpenE={setIsOpenE}
-          setIsOpenD={setIsOpenD}
-          setSelectedUser={setSelectedUser}
-          setFullName={setFullName}
-          setUserEmail={setUserEmail}
-          setUserRole={setUserRole}
-          setContact={setContact}
-        />
-           ) : (
-            <p className="ml-[45%]">No data available!</p>
-          )} 
-        </React.Fragment>
-      )}
+          <div className="ml-[50%]">
+            <Spinner speed="0.65s" />
+          </div>
+        ) : (
+          <React.Fragment>
+            {displayData && displayData.length !== 0 ? (
+              <UserMngmtTable
+                rowData={displayData}
+                setIsOpenE={setIsOpenE}
+                setIsOpenD={setIsOpenD}
+                setSelectedUser={setSelectedUser}
+                setFullName={setFullName}
+                setUserEmail={setUserEmail}
+                setUserRole={setUserRole}
+                setContact={setContact}
+              />
+            ) : (
+              <p className="ml-[45%]">No data available!</p>
+            )}
+          </React.Fragment>
+        )}
       </div>
       <DeleteUserModal
         isOpen={isOpenD}

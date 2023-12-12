@@ -13,19 +13,19 @@ import { baseURL } from "../../index";
 import StarIcon from '@mui/icons-material/Star';
 const MuiTheme = createTheme();
 
-const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
+const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
   const { auth } = useContext(NavContext);
 
   const navigate = useNavigate();
   const [isStarredMap, setIsStarredMap] = useState({});
   
-  useEffect(() => {
-    const initialStarredMap = {};
-    rowData.forEach((row) => {
-      initialStarredMap[row.queryId] = row.starred;
-    });
-    setIsStarredMap(initialStarredMap);
-  }, [rowData]);
+  // useEffect(() => {
+  //   const initialStarredMap = {};
+  //   rowData.forEach((row) => {
+  //     initialStarredMap[row.queryId] = row.starred;
+  //   });
+  //   setIsStarredMap(initialStarredMap);
+  // }, [rowData]);
 
   const handleStarClick = async (queryId, event) => {
     // Prevent the click from triggering when clicking on a button inside the row
@@ -37,7 +37,6 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       const response = await axios.patch(
         baseURL + `questions/starred/${queryId}`,
         null,
-
         {
           headers: {
             "Content-Type": "application/json",
@@ -60,14 +59,14 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
 
   const columns = [
     {
-      field: "queryId",
+      field: "questionId",
       headerName: "ID",
     },
     {
       field: "star",
       headerName: "",
       renderCell: ({ row }) => (
-        <IconButton onClick={(e) => handleStarClick(row.queryId, e)}>
+        <IconButton onClick={(e) => handleStarClick(row.questionId, e)}>
           {row.starred ? (
             <StarIcon style={{ color: "#FFC107" }} />
           ) : (
@@ -77,7 +76,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       ),
     },
     {
-      field: "query",
+      field: "question",
       headerName: "QUESTIONS",
     },
     {
@@ -123,7 +122,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       headerName: "View",
       renderCell: ({ row }) => (
         <IconButton
-          onClick={(e) => handleViewAnswerClick(row.queryId, e)}
+          onClick={(e) => handleViewAnswerClick(row.questionId, e)}
           style={{ color: "#2196F3" }}
         >
           {/* <InfoOutlineIcon /> */}
@@ -132,6 +131,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       ),
     },
   ];
+  
   const getStatusStyles = (status) => {
     switch (status) {
       case "Pending":
@@ -171,13 +171,13 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
     // navigate(`/community/expert/af933136-6f05-4f83-8e5b-f9c0d5384ced`);
   };
 
-  const handleViewAnswerClick = async (queryId, event) => {
+  const handleViewAnswerClick = async (questionId, event) => {
     if (event.target.tagName.toLowerCase() === "button") {
       return;
     }
     try {
       const response = await axios.patch(
-        `https://backend-ripik.com/api/questions/status/${queryId}?status=0`,
+        `https://backend-ripik.com/api/questions/status/${questionId}?status=0`,
 
         {
           headers: {
@@ -190,7 +190,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
       console.log("API Response:", response.data);
 
       // Navigate to the desired route (if needed)
-      navigate(`/community/expert/${queryId}`);
+      navigate(`/community/expert/${questionId}`);
     } catch (error) {
       console.error(error);
     }
@@ -260,13 +260,19 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries,handleStatus }) => {
         <DataGrid
           rows={rowData}
           columns={columns}
-          getRowId={(row) => row.queryId}
+          getRowId={(row) => row.questionId}
           getRowClassName={getRowClassName}
           columnVisibilityModel={{
-            queryId: false,
+            questionId: false,
           }}
           onRowClick={handleRowClick}
-          hideFooter={true}
+          // hideFooter={true}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+            // sorting: {
+            //   sortModel: [{ field: 'status', sort: 'asc' }],
+            // },
+          }}
           sx={{ minWidth: "1000px" }}
         />
       </ThemeProvider>
