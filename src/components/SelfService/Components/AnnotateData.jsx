@@ -90,6 +90,7 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
       className={`p-6 flex flex-col gap-6 bg-white transition-all duration-700 ease-in ${
         show ? "opacity-100" : "opacity-0"
       }`}
+      id="step3"
     >
       <p className="text-[#3E3C42] text-2xl font-medium">Assign labels</p>
       <div className="flex flex-col lg:flex-row gap-[47px] relative">

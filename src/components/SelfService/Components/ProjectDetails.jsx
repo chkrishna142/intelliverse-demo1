@@ -33,7 +33,7 @@ const ProjectDetails = ({
     setDisable(true);
   };
   return (
-    <div className="bg-white rounded-lg flex flex-col gap-8 p-6">
+    <div className="bg-white rounded-lg flex flex-col gap-8 p-6" id="step0">
       <p className="text-[#3E3C42] text-xl font-medium">Project Details</p>
       <div className="flex flex-col gap-3">
         <p className="text-sm text-[#3E3C42] font-medium">Project name</p>

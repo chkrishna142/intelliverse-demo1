@@ -47,6 +47,7 @@ const UseCaseDetail = ({
       className={`p-6 flex flex-col gap-8 rounded-lg bg-white transition-all ease-in duration-500 ${
         show ? "opacity-100" : "opacity-0"
       }`}
+      id="step1"
     >
       <p className="text-[#3E3C42] text-xl font-medium">UseCase details</p>
       <div className="flex flex-col gap-6">

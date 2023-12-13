@@ -41,20 +41,21 @@ export function getCreditsRemaining(bal) {
 }
 
 export function getQuestionsCredit(bal, setDisabled) {
-  if (0 < bal.question_balance < 10) {
-    setDisabled(false)
-    return 5
-  } else if (10 < bal.question_balance < 40) {
-    setDisabled(false)
-    return 20
-  } else if (40 < bal.question_balance < 80) {
-    setDisabled(false)
-    return 50
-  } else if (80 < bal.question_balance < 100) {
-    setDisabled(false)
-    return 100
-  } else {
-    setDisabled(true)
-    return 0
-  }
+  // if (0 < bal.question_balance < 10) {
+  //   setDisabled(false)
+  //   return 5
+  // } else if (10 < bal.question_balance < 40) {
+  //   setDisabled(false)
+  //   return 20
+  // } else if (40 < bal.question_balance < 80) {
+  //   setDisabled(false)
+  //   return 50
+  // } else if (80 < bal.question_balance < 100) {
+  //   setDisabled(false)
+  //   return 100
+  // } else {
+  //   setDisabled(true)
+  //   return 0
+  // }
+  return bal.question_balance
 }

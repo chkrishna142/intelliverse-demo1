@@ -10,7 +10,7 @@ import {
   Stepper,
   useSteps,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UseCaseDetail from "../Components/UseCaseDetail";
 import UploadDetails from "../Components/UploadDetails";
 import AnnotateData from "../Components/AnnotateData";
@@ -33,6 +33,15 @@ const CreateForm = () => {
   };
   const [userState, setUserState] = useState(initState);
   const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const elem = document.getElementById("step" + activeStep);
+    elem.scrollIntoView({
+      behavior: "smooth", // You can use 'auto' instead of 'smooth' for instant scrolling
+      block: "center", // You can use 'center' or 'end' instead of 'start'
+    });
+  }, [activeStep]);
+
   console.log(userState, "data");
   return (
     <div className="flex flex-col gap-2 h-screen mt-6 font-roboto">

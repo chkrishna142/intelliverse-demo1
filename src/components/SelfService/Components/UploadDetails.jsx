@@ -90,143 +90,173 @@ const UploadDetails = ({
       className={`flex flex-col gap-8 p-6 bg-white rounded-lg transition-all ease-in duration-700 ${
         show ? "opacity-100" : "opacity-0"
       }`}
+      id="step2"
     >
       <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
-      <div className="flex flex-col gap-6">
-        {/*Is annotated*/}
-        <div className="flex flex-col gap-3">
-          <p className="text-[#3E3C42] text-sm font-medium">
-            Is the data annotated?
-          </p>
-          <RadioGroup
-            onChange={(e) => handleChange("isAnnotated", e)}
-            value={userData.isAnnotated}
-          >
-            <div className="flex gap-1 items-center">
-              {["Yes", "No"].map((x) => {
-                return (
-                  <div
-                    style={{
-                      backgroundColor:
-                        x == userData.isAnnotated ? "#DDEEFF80" : "#FFF",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <Radio
-                      value={x}
-                      py={"8px"}
-                      pl={"8px"}
-                      pr={"12px"}
-                      fontSize={"14px"}
-                      fontWeight={500}
-                      color={"#3E3C42"}
-                      _checked={{
-                        bg: "#6CA6FC",
-                        borderColor: "#6CA6FC",
-                      }}
-                      _hover={{
-                        borderColor: "#6CA6FC",
-                      }}
-                      isDisabled={disable}
-                    >
-                      {x}
-                    </Radio>
-                  </div>
-                );
-              })}
-            </div>
-          </RadioGroup>
-        </div>
-        {/*annotation type */}
-        <div className="flex flex-col gap-3">
-          <p className="text-[#3E3C42] text-sm font-medium">
-            Select annotation type
-          </p>
-          <RadioGroup
-            onChange={(e) => handleChange("annotationType", e)}
-            value={userData.annotationType}
-            isDisabled={disable}
-          >
-            <div className="flex gap-1 items-center">
-              {["Classify", "Detect", "Segment"].map((x) => {
-                return (
-                  <div
-                    style={{
-                      backgroundColor:
-                        x == userData.annotationType ? "#DDEEFF80" : "#FFF",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <Radio
-                      value={x}
-                      py={"8px"}
-                      pl={"8px"}
-                      pr={"12px"}
-                      fontSize={"14px"}
-                      fontWeight={500}
-                      color={"#3E3C42"}
-                      _checked={{
-                        bg: "#6CA6FC",
-                        borderColor: "#6CA6FC",
-                      }}
-                      _hover={{
-                        borderColor: "#6CA6FC",
-                      }}
-                      isDisabled={disable}
-                    >
-                      {x}
-                    </Radio>
-                  </div>
-                );
-              })}
-            </div>
-          </RadioGroup>
-        </div>
-        {/*Upload data*/}
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1">
-            <p className="text-[#79767D] text-sm font-medium">
-              Upload {userData.dataType}
-              <span className="text-[#DC362E]">*</span>
+      <div className="w-full flex gap-[100px] items-center">
+        <div className="flex flex-col gap-6">
+          {/*Is annotated*/}
+          <div className="flex flex-col gap-3">
+            <p className="text-[#3E3C42] text-sm font-medium">
+              Is the data annotated?
             </p>
-            <p className="text-[#AEA9B1] text-sm">
-              Supported formats: {format[userData.dataType]?.join(", ")}
-            </p>
+            <RadioGroup
+              onChange={(e) => handleChange("isAnnotated", e)}
+              value={userData.isAnnotated}
+            >
+              <div className="flex gap-1 items-center">
+                {["Yes", "No"].map((x) => {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor:
+                          x == userData.isAnnotated ? "#DDEEFF80" : "#FFF",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <Radio
+                        value={x}
+                        py={"8px"}
+                        pl={"8px"}
+                        pr={"12px"}
+                        fontSize={"14px"}
+                        fontWeight={500}
+                        color={"#3E3C42"}
+                        _checked={{
+                          bg: "#6CA6FC",
+                          borderColor: "#6CA6FC",
+                        }}
+                        _hover={{
+                          borderColor: "#6CA6FC",
+                        }}
+                        isDisabled={disable}
+                      >
+                        {x}
+                      </Radio>
+                    </div>
+                  );
+                })}
+              </div>
+            </RadioGroup>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 text-[#AEA9B1] text-sm items-start sm:items-center">
-            <input
-              ref={fileInputRef}
-              type="file"
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-              multiple
-            />
-            <SecondaryButton
-              Icon={<img src="/selfServiceIcons/upload.svg" alt="upload" />}
-              text={"Upload files"}
-              width={"fit-content"}
-              onClick={() => {
-                fileInputRef.current.click();
-              }}
-              disable={disable}
-            />
-            <p>or</p>
-            <div className="flex items-center gap-0">
-              <TextButton
-                text={"Link Bucket"}
+          {/*annotation type */}
+          <div className="flex flex-col gap-3">
+            <p className="text-[#3E3C42] text-sm font-medium">
+              Select annotation type
+            </p>
+            <RadioGroup
+              onChange={(e) => handleChange("annotationType", e)}
+              value={userData.annotationType}
+              isDisabled={disable}
+            >
+              <div className="flex gap-1 items-center">
+                {["Classify", "Detect", "Segment"].map((x) => {
+                  return (
+                    <div
+                      style={{
+                        backgroundColor:
+                          x == userData.annotationType ? "#DDEEFF80" : "#FFF",
+                        borderRadius: "8px",
+                      }}
+                    >
+                      <Radio
+                        value={x}
+                        py={"8px"}
+                        pl={"8px"}
+                        pr={"12px"}
+                        fontSize={"14px"}
+                        fontWeight={500}
+                        color={"#3E3C42"}
+                        _checked={{
+                          bg: "#6CA6FC",
+                          borderColor: "#6CA6FC",
+                        }}
+                        _hover={{
+                          borderColor: "#6CA6FC",
+                        }}
+                        isDisabled={disable}
+                      >
+                        {x}
+                      </Radio>
+                    </div>
+                  );
+                })}
+              </div>
+            </RadioGroup>
+          </div>
+          {/*Upload data*/}
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <p className="text-[#79767D] text-sm font-medium">
+                Upload {userData.dataType}
+                <span className="text-[#DC362E]">*</span>
+              </p>
+              <p className="text-[#AEA9B1] text-sm">
+                Supported formats: {format[userData.dataType]?.join(", ")}
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 text-[#AEA9B1] text-sm items-start sm:items-center whitespace-nowrap">
+              <input
+                ref={fileInputRef}
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+                multiple
+              />
+              <SecondaryButton
+                Icon={<img src="/selfServiceIcons/upload.svg" alt="upload" />}
+                text={"Upload files"}
                 width={"fit-content"}
+                onClick={() => {
+                  fileInputRef.current.click();
+                }}
                 disable={disable}
               />
-              <div style={{ width: "fit-content" }}>
-                <Input
-                  type="text"
-                  placeholder="Supported Aws"
-                  isDisabled={disable}
+              <p>or</p>
+              <div className="flex items-center gap-0">
+                <TextButton
+                  text={"Link Bucket"}
+                  width={"fit-content"}
+                  disable={disable}
                 />
+                <div style={{ width: "fit-content" }}>
+                  <Input
+                    type="text"
+                    placeholder="Supported Aws"
+                    isDisabled={disable}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {userData.annotationType != "" && userData.uploadedFiles == null && (
+          <div className="rounded-lg h-full flex justify-center items-center transition-all duration-500 ease-linear">
+            <img
+              src={`/selfServiceIcons/images/${userData.annotationType.toLowerCase()}_final.png`}
+              alt="info image"
+              className="rounded-lg max-h-[350px]"
+            />
+          </div>
+        )}
+        {userData.uploadedFiles != null && (
+          <div className="grid grid-cols-2 h-fit w-fit gap-6">
+            {userData.uploadedFiles.slice(0, 5).map((item) => {
+              return (
+                <div className="flex justify-center items-center bg-black w-full rounded-lg">
+                  <img
+                    src={URL.createObjectURL(item)}
+                    alt="image"
+                    className="max-h-[70px] rounded-lg"
+                  />
+                </div>
+              );
+            })}
+            <div className="text-[#3E3C42] text-lg font-medium flex justify-center items-center text-center">
+              Images Uploaded...
+            </div>
+          </div>
+        )}
       </div>
       <div className="flex gap-2 items-center mt-2">
         <PrimaryButton
