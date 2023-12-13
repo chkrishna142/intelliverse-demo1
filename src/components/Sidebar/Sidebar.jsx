@@ -201,6 +201,16 @@ const Sidebar = ({ userRole }) => {
                       Workforce Monitoring
                     </div>
                   </Link>
+                  <div
+                    className={
+                      location.pathname.includes("/advisor")
+                        ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                        : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
+                    }
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Request use case
+                  </div>
                   {/* <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
                     Automate Data Digitization
                   </div> */}
@@ -274,6 +284,16 @@ const Sidebar = ({ userRole }) => {
                   </div>
                   <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Potline
+                  </div>
+                  <div
+                    className={
+                      location.pathname.includes("/advisor")
+                        ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                        : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
+                    }
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Request use case
                   </div>
                 </AccordionPanel>
               </AccordionItem>
@@ -350,7 +370,6 @@ const Sidebar = ({ userRole }) => {
                       Community
                     </div>
                   </a>
-                  <>
                   <div
                     className={
                       location.pathname.includes("/advisor")
@@ -361,8 +380,6 @@ const Sidebar = ({ userRole }) => {
                   >
                     Request use case
                   </div>
-                  <RequestUseCaseModal isOpen={isModalOpen} onOpen={() => setIsModalOpen(true)} onClose={() => setIsModalOpen(false)} size="3xl"/>
-                  </>
                 </AccordionPanel>
               </AccordionItem>
               {(userRole === "ADMIN" || userRole === "SUPERADMIN") && (
@@ -761,9 +778,11 @@ const Sidebar = ({ userRole }) => {
           <div className="w-full flex justify-center"><img  src="/impact.svg" alt="home logo" /></div>
           <div className="w-full flex justify-center"><p className="font-light w-24">Impact Tracker</p></div>
         </div> */}
-          </div>
+          </div>    
         </div>
       )}
+                {isModalOpen && <RequestUseCaseModal isOpen={isModalOpen} onOpen={() => setIsModalOpen(true)} onClose={() => setIsModalOpen(false)} size="3xl"/>}
+              
     </>
   );
 };

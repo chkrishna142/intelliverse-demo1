@@ -42,6 +42,7 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
     useState("");
   const [financialValue, setFinancialValue] = useState("");
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -87,6 +88,7 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
   const handleSubmit = async () => {
     // Set submitClicked to true
     setSubmitClicked(true);
+    setIsLoading(true);
 
     if (
       !briefDescription ||
@@ -123,6 +125,7 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
           "X-Auth-Token": auth,
         },
       });
+      setIsLoading(false);
       setSubmitted(true);
 
       console.log("submit", response);
@@ -157,9 +160,9 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
             Request Use Case
           </div>
           <ModalCloseButton className="mt-2" color={"white"} />
-          <ModalBody>
+          <ModalBody maxHeight={'80vh'} overflowY={'auto'}>
             {submitted === false ? (
-              <div>
+              <div className="overflow-y-auto">
                 <div className="mt-2">
                   <p className="font-semibold ">Brief description </p>
                   <Input
@@ -357,7 +360,7 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
             {submitted === false ? (
               <div className="flex gap-[10px] items-center mt-2">
                 <PrimaryButton
-                  text={"Submit"}
+                  text={isLoading ? "Submitting..." : "Submit"}
                   width={"fit-content"}
                   onClick={handleSubmit}
                 />
