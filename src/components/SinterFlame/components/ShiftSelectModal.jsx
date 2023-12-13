@@ -36,6 +36,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
     "Shift B (2PM to 10PM)",
   ];
   const { auth } = useContext(NavContext);
+  const [users, setUsers] = useState({});
   const [dataChanging, setDataChanging] = useState(false);
   const [data, setData] = useState([]);
   const [missingDates, setMissingDates] = useState([]);
@@ -89,7 +90,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
         // If the date doesn't exist, add it to the filledDatesArray
         if (!dateExists) {
           missing.push({
-            startTs: new Date(dateString).getTime()/1000,
+            startTs: new Date(dateString).getTime() / 1000,
             workers: {
               C: {
                 fieldOperator: "",
@@ -111,6 +112,29 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
       setMissingDates(missing);
     } catch (error) {
       setDataChanging(false);
+      console.log(error);
+    }
+  };
+
+  const fetchNames = async () => {
+    try {
+      const requestBody = JSON.stringify({
+        clientId: clientId.toLowerCase(),
+        useCase: "SINTERFLAME",
+        plantName: "chanderia",
+      });
+      const response = await axios.post(
+        baseURL + "vision/v2/processMonitoring/workerInfo/name/",
+        requestBody,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      setUsers(response.data);
+    } catch (error) {
       console.log(error);
     }
   };
@@ -137,6 +161,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
   };
 
   useEffect(() => {
+    fetchNames();
     handleClick();
   }, []);
 
@@ -269,7 +294,12 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
                                 }
                               )}
                             </Td>
-                            <OperatorSelect data={val} clientId={clientId} />
+                            <OperatorSelect
+                              data={val}
+                              clientId={clientId}
+                              users={users}
+                              fetchData={apiCall}
+                            />
                           </Tr>
                         );
                       })}
@@ -287,14 +317,18 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
                                 fontWeight={400}
                                 borderX={"1px solid #D3D3D3"}
                               >
-                                {new Date(val?.startTs*1000).toLocaleDateString(
-                                  "en-US",
-                                  {
-                                    timeZone: "UTC", // Specify UTC timezone
-                                  }
-                                )}
+                                {new Date(
+                                  val?.startTs * 1000
+                                ).toLocaleDateString("en-US", {
+                                  timeZone: "UTC", // Specify UTC timezone
+                                })}
                               </Td>
-                              <OperatorSelect data={val} clientId={clientId} />
+                              <OperatorSelect
+                                data={val}
+                                clientId={clientId}
+                                users={users}
+                                fetchData={apiCall}
+                              />
                             </Tr>
                           );
                         })}
@@ -392,7 +426,7 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
                       </Tr>
                     </Thead>
                     <Tbody>
-                      {[...Array(5)].map((val, idx) => {
+                      {data.map((val, idx) => {
                         return (
                           <Tr
                             key={idx}
@@ -405,12 +439,51 @@ const ShiftSelectModal = ({ openModal, closeModal, clientId }) => {
                               fontWeight={400}
                               borderX={"1px solid #D3D3D3"}
                             >
-                              {new Date().toLocaleDateString()}
+                              {new Date(val?.startTs * 1000).toLocaleDateString(
+                                "en-US",
+                                {
+                                  timeZone: "UTC", // Specify UTC timezone
+                                }
+                              )}
                             </Td>
-                            <OperatorSelect />
+                            <OperatorSelect
+                              data={val}
+                              clientId={clientId}
+                              users={users}
+                              fetchData={apiCall}
+                            />
                           </Tr>
                         );
                       })}
+                      {missingDates.length > 0 &&
+                        missingDates.map((val, idx) => {
+                          return (
+                            <Tr
+                              key={idx}
+                              className="!text-sm !text-[#3E3C42] even:bg-[#FAFAFA] odd:bg-white"
+                            >
+                              <Td
+                                className=""
+                                padding={0}
+                                px={2}
+                                fontWeight={400}
+                                borderX={"1px solid #D3D3D3"}
+                              >
+                                {new Date(
+                                  val?.startTs * 1000
+                                ).toLocaleDateString("en-US", {
+                                  timeZone: "UTC", // Specify UTC timezone
+                                })}
+                              </Td>
+                              <OperatorSelect
+                                data={val}
+                                clientId={clientId}
+                                users={users}
+                                fetchData={apiCall}
+                              />
+                            </Tr>
+                          );
+                        })}
                     </Tbody>
                   </Table>
                 </TableContainer>
