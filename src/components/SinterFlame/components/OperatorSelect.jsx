@@ -10,12 +10,10 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const OperatorSelect = ({ data, clientId }) => {
-  const a = ["","Skipper", "Private", "King", "Mermen", "Classified"]; //incharge
-  const b = ["","Rico", "Kowloski", "Alex"]; //operator
+const OperatorSelect = ({ data, clientId, users, fetchData }) => {
   const shifts = ["C", "A", "B"];
   const [editing, setEditing] = useState(false);
-  const [rowData, setRowData] = useState(data);
+  const [rowData, setRowData] = useState({});
   const { auth } = useContext(NavContext);
   const toast = useToast();
 
@@ -81,6 +79,10 @@ const OperatorSelect = ({ data, clientId }) => {
     apiCall();
   };
 
+  const handleCancel = () => {
+    setEditing(false);
+    fetchData();
+  };
   return (
     <>
       <Td padding={0} px={2} borderRight={"1px solid #D3D3D3"}>
@@ -103,7 +105,7 @@ const OperatorSelect = ({ data, clientId }) => {
                 colorScheme="gray"
                 icon={<CloseIcon />}
                 color={"#818181"}
-                onClick={() => setEditing(false)}
+                onClick={() => handleCancel()}
                 size={"xs"}
               />
               <IconButton
@@ -119,62 +121,69 @@ const OperatorSelect = ({ data, clientId }) => {
           )}
         </div>
       </Td>
-      {shifts.map((i) => {
-        return (
-          <Td padding={0} px={2} borderRight={"1px solid #D3D3D3"}>
-            <div className="w-full flex gap-2 items-center justify-between">
-              {editing ? (
-                <Select
-                  size={"sm"}
-                  color={"#3E3C42"}
-                  fontWeight={500}
-                  fontSize={"14px"}
-                  border={0}
-                  name="shiftIncharge"
-                  value={rowData?.workers[i]?.shiftIncharge}
-                  onChange={(e) => handleChange(i, e)}
-                >
-                  {a.map((val, index) => {
-                    return (
-                      <option key={index} value={val}>
-                        {val}
-                      </option>
-                    );
-                  })}
-                </Select>
-              ) : (
-                <p className="w-full self-start">
-                  {rowData?.workers[i]?.shiftIncharge}
-                </p>
-              )}
-              {editing ? (
-                <Select
-                  size={"sm"}
-                  color={"#3E3C42"}
-                  fontWeight={500}
-                  fontSize={"14px"}
-                  border={0}
-                  name="fieldOperator"
-                  value={rowData?.workers[i]?.fieldOperator}
-                  onChange={(e) => handleChange(i, e)}
-                >
-                  {b.map((val, index) => {
-                    return (
-                      <option key={index} value={val}>
-                        {val}
-                      </option>
-                    );
-                  })}
-                </Select>
-              ) : (
-                <p className="w-full self-start">
-                  {rowData?.workers[i]?.fieldOperator}
-                </p>
-              )}
-            </div>
-          </Td>
-        );
-      })}
+      {Object.keys(rowData).length > 0 &&
+        shifts.map((i) => {
+          return (
+            <Td padding={0} px={2} borderRight={"1px solid #D3D3D3"}>
+              <div className="w-full flex gap-2 items-center justify-between">
+                {editing ? (
+                  <Select
+                    size={"sm"}
+                    color={"#3E3C42"}
+                    fontWeight={500}
+                    fontSize={"14px"}
+                    border={0}
+                    name="shiftIncharge"
+                    value={rowData?.workers[i]?.shiftIncharge}
+                    onChange={(e) => handleChange(i, e)}
+                  >
+                    {users?.shiftIncharge?.map((val, index) => {
+                      return (
+                        <option key={index} value={val}>
+                          {val}
+                        </option>
+                      );
+                    })}
+                    <option key={"data"} value={""}>
+                      N/A
+                    </option>
+                  </Select>
+                ) : (
+                  <p className="w-full self-start">
+                    {rowData?.workers[i]?.shiftIncharge}
+                  </p>
+                )}
+                {editing ? (
+                  <Select
+                    size={"sm"}
+                    color={"#3E3C42"}
+                    fontWeight={500}
+                    fontSize={"14px"}
+                    border={0}
+                    name="fieldOperator"
+                    value={rowData?.workers[i]?.fieldOperator}
+                    onChange={(e) => handleChange(i, e)}
+                  >
+                    {users?.fieldOperator?.map((val, index) => {
+                      return (
+                        <option key={index} value={val}>
+                          {val}
+                        </option>
+                      );
+                    })}
+                    <option key={"data"} value={""}>
+                      N/A
+                    </option>
+                  </Select>
+                ) : (
+                  <p className="w-full self-start">
+                    {rowData?.workers[i]?.fieldOperator}
+                  </p>
+                )}
+              </div>
+            </Td>
+          );
+        })}
     </>
   );
 };
