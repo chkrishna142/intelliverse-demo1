@@ -1,22 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import OnlinePredictionIcon from '@mui/icons-material/OnlinePrediction';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import OnlinePredictionIcon from "@mui/icons-material/OnlinePrediction";
 // import AlignVerticalBottomIcon from "@mui/icons-material/AlignVerticalBottom";
-import { useWindowSize } from '@uidotdev/usehooks';
+import { useWindowSize } from "@uidotdev/usehooks";
 
 import {
   Accordion,
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-} from '@chakra-ui/react';
-import './Sidebar.css';
+} from "@chakra-ui/react";
+import "./Sidebar.css";
+import RequestUseCaseModal from "../RequestUseCase/RequestUseCase";
 
-const Sidebar = ({userRole, homeRef}) => {
+const Sidebar = ({ userRole }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const size = useWindowSize();
-  const InitialRoute = location.pathname === '/report' ? 'report' : 'real';
+  const InitialRoute = location.pathname === "/report" ? "report" : "real";
   const [route, setRoute] = useState(InitialRoute);
 
   //const plantName = window.location.href.split("/")[3];
@@ -26,21 +28,21 @@ const Sidebar = ({userRole, homeRef}) => {
         <div
           className=" "
           style={{
-            position: 'fixed',
-            width: '90px',
-            height: 'calc(100vh - 80px)',
-            backgroundColor: '#024D87',
+            position: "fixed",
+            width: "90px",
+            height: "calc(100vh - 80px)",
+            backgroundColor: "#024D87",
             boxShadow:
-              '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginTop: '65px',
-            marginLeft: '20px',
-            marginBottom: '20px',
-            borderRadius: '24px',
-            paddingBottom: '30px',
+              "0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "65px",
+            marginLeft: "20px",
+            marginBottom: "20px",
+            borderRadius: "24px",
+            paddingBottom: "30px",
           }}
         >
           <div className="grid grid-row-3 h-40 gap-5 text-white text-center text-xs">
@@ -77,31 +79,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/home')
-                            ? 'w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/home")
+                            ? "w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/home')
-                                ? 'w-6'
-                                : 'w-5'
+                              location.pathname.includes("/home")
+                                ? "w-6"
+                                : "w-5"
                             }
                             src={
-                              location.pathname.includes('/home')
-                                ? '/home_curved_selected.svg'
-                                : '/home_curved.svg'
+                              location.pathname.includes("/home")
+                                ? "/home_curved_selected.svg"
+                                : "/home_curved.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/home')
-                              ? 'font-bold text-xs text-[#024D87]'
-                              : 'font-light text-xs'
+                            location.pathname.includes("/home")
+                              ? "font-bold text-xs text-[#024D87]"
+                              : "font-light text-xs"
                           }
                         >
                           Home
@@ -120,31 +122,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/vision')
-                            ? 'w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/vision")
+                            ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/vision')
-                                ? 'w-11 pb-2'
-                                : 'w-7 pb-2'
+                              location.pathname.includes("/vision")
+                                ? "w-11 pb-2"
+                                : "w-7 pb-2"
                             }
                             src={
-                              location.pathname.includes('/vision')
-                                ? '/vision_updated.svg'
-                                : '/new1.svg'
+                              location.pathname.includes("/vision")
+                                ? "/vision_updated.svg"
+                                : "/new1.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/vision')
-                              ? 'font-bold text-xs text-[#024D87] -mt-2'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes("/vision")
+                              ? "font-bold text-xs text-[#024D87] -mt-2"
+                              : "font-light text-xs -mt-1"
                           }
                         >
                           Vision
@@ -157,9 +159,9 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/vision/Sizing">
                     <div
                       className={
-                        location.pathname.includes('/vision/Sizing')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes("/vision/Sizing")
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       Sizing Tool
@@ -168,9 +170,9 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/vision/ProcessMonitoring">
                     <div
                       className={
-                        location.pathname.includes('/vision/ProcessMonitoring')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes("/vision/ProcessMonitoring")
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       Flare/Flame Monitoring
@@ -179,9 +181,9 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/vision/qualityTracking">
                     <div
                       className={
-                        location.pathname.includes('/vision/qualityTracking')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes("/vision/qualityTracking")
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       Quality Tracking / Monitoring
@@ -190,14 +192,26 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/vision/workforceMonitoring">
                     <div
                       className={
-                        location.pathname.includes('/vision/workforceMonitoring')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes(
+                          "/vision/workforceMonitoring"
+                        )
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       Workforce Monitoring
                     </div>
                   </Link>
+                  <div
+                    className={
+                      location.pathname.includes("/advisor")
+                        ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                        : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
+                    }
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Request use case
+                  </div>
                   {/* <div className="text-xs cursor-pointer px-2 py-2 border-b border-gray-400 h-14 flex items-center  font-light">
                     Automate Data Digitization
                   </div> */}
@@ -212,31 +226,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/optimus')
-                            ? 'w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/optimus")
+                            ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/optimus')
-                                ? 'w-7 pb-2'
-                                : 'w-9 pb-2'
+                              location.pathname.includes("/optimus")
+                                ? "w-7 pb-2"
+                                : "w-9 pb-2"
                             }
                             src={
-                              location.pathname.includes('/optimus')
-                                ? '/optimus_new.svg'
-                                : '/new2.svg'
+                              location.pathname.includes("/optimus")
+                                ? "/optimus_new.svg"
+                                : "/new2.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/optimus')
-                              ? 'font-bold text-xs text-[#024D87] -mt-2'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes("/optimus")
+                              ? "font-bold text-xs text-[#024D87] -mt-2"
+                              : "font-light text-xs -mt-1"
                           }
                         >
                           Optimus
@@ -258,9 +272,9 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/optimus/blastfurnace">
                     <div
                       className={
-                        location.pathname.includes('/optimus/blastfurnace')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes("/optimus/blastfurnace")
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       Blast Furnace
@@ -271,6 +285,16 @@ const Sidebar = ({userRole, homeRef}) => {
                   </div>
                   <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
                     Potline
+                  </div>
+                  <div
+                    className={
+                      location.pathname.includes("/advisor")
+                        ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                        : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
+                    }
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Request use case
                   </div>
                 </AccordionPanel>
               </AccordionItem>
@@ -283,31 +307,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/community')
-                            ? 'w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/community")
+                            ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/community')
-                                ? 'w-7 pb-2'
-                                : 'w-7 pb-2'
+                              location.pathname.includes("/community")
+                                ? "w-7 pb-2"
+                                : "w-7 pb-2"
                             }
                             src={
-                              location.pathname.includes('/community')
-                                ? '/comm_selected.svg'
-                                : '/comm.svg'
+                              location.pathname.includes("/community")
+                                ? "/comm_selected.svg"
+                                : "/comm.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/community')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes("/community")
+                              ? "font-bold text-xs text-[#024D87] -mt-1"
+                              : "font-light text-xs -mt-1"
                           }
                         >
                           Community
@@ -320,9 +344,9 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/community/askanexpert">
                     <div
                       className={
-                        location.pathname.includes('/askanexpert')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes("/askanexpert")
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       Ask An Expert
@@ -331,107 +355,124 @@ const Sidebar = ({userRole, homeRef}) => {
                   <Link to="/community/advisor">
                     <div
                       className={
-                        location.pathname.includes('/advisor')
-                          ? 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md'
-                          : 'text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light'
+                        location.pathname.includes("/advisor")
+                          ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                          : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
                       }
                     >
                       AI Advisor
                     </div>
                   </Link>
-                  <a href="https://community.ripikintelliverse.com/" target="_blank">
-                  <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
-                    Community
-                  </div>
+                  <a
+                    href="https://community.ripikintelliverse.com/"
+                    target="_blank"
+                  >
+                    <div className="text-xs justify-center px-2 py-2 border-b border-gray-400 h-12 flex items-center font-light">
+                      Community
+                    </div>
                   </a>
+                  <div
+                    className={
+                      location.pathname.includes("/advisor")
+                        ? "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center bg-[#F7F7F7] text-[#024D87]  rounded-md"
+                        : "text-xs cursor-pointer px-2 py-2 border-y border-gray-400 h-12 flex items-center font-light"
+                    }
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Request use case
+                  </div>
                 </AccordionPanel>
               </AccordionItem>
-              {(userRole === "ADMIN" || userRole === "SUPERADMIN") && (<AccordionItem className="border-none -mt-4">
-                <h2>
-                  <Link to="/admin/usermanagement">
-                    <AccordionButton
-                      _hover={false}
-                      className="flex justify-center items-center "
-                    >
-                      <div
-                        className={
-                          location.pathname.includes('/admin')
-                            ? 'w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
-                        }
+              {(userRole === "ADMIN" || userRole === "SUPERADMIN") && (
+                <AccordionItem className="border-none -mt-4">
+                  <h2>
+                    <Link to="/admin/usermanagement">
+                      <AccordionButton
+                        _hover={false}
+                        className="flex justify-center items-center "
                       >
-                        <div className="w-full flex justify-center">
-                          <img
-                            className={
-                              location.pathname.includes('/admin')
-                                ? 'w-7 pb-2'
-                                : 'w-7 pb-2'
-                            }
-                            src={
-                              location.pathname.includes('/admin')
-                                ? '/admin_selected.svg'
-                                : '/admin.svg'
-                            }
-                            alt="home logo"
-                          />
-                        </div>
-                        <p
+                        <div
                           className={
-                            location.pathname.includes('/admin')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes("/admin")
+                              ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]"
+                              : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                           }
                         >
-                          Admin
-                        </p>
-                      </div>
-                    </AccordionButton>
-                  </Link>
-                </h2>
-              </AccordionItem>)}
-              {userRole === "SUPERADMIN" && (<AccordionItem className="border-none -mt-4">
-                <h2>
-                  <Link to="/superadmin/addclient">
-                    <AccordionButton
-                      _hover={false}
-                      className="flex justify-center items-center "
-                    >
-                      <div
-                        className={
-                          location.pathname.includes('/superadmin')
-                            ? 'w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
-                        }
-                      >
-                        <div className="w-full flex">
-                          <img
+                          <div className="w-full flex justify-center">
+                            <img
+                              className={
+                                location.pathname.includes("/admin")
+                                  ? "w-7 pb-2"
+                                  : "w-7 pb-2"
+                              }
+                              src={
+                                location.pathname.includes("/admin")
+                                  ? "/admin_selected.svg"
+                                  : "/admin.svg"
+                              }
+                              alt="home logo"
+                            />
+                          </div>
+                          <p
                             className={
-                              location.pathname.includes('/superadmin')
-                                ? 'w-9 pb-2 ml-2'
-                                : 'w-9 pb-2 ml-1'
+                              location.pathname.includes("/admin")
+                                ? "font-bold text-xs text-[#024D87] -mt-1"
+                                : "font-light text-xs -mt-1"
                             }
-                            src={
-                              location.pathname.includes('/superadmin')
-                                ? '/supericon1.png'
-                                : '/supericon2.png'
-                            }
-                            alt="home logo"
-                          />
+                          >
+                            Admin
+                          </p>
                         </div>
-                        <p
+                      </AccordionButton>
+                    </Link>
+                  </h2>
+                </AccordionItem>
+              )}
+              {userRole === "SUPERADMIN" && (
+                <AccordionItem className="border-none -mt-4">
+                  <h2>
+                    <Link to="/superadmin/addclient">
+                      <AccordionButton
+                        _hover={false}
+                        className="flex justify-center items-center "
+                      >
+                        <div
                           className={
-                            location.pathname.includes('/superadmin')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1 mr-1'
-                              : 'font-light text-xs -mt-1 mr-1'
+                            location.pathname.includes("/superadmin")
+                              ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]"
+                              : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                           }
                         >
-                          Super Admin
-                        </p>
-                      </div>
-                    </AccordionButton>
-                  </Link>
-                </h2>
-              </AccordionItem>)}
+                          <div className="w-full flex">
+                            <img
+                              className={
+                                location.pathname.includes("/superadmin")
+                                  ? "w-9 pb-2 ml-2"
+                                  : "w-9 pb-2 ml-1"
+                              }
+                              src={
+                                location.pathname.includes("/superadmin")
+                                  ? "/supericon1.png"
+                                  : "/supericon2.png"
+                              }
+                              alt="home logo"
+                            />
+                          </div>
+                          <p
+                            className={
+                              location.pathname.includes("/superadmin")
+                                ? "font-bold text-xs text-[#024D87] -mt-1 mr-1"
+                                : "font-light text-xs -mt-1 mr-1"
+                            }
+                          >
+                            Super Admin
+                          </p>
+                        </div>
+                      </AccordionButton>
+                    </Link>
+                  </h2>
+                </AccordionItem>
+              )}
               <AccordionItem className="border-none -mt-4">
                 <h2>
                   <Link to="/Sandbox">
@@ -441,31 +482,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/Sandbox')
-                            ? 'w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/Sandbox")
+                            ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/Sandbox')
-                                ? 'w-7 pb-2'
-                                : 'w-7 pb-2'
+                              location.pathname.includes("/Sandbox")
+                                ? "w-7 pb-2"
+                                : "w-7 pb-2"
                             }
                             src={
-                              location.pathname.includes('/Sandbox')
-                                ? '/selfService_selected.svg'
-                                : '/selfService.svg'
+                              location.pathname.includes("/Sandbox")
+                                ? "/selfService_selected.svg"
+                                : "/selfService.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/Sandbox')
-                              ? 'font-bold text-xs text-[#024D87] -mt-1 text-center'
-                              : 'font-light text-xs -mt-1 text-center'
+                            location.pathname.includes("/Sandbox")
+                              ? "font-bold text-xs text-[#024D87] -mt-1 text-center"
+                              : "font-light text-xs -mt-1 text-center"
                           }
                         >
                           AI Sandbox
@@ -543,21 +584,21 @@ const Sidebar = ({userRole, homeRef}) => {
         <div
           className=" "
           style={{
-            position: 'fixed',
-            width: '100%',
-            height: '76px',
-            bottom: '0px',
-            backgroundColor: '#024D87',
+            position: "fixed",
+            width: "100%",
+            height: "76px",
+            bottom: "0px",
+            backgroundColor: "#024D87",
             boxShadow:
-              '0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '0px',
-            marginLeft: '0px',
-            marginBottom: '0px',
-            borderRadius: '8px 8px 0px 0px',
-            paddingBottom: '30px',
+              "0px 2px 6px 2px rgba(0, 0, 0, 0.15), 0px 1px 2px rgba(0, 0, 0, 0.3)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "0px",
+            marginLeft: "0px",
+            marginBottom: "0px",
+            borderRadius: "8px 8px 0px 0px",
+            paddingBottom: "30px",
             zIndex: 1000,
           }}
         >
@@ -595,31 +636,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/home')
-                            ? 'w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/home")
+                            ? "w-full mt-6 cursor-pointer  rounded-md  px-5 py-2 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/home')
-                                ? 'w-6'
-                                : 'w-5'
+                              location.pathname.includes("/home")
+                                ? "w-6"
+                                : "w-5"
                             }
                             src={
-                              location.pathname.includes('/home')
-                                ? '/home_curved_selected.svg'
-                                : '/home_curved.svg'
+                              location.pathname.includes("/home")
+                                ? "/home_curved_selected.svg"
+                                : "/home_curved.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/home')
-                              ? 'font-bold text-xs text-[#024D87]'
-                              : 'font-light text-xs'
+                            location.pathname.includes("/home")
+                              ? "font-bold text-xs text-[#024D87]"
+                              : "font-light text-xs"
                           }
                         >
                           Home
@@ -638,31 +679,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/vision')
-                            ? 'w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/vision")
+                            ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/vision')
-                                ? 'w-11 pb-2'
-                                : 'w-7 pb-2'
+                              location.pathname.includes("/vision")
+                                ? "w-11 pb-2"
+                                : "w-7 pb-2"
                             }
                             src={
-                              location.pathname.includes('/vision')
-                                ? '/vision_updated.svg'
-                                : '/new1.svg'
+                              location.pathname.includes("/vision")
+                                ? "/vision_updated.svg"
+                                : "/new1.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/vision')
-                              ? 'font-bold text-xs text-[#024D87] -mt-2'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes("/vision")
+                              ? "font-bold text-xs text-[#024D87] -mt-2"
+                              : "font-light text-xs -mt-1"
                           }
                         >
                           Vision
@@ -681,31 +722,31 @@ const Sidebar = ({userRole, homeRef}) => {
                     >
                       <div
                         className={
-                          location.pathname.includes('/optimus')
-                            ? 'w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]'
-                            : 'w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2'
+                          location.pathname.includes("/optimus")
+                            ? "w-full mt-6 cursor-pointer  rounded-md p-2 bg-[#F7F7F7]"
+                            : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                         }
                       >
                         <div className="w-full flex justify-center">
                           <img
                             className={
-                              location.pathname.includes('/optimus')
-                                ? 'w-7 pb-2'
-                                : 'w-9 pb-2'
+                              location.pathname.includes("/optimus")
+                                ? "w-7 pb-2"
+                                : "w-9 pb-2"
                             }
                             src={
-                              location.pathname.includes('/optimus')
-                                ? '/optimus_new.svg'
-                                : '/new2.svg'
+                              location.pathname.includes("/optimus")
+                                ? "/optimus_new.svg"
+                                : "/new2.svg"
                             }
                             alt="home logo"
                           />
                         </div>
                         <p
                           className={
-                            location.pathname.includes('/optimus')
-                              ? 'font-bold text-xs text-[#024D87] -mt-2'
-                              : 'font-light text-xs -mt-1'
+                            location.pathname.includes("/optimus")
+                              ? "font-bold text-xs text-[#024D87] -mt-2"
+                              : "font-light text-xs -mt-1"
                           }
                         >
                           Optimus
@@ -738,9 +779,11 @@ const Sidebar = ({userRole, homeRef}) => {
           <div className="w-full flex justify-center"><img  src="/impact.svg" alt="home logo" /></div>
           <div className="w-full flex justify-center"><p className="font-light w-24">Impact Tracker</p></div>
         </div> */}
-          </div>
+          </div>    
         </div>
       )}
+                {isModalOpen && <RequestUseCaseModal isOpen={isModalOpen} onOpen={() => setIsModalOpen(true)} onClose={() => setIsModalOpen(false)} size="3xl"/>}
+              
     </>
   );
 };
