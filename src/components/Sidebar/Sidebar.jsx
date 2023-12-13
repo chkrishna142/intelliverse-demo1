@@ -14,7 +14,7 @@ import {
 import "./Sidebar.css";
 import RequestUseCaseModal from "../RequestUseCase/RequestUseCase";
 
-const Sidebar = ({ userRole }) => {
+const Sidebar = ({ userRole,homeRef }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const size = useWindowSize();
