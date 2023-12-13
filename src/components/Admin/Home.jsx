@@ -84,7 +84,7 @@ const AdminHome = () => {
               }
               onClick={() => setPage("allot_token")}
             >
-              Allot Token
+              Allocate Tokens
             </Tab>
           </div>
         </TabList>

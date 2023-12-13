@@ -104,7 +104,7 @@ const TokenTransaction = () => {
         <p className=" text-[18px] font-medium w-[200px] text-[#605D64]">
           Transaction History
         </p>
-        <div className="flex min-w-[110px]  items-center">
+        {/* <div className="flex min-w-[110px]  items-center">
           <Select
             borderColor="#CAC5CD"
             color="#605D64"
@@ -122,11 +122,12 @@ const TokenTransaction = () => {
               All Plants
             </option>
           </Select>
-        </div>
+        </div> */}
       </div>
       {/* token details */}
 
       <TokenData />
+      <TokenTransactionTable tableData={displayData1} />
       {TransactiontableData && (
         <div className="w-full flex justify-end">
           <Paginator
@@ -136,14 +137,18 @@ const TokenTransaction = () => {
           />
         </div>
       )}
-      <TokenTransactionTable tableData={displayData1} />
 
-      <div className="w-full p-2 flex justify-between items-center">
-        <p className="text-[#605D64] text-[16px] font-medium">
+      <div className="w-full p-2">
+        <p className="text-[#605D64] text-[16px] font-medium mt-3">
           Allocation History
         </p>
+        <div className="mt-3">
+          {displayData2 && displayData2.length != 0 && (
+            <TokenAllocationTable tableData={displayData2} />
+          )}
+        </div>
         {AllocationtableData && (
-          <div className="">
+          <div className="flex justify-end">
             <Paginator
               data={AllocationtableData}
               limit={4}
@@ -152,7 +157,6 @@ const TokenTransaction = () => {
           </div>
         )}
       </div>
-      <TokenAllocationTable tableData={displayData2} />
     </div>
   );
 };

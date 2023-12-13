@@ -213,13 +213,13 @@ const Home = ({ state, homeRef }) => {
                 )}
                 <img className="h-6 " src="/vision.svg" />
               </div>
-              <div
+              {/* <div
                 onClick={() => setIsOpen(true)}
                 className=" md:flex flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2 h-8 border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  "
               >
                 <div className="ml-2 ">+</div>
                 <div className="mr-3 ">Add Use Case</div>
-              </div>
+              </div> */}
             </div>
             <div className=" w-full h-full mb-5">
               <div className="mt-10 md:mt-5 ml-0 md:ml-3 flex flex-wrap md:justify-start justify-center gap-8 text-sm items-center">
@@ -409,13 +409,13 @@ const Home = ({ state, homeRef }) => {
                 <img className="md:h-8 h-6" src="/optimus.svg" />
               </div>
 
-              <div
+              {/* <div
                 onClick={() => setIsOpen(true)}
                 className=" md:flex h-8 flex items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2  border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  "
               >
                 <div className="ml-2 ">+</div>
                 <div className="mr-3 ">Add Use Case</div>
-              </div>
+              </div> */}
             </div>
             <div className="grid grid-cols-2 gap-2 md:mt-0 mt-7">
               <div className="mt-2 border-r">
@@ -645,13 +645,13 @@ const Home = ({ state, homeRef }) => {
                 )}
                 <img className="lg:h-14 h-10 ml-2" src="/community.svg" />
               </div>
-              <div
+              {/* <div
                 onClick={() => setIsOpen(true)}
                 className=" md:flex md:mt-0 mt-3 flex h-8 items-center gap-3 font-bold text-white bg-[#3182CE] md:mt-3 px-2 py-2  border rounded-md md:text-xs cursor-pointer hover:bg-[#024D87] hover:transition duration-200 text-[10px]  "
               >
                 <div className="ml-2 ">+</div>
                 <div className="mr-3 ">Add Use Case</div>
-              </div>
+              </div> */}
             </div>
             <div>
               <div className="md:mt-0 mt-10">
@@ -728,7 +728,7 @@ const Home = ({ state, homeRef }) => {
           </div>
         ) : null}
       </div>
-      {size.width > 640 ? (
+      {/* {size.width > 640 ? (
         <NewUseCaseModal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
@@ -740,7 +740,7 @@ const Home = ({ state, homeRef }) => {
           onClose={() => setIsOpen(false)}
           size={'xs'}
         />
-      )}
+      )} */}
     </div>
   );
 };

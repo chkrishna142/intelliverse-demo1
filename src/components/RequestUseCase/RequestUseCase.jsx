@@ -104,6 +104,7 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
         isClosable: true,
         position: "top",
       });
+      setIsLoading(false);
       return;
     }
 
