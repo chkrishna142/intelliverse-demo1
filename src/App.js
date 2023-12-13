@@ -48,6 +48,12 @@ import AddClients from './components/SuperAdmin/AddClients/AddClients';
 import CreateClient from './components/SuperAdmin/AddClients/CreateClient';
 import ViewClient from './components/SuperAdmin/AddClients/ViewClient';
 import UpdateClient from './components/SuperAdmin/AddClients/UpdateClient';
+import Subscriptions from './components/SuperAdmin/AdminPages/Subscriptions';
+import UserManagement from './components/SuperAdmin/AdminPages/UserManagement';
+import UserMgmt from './components/Admin/Tabs/UserMgmt';
+import SessionLogs from './components/Admin/Tabs/SessionLogs';
+import AllotToken from './components/Admin/Tabs/AllotToken';
+import TokenTransaction from './components/Admin/Tabs/TokenTransaction';
 
 function App() {
   const homeRef = useRef();
@@ -298,6 +304,30 @@ function App() {
                     <Route
                       path="/superadmin/viewClient/:clientId"
                       element={<ViewClient />}
+                    />
+                    <Route
+                      path="/superadmin/subscriptions"
+                      element={<Subscriptions />}
+                    />
+                    <Route
+                      path="/superadmin/usermanagement/:clientOrg"
+                      element={<UserMgmt />}
+                    />
+                    <Route
+                      path="/superadmin/usermanagement/update/:clientOrg"
+                      element={<UserMgmt />}
+                    />
+                    <Route
+                      path="/superadmin/sessionlogs/:clientOrg"
+                      element={<SessionLogs />}
+                    />
+                    <Route
+                      path="/superadmin/allottokens/:clientOrg"
+                      element={<AllotToken />}
+                    />
+                     <Route
+                      path="/superadmin/token/transactions/:clientOrg"
+                      element={<TokenTransaction />}
                     />
                     <Route
                       path="/superadmin/update/:clientId"

@@ -30,6 +30,7 @@ import axios from "axios";
 import { baseURL } from "../../../index";
 import NavContext from "../../NavContext";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
+import AdminTabs from "../Tabs/TabsView";
 
 const UpdateClient = () => {
   const { auth } = useContext(NavContext);
@@ -59,6 +60,7 @@ const UpdateClient = () => {
   const [remarks, setRemarks] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [clientOrg, setClientOrg] = useState("");
 
   const [selectedCountryCodeClient, setSelectedCountryCodeClient] =
     useState("+91");
@@ -260,6 +262,7 @@ const UpdateClient = () => {
       setRemarks(data.remarks);
       setProductDate(data.ripikProductUseDate);
       setRelationDate(data.clientRelStartDate);
+      setClientOrg(data.organisation)
     } catch (error) {
       console.log(error);
     }
@@ -270,7 +273,7 @@ const UpdateClient = () => {
   const handleBackButton = () => {
     navigate("/superadmin/addclient");
   };
-  // console.log("cl sec con", clientSecContactName);
+ 
   return (
     <div className="font-roboto flex flex-col gap-2 mt-6">
       <div className="flex items-center">
@@ -287,6 +290,7 @@ const UpdateClient = () => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        {  clientOrg && <AdminTabs update={"update"} clientOrg={clientOrg}/>}
           <p className="text-[#3E3C42] text-lg font-medium ">
             Company information
           </p>

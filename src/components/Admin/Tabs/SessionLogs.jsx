@@ -10,8 +10,10 @@ import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import SessionLogsTable from "../Tables/SessionLogsTable";
 import { Spinner } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 
 const SessionLogs = () => {
+  const { clientOrg } = useParams();
   const { auth } = useContext(NavContext);
   const [sessions, setSessions] = useState([]);
   const [order, setOrder] = useState({});
@@ -24,7 +26,7 @@ const SessionLogs = () => {
   const [displayData, setDisplayData] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [organisation, setOrganisation] = useState("");
   useEffect(() => {
     if (auth) {
       setLoading(true);
@@ -35,8 +37,12 @@ const SessionLogs = () => {
 
   const apiCall = async () => {
     const obj = { header: "logs" };
+    const param = {
+      organisation: clientOrg || organisation
+    }
     try {
       const response = await axios.get(baseURL + "iam/logs", {
+        params:param,
         headers: {
           "Content-Type": "application/json",
           "X-auth-Token": auth,
@@ -142,9 +148,25 @@ const SessionLogs = () => {
       });
     }
   }, [sessions]);
-
+ 
   return (
-    <div className="w-full px-2 !font-roboto">
+    <div className={`w-full px-2 !font-roboto ${clientOrg && "mt-[4vh]"}`}>
+      {clientOrg ? (
+          <div className="flex items-center mb-5">
+            <div className="cursor-pointer w-8">
+              <img
+                src="/transactionhistory/backarrow.svg"
+                className="w-full h-full"
+                alt="backarrow_img"
+              />
+            </div>
+            <p className="text-[#084298] font-medium text-xl ml-2">
+              Session logs
+            </p>
+          </div>
+        ) : (
+          ""
+        )}
       <div className="flex flex-col min-[1300px]:flex-row justify-between">
         <div className="flex flex-row justify-start gap-6">
           <div className="flex flex-col">
