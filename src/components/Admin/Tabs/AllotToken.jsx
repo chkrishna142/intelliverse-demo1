@@ -152,20 +152,14 @@ const AllotToken = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div>
-        <p className="text-[18px] text-[#605D64] font-medium">Allot Tokens</p>
+        <p className="text-[18px] text-[#605D64] font-medium">Allocated Tokens</p>
       </div>
 
       <TokenData />
 
       {/* pagination */}
 
-      <div className="flex justify-end mt-7">
-        <Pagination
-          data={dummyData}
-          limit={4}
-          setDisplayData={setDisplayData}
-        />
-      </div>
+      
 
       <div className="border border-gray-100">
         <TableContainer className="!text-center  border rounded-md bg-white !overflow-y-auto">
@@ -253,6 +247,13 @@ const AllotToken = () => {
             </Tbody>
           </Table>
         </TableContainer>
+      </div>
+      <div className="flex justify-end">
+        <Pagination
+          data={dummyData}
+          limit={4}
+          setDisplayData={setDisplayData}
+        />
       </div>
     </div>
   );

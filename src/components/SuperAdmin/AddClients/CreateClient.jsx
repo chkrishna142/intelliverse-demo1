@@ -58,6 +58,7 @@ const CreateClient = () => {
   const [remarks, setRemarks] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [error, setError] = useState("");
 
   const [selectedCountryCodeClient, setSelectedCountryCodeClient] =
     useState("+91");
@@ -109,9 +110,61 @@ const CreateClient = () => {
     setIsModalOpen(false);
     navigate("/superadmin/addclient");
   };
+  const isValidEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidName = (name) => {
+    // Regular expression for a simple name validation
+    const nameRegex = /^[a-zA-Z]{2,30}(?: [a-zA-Z]{2,30})*$/;
+    return nameRegex.test(name);
+  };
+
+  const isValidClientPhoneNumber = (phoneNumber) => {
+    // Regular expression for validating phone number (assuming digits only)
+    const phoneNumberRegex = /^\d+$/;
+
+    return (
+      phoneNumber &&
+      phoneNumberRegex.test(phoneNumber) &&
+      phoneNumber.length >= 8 &&
+      phoneNumber.length <= 15
+    );
+  };
+
   const handleSubmit = async () => {
     // Set submitClicked to true
     setSubmitClicked(true);
+    if (!clientName || !isValidName(clientName)) {
+      setError("Please enter a valid client name.");
+      return;
+    }
+    if (!clientEmail || !isValidEmail(clientEmail)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    if (!clientPhoneNumber || !isValidClientPhoneNumber(clientPhoneNumber)) {
+      setError("Please enter a valid phone number.");
+      return;
+    }
+    if (!ripikPhoneNumber || !isValidClientPhoneNumber(ripikPhoneNumber)) {
+      setError("Please enter a valid phone number.");
+      return;
+    }
+
+    if (!ripikEmail || !isValidEmail(ripikEmail)) {
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    // Clear any previous error
+    setError("");
+
+    // // Set submitClicked to true
+    // setSubmitClicked(true);
     // Check if any required field is empty
 
     if (
@@ -134,7 +187,6 @@ const CreateClient = () => {
       !ripikSecContactName ||
       !relationDate ||
       !purchaseOrderCode
-      
     ) {
       // Show a toast if any required field is empty
       toast({
@@ -182,16 +234,16 @@ const CreateClient = () => {
           "X-Auth-Token": auth,
         },
       });
-        toast({
-          title: "Client Added successfully",
-          status: "success",
-          duration: 4000,
-          isClosable: true,
-          position: 'top',
-        });
-        setTimeout(() => {
-          navigate("/superadmin/addclient");
-        }, 1500);
+      toast({
+        title: "Client Added successfully",
+        status: "success",
+        duration: 4000,
+        isClosable: true,
+        position: "top",
+      });
+      setTimeout(() => {
+        navigate("/superadmin/addclient");
+      }, 1500);
       console.log("submit", response.data);
     } catch (error) {
       toast({
@@ -241,15 +293,19 @@ const CreateClient = () => {
                   value={clientName}
                   required
                   borderColor={
-                    submitClicked && !clientName ? "red.500" : "gray.300"
+                    submitClicked && !isValidName(clientName) ? "red.500" : "gray.300"
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setClientName(e.target.value)}
                 />
-                {submitClicked && !clientName && (
+                {/* {submitClicked && !clientName && (
                   <Text color="red.500" fontSize="sm" mt="1">
                     Please enter the client name.
                   </Text>
+                )} */}
+                {/* Display error message if there is any */}
+                {submitClicked && !isValidName(clientName) && (
+                  <div className="text-red-500 text-sm mt-1">Please enter a valid name.</div>
                 )}
               </div>
             </div>
@@ -314,10 +370,10 @@ const CreateClient = () => {
               </div>
             </RadioGroup>
             {submitClicked && !companyType && (
-                  <Text color="red.500" fontSize="sm" mt="1">
-                    Please select the company type.
-                  </Text>
-                )}
+              <Text color="red.500" fontSize="sm" mt="1">
+                Please select the company type.
+              </Text>
+            )}
           </div>
           <div className="flex items-center gap-4 mt-5">
             <div>
@@ -351,7 +407,6 @@ const CreateClient = () => {
                   type="text"
                   value={subIndustryValue}
                   required
-                  
                   onChange={(e) => setSubIndustryValue(e.target.value)}
                 />
               </div>
@@ -415,10 +470,10 @@ const CreateClient = () => {
               </div>
             </RadioGroup>
             {submitClicked && !companySize && (
-                  <Text color="red.500" fontSize="sm" mt="1">
-                    Please select the company size.
-                  </Text>
-                )}
+              <Text color="red.500" fontSize="sm" mt="1">
+                Please select the company size.
+              </Text>
+            )}
           </div>
 
           <div>
@@ -436,10 +491,10 @@ const CreateClient = () => {
                 onChange={(e) => setNumberOfUsers(e.target.value)}
               />
               {submitClicked && !numberOfUsers && (
-                  <Text color="red.500" fontSize="sm" mt="1">
-                    Please enter Number of users.
-                  </Text>
-                )}
+                <Text color="red.500" fontSize="sm" mt="1">
+                  Please enter Number of users.
+                </Text>
+              )}
             </div>
           </div>
         </div>
@@ -496,7 +551,9 @@ const CreateClient = () => {
                   value={totalClientLocations}
                   onChange={(e) => setTotalClientLocations(e.target.value)}
                   borderColor={
-                    submitClicked && !totalClientLocations ? "red.500" : "gray.300"
+                    submitClicked && !totalClientLocations
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
@@ -549,7 +606,9 @@ const CreateClient = () => {
                   value={clientPrimaryContactName}
                   onChange={(e) => setClientPrimaryContactName(e.target.value)}
                   borderColor={
-                    submitClicked && !clientPrimaryContactName ? "red.500" : "gray.300"
+                    submitClicked && !clientPrimaryContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
@@ -568,14 +627,20 @@ const CreateClient = () => {
                   value={clientEmail}
                   onChange={(e) => setClientEmail(e.target.value)}
                   borderColor={
-                    submitClicked && !clientEmail ? "red.500" : "gray.300"
+                    submitClicked && !isValidEmail(clientEmail) ? "red.500" : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
-                {submitClicked && !clientEmail && (
+                {/* {submitClicked && !clientEmail && (
                   <Text color="red.500" fontSize="sm" mt="1">
                     Please enter the E-mail.
                   </Text>
+                )} */}
+                {/* Display error message if there is any */}
+                {submitClicked && !isValidEmail(clientEmail) && (
+                  <div className="text-red-500 text-sm mt-1">
+                    Please enter a valid email."
+                  </div>
                 )}
               </div>
             </div>
@@ -605,16 +670,22 @@ const CreateClient = () => {
                     value={clientPhoneNumber}
                     onChange={(e) => setClientPhoneNumber(e.target.value)}
                     borderColor={
-                      submitClicked && !clientPhoneNumber ? "red.500" : "gray.300"
+                      submitClicked && !isValidClientPhoneNumber(clientPhoneNumber)
+                        ? "red.500"
+                        : "gray.300"
                     }
                     borderWidth={"2px"}
                   />
-                  
                 </div>
-                {submitClicked && !clientPhoneNumber && (
+                {/* {submitClicked && !clientPhoneNumber && (
                   <Text color="red.500" fontSize="sm" mt="1">
                     Please enter the Phone number.
                   </Text>
+                )} */}
+                {submitClicked && !isValidClientPhoneNumber(clientPhoneNumber) && (
+                  <div className="text-red-500 text-sm mt-1">
+                    Please enter a valid phone number.
+                  </div>
                 )}
               </div>
             </div>
@@ -630,7 +701,9 @@ const CreateClient = () => {
                   value={clientSecContactName}
                   onChange={(e) => setClientSecContactName(e.target.value)}
                   borderColor={
-                    submitClicked && !clientSecContactName ? "red.500" : "gray.300"
+                    submitClicked && !clientSecContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
@@ -659,7 +732,9 @@ const CreateClient = () => {
                   value={ripikPrimaryContactName}
                   onChange={(e) => setRipikPrimaryContactName(e.target.value)}
                   borderColor={
-                    submitClicked && !ripikPrimaryContactName ? "red.500" : "gray.300"
+                    submitClicked && !ripikPrimaryContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
@@ -678,14 +753,20 @@ const CreateClient = () => {
                   value={ripikEmail}
                   onChange={(e) => setRipikEmail(e.target.value)}
                   borderColor={
-                    submitClicked && !ripikEmail ? "red.500" : "gray.300"
+                    submitClicked && !isValidEmail(ripikEmail) ? "red.500" : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
-                {submitClicked && !ripikEmail && (
+                {/* {submitClicked && !ripikEmail && (
                   <Text color="red.500" fontSize="sm" mt="1">
                     Please enter the E-mail.
                   </Text>
+                )} */}
+                {/* Display error message if there is any */}
+                {submitClicked && !isValidEmail(ripikEmail) && (
+                  <div className="text-red-500 text-sm mt-1">
+                    Please enter a valid email.
+                  </div>
                 )}
               </div>
             </div>
@@ -719,17 +800,23 @@ const CreateClient = () => {
                   value={ripikPhoneNumber}
                   onChange={(e) => setRipikPhoneNumber(e.target.value)}
                   borderColor={
-                    submitClicked && !clientPhoneNumber ? "red.500" : "gray.300"
+                    submitClicked && !isValidClientPhoneNumber(ripikPhoneNumber)
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
-                
               </div>
-              {submitClicked && !ripikPhoneNumber && (
-                  <Text color="red.500" fontSize="sm" mt="1">
-                    Please enter the Phone number.
-                  </Text>
-                )}
+              {/* {submitClicked && !ripikPhoneNumber && (
+                <Text color="red.500" fontSize="sm" mt="1">
+                  Please enter the Phone number.
+                </Text>
+              )} */}
+              {submitClicked && !isValidClientPhoneNumber(ripikPhoneNumber) && (
+                <div className="text-red-500 text-sm mt-1">
+                  Please enter a valid phone number.
+                </div>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -743,7 +830,9 @@ const CreateClient = () => {
                   value={ripikSecContactName}
                   onChange={(e) => setRipikSecContactName(e.target.value)}
                   borderColor={
-                    submitClicked && !ripikSecContactName ? "red.500" : "gray.300"
+                    submitClicked && !ripikSecContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                 />
