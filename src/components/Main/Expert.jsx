@@ -12,6 +12,7 @@ import { Input, Spinner } from "@chakra-ui/react";
 import NavContext from "../NavContext";
 import axios from "axios";
 import PrimaryButton from "../../util/Buttons/PrimaryButton";
+import ExpertComments from "../community/ExpertComments";
 // import { baseURL } from "../../index";
 
 const Expert = () => {
@@ -31,6 +32,9 @@ const Expert = () => {
   const [comment, setComment] = useState("");
   const [savedAnswer, setSavedAnswer] = useState("");
   const [subject, setSubject] = useState("");
+  const [retrievedComments, setRetrievedComments] = useState([]);
+  const [enquirer, setEnquirer] = useState("");
+  
 
   const { login } = useContext(NavContext);
 
@@ -42,6 +46,13 @@ const Expert = () => {
   }
 
   useLayoutEffect(adjustHeight, []);
+  // useEffect(() => {
+  //   adjustHeight();
+  // }, [reply]); // Call adjustHeight whenever reply changes
+
+  // useLayoutEffect(() => {
+  //   adjustHeight();
+  // }, [textbox.current]);
 
   const selectPicture = (event) => {
     setSend([...send, event.target.files[0]]);
@@ -63,7 +74,7 @@ const Expert = () => {
           },
         }
       );
-      setSavedAnswer(response?.data)
+      setSavedAnswer(response?.data);
       // console.log("saved", response?.data);
     } catch (e) {
       console.error(e);
@@ -91,10 +102,55 @@ const Expert = () => {
     }
   };
 
+  const postComments = async () => {
+    setComment("")
+    const data = {
+      comment:comment,
+    };
+    try {
+      const response = await axios.post(
+        baseURL + `questions/comment/${param.questionId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      getComments();
+      console.log("comments", response);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const getComments = async () => {
+    const data = {
+      comment,
+    };
+    try {
+      const response = await axios.get(
+        baseURL + `questions/comment/${param.questionId}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      setRetrievedComments(response?.data)
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     getData();
     getAttachments();
     fetchSavedAnswer();
+    getComments();
   }, []);
 
   const getAttachments = async () => {
@@ -124,7 +180,10 @@ const Expert = () => {
     // );
     setQuestion(res?.question);
     setAnswer(res?.answer);
-    console.log(res);
+    setEnquirer(res?.username)
+    setSubject(res?.subject)
+
+  
   };
 
   const postAnswer = async () => {
@@ -225,7 +284,7 @@ const Expert = () => {
   const handleComments = () => {
     console.log("Comment added");
   };
-   console.log("savedAnswer",reply)
+  console.log("comments", retrievedComments);
   return (
     <>
       <Navbar />
@@ -241,7 +300,7 @@ const Expert = () => {
                 />
               </div>
               <p className="text-black text-xl font-medium">
-                {"Session testing"}
+                {subject}
               </p>
             </div>
 
@@ -331,7 +390,7 @@ const Expert = () => {
                   ) : (
                     <div>
                       <div className="w-full h-20 rounded-md px-0 py-2 overflow-y-auto mb-3">
-                        <p className="ml-2">Dear {"(Enquire's name)"}</p>
+                        <p className="ml-2">Dear {enquirer}</p>
                         <p className="ml-2">{answer}</p>
                       </div>
                       <div className="flex gap-2 items-center justify-center mb-2">
@@ -345,10 +404,13 @@ const Expert = () => {
                         <div className="w-15 mt-2">
                           <PrimaryButton
                             text={"Add"}
-                            onClick={() => handleComments()}
+                            onClick={() => postComments()}
                           />
                         </div>
                       </div>
+                      {retrievedComments && retrievedComments.length != 0 && (
+                        <ExpertComments retrievedComments={retrievedComments}/>
+                      )}
                     </div>
                   )}
 
