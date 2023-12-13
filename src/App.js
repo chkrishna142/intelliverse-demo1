@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Home from './components/Main/Home';
 import Sizing from './components/Sizing/Sizing';
 import MaterialSelect from './util/MaterialSelect';
@@ -50,6 +50,7 @@ import ViewClient from './components/SuperAdmin/AddClients/ViewClient';
 import UpdateClient from './components/SuperAdmin/AddClients/UpdateClient';
 
 function App() {
+  const homeRef = useRef();
   const [login, setLogin] = useState(localStorage.getItem('logged_in')); // used on Login.jsx to set login provider to true
   const [auth, setAuth] = useState(localStorage.getItem('auth_token')); // used on Login.jsx to set auth provider to true
   const [email, setEmail] = useState(localStorage.getItem('email'));
@@ -131,22 +132,22 @@ function App() {
             <>
               <Navbar />
               <NavBox />
-              <Sidebar userRole={userType}/>
+              <Sidebar userRole={userType} homeRef={homeRef}/>
               <div className="!font-roboto" style={{ display: 'flex' }}>
                 <div className="md:ml-32 md:mr-10 md:mt-[12vh] w-full mr-2 ml-2 mt-28 mb-10 md:mb-10">
                   <Routes>
                     {/* Home Pages */}
                     <Route path="/" element={<Navigate to="/home" />} />
-                    <Route path="/home" element={<Home state={'home'} />} />
-                    <Route path="/vision" element={<Home state={'vision'} />} />
+                    <Route path="/home" element={<Home state={'home'} homeRef={homeRef}/>} />
+                    <Route path="/vision" element={<Home state={'vision'} homeRef={homeRef}/>} />
                     <Route
                       path="/optimus"
-                      element={<Home state={'optimus'} />}
+                      element={<Home state={'optimus'} homeRef={homeRef}/>}
                     />
                     {/* Community Pages */}
                     <Route
                       path="/community"
-                      element={<Home state={'community'} />}
+                      element={<Home state={'community'} homeRef={homeRef}/>}
                     />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
                     <Route

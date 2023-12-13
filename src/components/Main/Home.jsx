@@ -5,7 +5,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import { baseURL } from '../..';
 import mixpanel from 'mixpanel-browser';
 
-const Home = ({ state }) => {
+const Home = ({ state, homeRef }) => {
   const [alert, setAlert] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const size = useWindowSize();
@@ -209,14 +209,7 @@ const Home = ({ state }) => {
             <div className="mt-2 mr-3 ml-3 flex justify-between">
               <div className="flex justify-start items-center gap-2">
                 {state == 'vision' && (
-                  <Link
-                    to={`/home`}
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <img src="/backtick.svg" />
-                  </Link>
+                  <img src="/backtick.svg" className='cursor-pointer' onClick={() => homeRef.current.click()}/>
                 )}
                 <img className="h-6 " src="/vision.svg" />
               </div>
@@ -411,14 +404,7 @@ const Home = ({ state }) => {
             <div className="mt-0 mr-3 -ml-0 flex justify-between ">
               <div className="flex justify-start items-center gap-2">
                 {state == 'optimus' && (
-                  <Link
-                    to={`/home`}
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <img src="/backtick.svg" />
-                  </Link>
+                  <img src="/backtick.svg" className='cursor-pointer' onClick={() => homeRef.current.click()}/>
                 )}
                 <img className="md:h-8 h-6" src="/optimus.svg" />
               </div>
@@ -655,14 +641,7 @@ const Home = ({ state }) => {
             <div className="mt-0 mr-3 -ml-0 flex justify-between ">
               <div className="flex justify-start items-center gap-2">
                 {state == 'community' && (
-                  <Link
-                    to={`/home`}
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <img src="/backtick.svg" />
-                  </Link>
+                  <img src="/backtick.svg" className='cursor-pointer' onClick={() => homeRef.current.click()}/>
                 )}
                 <img className="lg:h-14 h-10 ml-2" src="/community.svg" />
               </div>

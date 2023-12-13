@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import './Sidebar.css';
 
-const Sidebar = ({userRole}) => {
+const Sidebar = ({userRole, homeRef}) => {
   const location = useLocation();
   const size = useWindowSize();
   const InitialRoute = location.pathname === '/report' ? 'report' : 'real';
@@ -72,6 +72,7 @@ const Sidebar = ({userRole}) => {
                   <Link to="/home">
                     <AccordionButton
                       _hover={false}
+                      ref={homeRef}
                       className="flex justify-center items-center hover:bg-none"
                     >
                       <div
