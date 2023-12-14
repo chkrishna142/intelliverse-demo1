@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopClientsChart = ({ top3clients, top3experts }) => {
+const TopClientsChart = ({ top3clients }) => {
   // const [names,setNames]=useState([...top3clients?.names])
   const [chartOptions, setChartOptions] = useState({
     chart: {
@@ -16,9 +16,7 @@ const TopClientsChart = ({ top3clients, top3experts }) => {
     },
 
     xaxis: {
-      categories: top3clients
-        ? [...top3clients?.names]
-        : ["Luc", "John", "Sam"],
+      categories: [...top3clients?.names],
 
       showLines: false,
       labels: {
@@ -63,7 +61,7 @@ const TopClientsChart = ({ top3clients, top3experts }) => {
   const [seriesData, setSeriesData] = useState([
     {
       name: "Series 1",
-      data: top3clients ? [...top3clients?.questions] : [23, 20, 12],
+      data: [...top3clients?.questions],
     },
   ]);
 

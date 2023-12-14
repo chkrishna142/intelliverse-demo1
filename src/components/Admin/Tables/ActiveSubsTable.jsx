@@ -1,14 +1,14 @@
 import React from "react";
 import { useToast } from "@chakra-ui/react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 const MuiTheme = createTheme();
 
 const ActiveSubsTable = ({ activeSubs }) => {
   const extendedRowData = activeSubs.map((row) => ({ ...row, plantName: "ripik" }));
-
+  const {clientId,mode} = useParams()
   const toast = useToast();
 
   const columns = [
@@ -110,9 +110,9 @@ const ActiveSubsTable = ({ activeSubs }) => {
           rows={extendedRowData}
           columns={columns}
           getRowId={(row) => row.subscriptionServiceId}
-          //   columnVisibilityModel={{
-
-          //   }}
+            columnVisibilityModel={{
+              renew:mode==="view" ? false : true
+            }}
           hideFooter={true}
           sx={{ minWidth: "1000px" }}
         />

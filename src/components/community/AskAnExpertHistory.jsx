@@ -562,29 +562,26 @@ const AskAnExpertHistory = () => {
               <div className="text-[14px] font-semibold">
                 {role === "EXPERT" ? "Top 3 Clients" : "Top 3 Experts"}
               </div>
-              <div className="text-[#fff]">
-                {top3clients &&
-                  top3clients.names &&
-                  top3clients.questions &&
-                  role === "EXPERT" && (
-                    <TopClientsChart top3clients={top3clients} />
-                  )}
-                {role !== "EXPERT" && <TopClientsChart top3experts={""} />}
-              </div>
+              {/* <div className="text-[#fff]">
+                {top3clients && top3clients.names.length > 0 && top3clients.questions.length > 0 && (
+                  <TopClientsChart top3clients={top3clients} />
+                )}
+                
+              </div> */}
+              
             </div>
             <div className=" flex flex-col mt-5">
               <div className="text-[14px] font-semibold">
                 {role === "EXPERT" ? "Top 3 Enquirers" : "Token summary"}
               </div>
-              <div className="text-[#fff]">
+              {/* <div className="text-[#fff]">
                 {top3Enquirers &&
-                  top3Enquirers.names &&
-                  top3Enquirers.questions &&
-                  role === "Expert" && (
+                  top3Enquirers.names.length > 0 &&
+                  top3Enquirers.questions.length > 0 && (
                     <TopEnquirerChart top3Enquirers={top3Enquirers} />
                   )}
-                {role !== "Expert" && <TopEnquirerChart tokenSummary={""} />}
-              </div>
+                
+              </div> */}
             </div>
           </div>
           <div className="p-10">
