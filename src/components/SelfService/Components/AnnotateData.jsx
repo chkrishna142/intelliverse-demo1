@@ -1,18 +1,24 @@
 import TextButton from "../../../util/Buttons/TextButton";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import SecondaryButton from "../../../util/Buttons/SecondaryButton";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
   Input,
   InputGroup,
   InputRightElement,
   RadioGroup,
+  useToast,
 } from "@chakra-ui/react";
 import AddLabel from "./AddLabel";
 import ImageSelector from "./ImageSelector";
 import DetectSegment from "./DetectSegment";
+import axios from "axios";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
+import { useNavigate } from "react-router-dom";
 
 const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
+  const { auth } = useContext(NavContext);
   const [labels, setLabels] = useState([]);
   const [page, setPage] = useState("Unannotated");
   const [selectedImages, setSelectedImages] = useState([]);
@@ -22,6 +28,8 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
   const [assign, setAssign] = useState("");
   const [add, setAdd] = useState(false);
   const addLabelRef = useRef();
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const handleAdd = (e) => {
     if (e.code == "Enter") {
@@ -59,21 +67,65 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
     setPage("Annotated");
   };
 
-  const handleSubmit = () => {
-    setUSerData((prev) => {
-      let newData = { ...prev };
-      newData.annotatedData = annotatedImages;
-      return newData;
-    });
+  const handleSubmit = async () => {
+    try {
+      const param = {
+        projectId: userData.projectId,
+      };
+      const annotations = annotatedImages.map((item) => {
+        return {
+          fileId: item.id,
+          label: item.label,
+        };
+      });
+      const requestBody = JSON.stringify({
+        annotations: annotations,
+      });
+      const response = await axios.post(
+        baseURL + "selfserve/v1/project/v1/annotations/set/",
+        requestBody,
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      if (response.status == 200) {
+        toast({
+          title: "Success",
+          description: "Annotated data recieved",
+          status: "success",
+          position: "top-right",
+          duration: 2000,
+          isClosable: true,
+        });
+        navigate("/Sandbox");
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Set annotate api failed",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
 
   useEffect(() => {
-    if (userData.uploadedFiles != null) {
+    if (
+      userData.uploadedFiles &&
+      Object.entries(userData.uploadedFiles).length > 0
+    ) {
       setAllImages(
-        userData.uploadedFiles.map((file, idx) => {
+        Object.entries(userData.uploadedFiles).map((item) => {
           return {
-            img: file,
-            id: idx,
+            img: item[1],
+            id: item[0],
           };
         })
       );
@@ -84,7 +136,6 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
     }
   }, [userData.uploadedFiles]);
 
-  console.log(annotatedImages,'data')
   return (
     <div
       className={`p-6 flex flex-col gap-6 bg-white transition-all duration-700 ease-in ${
@@ -92,7 +143,7 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
       }`}
       id="step3"
     >
-      <p className="text-[#3E3C42] text-2xl font-medium">Assign labels</p>
+      <p className="text-[#3E3C42] text-2xl font-medium">{`Assign labels (Files uploaded: ${userData.savedFiles?.length} & Files saved: ${Object.entries(userData.uploadedFiles)?.length})`}</p>
       <div className="flex flex-col lg:flex-row gap-[47px] relative">
         {/* Label selection and additon */}
         <div className="flex flex-col gap-3 whitespace-nowrap">

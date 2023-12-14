@@ -19,8 +19,7 @@ const DetectSegment = ({
       setImageSet((prev) => {
         let newData = allImages.map((item) => {
           return {
-            src: URL.createObjectURL(item.img),
-            img: item.img,
+            src: item.img,
             id: item.id,
             name: "Image " + item.id,
             regions: [],

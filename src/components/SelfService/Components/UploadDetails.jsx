@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Input, Radio, RadioGroup, useToast } from "@chakra-ui/react";
 import SecondaryButton from "../../../util/Buttons/SecondaryButton";
 import TextButton from "../../../util/Buttons/TextButton";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../util/Buttons/TonalButton";
+import axios from "axios";
+import { baseURL } from "../../../index";
+import NavContext from "../../NavContext";
 
 const UploadDetails = ({
   userData,
@@ -12,8 +15,10 @@ const UploadDetails = ({
   activeStep,
   show,
 }) => {
+  const { auth } = useContext(NavContext);
   const fileInputRef = useRef();
   const [disable, setDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
   const format = {
     Image: ["jpg", "jpeg", "png"],
@@ -28,6 +33,60 @@ const UploadDetails = ({
     });
   };
 
+  const UploadFiles = async (data) => {
+    let requestData = new FormData();
+    const param = {
+      projectId: userData.projectId,
+    };
+    data.map((x) => {
+      requestData.append("files", x);
+    });
+
+    const promise = new Promise((resolve, reject) => {
+      axios
+        .post(
+          baseURL + "selfserve/v1/project/v1/file/batchUpload/",
+          requestData,
+          {
+            params: param,
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "X-Auth-Token": auth,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Response: ", response.data);
+          handleChange("uploadedFiles", response.data?.dataset);
+          resolve(200);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject();
+          setLoading(false);
+        });
+    });
+
+    toast.promise(promise, {
+      success: {
+        title: "Upload complete",
+        description: "Click on save to annotate",
+        position: "top-right",
+      },
+      error: {
+        title: "Upload failed",
+        description: "Something went wrong",
+        position: "top-right",
+      },
+      loading: {
+        title: "Uploading files",
+        description: "Please wait",
+        position: "top-right",
+      },
+    });
+  };
+
   const handleFileChange = (event) => {
     const selectedFile = Array.from(event.target.files);
     if (selectedFile) {
@@ -36,13 +95,18 @@ const UploadDetails = ({
       });
       let goodToGo = true;
       selectedFile.map((file) => {
-        if (!acceptedTypes.includes(file.type)) {
+        if (!acceptedTypes.includes(file.type) || file.size > 2 * 1024 * 1024) {
           toast({
             title: "Error",
             description: (
               <div>
+                <p>{`Image name: ${file.name}`}</p>
                 <p>{`Accepted formats: [${acceptedTypes.join(", ")}]`}</p>
                 <p>{`Uploaded file: ${file.type}`}</p>
+                <p>{`Max size: 2MB, Uploaded size: ${(
+                  file.size /
+                  (1024 * 1024)
+                ).toFixed(1)}MB`}</p>
               </div>
             ),
             status: "error",
@@ -55,21 +119,18 @@ const UploadDetails = ({
         }
       });
       if (goodToGo) {
-        handleChange("uploadedFiles", selectedFile);
-        toast({
-          title: "Uploaded",
-          description: "File succesfully uploaded",
-          status: "success",
-          position: "top-right",
-          duration: 2000,
-          isClosable: true,
-        });
+        setLoading(true);
+        UploadFiles(selectedFile);
+        handleChange("savedFiles", selectedFile);
       }
     }
   };
 
   const handleSave = () => {
-    if (userData.annotationType == "" || userData.uploadedFiles == null) {
+    if (
+      userData.annotationType == "" ||
+      Object.entries(userData.uploadedFiles).length == 0
+    ) {
       toast({
         title: "Error",
         description:
@@ -87,13 +148,13 @@ const UploadDetails = ({
 
   return (
     <div
-      className={`flex flex-col gap-8 p-6 bg-white rounded-lg transition-all ease-in duration-700 ${
+      className={`flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 p-6 bg-white rounded-lg transition-all ease-in duration-700 ${
         show ? "opacity-100" : "opacity-0"
       }`}
       id="step2"
     >
-      <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
-      <div className="w-full flex gap-[100px] items-center">
+      <div className="flex flex-col gap-8">
+        <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
         <div className="flex flex-col gap-6">
           {/*Is annotated*/}
           <div className="flex flex-col gap-3">
@@ -230,50 +291,54 @@ const UploadDetails = ({
             </div>
           </div>
         </div>
-        {userData.annotationType != "" && userData.uploadedFiles == null && (
-          <div className="rounded-lg h-full flex justify-center items-center transition-all duration-500 ease-linear">
-            <img
-              src={`/selfServiceIcons/images/${userData.annotationType.toLowerCase()}_final.png`}
-              alt="info image"
-              className="rounded-lg max-h-[350px]"
+        <div className="flex gap-2 items-center mt-2">
+          <PrimaryButton
+            text={"Save"}
+            onClick={handleSave}
+            width={"fit-content"}
+            disable={disable || loading}
+          />
+          {activeStep > 2 && (
+            <TonalButton
+              text={"Edit"}
+              width={"fit-content"}
+              disable={!disable}
+              onClick={() => setDisable(false)}
             />
-          </div>
-        )}
-        {userData.uploadedFiles != null && (
-          <div className="grid grid-cols-2 h-fit w-fit gap-6">
-            {userData.uploadedFiles.slice(0, 5).map((item) => {
-              return (
-                <div className="flex justify-center items-center bg-black w-full rounded-lg">
-                  <img
-                    src={URL.createObjectURL(item)}
-                    alt="image"
-                    className="max-h-[70px] rounded-lg"
-                  />
-                </div>
-              );
-            })}
+          )}
+        </div>
+      </div>
+      {userData.annotationType != "" && userData.savedFiles == null && (
+        <div className="rounded-lg h-full flex justify-center items-center transition-all duration-500 ease-linear">
+          <img
+            src={`/selfServiceIcons/images/${userData.annotationType.toLowerCase()}_final.png`}
+            alt="info image"
+            className="rounded-lg h-auto xl:h-[420px] w-full lg:w-[35vw] xl:w-auto"
+          />
+        </div>
+      )}
+      {userData.uploadedFiles &&
+        Object.entries(userData.uploadedFiles).length > 0 && (
+          <div className="grid grid-cols-2 h-full w-fit gap-3">
+            {Object.entries(userData.uploadedFiles)
+              .slice(0, 5)
+              .map((item) => {
+                return (
+                  <div className="flex justify-center items-center bg-black w-full rounded-lg">
+                    <img
+                      src={item[1]}
+                      alt="image"
+                      className="h-auto xl:h-[120px] w-[50vw] lg:w-[15vw] xl:w-auto rounded-lg"
+                      crossOrigin="anonymous"
+                    />
+                  </div>
+                );
+              })}
             <div className="text-[#3E3C42] text-lg font-medium flex justify-center items-center text-center">
               Images Uploaded...
             </div>
           </div>
         )}
-      </div>
-      <div className="flex gap-2 items-center mt-2">
-        <PrimaryButton
-          text={"Save"}
-          onClick={handleSave}
-          width={"fit-content"}
-          disable={disable}
-        />
-        {activeStep > 2 && (
-          <TonalButton
-            text={"Edit"}
-            width={"fit-content"}
-            disable={!disable}
-            onClick={() => setDisable(false)}
-          />
-        )}
-      </div>
     </div>
   );
 };
