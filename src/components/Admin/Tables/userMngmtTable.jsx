@@ -15,7 +15,8 @@ const UserMngmtTable = ({
   setUserRole,
   setContact,
   clientOrg,
-  clientUpdate
+  clientUpdate,
+  mode
 }) => {
   const columns = [
     {
@@ -140,7 +141,7 @@ const UserMngmtTable = ({
           columnVisibilityModel={{
             userid: false,
             username: false,
-            action : clientOrg && !clientUpdate ? false : true
+            action : clientOrg && mode !=="update" ? false : true
           }}
           hideFooter={true}
           sx={{ minWidth: "1000px" }}
