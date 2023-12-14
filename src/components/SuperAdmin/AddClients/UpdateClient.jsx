@@ -417,7 +417,7 @@ const UpdateClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">Company size</p>
 
           <div className="flex flex-col gap-3">
@@ -494,7 +494,7 @@ const UpdateClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Company’s location
           </p>
@@ -586,7 +586,7 @@ const UpdateClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Client’s contact details
           </p>
@@ -701,7 +701,7 @@ const UpdateClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Ripik's contact details
           </p>
@@ -817,7 +817,7 @@ const UpdateClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Client relation details
           </p>
