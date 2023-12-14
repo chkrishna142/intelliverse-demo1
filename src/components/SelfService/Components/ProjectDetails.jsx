@@ -1,7 +1,10 @@
 import { Input, useToast } from "@chakra-ui/react";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import TonalButton from "../../../util/Buttons/TonalButton";
+import axios from "axios";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
 
 const ProjectDetails = ({
   userData,
@@ -10,13 +13,16 @@ const ProjectDetails = ({
   setActiveStep,
 }) => {
   const nameRef = useRef();
+  const { auth } = useContext(NavContext);
   const [disable, setDisable] = useState(false);
   const toast = useToast();
-  const handlSave = () => {
-    if (nameRef.current.value == "") {
+
+  const handlSave = async () => {
+    if (nameRef.current.value == "" || nameRef.current.value.length > 100) {
       toast({
         title: "Error",
-        description: "Please enter project name",
+        description:
+          "Please ensure project name is not empty or greater than 100 characters",
         status: "error",
         position: "top-right",
         duration: 2000,
@@ -24,14 +30,53 @@ const ProjectDetails = ({
       });
       return;
     }
-    setUSerData((prev) => {
-      let newData = { ...prev };
-      newData["name"] = nameRef.current.value;
-      return newData;
-    });
-    if (activeStep < 1) setActiveStep((prev) => prev + 1);
-    setDisable(true);
+    try {
+      const requestBody = JSON.stringify({
+        name: nameRef.current.value,
+        remarks: "Self Serve project",
+        clientId: "ripik",
+      });
+      const response = await axios.post(
+        baseURL + "selfserve/v1/project/v1/add/",
+        requestBody,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      if (response.status == 200) {
+        setUSerData((prev) => {
+          let newData = { ...prev };
+          newData["name"] = nameRef.current.value;
+          newData["projectId"] = response.data.projectId;
+          return newData;
+        });
+        toast({
+          title: "Success",
+          description: "Project created with id: " + response.data.projectId,
+          status: "success",
+          position: "top-right",
+          duration: 2000,
+          isClosable: true,
+        });
+        if (activeStep < 1) setActiveStep((prev) => prev + 1);
+        setDisable(true);
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Creation api failed",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
   };
+
   return (
     <div className="bg-white rounded-lg flex flex-col gap-8 p-6" id="step0">
       <p className="text-[#3E3C42] text-xl font-medium">Project Details</p>
@@ -43,6 +88,7 @@ const ProjectDetails = ({
           defaultValue={userData.name}
           ref={nameRef}
           isDisabled={disable}
+          placeholder="Max char 100"
         />
       </div>
       <div className="flex gap-2 items-center">

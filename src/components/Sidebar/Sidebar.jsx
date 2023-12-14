@@ -633,6 +633,7 @@ const Sidebar = ({ userRole,homeRef }) => {
                     <AccordionButton
                       _hover={false}
                       className="flex justify-center items-center hover:bg-none"
+                      ref={homeRef}
                     >
                       <div
                         className={

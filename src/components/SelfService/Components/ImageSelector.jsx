@@ -74,7 +74,7 @@ const ImageSelector = ({
           return (
             <div className="w-full h-auto bg-black relative rounded flex items-center justify-center">
               <img
-                src={URL.createObjectURL(item.img)}
+                src={item.img}
                 alt="image"
                 className="w-full rounded"
               />
