@@ -216,11 +216,23 @@ const UserMgmt = () => {
     return emailRegex.test(email);
   };
 
+  const isValidName = (name) => {
+    // Regular expression for a simple name validation
+    const nameRegex = /^[a-zA-Z]{2,30}(?: [a-zA-Z]{2,30})*$/;
+    return nameRegex.test(name);
+  };
+
   const patchUser = async () => {
     // Validate email and name before editing user details
-    if (!userEmail || !isValidEmail(userEmail) || !fullName) {
+    if (!userEmail || !isValidEmail(userEmail)) {
       // Display an error message or handle it as per your UI/UX
-      setError("Please enter a valid email and name.");
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    if (!fullName || !isValidName(fullName)) {
+      
+      setError("Please enter a valid name.");
       return;
     }
 
