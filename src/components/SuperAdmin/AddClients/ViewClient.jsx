@@ -149,20 +149,20 @@ const ViewClient = () => {
             <PrimaryButton text={"Deploy"} width={"fit-content"} />
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Client name
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={clientName}
                   readOnly
                   border={"none"}
                   p={0}
-                />
-                {/* <p>{clientName}</p> */}
+                /> */}
+                {clientName}
               </div>
             </div>
             <div>
@@ -170,57 +170,61 @@ const ViewClient = () => {
                 Parent company{" "}
                 <span className="text-[#AEA9B1]">(if applicable)</span>
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div >
+                {/* <Input
                   type="text"
                   value={parentCompany}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {parentCompany}
               </div>
             </div>
           </div>
           <div className="flex flex-col gap-3">
-            <p className="text-[#3E3C42] text-lg font-medium">Company Type</p>
+            <p className="text-[#3E3C42] text-lg font-medium mt-3">Company Type</p>
 
-            <div style={{ width: "fit-content" }}>
-              <Input
+            <div>
+              {/* <Input
                 type="text"
                 value={companyType}
                 readOnly
                 border={"none"}
                 p={0}
-              />
+              /> */}
+              {companyType}
             </div>
           </div>
-          <div className="flex items-center gap-4 mt-5">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Industry
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={industryValue}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {industryValue}
               </div>
             </div>
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Sub-Industry <span className="text-[#AEA9B1]">(optional)</span>
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div >
+                {/* <Input
                   type="text"
                   value={subIndustryValue}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {subIndustryValue}
               </div>
             </div>
           </div>
@@ -229,17 +233,18 @@ const ViewClient = () => {
           <p className="text-[#3E3C42] text-lg font-medium ">Company size</p>
 
           <div className="flex flex-col gap-3">
-            <p className="text-[#79767D] text-sm font-medium mb-1">
+            <p className="text-[#79767D] text-sm font-medium ">
               Company Size
             </p>
-            <div style={{ width: "fit-content" }}>
-              <Input
+            <div>
+              {/* <Input
                 type="text"
                 value={companySize}
                 readOnly
                 border={"none"}
                 p={0}
-              />
+              /> */}
+              {companySize}
             </div>
           </div>
 
@@ -247,14 +252,15 @@ const ViewClient = () => {
             <p className="text-[#79767D] text-sm font-medium mb-3">
               Number of users
             </p>
-            <div style={{ width: "fit-content" }}>
-              <Input
+            <div >
+              {/* <Input
                 type="text"
                 value={numberOfUsers}
                 readOnly
                 border={"none"}
                 p={0}
-              />
+              /> */}
+              {numberOfUsers}
             </div>
           </div>
         </div>
@@ -263,19 +269,20 @@ const ViewClient = () => {
             Company’s location
           </p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Client HQ location
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={clientHqLocation}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {clientHqLocation}
               </div>
             </div>
             <div>
@@ -283,31 +290,33 @@ const ViewClient = () => {
                 HQ location address
                 <span className="text-[#AEA9B1]">(if applicable)</span>
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={hqLocationAddress}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {hqLocationAddress}
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Total client locations{" "}
                 <span className="text-[#AEA9B1]">(count) </span>{" "}
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={totalClientLocations}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {totalClientLocations}
               </div>
             </div>
             <div>
@@ -317,14 +326,15 @@ const ViewClient = () => {
                   (use comma ‘ , ‘ to enter multiple locations)
                 </span>
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={allLocations}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {allLocations}
               </div>
             </div>
           </div>
@@ -334,61 +344,65 @@ const ViewClient = () => {
             Client’s contact details
           </p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Primary contact name
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div >
+                {/* <Input
                   type="text"
                   value={clientPrimaryContactName}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {clientPrimaryContactName}
               </div>
             </div>
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">E-mail</p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="email"
                   value={clientEmail}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {clientEmail}
               </div>
             </div>
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Phone number
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="email"
                   value={clientPhoneNumber}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {clientPhoneNumber}
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Secondary contact name{" "}
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={clientSecContactName}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {clientSecContactName}
               </div>
             </div>
           </div>
@@ -398,31 +412,33 @@ const ViewClient = () => {
             Ripik's contact details
           </p>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Primary contact name
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div >
+                {/* <Input
                   type="text"
                   value={ripikPrimaryContactName}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {ripikPrimaryContactName}
               </div>
             </div>
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">E-mail</p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={ripikEmail}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {ripikEmail}
               </div>
             </div>
             <div>
@@ -436,30 +452,32 @@ const ViewClient = () => {
                     onChange={(e) => setRipikPhoneNumber(e.target.value)}
                   />
                 </div> */}
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div >
+                {/* <Input
                   type="text"
                   value={ripikPhoneNumber}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {ripikPhoneNumber}
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Secondary contact name
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div >
+                {/* <Input
                   type="text"
                   value={ripikSecContactName}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {ripikSecContactName}
               </div>
             </div>
           </div>
@@ -468,20 +486,21 @@ const ViewClient = () => {
           <p className="text-[#3E3C42] text-lg font-medium ">
             Client relation details
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-10">
             <div>
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 Relation start date
               </p>
               <div>
-                <Input
+                {/* <Input
                   type="text"
                   placeholder="₹"
                   value={relationDate}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {relationDate}
               </div>
             </div>
             <div>
@@ -489,14 +508,15 @@ const ViewClient = () => {
                 First Ripik product use date
               </p>
               <div>
-                <Input
+                {/* <Input
                   type="text"
                   placeholder="₹"
                   value={productDate}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {productDate}
               </div>
             </div>
           </div>
@@ -506,15 +526,16 @@ const ViewClient = () => {
                 Deal value
                 <span className="text-[#AEA9B1]">(optional)</span>
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   placeholder="₹"
                   value={dealValue}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {dealValue}
               </div>
             </div>
           </div>
@@ -523,14 +544,15 @@ const ViewClient = () => {
               <p className="text-[#79767D] text-sm font-medium mb-3">
                 First purchase order code
               </p>
-              <div style={{ width: "fit-content" }}>
-                <Input
+              <div>
+                {/* <Input
                   type="text"
                   value={purchaseOrderCode}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {purchaseOrderCode}
               </div>
             </div>
           </div>
@@ -540,14 +562,15 @@ const ViewClient = () => {
                 Remarks/additional information
                 <span className="text-[#AEA9B1]">(optional)</span>
               </p>
-              <div style={{ width: "" }}>
-                <Textarea
+              <div >
+                {/* <Textarea
                   style={{ width: "60vw" }}
                   value={remarks}
                   readOnly
                   border={"none"}
                   p={0}
-                />
+                /> */}
+                {remarks}
               </div>
             </div>
           </div>

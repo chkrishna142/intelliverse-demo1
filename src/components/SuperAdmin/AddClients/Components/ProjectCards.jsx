@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../../../index";
 import NavContext from "../../../NavContext";
 import axios from "axios";
+import { blue } from "@mui/material/colors";
 
 const ProjectCard = ({ data, fetchClientsFun }) => {
   const { auth } = useContext(NavContext);
@@ -107,7 +108,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
   };
   const locationString = data.enterAllLocation;
   const locations = locationString.split(",");
-  const maxLocationsToShow = 3;
+  const maxLocationsToShow = 2;
 
   const formatDate = (timestamp) => {
     // Create a new Date object using the provided timestamp (in milliseconds)
@@ -273,7 +274,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
               </div>
             ))}
             {locations.length > maxLocationsToShow && (
-              <Badge>+{locations.length - maxLocationsToShow}</Badge>
+              <Badge ml={1} color={"blue"} bg={"white"}>+{locations.length - maxLocationsToShow}</Badge>
             )}
           </div>
           {/* );
