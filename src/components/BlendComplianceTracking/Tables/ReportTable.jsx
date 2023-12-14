@@ -46,6 +46,7 @@ const ReportTable = ({ rowData }) => {
               p={0}
               px={"12px"}
               flex={1}
+              minW={100}
               textAlign={"center"}
             >
               {" "}

@@ -134,7 +134,7 @@ const ReportTableRows = () => {
           2
         </Td>
         <Td p={"8px"}>
-          <div className="flex w-full justify-end">
+          <div className="flex w-full justify-start xl:justify-end">
             <img
               src={`/BlendComplianceIcons/${isExpanded ? "up" : "down"}.svg`}
               alt="no support"
