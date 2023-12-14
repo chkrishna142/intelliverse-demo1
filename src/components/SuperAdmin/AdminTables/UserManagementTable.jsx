@@ -5,7 +5,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const MuiTheme = createTheme();
 
-const UserMngmtTable = ({
+const UserManagementTable = ({
   rowData,
   setIsOpenE,
   setIsOpenD,
@@ -14,8 +14,6 @@ const UserMngmtTable = ({
   setUserEmail,
   setUserRole,
   setContact,
-  clientOrg,
-  clientUpdate
 }) => {
   const columns = [
     {
@@ -83,53 +81,18 @@ const UserMngmtTable = ({
           <span className="text-[#7AC958] text-sm font-semibold">Active</span>
         );
       },
-    },
-    {
-      field: "action",
-      headerName: "ACTION",
-      flex: 1,
-      renderCell: ({ row }) => {
-        return (
-          <div className="flex gap-1 items-center">
-            <IconButton
-              aria-label="delete"
-              color="error"
-              onClick={() => {
-                setIsOpenD(true);
-                setSelectedUser(row);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-            <IconButton
-              aria-label="edit"
-              color="primary"
-              onClick={() => {
-                setIsOpenE(true);
-                setSelectedUser(row);
-                setFullName(row?.fullname);
-                setUserEmail(row?.email);
-                setUserRole(row?.role);
-                setContact(row?.phoneNumber);
-              }}
-            >
-              <EditNoteIcon />
-            </IconButton>
-          </div>
-        );
-      },
-    },
+    }
   ];
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-nowrap";
-  const flexMap = [0, 2, 2, 3, 1, 1.5, 1, 1];
+  const flexMap = [0, 2, 2, 3, 1, 1.5, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
     val["flex"] = flexMap[idx];
   });
- 
+
   return (
     <div className="overflow-x-auto mt-2">
       <ThemeProvider theme={MuiTheme}>
@@ -139,8 +102,7 @@ const UserMngmtTable = ({
           getRowId={(row) => row.userid}
           columnVisibilityModel={{
             userid: false,
-            username: false,
-            action : clientOrg && !clientUpdate ? false : true
+            username: false
           }}
           hideFooter={true}
           sx={{ minWidth: "1000px" }}
@@ -150,4 +112,4 @@ const UserMngmtTable = ({
   );
 };
 
-export default UserMngmtTable;
+export default UserManagementTable;
