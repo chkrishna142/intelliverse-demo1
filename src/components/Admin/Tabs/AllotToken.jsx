@@ -11,9 +11,11 @@ import {
 import { useEffect, useState } from "react";
 import TokenData from "../TokenData";
 import Pagination from "../TransactionHistory/Pagination";
+import { useParams } from "react-router-dom";
 
 const AllotToken = () => {
   const toast = useToast();
+  const { clientOrg } = useParams();
   const [inputValue, setInputValue] = useState(20);
   const [dummyData, setDummyData] = useState([
     {
@@ -150,7 +152,7 @@ const AllotToken = () => {
 
   // },[displayData])
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className={`w-full flex flex-col gap-4 ${clientOrg && "mt-[4vh]"}`}>
       <div>
         <p className="text-[18px] text-[#605D64] font-medium">Allocated Tokens</p>
       </div>

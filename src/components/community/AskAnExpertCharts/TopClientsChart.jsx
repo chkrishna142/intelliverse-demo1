@@ -40,7 +40,7 @@ const TopClientsChart = ({top3clients}) => {
       bar: {
         borderRadius: 4,
         horizontal: true,
-        barHeight: '30%',
+        // barHeight: '30%',
       },
     },
     export: {

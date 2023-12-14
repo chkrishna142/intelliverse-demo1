@@ -4,8 +4,10 @@ import TokenData from "../TokenData";
 import TokenTransactionTable from "../TokenTransactionTable";
 import TokenAllocationTable from "../TokenAllocationTable";
 import Paginator from "../../../util/VisionUtils/Paginator";
+import { useParams } from "react-router-dom";
 
 const TokenTransaction = () => {
+  const { clientOrg } = useParams();
   const [selectPlant, setSelectPlant] = useState("All Plants");
   const handleSelectPlant = (e) => {
     setSelectPlant(e.target.value);
@@ -98,7 +100,7 @@ const TokenTransaction = () => {
   const [displayData2, setDisplayData2] = useState([]);
 
   return (
-    <div className="flex flex-col w-full h-full gap-4 ">
+    <div className={`flex flex-col w-full h-full gap-4 ${clientOrg && "mt-[4vh]"}`}>
       {/* top head */}
       <div className="w-full flex justify-between items-center">
         <p className=" text-[18px] font-medium w-[200px] text-[#605D64]">

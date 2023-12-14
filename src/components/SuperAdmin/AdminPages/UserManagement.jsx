@@ -24,7 +24,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon, DownloadIcon, EditIcon } from "@chakra-ui/icons";
-import { AddNewModal, DeleteUserModal, EditUserModal } from "./UserModals";
+
 import { useState, useContext } from "react";
 import { useEffect } from "react";
 import NavContext from "../../NavContext";
@@ -33,36 +33,30 @@ import { baseURL } from "../../..";
 import Paginator from "../../../util/VisionUtils/Paginator";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import { CSVLink } from "react-csv";
-import UserMngmtTable from "../Tables/userMngmtTable";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
-const UserMgmt = () => {
-  const { clientOrg } = useParams();
-  const location = useLocation();
-  const [searchParams,setSearchParams] = useSearchParams()
-  const [mode, setMode] = useState("");
-  const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
-  const [clientId,setClientId] = useState("")
-  const dummyData = {
-    userName: "Sudhanshu Prasad",
-    email: "sudhanshu.12prasad@gmail.com",
-    lastLogin: "8 Sep '23 10:15 AM",
-    phoneNumber: "9856417823",
-    role: "Admin",
-  };
+import {
+  AddNewModal,
+  AddNewUserManagementModal,
+  DeleteUserModal,
+} from "./UserManagementModal";
+import { useNavigate } from "react-router-dom";
+import UserManagementTable from "../AdminTables/UserManagementTable";
+
+const UserManagement = () => {
   const { auth } = useContext(NavContext);
-  const navigate = useNavigate()
+
   const [users, setUsers] = useState([]);
-  const [clientUpdate, setClientUpdate] = useState(false);
+
   const [displayData, setDisplayData] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
   const [downloadData, setDownloadData] = useState({});
   const [loading, setLoading] = useState(false);
   const [organisation, setOrganisation] = useState("");
   const [status, setStatus] = useState([]);
+  const navigate = useNavigate();
   const fetchUsers = async () => {
     const param = {
-      organisation: clientOrg || organisation,
+      organisation: organisation,
     };
     try {
       const response = await axios.get(baseURL + "iam/users", {
@@ -109,15 +103,6 @@ const UserMgmt = () => {
     }
   };
   useEffect(() => {
-    // if (
-    //   location.pathname === `/superadmin/usermanagement/update/${clientOrg}`
-    // ) {
-    //   setClientUpdate(true);
-    // } else {
-    //   setClientUpdate(false);
-    // }
-    setClientId(searchParams.get("clientId"))
-    setMode(searchParams.get("mode"))
     if (auth) {
       setLoading(true);
       fetchUsers();
@@ -159,10 +144,11 @@ const UserMgmt = () => {
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState("");
   const toast = useToast();
+
   const fetchStatus = async () => {
     try {
       const param = {
-        organisation: clientOrg || organisation,
+        organisation: organisation,
       };
       const response = await axios.get(baseURL + `iam/status`, {
         params: param,
@@ -178,30 +164,27 @@ const UserMgmt = () => {
     }
   };
   const deleteUser = async (userID) => {
-    try {
-      let data = JSON.stringify({
-        userid: userID,
-      });
-
-      let config = {
-        method: "delete",
-        maxBodyLength: Infinity,
-        url: baseURL + "iam/users",
-        headers: {
-          "x-auth-token": auth,
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-
-      const response = await axios.request(config);
-
-      if (response.status === 200) {
-        fetchUsers();
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    // try {
+    //   let data = JSON.stringify({
+    //     userid: userID,
+    //   });
+    //   let config = {
+    //     method: "delete",
+    //     maxBodyLength: Infinity,
+    //     url: baseURL + "iam/users",
+    //     headers: {
+    //       "x-auth-token": auth,
+    //       "Content-Type": "application/json",
+    //     },
+    //     data: data,
+    //   };
+    //   const response = await axios.request(config);
+    //   if (response.status === 200) {
+    //     fetchUsers();
+    //   }
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   useEffect(() => {
@@ -291,41 +274,27 @@ const UserMgmt = () => {
     });
     setDisplayUsers(temp);
   }, [search, users]);
+  const handleClickHistory = () => {
+    navigate("/superadmin/addclient");
+  };
 
-  // const [sortOption, setSortOption] = useState(0);
-
-  // useEffect(() => {
-  //   let temp = users;
-  //   if (sortOption === 0 && users) {
-  //     temp.sort((a, b) => a.username.localeCompare(b.username));
-  //     console.log(temp);
-  //     setUsers(temp);
-  //     setDisplayUsers(temp);
-  //   }
-  // }, [sortOption, users]);
-   console.log("mode",mode)
-   const handleBackButton = ()=>{
-    mode==="update" ? navigate(`/superadmin/update/${clientId}`) : navigate(`/superadmin/viewClient/${clientId}`)
-      }
   return (
     <>
-      <div className={`w-full px-2 !font-roboto ${clientOrg && "mt-[4vh]"}`}>
-        {clientOrg ? (
-          <div className="flex items-center mb-5">
-            <div className="cursor-pointer w-8" onClick={handleBackButton}>
-              <img
-                src="/transactionhistory/backarrow.svg"
-                className="w-full h-full"
-                alt="backarrow_img"
-              />
-            </div>
-            <p className="text-[#084298] font-medium text-xl ml-2">
-              User Management
+      <div className="w-full px-2 !font-roboto mt-[3vh]">
+        <div className="flex justify-start items-center w-full gap-2 mb-3">
+          <div className="cursor-pointer" onClick={handleClickHistory}>
+            <img
+              src="/transactionhistory/backarrow.svg"
+              className="w-full h-full"
+              alt="backarrow_img"
+            />
+          </div>
+          <div className="flex justify-center items-center cursor-pointer">
+            <p className="font-semibold text-[20px] text-[#084298] text-bold">
+              UserManagement
             </p>
           </div>
-        ) : (
-          ""
-        )}
+        </div>
         <div className="flex flex-col 2xl:flex-row justify-between">
           <div className="flex flex-row justify-start gap-6">
             <div className="flex flex-col">
@@ -375,27 +344,11 @@ const UserMgmt = () => {
                   enable={true}
                 />
               )}
-              {clientOrg && mode==="view" ? (
-                ""
-              ) : (
-                <Button
-                  onClick={() => setIsOpenA(true)}
-                  className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
-                >
-                  <AddIcon />
-                  <span>Add New User</span>
-                </Button>
-              )}
-              {/* <Paginator
-                data={displayUsers}
-                setDisplayData={setDisplayData}
-                limit={10}
-              /> */}
             </div>
           </div>
         </div>
-        {/* {displayData && displayData.length != 0 && (
-          <UserMngmtTable
+        {displayData && displayData.length != 0 && (
+          <UserManagementTable
             rowData={displayData}
             setIsOpenE={setIsOpenE}
             setIsOpenD={setIsOpenD}
@@ -405,14 +358,14 @@ const UserMgmt = () => {
             setUserRole={setUserRole}
             setContact={setContact}
           />
-        )} */}
+        )}
         {loading ? (
           <div className="ml-[50%]">
             <Spinner speed="0.65s" />
           </div>
         ) : (
           <React.Fragment>
-            {displayData && displayData.length !== 0 ? (
+            {/* {displayData && displayData.length !== 0 ? (
               <UserMngmtTable
                 rowData={displayData}
                 setIsOpenE={setIsOpenE}
@@ -422,13 +375,10 @@ const UserMgmt = () => {
                 setUserEmail={setUserEmail}
                 setUserRole={setUserRole}
                 setContact={setContact}
-                clientOrg={clientOrg}
-                clientUpdate={clientUpdate}
-                mode={mode}
               />
             ) : (
               <p className="ml-[45%]">No data available!</p>
-            )}
+            )} */}
           </React.Fragment>
         )}
         <div className="flex justify-end">
@@ -439,149 +389,8 @@ const UserMgmt = () => {
           />
         </div>
       </div>
-
-      <DeleteUserModal
-        isOpen={isOpenD}
-        onClose={onCloseD}
-        userID={selectedUser?.userid}
-        fetchUsers={fetchUsers}
-      />
-      <AddNewModal
-        isOpen={isOpenA}
-        onClose={onCloseA}
-        fetchUsers={fetchUsers}
-        clientOrg={clientOrg}
-      />
-      <Modal
-        isOpen={isOpenE}
-        onClose={onCloseE}
-        isCentered
-        size={"sm"}
-        width={740}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <div className="text-white w-full h-10 flex bg-[#2660B6] font-semibold justify-center items-center rounded-t-md">
-            Edit User
-          </div>
-          {/* <ModalCloseButton className="mt-2" color={'white'} /> */}
-          <ModalBody className="mt-6">
-            <Flex flexDirection={"column"} gap={"30px"}>
-              <FormControl className="!h-12">
-                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                  Full Name
-                </div>
-                <input
-                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5 capitalize"
-                  placeholder="Enter full name"
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                />
-              </FormControl>
-              <FormControl className="!h-12">
-                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                  E-mail ID
-                </div>
-                <input
-                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
-                  placeholder="Enter valid email ID"
-                  value={userEmail}
-                  onChange={(e) => setUserEmail(e.target.value)}
-                />
-              </FormControl>
-              <FormControl className="!h-12">
-                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                  Phone Number{" "}
-                  <span className="text-[#CAC5CD] text-xs">(optional)</span>
-                </div>
-                <input
-                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
-                  placeholder="Enter valid phone number"
-                  value={contact}
-                  onChange={(event) => setContact(event.target.value)}
-                />
-              </FormControl>
-              <FormControl className="!h-12 mb-2 font-semibold">
-                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                  Role
-                </div>
-                <select
-                  value={userRole}
-                  onChange={(e) => setUserRole(e.target.value)}
-                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
-                >
-                  <option value={"ADMIN"}>Admin</option>
-                  <option value={"USER"}>Regular</option>
-                  <option value={"Super Admin"}>CXO</option>
-                </select>
-                {/* <Input placeholder="Enter Your Name" /> */}
-              </FormControl>
-              <div className="flex flex-col items-start gap-2 text-xs font-light">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    disabled={contact?.length !== 10}
-                    onSelect={() => setWhatsapp(!whatsapp)}
-                  />
-                  Enable WhatsApp Integration
-                </div>
-                {/* <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  onSelect={() => setEmailInvitation(!emailInvitation)}
-                />
-                Send Invitation Email
-              </div> */}
-              </div>
-              {/* Display error message if there is any */}
-              {error && <div className="text-red-500 mt-1">{error}</div>}
-            </Flex>
-          </ModalBody>
-          <ModalFooter className="!w-full !flex !flex-row !items-center !justify-start !gap-2">
-            {/* <button
-              onClick={() => {
-                patchUser();
-                onCloseE();
-              }}
-              className="bg-[#084298] text-sm h-10 text-white px-7 py-2 rounded-md mb-5 "
-              mr={3}
-            >
-              Save
-            </button> */}
-            <Button
-              isDisabled={disabled} // Disable the button if there is an error
-              onClick={() => {
-                patchUser();
-                // onCloseE();
-              }}
-              bg="#084298"
-              color="white"
-              size="sm"
-              height="10"
-              px="7"
-              py="2"
-              rounded="md"
-              mb="5"
-              mr="3"
-              _hover={{ bg: "#084298", color: "white" }}
-            >
-              Save
-            </Button>
-            <button
-              onClick={() => {
-                deleteUser(selectedUser?.userid);
-                onCloseE();
-              }}
-              className="border-[#DC362E] text-sm h-10 border text-[#DC632E] bg-white px-7 py-2 rounded-md mb-5 "
-              mr={3}
-            >
-              Delete user
-            </button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </>
   );
 };
 
-export default UserMgmt;
+export default UserManagement;
