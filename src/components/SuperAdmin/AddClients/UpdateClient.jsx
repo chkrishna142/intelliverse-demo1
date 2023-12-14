@@ -290,7 +290,7 @@ const UpdateClient = () => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
-        {  clientOrg && <AdminTabs update={"update"} clientOrg={clientOrg}/>}
+        {  clientOrg && clientId && <AdminTabs update={"update"} clientId={clientId} clientOrg={clientOrg}/>}
           <p className="text-[#3E3C42] text-lg font-medium ">
             Company information
           </p>

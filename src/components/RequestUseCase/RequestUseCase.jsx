@@ -167,7 +167,7 @@ const RequestUseCaseModal = ({ isOpen, onOpen, onClose, size }) => {
                 <div className="mt-2">
                   <p className="font-semibold ">Brief description </p>
                   <Input
-                    placeholder="Brief about use case"
+                    placeholder="Be concise and include the most important benefit"
                     mt={2}
                     value={briefDescription}
                     borderColor={

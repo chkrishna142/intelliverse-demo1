@@ -313,10 +313,7 @@ function App() {
                       path="/superadmin/usermanagement/:clientOrg"
                       element={<UserMgmt />}
                     />
-                    <Route
-                      path="/superadmin/usermanagement/update/:clientOrg"
-                      element={<UserMgmt />}
-                    />
+                  
                     <Route
                       path="/superadmin/sessionlogs/:clientOrg"
                       element={<SessionLogs />}

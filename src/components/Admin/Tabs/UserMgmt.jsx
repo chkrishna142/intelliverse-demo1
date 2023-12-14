@@ -34,14 +34,15 @@ import Paginator from "../../../util/VisionUtils/Paginator";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import { CSVLink } from "react-csv";
 import UserMngmtTable from "../Tables/userMngmtTable";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const UserMgmt = () => {
   const { clientOrg } = useParams();
   const location = useLocation();
-
+  const [searchParams,setSearchParams] = useSearchParams()
+  const [mode, setMode] = useState("");
   const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
-
+  const [clientId,setClientId] = useState("")
   const dummyData = {
     userName: "Sudhanshu Prasad",
     email: "sudhanshu.12prasad@gmail.com",
@@ -50,7 +51,7 @@ const UserMgmt = () => {
     role: "Admin",
   };
   const { auth } = useContext(NavContext);
-
+  const navigate = useNavigate()
   const [users, setUsers] = useState([]);
   const [clientUpdate, setClientUpdate] = useState(false);
   const [displayData, setDisplayData] = useState([]);
@@ -108,14 +109,15 @@ const UserMgmt = () => {
     }
   };
   useEffect(() => {
-    if (
-      location.pathname === `/superadmin/usermanagement/update/${clientOrg}`
-    ) {
-      setClientUpdate(true);
-    } else {
-      setClientUpdate(false);
-    }
-
+    // if (
+    //   location.pathname === `/superadmin/usermanagement/update/${clientOrg}`
+    // ) {
+    //   setClientUpdate(true);
+    // } else {
+    //   setClientUpdate(false);
+    // }
+    setClientId(searchParams.get("clientId"))
+    setMode(searchParams.get("mode"))
     if (auth) {
       setLoading(true);
       fetchUsers();
@@ -301,13 +303,16 @@ const UserMgmt = () => {
   //     setDisplayUsers(temp);
   //   }
   // }, [sortOption, users]);
-   console.log("path",clientUpdate)
+   console.log("mode",mode)
+   const handleBackButton = ()=>{
+    mode==="update" ? navigate(`/superadmin/update/${clientId}`) : navigate(`/superadmin/viewClient/${clientId}`)
+      }
   return (
     <>
       <div className={`w-full px-2 !font-roboto ${clientOrg && "mt-[4vh]"}`}>
         {clientOrg ? (
           <div className="flex items-center mb-5">
-            <div className="cursor-pointer w-8">
+            <div className="cursor-pointer w-8" onClick={handleBackButton}>
               <img
                 src="/transactionhistory/backarrow.svg"
                 className="w-full h-full"
@@ -370,7 +375,7 @@ const UserMgmt = () => {
                   enable={true}
                 />
               )}
-              {clientOrg && !clientUpdate ? (
+              {clientOrg && mode==="view" ? (
                 ""
               ) : (
                 <Button

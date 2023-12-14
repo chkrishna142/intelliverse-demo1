@@ -10,13 +10,15 @@ import axios from "axios";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import SessionLogsTable from "../Tables/SessionLogsTable";
 import { Spinner } from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 const SessionLogs = () => {
   const { clientOrg } = useParams();
+  const navigate = useNavigate()
   const { auth } = useContext(NavContext);
   const [sessions, setSessions] = useState([]);
   const [order, setOrder] = useState({});
+  const [searchParams,setSearchParams] = useSearchParams()
 
   const [displaySessions, setDisplaySessions] = useState([]);
   const [avgDuration, setAvgDuration] = useState({
@@ -27,7 +29,9 @@ const SessionLogs = () => {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [organisation, setOrganisation] = useState("");
+  const [clientId,setClientId] = useState("")
   useEffect(() => {
+    setClientId(searchParams.get("clientId"))
     if (auth) {
       setLoading(true);
       apiCall();
@@ -148,12 +152,15 @@ const SessionLogs = () => {
       });
     }
   }, [sessions]);
+  const handleBackButton = ()=>{
+navigate(`/superadmin/viewClient/${clientId}`)
+  }
  
   return (
     <div className={`w-full px-2 !font-roboto ${clientOrg && "mt-[4vh]"}`}>
       {clientOrg ? (
           <div className="flex items-center mb-5">
-            <div className="cursor-pointer w-8">
+            <div className="cursor-pointer w-8" onClick={handleBackButton}>
               <img
                 src="/transactionhistory/backarrow.svg"
                 className="w-full h-full"
@@ -226,7 +233,7 @@ const SessionLogs = () => {
         ) : (
           <React.Fragment>
             {displayData && displayData.length !== 0 ? (
-              <SessionLogsTable rowData={displayData} />
+              <SessionLogsTable clientOrg={clientOrg} rowData={displayData} />
             ) : (
               <p className="ml-[45%]">No data available.</p>
             )}
