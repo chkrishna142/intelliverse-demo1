@@ -424,6 +424,7 @@ const UserMgmt = () => {
                 setContact={setContact}
                 clientOrg={clientOrg}
                 clientUpdate={clientUpdate}
+                mode={mode}
               />
             ) : (
               <p className="ml-[45%]">No data available!</p>
