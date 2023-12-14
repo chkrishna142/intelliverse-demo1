@@ -449,6 +449,7 @@ const UserMgmt = () => {
         isOpen={isOpenA}
         onClose={onCloseA}
         fetchUsers={fetchUsers}
+        clientOrg={clientOrg}
       />
       <Modal
         isOpen={isOpenE}

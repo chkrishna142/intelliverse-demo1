@@ -110,7 +110,7 @@ const ViewClient = () => {
       setRemarks(data.remarks);
       setProductDate(data.ripikProductUseDate);
       setRelationDate(data.clientRelStartDate);
-      setClientOrg(data.organisation)
+      setClientOrg(data.organisation);
     } catch (error) {
       console.log(error);
     }
@@ -122,7 +122,7 @@ const ViewClient = () => {
   const handleBackButton = () => {
     navigate("/superadmin/addclient");
   };
-  console.log("clientOrg",clientOrg)
+  console.log("clientOrg", clientOrg);
   return (
     <div className="font-roboto flex flex-col gap-2 mt-6">
       <div className="flex items-center">
@@ -139,10 +139,15 @@ const ViewClient = () => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
-        {  clientOrg && clientId && <AdminTabs clientId={clientId} clientOrg={clientOrg}/>}
-          <p className="text-[#3E3C42] text-lg font-medium ">
-            Company information
-          </p>
+          {clientOrg && clientId && (
+            <AdminTabs clientId={clientId} clientOrg={clientOrg} />
+          )}
+          <div className="flex justify-between mt-2">
+            <p className="text-[#3E3C42] text-lg font-medium ">
+              Company information
+            </p>
+            <PrimaryButton text={"Deploy"} width={"fit-content"} />
+          </div>
 
           <div className="flex items-center gap-4">
             <div>

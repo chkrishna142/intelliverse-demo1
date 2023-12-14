@@ -113,9 +113,7 @@ const UpdateClient = () => {
     navigate("/superadmin/addclient");
   };
   const handleSubmit = async () => {
-    
     setSubmitClicked(true);
-
 
     const formattedClientPhoneNumber = clientPhoneNumber.startsWith(
       selectedCountryCodeClient
@@ -129,7 +127,7 @@ const UpdateClient = () => {
       ? ripikPhoneNumber
       : selectedCountryCodeRipik + ripikPhoneNumber;
     // Check if any required field is empty
-  
+
     if (
       !clientName ||
       !companyType ||
@@ -150,7 +148,6 @@ const UpdateClient = () => {
       !ripikSecContactName ||
       !relationDate ||
       !purchaseOrderCode
-      
     ) {
       // Show a toast if any required field is empty
       toast({
@@ -262,7 +259,7 @@ const UpdateClient = () => {
       setRemarks(data.remarks);
       setProductDate(data.ripikProductUseDate);
       setRelationDate(data.clientRelStartDate);
-      setClientOrg(data.organisation)
+      setClientOrg(data.organisation);
     } catch (error) {
       console.log(error);
     }
@@ -273,7 +270,7 @@ const UpdateClient = () => {
   const handleBackButton = () => {
     navigate("/superadmin/addclient");
   };
- 
+
   return (
     <div className="font-roboto flex flex-col gap-2 mt-6">
       <div className="flex items-center">
@@ -290,10 +287,19 @@ const UpdateClient = () => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
-        {  clientOrg && clientId && <AdminTabs update={"update"} clientId={clientId} clientOrg={clientOrg}/>}
-          <p className="text-[#3E3C42] text-lg font-medium ">
-            Company information
-          </p>
+          {clientOrg && clientId && (
+            <AdminTabs
+              update={"update"}
+              clientId={clientId}
+              clientOrg={clientOrg}
+            />
+          )}
+          <div className="flex justify-between mt-2">
+            <p className="text-[#3E3C42] text-lg font-medium ">
+              Company information
+            </p>
+            <PrimaryButton text={"Deploy"} width={"fit-content"} />
+          </div>
 
           <div className="flex items-center gap-4">
             <div>
@@ -310,7 +316,6 @@ const UpdateClient = () => {
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setClientName(e.target.value)}
-
                 />
                 {submitClicked && !clientName && (
                   <Text color="red.500" fontSize="sm" mt="1">
@@ -408,7 +413,6 @@ const UpdateClient = () => {
                   type="text"
                   value={subIndustryValue}
                   required
-                 
                   onChange={(e) => setSubIndustryValue(e.target.value)}
                 />
               </div>
@@ -485,10 +489,10 @@ const UpdateClient = () => {
                 onChange={(e) => setNumberOfUsers(e.target.value)}
               />
               {submitClicked && !numberOfUsers && (
-                  <Text color="red.500" fontSize="sm" mt="1">
-                    Please enter number Of users.
-                  </Text>
-                )}
+                <Text color="red.500" fontSize="sm" mt="1">
+                  Please enter number Of users.
+                </Text>
+              )}
             </div>
           </div>
         </div>
@@ -528,7 +532,6 @@ const UpdateClient = () => {
                 <Input
                   type="text"
                   value={hqLocationAddress}
-                 
                   onChange={(e) => setHqLocationAddress(e.target.value)}
                 />
               </div>
@@ -545,14 +548,16 @@ const UpdateClient = () => {
                   type="text"
                   value={totalClientLocations}
                   borderColor={
-                    submitClicked && !totalClientLocations ? "red.500" : "gray.300"
+                    submitClicked && !totalClientLocations
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setTotalClientLocations(e.target.value)}
                 />
                 {submitClicked && !totalClientLocations && (
                   <Text color="red.500" fontSize="sm" mt="1">
-                   Total client locations.
+                    Total client locations.
                   </Text>
                 )}
               </div>
@@ -598,7 +603,9 @@ const UpdateClient = () => {
                   type="text"
                   value={clientPrimaryContactName}
                   borderColor={
-                    submitClicked && !clientPrimaryContactName ? "red.500" : "gray.300"
+                    submitClicked && !clientPrimaryContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setClientPrimaryContactName(e.target.value)}
@@ -654,7 +661,9 @@ const UpdateClient = () => {
                     type="tel"
                     value={clientPhoneNumber}
                     borderColor={
-                      submitClicked && !clientPhoneNumber ? "red.500" : "gray.300"
+                      submitClicked && !clientPhoneNumber
+                        ? "red.500"
+                        : "gray.300"
                     }
                     borderWidth={"2px"}
                     onChange={(e) => setClientPhoneNumber(e.target.value)}
@@ -678,7 +687,9 @@ const UpdateClient = () => {
                   type="text"
                   value={clientSecContactName}
                   borderColor={
-                    submitClicked && !clientSecContactName ? "red.500" : "gray.300"
+                    submitClicked && !clientSecContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setClientSecContactName(e.target.value)}
@@ -707,7 +718,9 @@ const UpdateClient = () => {
                   type="text"
                   value={ripikPrimaryContactName}
                   borderColor={
-                    submitClicked && !ripikPrimaryContactName ? "red.500" : "gray.300"
+                    submitClicked && !ripikPrimaryContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setRipikPrimaryContactName(e.target.value)}
@@ -772,13 +785,12 @@ const UpdateClient = () => {
                   borderWidth={"2px"}
                   onChange={(e) => setRipikPhoneNumber(e.target.value)}
                 />
-                
               </div>
               {submitClicked && !ripikPhoneNumber && (
-                  <Text color="red.500" fontSize="sm" mt="1">
-                    Please enter the Phone number.
-                  </Text>
-                )}
+                <Text color="red.500" fontSize="sm" mt="1">
+                  Please enter the Phone number.
+                </Text>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -791,7 +803,9 @@ const UpdateClient = () => {
                   type="text"
                   value={ripikSecContactName}
                   borderColor={
-                    submitClicked && !ripikSecContactName ? "red.500" : "gray.300"
+                    submitClicked && !ripikSecContactName
+                      ? "red.500"
+                      : "gray.300"
                   }
                   borderWidth={"2px"}
                   onChange={(e) => setRipikSecContactName(e.target.value)}
