@@ -1,15 +1,3 @@
-import {
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
-  useSteps,
-} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import UseCaseDetail from "../Components/UseCaseDetail";
 import UploadDetails from "../Components/UploadDetails";
@@ -18,10 +6,12 @@ import ProjectDetails from "../Components/ProjectDetails";
 
 const CreateForm = () => {
   const initState = {
+    projectId: "",
     name: "",
     dataType: "",
     whatToDetect: "",
-    uploadedFiles: null,
+    uploadedFiles: {},
+    savedFiles: null,
     isAnnotated: "No",
     annotationType: "",
     steps: [
@@ -42,7 +32,6 @@ const CreateForm = () => {
     });
   }, [activeStep]);
 
-  console.log(userState, "data");
   return (
     <div className="flex flex-col gap-2 h-screen mt-6 font-roboto">
       <p className="text-[#084298] font-medium text-xl">Create new project</p>

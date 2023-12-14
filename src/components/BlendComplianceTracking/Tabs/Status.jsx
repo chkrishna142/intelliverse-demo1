@@ -25,7 +25,7 @@ const Status = () => {
   let active = Math.floor(Math.random() * mach[sm][type]?.length);
   return (
     <div className="flex flex-col gap-3 pb-6 pt-3 px-3 rounded-xl bg-white">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:items-end">
         <div className="flex flex-col gap-3">
           <div className="flex gap-4">
             {batches.map((i, idx) => {
@@ -46,26 +46,26 @@ const Status = () => {
               );
             })}
           </div>
-          <div className="flex gap-8 items-center">
-            <div className="flex flex-col gap-1">
+          <div className="flex gap-8 items-center overflow-x-auto max-w-[300px] sm:max-w-none">
+            <div className="flex flex-col gap-1 min-w-[40px]">
               <p className="text-[#3A74CA] text-base font-medium">CU 1</p>
               <p className="text-[#AEA9B1] text-sm">Plant</p>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 min-w-[40px]">
               <p className="text-[#3A74CA] text-base font-medium">A</p>
               <p className="text-[#AEA9B1] text-sm">Shift</p>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 min-w-[40px]">
               <p className="text-[#3A74CA] text-base font-medium">26</p>
               <p className="text-[#AEA9B1] text-sm">Batch</p>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 min-w-[140px]">
               <p className="text-[#938F96] text-sm font-medium flex gap-3">12 May ‘23 <span>12:45 pm</span></p>
               <p className="text-[#AEA9B1] text-sm">Time</p>
             </div>
           </div>
         </div>
-        <div className="flex ga-0">
+        <div className="flex gap-0">
           {types.map((i, idx) => {
             return (
               <div
@@ -87,9 +87,9 @@ const Status = () => {
           })}
         </div>
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-col-reverse md:flex-row gap-3">
         <StatusTable />
-        <div className="flex flex-col gap-4 w-[30%] h-[65vh] overflow-y-auto">
+        <div className="flex flex-col gap-4 w-full md:w-[50%] lg:w-[40%] xl:w-[30%] h-[50vh] md:h-[65vh] overflow-y-auto">
           {mach[sm][type].map((i, idx) => {
             return (
               <div className="flex flex-col gap-2 capitalize">
