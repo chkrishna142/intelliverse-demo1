@@ -55,7 +55,7 @@ const ProjectDetails = ({
         });
         toast({
           title: "Success",
-          description: "Project created with id: " + response.data.projectId,
+          description: "Project created with name " + nameRef.current.value,
           status: "success",
           position: "top-right",
           duration: 2000,

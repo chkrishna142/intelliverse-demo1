@@ -21,7 +21,7 @@ const DetectSegment = ({
           return {
             src: item.img,
             id: item.id,
-            name: "Image " + item.id,
+            name: item.id,
             regions: [],
           };
         });

@@ -95,7 +95,7 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
       if (response.status == 200) {
         toast({
           title: "Success",
-          description: "Annotated data recieved",
+          description: "Annotated data received",
           status: "success",
           position: "top-right",
           duration: 2000,
