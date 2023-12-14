@@ -49,7 +49,7 @@ const ProjectCard = ({ data }) => {
         projectId: data?.projectId,
       };
       const resposne = await axios.get(
-        baseURL + "selfserve/v1/project/v2/getSingle/",
+        baseURL + "selfserve/v1/project/v1/getSingle/",
         {
           params: param,
           headers: {
