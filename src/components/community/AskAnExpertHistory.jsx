@@ -14,6 +14,7 @@ import NavContext from ".././NavContext";
 import { baseURL } from "../../index";
 import TopEnquirerChart from "./AskAnExpertCharts/TopEnquirerChart";
 import TopClientsChart from "./AskAnExpertCharts/TopClientsChart";
+import PrimaryButton from "../../util/Buttons/PrimaryButton";
 
 const AskAnExpertHistory = () => {
   const { auth } = useContext(NavContext);
@@ -43,6 +44,7 @@ const AskAnExpertHistory = () => {
   const [loading, setLoading] = useState(false);
   const [top3clients, setTopClients] = useState([]);
   const [top3Enquirers, setTopEnquirers] = useState([]);
+  const [role, setRole] = useState("");
 
   const handleClick = () => {
     setStateChanging(false);
@@ -230,19 +232,147 @@ const AskAnExpertHistory = () => {
         }
       );
       setFullName(response?.data.data.fullname);
+      setRole(response?.data.data.role);
+      if (response?.data.data.role === "EXPERT") {
+        fetchQueries();
+      } else {
+        handleQuestionsExceptexpert();
+      }
       // console.log("users",response?.data.data.fullname);
     } catch (e) {
       console.error(e);
     }
   };
 
+  const handleQuestionsExceptexpert = () => {
+    const data = [
+      {
+        starred: false,
+        subject: "s1",
+        question: "Danish Asking",
+        questionId: "f136dd04-80d5-41ab-8c76-117454ae5596",
+        organisation: "Ripik.Ai",
+        expert: "Aman Kumar",
+        dateTime: "2023-12-14T11:55:13.809513",
+        deadLine: 74,
+        status: "Pending",
+      },
+      {
+        starred: true,
+        subject: "Exquisite Subject",
+        question: "Cant Solve?",
+        questionId: "67f4fc41-06af-4f93-94c4-5c9f893ad812",
+        organisation: "Ripik.Ai",
+        expert: "Aman Kumar",
+        dateTime: "2023-12-12T14:41:53.694541",
+        deadLine: 29,
+        status: "In Progress",
+      },
+      {
+        starred: false,
+        subject: "Wanted to ask about something",
+        question: "Dunno what to ask?",
+        questionId: "a4a9a9b4-80c6-4144-9bf3-23449a5c464c",
+        organisation: "Ripik.Ai",
+        expert: "Anandkar",
+        dateTime: "2023-12-12T13:50:37.868293",
+        deadLine: 28,
+        status: "Pending",
+      },
+      {
+        starred: false,
+        subject: "(no subject)",
+        question: "NewStuff",
+        questionId: "d466748d-f8b3-4400-b14f-2b7c5b9c76ca",
+        organisation: "Ripik.Ai",
+        expert: "Anandkar",
+        dateTime: "2023-12-12T13:48:47.386948",
+        deadLine: 28,
+        status: "Pending",
+      },
+      {
+        starred: true,
+        subject: null,
+        question: "#Unique",
+        questionId: "37ca6b26-9aa9-452f-be25-a01af838d085",
+        organisation: "Ripik.Ai",
+        expert: "Anandkar",
+        dateTime: "2023-12-07T19:42:12.697713",
+        deadLine: -1,
+        status: "In Progress",
+      },
+      {
+        starred: false,
+        subject: null,
+        question: "How u doin Mr.Expert",
+        questionId: "1cec94eb-3030-43b8-a535-280e14b006d4",
+        organisation: "Ripik.Ai",
+        expert: "Anandkar",
+        dateTime: "2023-12-06T19:36:24.152814",
+        deadLine: -1,
+        status: "Pending",
+      },
+      {
+        starred: false,
+        subject: null,
+        question: "Testing Question",
+        questionId: "b948d0b5-6970-45ae-9b5e-3853e02a9c08",
+        organisation: "Ripik.Ai",
+        expert: "Sharun N D",
+        dateTime: "2023-12-06T12:18:15.10578",
+        deadLine: -1,
+        status: "In Progress",
+      },
+      {
+        starred: true,
+        subject: null,
+        question: "Testing Question",
+        questionId: "20a4630f-ec5b-49e2-bc6c-487b9c2c6e4f",
+        organisation: "Ripik.Ai",
+        expert: "Sharun N D",
+        dateTime: "2023-12-06T12:18:02.219655",
+        deadLine: -1,
+        status: "In Progress",
+      },
+    ];
+
+    setDownloadData(data);
+    // Count questions based on status
+    const pendingCount = data.filter(
+      (item) => item.status === "Pending"
+    ).length;
+    const inProgressCount = data.filter(
+      (item) => item.status === "In Progress"
+    ).length;
+    const answeredCount = data.filter(
+      (item) => item.status === "Answered"
+    ).length;
+
+    setPendingQuestions(pendingCount);
+    setInProgressQuestions(inProgressCount);
+    setAnsweredQuestions(answeredCount);
+    const sortedData = data.sort((a, b) => {
+      const statusOrder = ["In Progress", "Pending", "Answered"];
+      return statusOrder.indexOf(a.status) - statusOrder.indexOf(b.status);
+    });
+
+    setTableData(sortedData);
+    setFilteredData(sortedData);
+
+    setLoading(false);
+  };
+
   useEffect(() => {
     if (auth) {
       setLoading(true);
-      fetchQueries();
       fetchUser();
+      // if (role === "EXPERT") {
+      //   fetchQueries();
+      // } else {
+      //   handleQuestionsExceptexpert();
+      // }
     }
-  }, [auth]);
+  }, [auth, role]);
 
   const handleStatus = (selectedStatus) => {
     setChangingbutton(selectedStatus);
@@ -260,103 +390,123 @@ const AskAnExpertHistory = () => {
       setFilteredData(filtered);
     }
   };
-  console.log("clients", top3clients);
+  console.log("role", role);
   console.log("enq", top3Enquirers);
 
   return (
-    <div className="mt-[3vh] flex flex-col w-full gap-1">
+    <div className="mt-[3vh] flex flex-col w-full gap-1 ">
       <div className="w-full flex justify-between items-center">
         <p className="text-[20px] sm:text-[20px] font-semibold text-[#024D87]">
           {fullName}'s Dashboard
         </p>
-        <div className="flex items-center gap-1">
-          <div className="flex min-w-[110px]  items-center">
-            <Select
-              borderColor="#CAC5CD"
-              color="#605D64"
-              variant="outline"
-              className="!text-sm !font-medium text-[#605D64]"
-              _focus={{ borderColor: "blue.500" }}
-              onChange={(e) => handleRangeSelect(e)}
-              value={selectedRange}
-            >
-              <option
-                key="All Time"
-                value={0}
-                className="bg-white hover:bg-blue-200"
+        <div className="flex gap-3">
+          {role !== "EXPERT" && (
+            <PrimaryButton text={"Ask a question"} width={"fit-content"} />
+          )}
+          <div className="flex items-center gap-1">
+            <div className="flex min-w-[110px]  items-center">
+              <Select
+                borderColor="#CAC5CD"
+                color="#605D64"
+                variant="outline"
+                className="!text-sm !font-medium text-[#605D64]"
+                _focus={{ borderColor: "blue.500" }}
+                onChange={(e) => handleRangeSelect(e)}
+                value={selectedRange}
               >
-                All time
-              </option>
-              <option
-                key="Last Seven Days"
-                value={1}
-                className="bg-white hover:bg-blue-200"
-              >
-                This Week
-              </option>
-              <option
-                key="This Month"
-                value={2}
-                className="bg-white hover:bg-blue-200"
-              >
-                Month to Date
-              </option>
-              <option
-                key="This Quarter"
-                value={3}
-                className="bg-white hover:bg-blue-200"
-              >
-                Quarter to Date
-              </option>
-              {/* <option
+                <option
+                  key="All Time"
+                  value={0}
+                  className="bg-white hover:bg-blue-200"
+                >
+                  All time
+                </option>
+                <option
+                  key="Last Seven Days"
+                  value={1}
+                  className="bg-white hover:bg-blue-200"
+                >
+                  This Week
+                </option>
+                <option
+                  key="This Month"
+                  value={2}
+                  className="bg-white hover:bg-blue-200"
+                >
+                  Month to Date
+                </option>
+                <option
+                  key="This Quarter"
+                  value={3}
+                  className="bg-white hover:bg-blue-200"
+                >
+                  Quarter to Date
+                </option>
+                {/* <option
                 key="Previous Quarter"
                 value={4}
                 className="bg-white hover:bg-blue-200"
               >
                 Previous Quarter
               </option> */}
-              <option
-                key="This Year"
-                value={5}
-                className="bg-white hover:bg-blue-200"
-              >
-                Year to Date
-              </option>
-              <option
-                key="custom"
-                value={6}
-                className="bg-white hover:bg-blue-200"
-              >
-                Custom Range
-              </option>
-            </Select>
-          </div>
-          {selectedRange == 6 && (
-            <div className="gap-2 flex justify-end">
-              <div className="min-w-[110px]">
-                <FloatingInput
-                  text="From"
-                  type="date"
-                  setDateTime={setCustomFromTime}
-                  value={customStartDate}
-                />
-              </div>
-
-              <div className="min-w-[110px]">
-                <FloatingInput
-                  text="To"
-                  type="date"
-                  setDateTime={setCustomToTime}
-                  value={customEndDate}
-                />
-              </div>
-              <div>
-                <button
-                  className="text-center py-2 px-2 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-md min-w-[80px]"
-                  onClick={handleClick}
+                <option
+                  key="This Year"
+                  value={5}
+                  className="bg-white hover:bg-blue-200"
                 >
-                  Apply
-                </button>
+                  Year to Date
+                </option>
+                <option
+                  key="custom"
+                  value={6}
+                  className="bg-white hover:bg-blue-200"
+                >
+                  Custom Range
+                </option>
+              </Select>
+            </div>
+            {selectedRange == 6 && (
+              <div className="gap-2 flex justify-end">
+                <div className="min-w-[110px]">
+                  <FloatingInput
+                    text="From"
+                    type="date"
+                    setDateTime={setCustomFromTime}
+                    value={customStartDate}
+                  />
+                </div>
+
+                <div className="min-w-[110px]">
+                  <FloatingInput
+                    text="To"
+                    type="date"
+                    setDateTime={setCustomToTime}
+                    value={customEndDate}
+                  />
+                </div>
+                <div>
+                  <button
+                    className="text-center py-2 px-2 text-white text-xs md:text-base font-medium bg-[#6CA6FC] rounded-md min-w-[80px]"
+                    onClick={handleClick}
+                  >
+                    Apply
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          {role !== "EXPERT" && (
+            <div className="flex items-center lg:gap-4 sm:gap-2 px-3 py-1 rounded-sm bg-[#FFFFD8]">
+              <div>
+                <p className="text-[14px] text-[#605D64] font-normal p-1">
+                  Current Balance
+                </p>
+              </div>
+              <div className="flex items-center gap-1">
+                <p className="text-[#3E3C42] font-semibold text-[14px]">
+                  {2000}
+                </p>
+                <img src="/token.svg" className="w-full h-full" alt="token" />
               </div>
             </div>
           )}
@@ -407,23 +557,33 @@ const AskAnExpertHistory = () => {
             </div>
           </div>
 
-          <div className="flex flex-1 bg-blue-100 justify-evenly rounded-r-lg h-[200px]">
-            <div className=" flex flex-col justify-center mt-5 items-center ">
-              <div className="text-[20px] font-md">Top 3 Clients</div>
+          <div className="flex flex-1 bg-white justify-center rounded-r-lg h-[200px]">
+            <div className=" flex flex-col mt-5 ">
+              <div className="text-[14px] font-semibold">
+                {role === "EXPERT" ? "Top 3 Clients" : "Top 3 Experts"}
+              </div>
               <div className="text-[#fff]">
-                {top3clients && top3clients.names && top3clients.questions && (
-                  <TopClientsChart top3clients={top3clients} />
-                )}
+                {top3clients &&
+                  top3clients.names &&
+                  top3clients.questions &&
+                  role === "EXPERT" && (
+                    <TopClientsChart top3clients={top3clients} />
+                  )}
+                {role !== "EXPERT" && <TopClientsChart top3experts={""} />}
               </div>
             </div>
-            <div className=" flex flex-col justify-center mt-5 items-center ">
-              <div className="text-[20px] font-md">Top 3 Enquirers</div>
+            <div className=" flex flex-col mt-5">
+              <div className="text-[14px] font-semibold">
+                {role === "EXPERT" ? "Top 3 Enquirers" : "Token summary"}
+              </div>
               <div className="text-[#fff]">
                 {top3Enquirers &&
                   top3Enquirers.names &&
-                  top3Enquirers.questions && (
+                  top3Enquirers.questions &&
+                  role === "Expert" && (
                     <TopEnquirerChart top3Enquirers={top3Enquirers} />
                   )}
+                {role !== "Expert" && <TopEnquirerChart tokenSummary={""} />}
               </div>
             </div>
           </div>
@@ -489,13 +649,23 @@ const AskAnExpertHistory = () => {
           </div>
           {/* paginator */}
           <div className="">
-            {filteredData && filteredData.length != 0 && (
+            {filteredData && filteredData.length != 0 && role === "EXPERT" ? (
               <ExlCsvDownload
                 data={filteredData}
                 order={downloadData.summary}
                 orderDetail={downloadData.details}
                 enable={true}
               />
+            ) : (
+              filteredData &&
+              filteredData.length != 0 && (
+                <ExlCsvDownload
+                  data={[""]}
+                  order={[""]}
+                  orderDetail={[""]}
+                  enable={true}
+                />
+              )
             )}
           </div>
         </div>
@@ -511,10 +681,11 @@ const AskAnExpertHistory = () => {
               </div>
             ) : (
               <React.Fragment>
-                {filteredData && filteredData.length !== 0 ? (
+                {filteredData && filteredData.length !== 0 && role ? (
                   <AskAnExpertHistoryTable
                     rowData={filteredData}
                     fetchQueries={fetchQueries}
+                    role={role}
                   />
                 ) : (
                   <p className="ml-[45%]">No data available!</p>
