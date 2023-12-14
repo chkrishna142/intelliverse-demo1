@@ -36,6 +36,7 @@ const UpdateClient = () => {
   const { auth } = useContext(NavContext);
   const { clientId } = useParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [companyType, setCompanyType] = useState();
   const [industryValue, setIndustryValue] = useState("");
   const [subIndustryValue, setSubIndustryValue] = useState("");
@@ -113,6 +114,7 @@ const UpdateClient = () => {
     navigate("/superadmin/addclient");
   };
   const handleSubmit = async () => {
+    setIsLoading(true);
     setSubmitClicked(true);
 
     const formattedClientPhoneNumber = clientPhoneNumber.startsWith(
@@ -158,6 +160,7 @@ const UpdateClient = () => {
         isClosable: true,
         position: "top",
       });
+      setIsLoading(false);
       return;
     }
     const data = {
@@ -206,7 +209,8 @@ const UpdateClient = () => {
       //   isClosable: true,
       //   position: 'top',
       // });
-      navigate("/superadmin/addclient");
+
+      // navigate("/superadmin/addclient");
       // console.log("submit", response);
     } catch (error) {
       // toast({
@@ -217,6 +221,19 @@ const UpdateClient = () => {
       //     position: "top",
       //   });
       console.log(error);
+    } finally {
+      setIsLoading(false);
+      // toast({
+      //   title: "Client details Updated Successfully",
+
+      //   status: "Success",
+      //   duration: 4000,
+      //   isClosable: true,
+      //   position: "top",
+      // });
+      setTimeout(() => {
+        navigate("/superadmin/addclient");
+      }, 1500);
     }
     console.log("data", data);
   };
@@ -272,28 +289,9 @@ const UpdateClient = () => {
   };
 
   return (
-    <div className="font-roboto flex flex-col gap-2 mt-6">
-      <div className="flex items-center">
-        <div className="cursor-pointer w-8" onClick={handleBackButton}>
-          <img
-            src="/transactionhistory/backarrow.svg"
-            className="w-full h-full"
-            alt="backarrow_img"
-          />
-        </div>
-        <p className="text-[#084298] font-medium text-xl ml-2">
-          Update Client Details
-        </p>
-      </div>
+    <div className="font-roboto flex flex-col gap-2">
       <div className="flex flex-col gap-3">
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
-          {clientOrg && clientId && (
-            <AdminTabs
-              update={"update"}
-              clientId={clientId}
-              clientOrg={clientOrg}
-            />
-          )}
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <div className="flex justify-between mt-2">
             <p className="text-[#3E3C42] text-lg font-medium ">
               Company information
@@ -909,7 +907,7 @@ const UpdateClient = () => {
       </div>
       <div className="flex gap-[10px] items-center mt-2">
         <PrimaryButton
-          text={"Submit"}
+          text={isLoading ? "Updating..." : "Update"}
           width={"fit-content"}
           disable={""}
           onClick={handleSubmit}

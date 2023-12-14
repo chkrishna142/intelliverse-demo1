@@ -54,6 +54,8 @@ import UserMgmt from './components/Admin/Tabs/UserMgmt';
 import SessionLogs from './components/Admin/Tabs/SessionLogs';
 import AllotToken from './components/Admin/Tabs/AllotToken';
 import TokenTransaction from './components/Admin/Tabs/TokenTransaction';
+import ViewTabs from './components/SuperAdmin/Tabs/ViewTabs';
+import UpdateTabs from './components/SuperAdmin/Tabs/UpdateTabs';
 
 function App() {
   const homeRef = useRef();
@@ -301,34 +303,18 @@ function App() {
                       path="/superadmin/addclient/add"
                       element={<CreateClient />}
                     />
-                    <Route
-                      path="/superadmin/viewClient/:clientId"
+                    {/* <Route
+                      path="/superadmin/viewClient"
                       element={<ViewClient />}
-                    />
-                    <Route
-                      path="/superadmin/subscriptions"
-                      element={<Subscriptions />}
-                    />
-                    <Route
-                      path="/superadmin/usermanagement/:clientOrg"
-                      element={<UserMgmt />}
-                    />
-                  
-                    <Route
-                      path="/superadmin/sessionlogs/:clientOrg"
-                      element={<SessionLogs />}
-                    />
-                    <Route
-                      path="/superadmin/allottokens/:clientOrg"
-                      element={<AllotToken />}
-                    />
+                    /> */}
                      <Route
-                      path="/superadmin/token/transactions/:clientOrg"
-                      element={<TokenTransaction />}
+                      path="/superadmin/viewDetails/:clientOrg/:clientId/:mode"
+                      element={<ViewTabs />}
                     />
+                    
                     <Route
-                      path="/superadmin/update/:clientId"
-                      element={<UpdateClient />}
+                      path="/superadmin/update/:clientOrg/:clientId/:mode"
+                      element={<UpdateTabs />}
                     /></>)}
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />
