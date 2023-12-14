@@ -99,7 +99,7 @@ const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
   );
 };
 
-const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
+const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
   const [fullName, setFullName] = useState("");
   const [emailID, setEmailID] = useState("");
   const [contact, setContact] = useState("");
@@ -143,6 +143,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers }) => {
         location: "",
         phoneNumber: contact,
         services: [],
+        organisation: clientOrg || ""
       });
 
       let config = {
