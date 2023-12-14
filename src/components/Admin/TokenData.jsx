@@ -1,11 +1,50 @@
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { baseURL } from "../..";
+import NavContext from ".././NavContext";
 
 const TokenData = () => {
+  const { clientOrg } = useParams();
+  const { auth } = useContext(NavContext);
   const navigate = useNavigate();
+  const [totalTokens, setTotalTokens] = useState(0);
+  const [allocated, setAllocated] = useState(0);
+  const [unAllocated, setUnallocated] = useState(0);
+
+  const fetchTokenBalance = async () => {
+    const param = {
+      organisation: clientOrg || "",
+    };
+    try {
+      const response = await axios.get(
+        baseURL + `token-wallet/v1/org-balance`,
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-auth-Token": auth,
+          },
+        }
+      );
+      setTotalTokens(response?.data.Total)
+      setAllocated(response?.data.Allocated)
+      setUnallocated(response?.data.UnAllocated)
+      
+    } catch (error) {
+      
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTokenBalance();
+  }, []);
+
   const handleToken = () => {
     navigate("/community/advisor/buycredits");
   };
-
+  
   return (
     <div className="w-full lg:flex lg:flex-row lg:justify-between flex-col items-center mx-auto">
       {/* Total coins */}
@@ -16,7 +55,7 @@ const TokenData = () => {
         <div className="flex flex-col w-full h-[70px] px-[16px] py-[6px] justify-center bg-[#FAFAFA] rounded-tr-lg  rounded-br-lg gap-[8px]">
           <div className="flex gap-2 w-full ">
             <div className="w-full flex gap-1">
-              <p className="text-[#3E3C42] font-semibold ">400</p>
+              <p className="text-[#3E3C42] font-semibold ">{totalTokens}</p>
               {/* coin icons */}
               <img src="/token.svg" alt="coins" />
             </div>
@@ -39,7 +78,7 @@ const TokenData = () => {
         <div className="flex flex-col w-full h-[70px] px-[16px] py-[6px] justify-center bg-[#FAFAFA] rounded-tr-lg  rounded-br-lg gap-[8px]">
           <div className="flex gap-2 w-full ">
             <div className="w-full flex gap-1">
-              <p className="text-[#3E3C42] font-semibold ">200</p>
+              <p className="text-[#3E3C42] font-semibold ">{allocated}</p>
               {/* coin icons */}
               <img src="/token.svg" alt="coins" />
             </div>
@@ -57,7 +96,7 @@ const TokenData = () => {
         <div className="flex flex-col w-full h-[70px] px-[16px] py-[6px] justify-center bg-[#FAFAFA] rounded-tr-lg  rounded-br-lg gap-[8px]">
           <div className="flex gap-2 w-full ">
             <div className="w-full flex gap-1">
-              <p className="text-[#3E3C42] font-semibold ">200</p>
+              <p className="text-[#3E3C42] font-semibold ">{unAllocated}</p>
               {/* coin icons */}
               <img src="/token.svg" alt="coins" />
             </div>
