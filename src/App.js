@@ -163,7 +163,7 @@ function App() {
                       element={<CreditBuy />}
                     />
                     <Route
-                      path="/community/askanexpert"
+                      path="/community/askanexpert/question"
                       element={<AskAnExpert />}
                     />
                     <Route
@@ -283,7 +283,7 @@ function App() {
                       element={<AiAdvisorHistory />}
                     />
                     <Route
-                      path="community/askanexpert/history"
+                      path="community/askanexpert"
                       element={<AskAnExpertHistory />}
                     />
                     <Route

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopEnquirerChart = ({ top3Enquirers }) => {
-  const [chartOptions, setChartOptions] = useState({
+const TopEnquirerChart = ({ data }) => {
+  const chartOptions= {
     chart: {
       type: "bar",
       toolbar: { show: false },
@@ -15,7 +15,10 @@ const TopEnquirerChart = ({ top3Enquirers }) => {
     },
 
     xaxis: {
-      categories: [...top3Enquirers?.names],
+      categories:
+      data?.names && data?.names?.length > 0
+          ? [...data?.names]
+          : [],
       showLines: false,
       labels: {
         style: {
@@ -46,21 +49,36 @@ const TopEnquirerChart = ({ top3Enquirers }) => {
       bar: {
         borderRadius: 4,
         horizontal: true,
-        barHeight: top3Enquirers ? "" : "45%",
       },
     },
     colors: ["#D9D9D9"],
     export: {
       enabled: false,
     },
-  });
+  };
 
   const [seriesData, setSeriesData] = useState([
     {
       name: "Series 1",
-      data: [...top3Enquirers?.questions],
+      data:
+      data?.questions && data?.questions?.length > 0
+          ? [...data?.questions]
+          : [],
     },
   ]);
+
+  useEffect(() => {
+    // Update seriesData based on conditions
+    setSeriesData([
+      {
+        name: "Series 1",
+        data:
+        data?.questions && data?.questions?.length > 0
+            ? [...data?.questions]    
+            : [],
+      },
+    ]);
+  }, [data]);
 
   return (
     <div>
