@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useParams, Link } from "react-router-dom";
 import PredictionCard from "../Components/PredictionCard";
 import OutputDetail from "../Components/OutputDetail";
@@ -51,6 +52,7 @@ const DetailView = () => {
       setUserState((prev) => {
         let newData = { ...prev };
         let data = resposne.data;
+        let val = Object.keys(data?.detail[0]?.dataset)[0];
         newData["name"] = data?.name || "";
         newData["dataType"] =
           Capitalize(data?.detail[0]?.datasetType) || "Image";
@@ -59,10 +61,9 @@ const DetailView = () => {
         newData["annotationType"] =
           Capitalize(data?.detail[0]?.modelType) || "Classify";
         newData["savedFiles"] = "Dummy";
-        newData["uploadedFiles"] =
-          data?.detail[0]?.dataset?.[
-            Object.keys(data?.detail[0]?.dataset)[0]
-          ] || {};
+        newData["uploadedFiles"] = data?.detail[0]?.dataset?.[val] || {};
+        newData["annotatedData"] = data?.detail[0]?.annotations?.[val] || [];
+        newData["lastUpdatedAt"] = data?.lastUpdatedAt;
         return newData;
       });
     } catch (error) {
@@ -79,6 +80,7 @@ const DetailView = () => {
     "Model output overview",
     "Model output details",
   ];
+
   return (
     <div className="flex flex-col gap-2 mt-6 h-full">
       <div className="flex gap-2 items-center">
@@ -95,49 +97,62 @@ const DetailView = () => {
         </p>
       </div>
       <div className="rounded-lg bg-white p-4 flex flex-col gap-4 w-full h-full">
-        <div className="flex justify-between items-end">
-          <div className="flex gap-4 items-center">
-            {tabs.map((x) => {
-              return (
-                <div
-                  className="px-6 py-[6px] rounded text-base border"
-                  style={{
-                    borderColor: x == page ? "#6CA6FC" : "#EBEBEB",
-                    fontWeight: x == page ? 500 : 400,
-                    color: x == page ? "#084298" : "#605D64",
-                    cursor: x != page ? "pointer" : "default",
-                    backgroundColor: x == page ? "#F1F7FF" : "#fff",
-                  }}
-                  onClick={() => setPage(x)}
-                >
-                  {x}
-                </div>
-              );
-            })}
-          </div>
-          {page == "Project details" ? (
-            <div className="flex items-center gap-3">
-              <p className="text-[#938F96] text-sm">Last updated</p>
-              <p className="text-[#938F96] text-sm">
-                {new Date(userState?.lastUpdatedAt).toLocaleString()}
-              </p>
+        <Tabs>
+          <TabList className="!flex !justify-between !border-0">
+            <div className="flex items-center gap-4">
+              {tabs.map((x) => {
+                return (
+                  <Tab
+                    px={"24px"}
+                    py={"6px"}
+                    borderRadius={"4px"}
+                    borderWidth={"1px"}
+                    fontSize={"16px"}
+                    style={{
+                      borderColor: x == page ? "#6CA6FC" : "#EBEBEB",
+                      fontWeight: x == page ? 500 : 400,
+                      color: x == page ? "#084298" : "#605D64",
+                      cursor: x != page ? "pointer" : "default",
+                      backgroundColor: x == page ? "#F1F7FF" : "#fff",
+                    }}
+                    onClick={() => setPage(x)}
+                  >
+                    {x}
+                  </Tab>
+                );
+              })}
             </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <p className="text-[#938F96] text-sm">Model accuracy</p>
-              <p className="text-[#69B04B] text-sm font-medium">76%</p>
-            </div>
-          )}
-        </div>
-        {page == "Project details" && <ViewForm userState={userState} />}
-        {page == "Model output overview" && (
-          <div className="grid grid-cols-4 gap-4 w-full h-fit">
-            {[...Array(10)].map((x) => {
-              return <PredictionCard />;
-            })}
-          </div>
-        )}
-        {page == "Model output details" && <OutputDetail />}
+            {page == "Project details" ? (
+              <div className="flex items-center gap-3">
+                <p className="text-[#938F96] text-sm">Last updated</p>
+                <p className="text-[#938F96] text-sm">
+                  {new Date(userState?.lastUpdatedAt).toLocaleString()}
+                </p>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <p className="text-[#938F96] text-sm">Model accuracy</p>
+                <p className="text-[#69B04B] text-sm font-medium">76%</p>
+              </div>
+            )}
+          </TabList>
+
+          <TabPanels>
+            <TabPanel className="!pl-0 !pr-0">
+              <ViewForm userState={userState} />
+            </TabPanel>
+            <TabPanel className="!pl-0 !pr-0">
+              <div className="grid grid-cols-4 gap-4 w-full h-fit">
+                {[...Array(10)].map((x) => {
+                  return <PredictionCard />;
+                })}
+              </div>
+            </TabPanel>
+            <TabPanel className="!pl-0 !pr-0">
+              <OutputDetail />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </div>
     </div>
   );
