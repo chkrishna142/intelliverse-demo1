@@ -16,7 +16,7 @@ const ViewForm = ({ userState }) => {
               return (
                 <div className="w-full h-auto bg-black relative rounded flex items-center justify-center">
                   <img
-                    src={userState?.uploadedFiles[item.fieldId]}
+                    src={userState?.uploadedFiles[item.fileId]}
                     alt="image"
                     className="w-full rounded"
                   />

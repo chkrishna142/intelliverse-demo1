@@ -102,7 +102,7 @@ const Dashboard = () => {
             Your list of projects
           </p>
           <div
-            className="bg-[#fafafa] p-2 overflow-y-auto max-h-[50vh] sm:max-h-max grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1440px]:grid-cols-4 min-[1750px]:grid-cols-5 min-[2150px]:grid-cols-6 gap-6 text-base font-medium text-[#3E3C42]"
+            className="bg-white p-2 overflow-y-auto max-h-[50vh] sm:max-h-max grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1440px]:grid-cols-4 min-[1750px]:grid-cols-5 min-[2150px]:grid-cols-6 gap-6 text-base font-medium text-[#3E3C42]"
             style={{ height: "fit-content" }}
           >
             <div
