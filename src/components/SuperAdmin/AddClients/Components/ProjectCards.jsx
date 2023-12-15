@@ -100,11 +100,11 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
   ];
 
   const handleClick = () => {
-    navigate(`/superadmin/viewClient/${data.clientId}`);
+    navigate(`/superadmin/viewDetails/${data.organisation}/${data.clientId}/view`);
   };
 
   const handleUpdate = () => {
-    navigate(`/superadmin/update/${data.clientId}`);
+    navigate(`/superadmin/update/${data.organisation}/${data.clientId}/update`);
   };
   const locationString = data.enterAllLocation;
   const locations = locationString.split(",");
@@ -151,7 +151,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
   
   return (
     <div
-      className="px-4 py-5 rounded flex flex-col gap-10 relative bg-white"
+      className="px-4 py-5 rounded flex flex-col gap-4 relative bg-white"
       style={{
         boxShadow:
           "-4px -4px 24px 0px rgba(0, 0, 0, 0.07), 4px 4px 24px 0px rgba(0, 0, 0, 0.07)",
@@ -230,7 +230,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
                   <img src="/eye.svg" alt="" />
                 </div>
                 <div className="ml-2">
-                  <p>{4}</p>
+                  <p>{1}</p>
                 </div>
               </div>
             </div>
@@ -243,7 +243,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
                   <img src="/optimussquare.svg" alt="" />
                 </div>
                 <div className="ml-2">
-                  <p>{"5"}</p>
+                  <p>{"0"}</p>
                 </div>
               </div>
             </div>
@@ -262,19 +262,19 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
             </div>
           </div>
         </div>
-        <div>
-          <p className="text-[#938F96]">Locations</p>
-          <div className="flex gap-[2px]">
+        <div className="">
+          <p className="text-[#938F96] text-sm">Locations</p>
+          <div className="flex gap-[2px] mt-2">
             {locations.slice(0, maxLocationsToShow).map((location, index) => (
-              <div key={index} className="flex items-center">
+              <div key={index} className="flex items-center ">
                 <div>
                   <img src="/location.png" alt="" />
                 </div>
-                <p className="text-[#938F96] ">{location}</p>
+                <p className="text-[#938F96] text-sm">{location}</p>
               </div>
             ))}
             {locations.length > maxLocationsToShow && (
-              <Badge ml={1} color={"blue"} bg={"white"}>+{locations.length - maxLocationsToShow}</Badge>
+              <Badge ml={1} color={"#447ED4"} bg={"white"} fontWeight={600} fontSize="14px">+{locations.length - maxLocationsToShow}</Badge>
             )}
           </div>
           {/* );

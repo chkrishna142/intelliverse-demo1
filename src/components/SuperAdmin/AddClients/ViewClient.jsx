@@ -119,29 +119,16 @@ const ViewClient = () => {
     fetchClientDetails();
   }, []);
   // console.log("cmp type", allLocations, totalClientLocations);
-  const handleBackButton = () => {
-    navigate("/superadmin/addclient");
-  };
-  console.log("clientOrg", clientOrg);
+  // const handleBackButton = () => {
+  //   navigate("/superadmin/addclient");
+  // };
   return (
-    <div className="font-roboto flex flex-col gap-2 mt-6">
-      <div className="flex items-center">
-        <div className="cursor-pointer w-8" onClick={handleBackButton}>
-          <img
-            src="/transactionhistory/backarrow.svg"
-            className="w-full h-full"
-            alt="backarrow_img"
-          />
-        </div>
-        <p className="text-[#084298] font-medium text-xl ml-2">
-          Client Details
-        </p>
-      </div>
+    <div className="font-roboto flex flex-col gap-2">
       <div className="flex flex-col gap-3">
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
-          {clientOrg && clientId && (
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
+          {/* {clientOrg && clientId && (
             <AdminTabs clientId={clientId} clientOrg={clientOrg} />
-          )}
+          )} */}
           <div className="flex justify-between mt-2">
             <p className="text-[#3E3C42] text-lg font-medium ">
               Company information
@@ -229,7 +216,7 @@ const ViewClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">Company size</p>
 
           <div className="flex flex-col gap-3">
@@ -264,7 +251,7 @@ const ViewClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Company’s location
           </p>
@@ -339,7 +326,7 @@ const ViewClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Client’s contact details
           </p>
@@ -407,7 +394,7 @@ const ViewClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Ripik's contact details
           </p>
@@ -482,7 +469,7 @@ const ViewClient = () => {
             </div>
           </div>
         </div>
-        <div className="p-6 rounded-lg flex flex-col gap-3 bg-white">
+        <div className="pl-3 pr-6 rounded-lg flex flex-col gap-3 bg-white">
           <p className="text-[#3E3C42] text-lg font-medium ">
             Client relation details
           </p>

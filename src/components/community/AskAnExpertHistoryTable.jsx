@@ -10,15 +10,15 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import NavContext from ".././NavContext";
 import { baseURL } from "../../index";
-import StarIcon from '@mui/icons-material/Star';
+import StarIcon from "@mui/icons-material/Star";
 const MuiTheme = createTheme();
 
-const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
+const AskAnExpertHistoryTable = ({ rowData, fetchQueries, role }) => {
   const { auth } = useContext(NavContext);
 
   const navigate = useNavigate();
   const [isStarredMap, setIsStarredMap] = useState({});
-  
+
   // useEffect(() => {
   //   const initialStarredMap = {};
   //   rowData.forEach((row) => {
@@ -45,7 +45,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
         }
       );
 
-      if(response.status == 200){
+      if (response.status == 200) {
         // setIsStarredMap((prevMap) => ({
         //   ...prevMap,
         //   [queryId]: !prevMap[queryId],
@@ -94,8 +94,8 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
       ),
     },
     {
-      field: "enquirer",
-      headerName: "ENQUIRER",
+      field: role === "EXPERT" ? "enquirer" : "expert",
+      headerName: role === "EXPERT" ? "ENQUIRER" : "EXPERT",
     },
     {
       field: "dateTime",
@@ -131,7 +131,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
       ),
     },
   ];
-  
+
   const getStatusStyles = (status) => {
     switch (status) {
       case "Pending":
@@ -149,7 +149,10 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm text-[#3E3C42] whitespace-nowrap";
-  const flexMap = [0, 0.5, 3, 1, 1, 1, 1, 1, 1];
+  const flexMap =
+    role === "EXPERT"
+      ? [0, 0.5, 3, 1, 1, 1, 1, 1, 1]
+      : [0, 0.5, 3, 0, 1, 1, 1, 1, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
@@ -264,6 +267,7 @@ const AskAnExpertHistoryTable = ({ rowData,fetchQueries }) => {
           getRowClassName={getRowClassName}
           columnVisibilityModel={{
             questionId: false,
+            organisation: role === "EXPERT" ? true : false,
           }}
           onRowClick={handleRowClick}
           // hideFooter={true}

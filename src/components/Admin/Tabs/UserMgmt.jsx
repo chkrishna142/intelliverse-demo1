@@ -34,15 +34,18 @@ import Paginator from "../../../util/VisionUtils/Paginator";
 import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import { CSVLink } from "react-csv";
 import UserMngmtTable from "../Tables/userMngmtTable";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 
 const UserMgmt = () => {
-  const { clientOrg } = useParams();
-  const location = useLocation();
-  const [searchParams,setSearchParams] = useSearchParams()
-  const [mode, setMode] = useState("");
+  const { clientOrg, clientId, mode } = useParams();
+
   const token = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
-  const [clientId,setClientId] = useState("")
+
   const dummyData = {
     userName: "Sudhanshu Prasad",
     email: "sudhanshu.12prasad@gmail.com",
@@ -51,7 +54,7 @@ const UserMgmt = () => {
     role: "Admin",
   };
   const { auth } = useContext(NavContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [clientUpdate, setClientUpdate] = useState(false);
   const [displayData, setDisplayData] = useState([]);
@@ -116,8 +119,7 @@ const UserMgmt = () => {
     // } else {
     //   setClientUpdate(false);
     // }
-    setClientId(searchParams.get("clientId"))
-    setMode(searchParams.get("mode"))
+
     if (auth) {
       setLoading(true);
       fetchUsers();
@@ -216,11 +218,22 @@ const UserMgmt = () => {
     return emailRegex.test(email);
   };
 
+  const isValidName = (name) => {
+    // Regular expression for a simple name validation
+    const nameRegex = /^[a-zA-Z]{2,30}(?: [a-zA-Z]{2,30})*$/;
+    return nameRegex.test(name);
+  };
+
   const patchUser = async () => {
     // Validate email and name before editing user details
-    if (!userEmail || !isValidEmail(userEmail) || !fullName) {
+    if (!userEmail || !isValidEmail(userEmail)) {
       // Display an error message or handle it as per your UI/UX
-      setError("Please enter a valid email and name.");
+      setError("Please enter a valid email.");
+      return;
+    }
+
+    if (!fullName || !isValidName(fullName)) {
+      setError("Please enter a valid name.");
       return;
     }
 
@@ -303,29 +316,15 @@ const UserMgmt = () => {
   //     setDisplayUsers(temp);
   //   }
   // }, [sortOption, users]);
-   console.log("mode",mode)
-   const handleBackButton = ()=>{
-    mode==="update" ? navigate(`/superadmin/update/${clientId}`) : navigate(`/superadmin/viewClient/${clientId}`)
-      }
+  console.log("mode", mode);
+  const handleBackButton = () => {
+    mode === "update"
+      ? navigate(`/superadmin/update/${clientId}`)
+      : navigate(`/superadmin/viewClient/${clientId}`);
+  };
   return (
     <>
-      <div className={`w-full px-2 !font-roboto ${clientOrg && "mt-[4vh]"}`}>
-        {clientOrg ? (
-          <div className="flex items-center mb-5">
-            <div className="cursor-pointer w-8" onClick={handleBackButton}>
-              <img
-                src="/transactionhistory/backarrow.svg"
-                className="w-full h-full"
-                alt="backarrow_img"
-              />
-            </div>
-            <p className="text-[#084298] font-medium text-xl ml-2">
-              User Management
-            </p>
-          </div>
-        ) : (
-          ""
-        )}
+      <div className={`w-full px-2 !font-roboto`}>
         <div className="flex flex-col 2xl:flex-row justify-between">
           <div className="flex flex-row justify-start gap-6">
             <div className="flex flex-col">
@@ -367,15 +366,7 @@ const UserMgmt = () => {
               <img className="h-5 text-black" src="/search.svg" />
             </div>
             <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
-              {displayUsers.length > 0 && (
-                <ExlCsvDownload
-                  data={displayUsers}
-                  order={downloadData?.summary}
-                  orderDetail={downloadData?.detail}
-                  enable={true}
-                />
-              )}
-              {clientOrg && mode==="view" ? (
+              {clientOrg && mode === "view" ? (
                 ""
               ) : (
                 <Button
@@ -386,6 +377,15 @@ const UserMgmt = () => {
                   <span>Add New User</span>
                 </Button>
               )}
+              {displayUsers.length > 0 && (
+                <ExlCsvDownload
+                  data={displayUsers}
+                  order={downloadData?.summary}
+                  orderDetail={downloadData?.detail}
+                  enable={true}
+                />
+              )}
+
               {/* <Paginator
                 data={displayUsers}
                 setDisplayData={setDisplayData}

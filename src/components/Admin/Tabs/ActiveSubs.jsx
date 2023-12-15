@@ -23,6 +23,7 @@ import ExlCsvDownload from "../../../util/VisionUtils/ExlCsvDownload";
 import { CSVLink } from "react-csv";
 import ActiveSubsTable from "../Tables/ActiveSubsTable";
 
+
 const ActiveSubs = () => {
   const activeSubsDataList = [];
   const [activeSubs, setActiveSubs] = useState([]);
@@ -99,10 +100,10 @@ const ActiveSubs = () => {
   }, [auth]);
 
   // console.log("active subs h", activeSubs);
-  // console.log("display data h", displayData);
+  
 
   return (
-    <div className="w-full px-2 !font-roboto">
+    <div className="w-full px-2 mt-2 !font-roboto">
       <div className="flex justify-between">
         <div>
           <p className="text-lg font-semibold text-[#605D64]">
