@@ -6,76 +6,79 @@ const dummy = [
     img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/1",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/2",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/3",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/4",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/5",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/6",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/7",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/8",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/9",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/10",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/11",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/12",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/13",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/14",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/15",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/16",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/17",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/18",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/19",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/20",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/21",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/22",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/23",
   },
   {
-    img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
+    img: "https://source.unsplash.com/random/24",
+  },
+  {
+    img: "https://source.unsplash.com/random/25",
   },
 ];
 
@@ -100,9 +103,9 @@ const DetailOutputCard = ({ data }) => {
           {imgdata.map((x) => {
             return (
               <img
-                src="https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg"
+                src={x.img}
                 alt="model image"
-                className="max-w-full max-h-full rounded"
+                className="h-full w-full rounded"
               />
             );
           })}
@@ -148,11 +151,24 @@ const DetailOutputCard = ({ data }) => {
 
 const OutputDetail = () => {
   const bg = ["#FFC107", "#6CA6FC", "#CAC5CD"];
-  const [data, setData] = useState(dummy);
+  const data = [
+    {
+      val: 80,
+      title: "Model assigned",
+    },
+    {
+      val: 20,
+      title: "You assigned",
+    },
+    {
+      val: 100,
+      title: "Total assigned",
+    },
+  ];
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-[80px] items-center">
-        {bg.map((x) => {
+        {bg.map((x, idx) => {
           return (
             <div className="flex gap-2 items-center">
               <div
@@ -160,8 +176,10 @@ const OutputDetail = () => {
                 style={{ backgroundColor: x }}
               />
               <div className="flex flex-col gap-[2px]">
-                <p className="text-[#3E3C42] text-[32px] font-medium">80</p>
-                <p className="text-[#605D64] text-base">Model assigned</p>
+                <p className="text-[#3E3C42] text-[32px] font-medium">
+                  {data[idx].val}
+                </p>
+                <p className="text-[#605D64] text-base">{data[idx].title}</p>
               </div>
             </div>
           );
