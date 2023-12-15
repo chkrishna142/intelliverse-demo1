@@ -41,7 +41,7 @@ const TopEnquirerChart = ({ data,role }) => {
     },
     yaxis: {
       labels: {
-        minWidth: 260,
+        maxWidth: 200,
         style: {
           fontSize: "14px",
         },
