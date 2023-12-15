@@ -6,7 +6,7 @@ const TopEnquirerChart = ({ data,role }) => {
     chart: {
       type: "bar",
       toolbar: { show: false },
-     
+     width:"200%"
     },
     grid: {
       show: false,
