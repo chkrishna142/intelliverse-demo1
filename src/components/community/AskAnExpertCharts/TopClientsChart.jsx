@@ -42,6 +42,7 @@ const TopClientsChart = ({ data,role }) => {
     },
     yaxis: {
       labels: {
+        maxWidth: 200,
         style: {
           fontSize: "14px",
           fontWeight: 400,
@@ -53,6 +54,7 @@ const TopClientsChart = ({ data,role }) => {
       bar: {
         borderRadius: 4,
         horizontal: true,
+        // barWidth: '1%',
         // barHeight: '30%',
         // barHeight:data?.questions && data?.questions?.length < 3 ? "30%" : undefined,
 
