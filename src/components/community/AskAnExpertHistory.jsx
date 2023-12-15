@@ -16,7 +16,7 @@ import TopEnquirerChart from "./AskAnExpertCharts/TopEnquirerChart";
 import TopClientsChart from "./AskAnExpertCharts/TopClientsChart";
 import PrimaryButton from "../../util/Buttons/PrimaryButton";
 import { useNavigate } from "react-router-dom";
-
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 const AskAnExpertHistory = () => {
   const { auth } = useContext(NavContext);
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const AskAnExpertHistory = () => {
   const [top3Experts, setExperts] = useState([]);
   const [tokenSummary, setTokenSummary] = useState([]);
   const [role, setRole] = useState("");
+  const [imageurl, setImageUrl] = useState("");
 
   const handleClick = () => {
     setStateChanging(false);
@@ -215,27 +216,24 @@ const AskAnExpertHistory = () => {
       setFilteredData(sortedData);
       setTopEnquirers(response?.data?.top3enquirer);
       setTopClients(response?.data?.top3client);
-
       setLoading(false);
-      
     } catch (e) {
       console.error(e);
     }
   };
+
   const fetchUser = async () => {
     try {
-      const response = await axios.get(
-        baseURL + "user",
-
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      );
+      const response = await axios.get(baseURL + "user", {
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      });
       setFullName(response?.data.data.fullname);
       setRole(response?.data.data.role);
+      setImageUrl(response?.data?.data?.imageurl);
+      // console.log("reee", response);
       if (response?.data.data.role === "EXPERT") {
         fetchQueries();
       } else {
@@ -339,12 +337,12 @@ const AskAnExpertHistory = () => {
       },
     ];
     setExperts({
-      names: ["Expert 1","Expert 1","Expert 3"],
-      questions: [24,20,17],
+      names: ["Expert 1", "Expert 1", "Expert 3"],
+      questions: [24, 20, 17],
     });
     setTokenSummary({
-      names: ["Total questions","Total tokens used"],
-      questions: [24,20],
+      names: ["Total questions asked", "Total tokens used"],
+      questions: [24, 20],
     });
 
     setDownloadData(data);
@@ -404,12 +402,8 @@ const AskAnExpertHistory = () => {
   const handleQuestionPage = () => {
     navigate("/community/askanexpert/question");
   };
-  console.log("role", role);
-  console.log("enq", top3Enquirers);
-  console.log("exp", top3Experts);
-  console.log("cl", top3clients);
-  console.log("toksum", tokenSummary);
 
+  console.log("img", imageurl);
 
   return (
     <div className="mt-[3vh] flex flex-col w-full gap-1 ">
@@ -538,13 +532,22 @@ const AskAnExpertHistory = () => {
       <div className="flex flex-col w-full h-full  bg-white p-4 rounded-xl">
         {/* <div className=" flex items-center  rounded-lg "> */}
         <div className="flex items-center  rounded-lg">
-          <div className="bg-[#124CA2] flex-1 flex items-center justify-evenly rounded-l-lg  gap-4 h-[200px]">
-            <div className="rounded-full ">
-              <img
-                src="/askanexperthistory.png"
-                className="w-full object-cover rounded-full"
-                alt="img"
-              />
+          <div className="bg-[#124CA2] w-[30vw] flex items-center justify-evenly rounded-l-lg  gap-4 h-[200px]">
+            <div className="rounded-full w-[100px]">
+              {imageurl !== "" && imageurl !== null ? (
+                <img
+                  src={imageurl}
+                  className="w-full object-covered rounded-full h-[100px]"
+                  alt="img"
+                />
+              ) : (
+                <img
+                  src="/profile.svg"
+                  className="w-full object-cover rounded-full"
+                  alt="img"
+                />
+              )}
+              {/* <AccountBoxIcon /> */}
             </div>
             <div className=" flex flex-col justify-center text-[#FAFAFA] ">
               <div className=" font-md text-[20px]">Question Summary</div>
@@ -586,12 +589,11 @@ const AskAnExpertHistory = () => {
               </div>
               <div className="text-[#fff]">
                 {top3clients && top3clients?.names?.length > 0 && (
-                  <TopClientsChart data={top3clients} />
+                  <TopClientsChart data={top3clients} role={role} />
                 )}
                 {top3Experts && top3Experts?.names?.length > 0 && (
-                  <TopClientsChart data={top3Experts} />
+                  <TopClientsChart data={top3Experts} role={role} />
                 )}
-                
               </div>
             </div>
             <div className=" flex flex-col mt-5">
@@ -602,14 +604,13 @@ const AskAnExpertHistory = () => {
                 {top3Enquirers &&
                   top3Enquirers?.names?.length > 0 &&
                   top3Enquirers?.questions?.length > 0 && (
-                    <TopEnquirerChart data={top3Enquirers} />
+                    <TopEnquirerChart data={top3Enquirers} role={role} />
                   )}
-                  {tokenSummary &&
+                {tokenSummary &&
                   tokenSummary?.names?.length > 0 &&
                   tokenSummary?.questions?.length > 0 && (
-                    <TopEnquirerChart data={tokenSummary} />
+                    <TopEnquirerChart data={tokenSummary} role={role} />
                   )}
-                
               </div>
             </div>
           </div>

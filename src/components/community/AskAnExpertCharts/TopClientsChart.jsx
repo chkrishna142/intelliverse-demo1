@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopClientsChart = ({ data }) => {
+const TopClientsChart = ({ data,role }) => {
   // const [names,setNames]=useState([...top3clients?.names])
   const chartOptions = {
     chart: {
@@ -12,7 +12,7 @@ const TopClientsChart = ({ data }) => {
       show: false,
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
 
     xaxis: {
@@ -30,12 +30,13 @@ const TopClientsChart = ({ data }) => {
         },
       },
       title: {
-        text: "",
+        text: "Number of questions",
         offsetY: -30,
         style: {
           fontSize: "14px",
           fontWeight: 400,
           colors: ["#605D64"],
+          textAlign:"left"
         },
       },
     },
@@ -53,9 +54,11 @@ const TopClientsChart = ({ data }) => {
         borderRadius: 4,
         horizontal: true,
         // barHeight: '30%',
+        // barHeight:data?.questions && data?.questions?.length < 3 ? "30%" : undefined,
+
       },
     },
-    colors: ["#D9D9D9"],
+    // colors: ["#D9D9D9"],
     export: {
       enabled: false,
     },
@@ -74,7 +77,7 @@ const TopClientsChart = ({ data }) => {
       },
     ]);
   }, [data]);
-
+console.log("role",role)
   return (
     <div>
       <ReactApexChart
