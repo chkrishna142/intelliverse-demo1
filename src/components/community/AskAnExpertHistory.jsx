@@ -15,10 +15,11 @@ import { baseURL } from "../../index";
 import TopEnquirerChart from "./AskAnExpertCharts/TopEnquirerChart";
 import TopClientsChart from "./AskAnExpertCharts/TopClientsChart";
 import PrimaryButton from "../../util/Buttons/PrimaryButton";
+import { useNavigate } from "react-router-dom";
 
 const AskAnExpertHistory = () => {
   const { auth } = useContext(NavContext);
-
+  const navigate = useNavigate();
   const [tableData, setTableData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [selectedRange, setSelectedRange] = useState(0);
@@ -44,6 +45,8 @@ const AskAnExpertHistory = () => {
   const [loading, setLoading] = useState(false);
   const [top3clients, setTopClients] = useState([]);
   const [top3Enquirers, setTopEnquirers] = useState([]);
+  const [top3Experts, setExperts] = useState([]);
+  const [tokenSummary, setTokenSummary] = useState([]);
   const [role, setRole] = useState("");
 
   const handleClick = () => {
@@ -210,11 +213,11 @@ const AskAnExpertHistory = () => {
 
       setTableData(sortedData);
       setFilteredData(sortedData);
-      setTopEnquirers(response?.data.top3enquirer);
-      setTopClients(response?.data.top3client);
+      setTopEnquirers(response?.data?.top3enquirer);
+      setTopClients(response?.data?.top3client);
 
       setLoading(false);
-      console.log("date in fetch ", data);
+      
     } catch (e) {
       console.error(e);
     }
@@ -335,6 +338,14 @@ const AskAnExpertHistory = () => {
         status: "In Progress",
       },
     ];
+    setExperts({
+      names: ["Expert 1","Expert 1","Expert 3"],
+      questions: [24,20,17],
+    });
+    setTokenSummary({
+      names: ["Total questions","Total tokens used"],
+      questions: [24,20],
+    });
 
     setDownloadData(data);
     // Count questions based on status
@@ -372,7 +383,7 @@ const AskAnExpertHistory = () => {
       //   handleQuestionsExceptexpert();
       // }
     }
-  }, [auth, role]);
+  }, [auth]);
 
   const handleStatus = (selectedStatus) => {
     setChangingbutton(selectedStatus);
@@ -390,8 +401,15 @@ const AskAnExpertHistory = () => {
       setFilteredData(filtered);
     }
   };
+  const handleQuestionPage = () => {
+    navigate("/community/askanexpert/question");
+  };
   console.log("role", role);
   console.log("enq", top3Enquirers);
+  console.log("exp", top3Experts);
+  console.log("cl", top3clients);
+  console.log("toksum", tokenSummary);
+
 
   return (
     <div className="mt-[3vh] flex flex-col w-full gap-1 ">
@@ -401,7 +419,11 @@ const AskAnExpertHistory = () => {
         </p>
         <div className="flex gap-3">
           {role !== "EXPERT" && (
-            <PrimaryButton text={"Ask a question"} width={"fit-content"} />
+            <PrimaryButton
+              text={"Ask a question"}
+              width={"fit-content"}
+              onClick={handleQuestionPage}
+            />
           )}
           <div className="flex items-center gap-1">
             <div className="flex min-w-[110px]  items-center">
@@ -562,26 +584,33 @@ const AskAnExpertHistory = () => {
               <div className="text-[14px] font-semibold">
                 {role === "EXPERT" ? "Top 3 Clients" : "Top 3 Experts"}
               </div>
-              {/* <div className="text-[#fff]">
-                {top3clients && top3clients.names.length > 0 && top3clients.questions.length > 0 && (
-                  <TopClientsChart top3clients={top3clients} />
+              <div className="text-[#fff]">
+                {top3clients && top3clients?.names?.length > 0 && (
+                  <TopClientsChart data={top3clients} />
+                )}
+                {top3Experts && top3Experts?.names?.length > 0 && (
+                  <TopClientsChart data={top3Experts} />
                 )}
                 
-              </div> */}
-              
+              </div>
             </div>
             <div className=" flex flex-col mt-5">
               <div className="text-[14px] font-semibold">
                 {role === "EXPERT" ? "Top 3 Enquirers" : "Token summary"}
               </div>
-              {/* <div className="text-[#fff]">
+              <div className="text-[#fff]">
                 {top3Enquirers &&
-                  top3Enquirers.names.length > 0 &&
-                  top3Enquirers.questions.length > 0 && (
-                    <TopEnquirerChart top3Enquirers={top3Enquirers} />
+                  top3Enquirers?.names?.length > 0 &&
+                  top3Enquirers?.questions?.length > 0 && (
+                    <TopEnquirerChart data={top3Enquirers} />
+                  )}
+                  {tokenSummary &&
+                  tokenSummary?.names?.length > 0 &&
+                  tokenSummary?.questions?.length > 0 && (
+                    <TopEnquirerChart data={tokenSummary} />
                   )}
                 
-              </div> */}
+              </div>
             </div>
           </div>
           <div className="p-10">
