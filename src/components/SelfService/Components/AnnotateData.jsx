@@ -82,6 +82,11 @@ const AnnotateData = ({
           label: item.label,
         };
       });
+      setUSerData((prev) => {
+        let newData = { ...prev };
+        newData["annotatedData"] = annotations;
+        return newData;
+      });
       const requestBody = JSON.stringify({
         annotations: annotations,
       });
