@@ -155,15 +155,22 @@ const Expert = () => {
   }, []);
 
   const getAttachments = async () => {
-    const data = await fetch(
-      baseURL + `attachment/expert/${param.questionId}`,
-      {
-        method: "GET",
-      }
-    );
-    const res = await data?.json();
-    setAttachments(res);
-    console.log(res);
+    try {
+      const res = await axios.get(
+        baseURL + `attachment/expert/${param.questionId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      // const res = await data?.json();
+      setAttachments(res);
+      console.log(res);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const getData = async () => {
@@ -332,12 +339,14 @@ const Expert = () => {
                   width={"fit-content"}
                   onClick={() => setReview(true)}
                 />
-              ) : (
+              ) : spinner === false ? (
                 <PrimaryButton
                   text={"Submit"}
                   width={"fit-content"}
                   onClick={() => postAnswer()}
                 />
+              ) : (
+                <Spinner />
               )}
             </div>
           ) : (
