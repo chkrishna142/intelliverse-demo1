@@ -130,58 +130,8 @@ const AllotToken = () => {
     fetchTableData();
   }, []);
 
-  // const showToast = (itemId, newValue) => {
-  //   toast({
-  //     title: `Added ${newValue} tokens for user ${
-  //       "y"
-  //       // tab.find((item) => item.id === itemId).username
-  //     }`,
-  //     status: "success",
-  //     duration: 4000,
-  //     isClosable: true,
-  //     position: "top-right",
-  //   });
-  // };
-
-  // const handleAddToken = (itemId, newValue) => {
-  //   // Convert newValue to a number
-  //   const parsedValue = Number(newValue);
-
-  //   if (isNaN(parsedValue) || !Number.isInteger(parsedValue)) {
-  //     // Handle the case where newValue is not a valid number
-  //     toast({
-  //       title: `Invalid input for tokens. Please enter a valid number`,
-  //       status: "error",
-  //       duration: 4000,
-  //       isClosable: true,
-  //       position: "top-right",
-  //     });
-  //     return;
-  //   }
-
-  //   // Update addTokens value without changing tokensRemaining
-  //   // setDummyData((prevData) =>
-  //   //   prevData.map((item) =>
-  //   //     item.id === itemId ? { ...item, addTokens: parsedValue } : item
-  //   //   )
-  //   // );
-  // };
 
   const handleAddButtonClick = async (id, user) => {
-    // const currentItem = dummyData.find((item) => item.id === itemId);
-    // const updatedData = dummyData.map((item) =>
-    //   item.id === itemId
-    //     ? {
-    //         ...item,
-    //         tokensRemaining: item.tokensRemaining + currentItem.addTokens,
-    //       }
-    //     : item
-    // );
-    // setDummyData(updatedData);
-    // // Show toast only when the "Add" button is clicked
-    // showToast(itemId, currentItem.addTokens);
-    // // Reset the input field value to 20
-    // handleAddToken(itemId, 20);
     
     if (isNaN(addTokens)) {
       // Handle the case where addTokens is not a valid integer

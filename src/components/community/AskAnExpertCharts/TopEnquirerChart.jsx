@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopEnquirerChart = ({ data }) => {
+const TopEnquirerChart = ({ data,role }) => {
   const chartOptions= {
     chart: {
       type: "bar",
       toolbar: { show: false },
+     
     },
     grid: {
       show: false,
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
 
     xaxis: {
@@ -29,29 +30,34 @@ const TopEnquirerChart = ({ data }) => {
         show: false,
       },
       title: {
-        text: "",
+        text: role === "EXPERT" ? "Number of questions" : "",
         offsetY: -30,
         style: {
           fontSize: "14px",
           fontWeight: 400,
-          color: "#605D64",
+          colors: ["#605D64"],
         },
       },
     },
     yaxis: {
       labels: {
+        minWidth: 260,
         style: {
           fontSize: "14px",
         },
       },
+      axisBorder: {
+        show: false,
+    }
     },
     plotOptions: {
       bar: {
         borderRadius: 4,
         horizontal: true,
+        // barHeight:role !== "EXPERT" ? "47%":""
       },
     },
-    colors: ["#D9D9D9"],
+    // colors: ["#D9D9D9"],
     export: {
       enabled: false,
     },
@@ -86,7 +92,7 @@ const TopEnquirerChart = ({ data }) => {
         options={chartOptions}
         series={seriesData}
         type="bar"
-        height={130}
+        height={role !=="EXPERT" ? 105 : 130}
       />
     </div>
   );
