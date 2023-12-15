@@ -11,10 +11,11 @@ const ProjectDetails = ({
   setUSerData,
   activeStep,
   setActiveStep,
+  viewMode = false,
 }) => {
   const nameRef = useRef();
   const { auth } = useContext(NavContext);
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(viewMode);
   const toast = useToast();
 
   const handlSave = async () => {
@@ -98,14 +99,14 @@ const ProjectDetails = ({
           onClick={handlSave}
           disable={disable}
         />
-        {activeStep > 0 && (
+        {/* {activeStep > 0 && (
           <TonalButton
             text={"Edit"}
             width={"fit-content"}
             onClick={() => setDisable(false)}
             disable={!disable}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

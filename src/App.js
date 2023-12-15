@@ -319,7 +319,7 @@ function App() {
                     {/*Self service pages */}
                     <Route path="/Sandbox" element={<Dashboard />} />
                     <Route path="/Sandbox/Create" element={<CreateForm />} />
-                    <Route path="/Sandbox/View" element={<DetailView />} />
+                    <Route path="/Sandbox/View/:projectId" element={<DetailView />} />
                   </Routes>
                 </div>
               </div>

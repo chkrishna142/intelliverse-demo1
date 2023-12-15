@@ -11,10 +11,6 @@ import {
 } from "@chakra-ui/react";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../util/Buttons/TonalButton";
-import axios from "axios";
-import { baseURL } from "../../..";
-import NavContext from "../../NavContext";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({ data }) => {
@@ -41,32 +37,9 @@ const ProjectCard = ({ data }) => {
     },
   ];
   const navigate = useNavigate();
-  const { auth } = useContext(NavContext);
-
-  const getSingle = async () => {
-    try {
-      const param = {
-        projectId: data?.projectId,
-      };
-      const resposne = await axios.get(
-        baseURL + "selfserve/v1/project/v1/getSingle/",
-        {
-          params: param,
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": auth,
-          },
-        }
-      );
-      console.log(resposne.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleClick = () => {
-    getSingle();
-    navigate('/Sandbox/View')
+    navigate(`/Sandbox/View/${data?.projectId}`);
   };
 
   return (
