@@ -100,7 +100,7 @@ const AllotToken = () => {
   // ]);
   const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
-
+  const [addTokensArray, setAddTokensArray] = useState([]);
   const fetchTableData = async () => {
     setIsLoading(true);
     const param = {
@@ -130,42 +130,42 @@ const AllotToken = () => {
     fetchTableData();
   }, []);
 
-  const showToast = (itemId, newValue) => {
-    toast({
-      title: `Added ${newValue} tokens for user ${
-        "y"
-        // tab.find((item) => item.id === itemId).username
-      }`,
-      status: "success",
-      duration: 4000,
-      isClosable: true,
-      position: "top-right",
-    });
-  };
+  // const showToast = (itemId, newValue) => {
+  //   toast({
+  //     title: `Added ${newValue} tokens for user ${
+  //       "y"
+  //       // tab.find((item) => item.id === itemId).username
+  //     }`,
+  //     status: "success",
+  //     duration: 4000,
+  //     isClosable: true,
+  //     position: "top-right",
+  //   });
+  // };
 
-  const handleAddToken = (itemId, newValue) => {
-    // Convert newValue to a number
-    const parsedValue = Number(newValue);
+  // const handleAddToken = (itemId, newValue) => {
+  //   // Convert newValue to a number
+  //   const parsedValue = Number(newValue);
 
-    if (isNaN(parsedValue) || !Number.isInteger(parsedValue)) {
-      // Handle the case where newValue is not a valid number
-      toast({
-        title: `Invalid input for tokens. Please enter a valid number`,
-        status: "error",
-        duration: 4000,
-        isClosable: true,
-        position: "top-right",
-      });
-      return;
-    }
+  //   if (isNaN(parsedValue) || !Number.isInteger(parsedValue)) {
+  //     // Handle the case where newValue is not a valid number
+  //     toast({
+  //       title: `Invalid input for tokens. Please enter a valid number`,
+  //       status: "error",
+  //       duration: 4000,
+  //       isClosable: true,
+  //       position: "top-right",
+  //     });
+  //     return;
+  //   }
 
-    // Update addTokens value without changing tokensRemaining
-    // setDummyData((prevData) =>
-    //   prevData.map((item) =>
-    //     item.id === itemId ? { ...item, addTokens: parsedValue } : item
-    //   )
-    // );
-  };
+  //   // Update addTokens value without changing tokensRemaining
+  //   // setDummyData((prevData) =>
+  //   //   prevData.map((item) =>
+  //   //     item.id === itemId ? { ...item, addTokens: parsedValue } : item
+  //   //   )
+  //   // );
+  // };
 
   const handleAddButtonClick = async (id, user) => {
     // const currentItem = dummyData.find((item) => item.id === itemId);
@@ -182,6 +182,19 @@ const AllotToken = () => {
     // showToast(itemId, currentItem.addTokens);
     // // Reset the input field value to 20
     // handleAddToken(itemId, 20);
+    
+    if (isNaN(addTokens)) {
+      // Handle the case where addTokens is not a valid integer
+      toast({
+        title: `Invalid input for tokens. Please enter a valid number`,
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: 'top',
+      });
+      setAddTokens(20)
+      return;
+    }
     const body = {
       organisation: clientOrg || "",
       userId: id,
@@ -210,8 +223,9 @@ const AllotToken = () => {
       fetchTableData();
       console.log("res", response);
     } catch (error) {
+      setAddTokens(20)
       toast({
-        title: `Something went wrong`,
+        title: `${error.response.data.message}`,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -220,9 +234,22 @@ const AllotToken = () => {
       console.log(error);
     }
   };
-  // useEffect(()=>{
 
-  // },[displayData])
+  useEffect(() => {
+    // Initialize addTokensArray with default values (20 for each row)
+    setAddTokensArray(Array(tableData.length).fill(20));
+  }, [tableData]);
+  
+  const handleAddToken = (index, newValue) => {
+    // Update addTokensArray with the new value for the specific index
+    setAddTokensArray((prevTokens) => {
+      const newTokens = [...prevTokens];
+      newTokens[index] = newValue;
+      setAddTokens(newValue)
+      return newTokens;
+    });
+  };
+console.log("add",addTokens)
   return (
     <div className={`w-full flex flex-col gap-4 ${clientOrg && "mt-[4vh]"}`}>
       <div>
@@ -278,7 +305,7 @@ const AllotToken = () => {
               <Tbody textAlign={"left"}>
                 {displayData &&
                   displayData.length > 0 &&
-                  displayData.map((item) => {
+                  displayData.map((item,index) => {
                     return (
                       <Tr key={item.userId}>
                         <Td
@@ -318,8 +345,8 @@ const AllotToken = () => {
                               <input
                                 type="text"
                                 className="border w-12 h-8 text-[#605D64] pl-2 pr-5 rounded-sm"
-                                value={addTokens}
-                                onChange={(e) => setAddTokens(e.target.value)}
+                                value={addTokensArray[index]}
+                                onChange={(e) => handleAddToken(index,e.target.value)}
                               />
                               <button
                                 className="!text-[#3A74CA] !font-semibold text-[14px]"

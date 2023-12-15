@@ -230,7 +230,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
                   <img src="/eye.svg" alt="" />
                 </div>
                 <div className="ml-2">
-                  <p>{4}</p>
+                  <p>{1}</p>
                 </div>
               </div>
             </div>
@@ -243,7 +243,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
                   <img src="/optimussquare.svg" alt="" />
                 </div>
                 <div className="ml-2">
-                  <p>{"5"}</p>
+                  <p>{"0"}</p>
                 </div>
               </div>
             </div>

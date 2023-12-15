@@ -143,7 +143,8 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
         location: "",
         phoneNumber: contact,
         services: [],
-        organisation: clientOrg || ""
+        organisation: clientOrg || "",
+        role:role
       });
 
       let config = {
