@@ -14,10 +14,11 @@ const UploadDetails = ({
   setActiveStep,
   activeStep,
   show,
+  viewMode = false,
 }) => {
   const { auth } = useContext(NavContext);
   const fileInputRef = useRef();
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(viewMode);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const format = {
@@ -126,7 +127,7 @@ const UploadDetails = ({
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (
       userData.annotationType == "" ||
       Object.entries(userData.uploadedFiles).length == 0
@@ -141,9 +142,36 @@ const UploadDetails = ({
         isClosable: true,
       });
       return;
+    } else {
+      try {
+        const requestBody = JSON.stringify({
+          remarks: userData.whatToDetect,
+          datasetType: userData.dataType.toUpperCase(),
+          isAnnotated: userData.isAnnotated == "No" ? false : true,
+          modelType: userData.annotationType.toUpperCase(),
+        });
+        const param = {
+          projectId: userData.projectId,
+        };
+        const response = await axios.post(
+          baseURL + "selfserve/v1/project/v1/update/",
+          requestBody,
+          {
+            params: param,
+            headers: {
+              "Content-Type": "application/json",
+              "X-Auth-Token": auth,
+            },
+          }
+        );
+        if (response.status == 200) {
+          if (activeStep < 3) setActiveStep((prev) => prev + 1);
+          setDisable(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
-    if (activeStep < 3) setActiveStep((prev) => prev + 1);
-    setDisable(true);
   };
 
   return (
@@ -298,14 +326,14 @@ const UploadDetails = ({
             width={"fit-content"}
             disable={disable || loading}
           />
-          {activeStep > 2 && (
+          {/* {activeStep > 2 && (
             <TonalButton
               text={"Edit"}
               width={"fit-content"}
               disable={!disable}
               onClick={() => setDisable(false)}
             />
-          )}
+          )} */}
         </div>
       </div>
       {userData.annotationType != "" && userData.savedFiles == null && (

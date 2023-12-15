@@ -10,10 +10,11 @@ const UseCaseDetail = ({
   activeStep,
   setActiveStep,
   show,
+  viewMode = false,
 }) => {
   const descRef = useRef();
   const toast = useToast();
-  const [disable, setDisable] = useState(false);
+  const [disable, setDisable] = useState(viewMode);
   const handleChange = (name, value) => {
     setUSerData((prev) => {
       const updatedData = { ...prev };

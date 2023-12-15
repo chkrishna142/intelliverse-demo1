@@ -15,9 +15,14 @@ import DetectSegment from "./DetectSegment";
 import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
-import { useNavigate } from "react-router-dom";
 
-const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
+const AnnotateData = ({
+  userData,
+  setUSerData,
+  activeStep,
+  setActiveStep,
+  show,
+}) => {
   const { auth } = useContext(NavContext);
   const [labels, setLabels] = useState([]);
   const [page, setPage] = useState("Unannotated");
@@ -29,7 +34,6 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
   const [add, setAdd] = useState(false);
   const addLabelRef = useRef();
   const toast = useToast();
-  const navigate = useNavigate();
 
   const handleAdd = (e) => {
     if (e.code == "Enter") {
@@ -101,7 +105,7 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
           duration: 2000,
           isClosable: true,
         });
-        navigate("/Sandbox");
+        setActiveStep((prev) => prev + 1);
       }
     } catch (error) {
       console.log(error);
@@ -143,7 +147,9 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
       }`}
       id="step3"
     >
-      <p className="text-[#3E3C42] text-2xl font-medium">{`Assign labels (Files uploaded: ${userData.savedFiles?.length} & Files saved: ${Object.entries(userData.uploadedFiles)?.length})`}</p>
+      <p className="text-[#3E3C42] text-2xl font-medium">{`Assign labels (Files uploaded: ${
+        userData.savedFiles?.length
+      } & Files saved: ${Object.entries(userData.uploadedFiles)?.length})`}</p>
       <div className="flex flex-col lg:flex-row gap-[47px] relative">
         {/* Label selection and additon */}
         <div className="flex flex-col gap-3 whitespace-nowrap">
@@ -236,7 +242,7 @@ const AnnotateData = ({ userData, setUSerData, setActiveStep, show }) => {
         <PrimaryButton
           text={"Submit"}
           width={"fit-content"}
-          disable={annotatedImages.length == 0}
+          disable={annotatedImages.length == 0 || activeStep > 3}
           onClick={handleSubmit}
         />
       </div>
