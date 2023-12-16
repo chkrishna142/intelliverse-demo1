@@ -481,7 +481,7 @@ const AskAnExpert = () => {
           </p>
           <Link to="/community/advisor/buycredits">
             <div className="text-[#124CA2] font-bold cursor-pointer">
-              Add more
+              Buy tokens
             </div>
           </Link>
           <Link to="/user/transactionhistory">

@@ -13,7 +13,25 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 
 const TokenAllocationTable = ({ tableData }) => {
   const size = useWindowSize();
+  function convertTime(inputTime) {
+    const inputDate = new Date(inputTime);
 
+    // Get components of the date
+    const day = inputDate.getDate();
+    const month = inputDate.toLocaleString("default", { month: "short" });
+    const year = inputDate.getFullYear().toString().substr(-2);
+    let hours = inputDate.getHours();
+    let minutes = inputDate.getMinutes();
+
+    // Add leading zero if necessary
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    // Format the result in 24-hour format
+    const result = `${day} ${month} '${year} ${hours}:${minutes}`;
+
+    return result;
+  }
   return (
     <div>
       <div>
@@ -55,22 +73,35 @@ const TokenAllocationTable = ({ tableData }) => {
                   <Tr className="!text-[14px] !text-[#3E3C42] text-center !font-medium even:bg-[#FAFAFA] odd:bg-white">
                     <Td>
                       <div className="w-full flex justify-center ">
-                        {item.name}
+                        {item.userName}
                       </div>
                     </Td>
                     <Td>
                       <div className="w-full flex justify-center ">
-                        {item.date}
+                        {convertTime(item.transactionDate)}
                       </div>
                     </Td>
 
                     <Td>
                       <div className="w-full flex justify-center gap-1 ">
-                        {item.email}
+                        {item.userEmail}
                       </div>
                     </Td>
                     <Td>
-                      <div className="w-full flex justify-center gap-1 ">
+                      <div
+                        className={` w-full flex justify-center gap-1 ${
+                          item.status == "SUCCESS"
+                            ? item.token > 0
+                              ? "text-[#7AC958]"
+                              : ""
+                            : "text-[#DC362E]"
+                        }`}
+                      >
+                        {item.status == "SUCCESS"
+                          ? item.token > 0
+                            ? "+"
+                            : ""
+                          : ""}
                         {item.token}
                         <img src="/token.svg" alt="coins" />
                       </div>
@@ -78,10 +109,10 @@ const TokenAllocationTable = ({ tableData }) => {
                     <Td>
                       <div
                         className={`w-full flex justify-start  ${
-                          item.status == false ? "text-[#E46962]" : ""
+                          item.status == "FAILURE" ? "text-[#E46962]" : ""
                         }`}
                       >
-                        {item.status == false ? "Failed" : "Success"}
+                        {item.status == "FAILURE" ? "Failed" : "Success"}
                       </div>
                     </Td>
                   </Tr>

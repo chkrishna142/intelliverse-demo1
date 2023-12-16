@@ -157,6 +157,7 @@ const CreditBuy = () => {
                     className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
                   >
                     Name
+                 
                   </div>
                   <div
                     style={{ zIndex: '10px' }}

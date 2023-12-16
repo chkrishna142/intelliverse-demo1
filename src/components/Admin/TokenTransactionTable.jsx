@@ -13,7 +13,25 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 
 const TokenTransactionTable = ({ tableData }) => {
   const size = useWindowSize();
+  function convertTime(inputTime) {
+    const inputDate = new Date(inputTime);
 
+    // Get components of the date
+    const day = inputDate.getDate();
+    const month = inputDate.toLocaleString("default", { month: "short" });
+    const year = inputDate.getFullYear().toString().substr(-2);
+    let hours = inputDate.getHours();
+    let minutes = inputDate.getMinutes();
+
+    // Add leading zero if necessary
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+
+    // Format the result in 24-hour format
+    const result = `${day} ${month} '${year} ${hours}:${minutes}`;
+
+    return result;
+  }
   return (
     <div>
       <TableContainer
@@ -47,12 +65,12 @@ const TokenTransactionTable = ({ tableData }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {tableData.map((item) => {
+            {tableData.map((item,index) => {
               return (
-                <Tr className="!text-[14px] !text-[#3E3C42] text-center !font-medium even:bg-[#FAFAFA] odd:bg-white">
+                <Tr key={item.index} className="!text-[14px] !text-[#3E3C42] text-center !font-medium even:bg-[#FAFAFA] odd:bg-white">
                   <Td>
                     <div className="w-full flex justify-center ">
-                      {item.date}
+                      {convertTime(item.transactionDate)}
                     </div>
                   </Td>
 
@@ -69,14 +87,14 @@ const TokenTransactionTable = ({ tableData }) => {
                   <Td>
                     <div
                       className={` w-full flex justify-center gap-1 ${
-                        item.status == true
+                        item.status == "SUCCESS"
                           ? item.token > 0
                             ? "text-[#7AC958]"
                             : ""
                           : "text-[#DC362E]"
                       }`}
                     >
-                      {item.status == true ? (item.token > 0 ? "+" : "") : ""}
+                      {item.status == "SUCCESS" ? (item.token > 0 ? "+" : "") : ""}
                       {item.token}
                       <img src="/token.svg" alt="coins" />
                     </div>
@@ -84,10 +102,10 @@ const TokenTransactionTable = ({ tableData }) => {
                   <Td>
                     <div
                       className={`w-full flex justify-start  ${
-                        item.status == false ? "text-[#E46962]" : ""
+                        item.status == "FAILURE" ? "text-[#E46962]" : ""
                       }`}
                     >
-                      {item.status == false ? "Failed" : "Success"}
+                      {item.status == "FAILURE" ? "Failed" : "Success"}
                     </div>
                   </Td>
                 </Tr>
