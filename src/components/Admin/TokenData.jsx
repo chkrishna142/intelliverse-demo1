@@ -27,9 +27,9 @@ const TokenData = () => {
           },
         }
       );
-      setTotalTokens(response?.data.Total)
-      setAllocated(response?.data.Allocated)
-      setUnallocated(response?.data.UnAllocated)
+      setTotalTokens(response?.data.total)
+      setAllocated(response?.data.allocated)
+      setUnallocated(response?.data.unAllocated)
       
     } catch (error) {
       

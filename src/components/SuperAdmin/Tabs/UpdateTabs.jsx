@@ -10,10 +10,12 @@ import SessionLogs from "../../Admin/Tabs/SessionLogs";
 import UserMgmt from "../../Admin/Tabs/UserMgmt";
 import ActiveSubs from "../../Admin/Tabs/ActiveSubs";
 import UpdateClient from "../AddClients/UpdateClient";
+import DevelopmentInProgress from "../Deploy/DevelopmentInProgress";
 
 const UpdateTabs = () => {
   const navigate = useNavigate();
   const { clientId } = useParams();
+  const [isDeployClicked, setDeployClicked] = useState(false);
 
   const size = useWindowSize();
   let param = useParams();
@@ -23,7 +25,7 @@ const UpdateTabs = () => {
     navigate("/superadmin/addclient");
   };
   return (
-    <div
+    <> {!isDeployClicked ? <div
       className="pl-0 pr-5  font-roboto flex flex-col rounded-lg"
       //   style={{ width: size.width >= 768 ? "calc(100vw - 168px)" : "100vw" }}
     >
@@ -88,7 +90,7 @@ const UpdateTabs = () => {
 
         <TabPanels className="!pt-4">
           <TabPanel className="!pl-0 !pr-0">
-            {clientId && <UpdateClient />}
+            {clientId && <UpdateClient setDeployClicked={setDeployClicked} />}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             {clientId && <ActiveSubs clientId={clientId} mode="view" />}
@@ -101,7 +103,7 @@ const UpdateTabs = () => {
           </TabPanel>
         </TabPanels>
       </Tabs>
-    </div>
+    </div>:<DevelopmentInProgress />}</>
   );
 };
 

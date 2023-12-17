@@ -7,6 +7,7 @@ const TopClientsChart = ({ data,role }) => {
     chart: {
       type: "bar",
       toolbar: { show: false },
+      
     },
     grid: {
       show: false,

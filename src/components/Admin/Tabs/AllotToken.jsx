@@ -24,80 +24,7 @@ const AllotToken = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [addTokens, setAddTokens] = useState(20);
-  // const [dummyData, setDummyData] = useState([
-  //   {
-  //     id: 1,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu.12prasad@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 2,
-  //     username: "Sudhanshu",
-  //     email: "sudhanshu.12prasad@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 3,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu.12prasad@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 4,
-  //     username: "Sudhanshu",
-  //     email: "sudhanshu@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 5,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhansh@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 6,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu.12prasad@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-
-  //   {
-  //     id: 7,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 8,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu.12prasad@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-
-  //   {
-  //     id: 9,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu.12prasad@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  //   {
-  //     id: 10,
-  //     username: "Sudhanshu Prasad",
-  //     email: "sudhanshu.12@gmail.com",
-  //     tokensRemaining: 150,
-  //     addTokens: 20,
-  //   },
-  // ]);
+  
   const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [addTokensArray, setAddTokensArray] = useState([]);
@@ -175,7 +102,7 @@ const AllotToken = () => {
     } catch (error) {
       setAddTokens(20)
       toast({
-        title: `${error.response.data.message}`,
+        title: `Invalid token`,
         status: "error",
         duration: 3000,
         isClosable: true,
