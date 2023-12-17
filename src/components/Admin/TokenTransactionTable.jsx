@@ -9,7 +9,6 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import { useWindowSize } from "@uidotdev/usehooks";
-import React, { useState, useEffect, useRef, useContext } from "react";
 
 const TokenTransactionTable = ({ tableData }) => {
   const size = useWindowSize();
@@ -81,7 +80,7 @@ const TokenTransactionTable = ({ tableData }) => {
                   </Td>
                   <Td>
                     <div className="w-full flex justify-center gap-1 ">
-                      {item.amount == 0 ? "-" : `₹${item.amount}`}
+                      {item.amount == 0 ? "-" : `₹${item.amount || ""}`}
                     </div>
                   </Td>
                   <Td>

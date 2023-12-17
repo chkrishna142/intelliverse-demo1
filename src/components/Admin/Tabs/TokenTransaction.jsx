@@ -123,8 +123,8 @@ const TokenTransaction = () => {
       setIsLoading(false);
       {
         clientOrg
-          ? setTransactiontableData(response?.data?.user)
-          : setTransactiontableData(response?.data?.org);
+          ? setTransactiontableData(response?.data?.org)
+          : setTransactiontableData(response?.data?.user);
       }
     } catch (error) {
       setIsLoading(false);
@@ -152,10 +152,10 @@ const TokenTransaction = () => {
         <p>Loading...</p>
       ) : (
         <>
-          {displayData1 && displayData1.length > 0 && (
-            <>
-              <TokenTransactionTable tableData={displayData1} />
-
+          {displayData1 && displayData1.length !==0  && 
+            
+              <TokenTransactionTable tableData={displayData1} />}
+              {transactiontableData && transactiontableData.length > 0 && (
               <div className="w-full flex justify-end">
                 <Paginator
                   data={transactiontableData}
@@ -163,7 +163,7 @@ const TokenTransaction = () => {
                   setDisplayData={setDisplayData1}
                 />
               </div>
-            </>
+            
           )}
 
           <div className="w-full p-2">

@@ -102,7 +102,7 @@ const AllotToken = () => {
     } catch (error) {
       setAddTokens(20)
       toast({
-        title: `${error.response.data.message}`,
+        title: `Invalid token`,
         status: "error",
         duration: 3000,
         isClosable: true,

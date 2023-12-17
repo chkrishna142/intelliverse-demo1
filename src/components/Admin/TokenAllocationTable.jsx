@@ -68,9 +68,9 @@ const TokenAllocationTable = ({ tableData }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {tableData.map((item) => {
+              {tableData.map((item,index) => {
                 return (
-                  <Tr className="!text-[14px] !text-[#3E3C42] text-center !font-medium even:bg-[#FAFAFA] odd:bg-white">
+                  <Tr key={item.index} className="!text-[14px] !text-[#3E3C42] text-center !font-medium even:bg-[#FAFAFA] odd:bg-white">
                     <Td>
                       <div className="w-full flex justify-center ">
                         {item.userName}

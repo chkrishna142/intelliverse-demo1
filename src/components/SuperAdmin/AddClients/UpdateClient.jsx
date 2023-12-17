@@ -32,7 +32,7 @@ import NavContext from "../../NavContext";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import AdminTabs from "../Tabs/TabsView";
 
-const UpdateClient = () => {
+const UpdateClient = ({setDeployClicked}) => {
   const { auth } = useContext(NavContext);
   const { clientId } = useParams();
   const navigate = useNavigate();
@@ -296,7 +296,7 @@ const UpdateClient = () => {
             <p className="text-[#3E3C42] text-lg font-medium ">
               Company information
             </p>
-            <PrimaryButton text={"Deploy"} width={"fit-content"} />
+            <PrimaryButton text={"Deploy"} width={"fit-content"} onClick={()=>setDeployClicked(true)}/>
           </div>
 
           <div className="flex items-center gap-4">

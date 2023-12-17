@@ -8,10 +8,9 @@ import { Input } from "@chakra-ui/react";
 import { SpinnerIcon } from "@chakra-ui/icons";
 import QuestionInstructions from "./QuestionInstructions";
 
-const AskYourQuestion = () => {
-const [spinner, setSpinner] = useState(false);
+const AskYourQuestion = ({ question,setQuestion,postQuestion,summary,setSummary }) => {
+  const [spinner, setSpinner] = useState(false);
   const [customEndDate, setCustomToTime] = useState("");
-  const [summary, setSummary] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [review, setReview] = useState(false);
   const [reply, setReply] = useState("");
@@ -25,7 +24,7 @@ const [spinner, setSpinner] = useState(false);
             <TonalButton
               text={"Save Draft"}
               width={"fit-content"}
-            //   onClick={handleSave}
+              //   onClick={handleSave}
             />
           ) : (
             <PrimaryButton
@@ -44,7 +43,7 @@ const [spinner, setSpinner] = useState(false);
             <PrimaryButton
               text={"Submit"}
               width={"fit-content"}
-            //   onClick={() => postAnswer()}
+                onClick={() => postQuestion()}
             />
           ) : (
             <SpinnerIcon />
@@ -88,18 +87,15 @@ const [spinner, setSpinner] = useState(false);
 
         {review === false ? (
           <div>
-           
-              <textarea
-                // ref={""}
-                // value={reply || savedAnswer}
-                onChange={(e) => {
-                  setReply(e.target.value);
-                  // handleKeyDown();
-                }}
-                placeholder="Your answer here"
-                className="w-[60%] border rounded-md px-2 py-2 h-32"
-              />
-           
+            <textarea
+              // ref={""}
+              value={question}
+              onChange={(e) => {
+                setQuestion(e.target.value);
+              }}
+              placeholder="Your answer here"
+              className="w-[60%] border rounded-md px-2 py-2 h-32"
+            />
           </div>
         ) : (
           ""
@@ -108,7 +104,7 @@ const [spinner, setSpinner] = useState(false);
           <div className="w-full mt-4">
             <p className="text-[#034C85]">Your Question</p>
             <div className="w-full h-20  rounded-md px-0 py-2">
-              {/* {reply || savedAnswer} */}
+              {question}
             </div>
           </div>
         ) : null}
