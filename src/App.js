@@ -13,8 +13,6 @@ import SinterflameSingle from './components/SinterFlame/SinterflameSingle';
 import Manpower from './components/Manpower/Manpower';
 import BlendComplianceTracking from './components/BlendComplianceTracking/BlendComplianceTracking';
 import WorkforceSafety from './components/WorkforceSafety/WorkforceSafety';
-import Quality from './components/QualityTracking/Quality';
-import QualitySingleCam from './components/QualityTracking/QualitySingleCam';
 import Login from './components/Auth/Login';
 import Sidebar from './components/Sidebar/Sidebar';
 import AiAdvisor from './components/Main/AIAdvisor';
@@ -56,6 +54,8 @@ import AllotToken from './components/Admin/Tabs/AllotToken';
 import TokenTransaction from './components/Admin/Tabs/TokenTransaction';
 import ViewTabs from './components/SuperAdmin/Tabs/ViewTabs';
 import UpdateTabs from './components/SuperAdmin/Tabs/UpdateTabs';
+import Fabric from "./components/FabricTracking/Fabric"
+import FabricSingleCam from './components/FabricTracking/FabricSingleCam'
 
 function App() {
   const homeRef = useRef();
@@ -236,12 +236,12 @@ function App() {
                     />
                     {/*Quality Tracking pages */}
                     <Route
-                      path="/vision/qualityTracking/:material/:clientId"
-                      element={<Quality />}
+                      path="/vision/qualityTracking/fabric/:clientId"
+                      element={<Fabric />}
                     />
                     <Route
-                      path="/vision/qualityTracking/:material/:clientId/:plantId/:cameraId"
-                      element={<QualitySingleCam />}
+                      path="/vision/qualityTracking/fabric/:clientId/:plantId/:cameraId"
+                      element={<FabricSingleCam />}
                     />
                     {/*Manpower pages */}
                     <Route path="/Optimus/Manpower" element={<Manpower />} />
