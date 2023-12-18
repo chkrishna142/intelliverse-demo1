@@ -74,7 +74,7 @@ const AllotToken = ({ setTranTableChange, isFetchTranChanged }) => {
     const body = {
       organisation: clientOrg || "",
       userId: id,
-      allotedToken: addTokens,
+      allotedToken: Number(addTokens),
     };
     try {
       const response = await axios.post(
@@ -223,9 +223,8 @@ const AllotToken = ({ setTranTableChange, isFetchTranChanged }) => {
                                 type="text"
                                 className="border w-12 h-8 text-[#605D64] pl-2 pr-5 rounded-sm"
                                 value={addTokensArray[index]}
-                                onChange={(e) =>
-                                  handleAddToken(index, e.target.value)
-                                }
+                                onChange={(e) => handleAddToken(index,e.target.value)}
+                                style={{width:"70px"}}
                               />
                               <button
                                 className="!text-[#3A74CA] !font-semibold text-[14px]"

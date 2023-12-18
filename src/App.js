@@ -56,6 +56,7 @@ import ViewTabs from './components/SuperAdmin/Tabs/ViewTabs';
 import UpdateTabs from './components/SuperAdmin/Tabs/UpdateTabs';
 import Fabric from "./components/FabricTracking/Fabric"
 import FabricSingleCam from './components/FabricTracking/FabricSingleCam'
+import AskYourQuestion from './components/community/AskYourQuestion/AskYourQuestion';
 
 function App() {
   const homeRef = useRef();
@@ -294,6 +295,10 @@ function App() {
                     <Route
                       path="/user/transactionhistory"
                       element={<TransactionHistory />}
+                    />
+                    <Route
+                      path="/community/askanexpert/askquestion/:expertId"
+                      element={<AskYourQuestion />}
                     />
                     {/*Super admin pages */}
                     {userType === "SUPERADMIN" && ( <><Route

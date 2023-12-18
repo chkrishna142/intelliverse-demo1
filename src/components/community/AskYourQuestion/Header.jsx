@@ -49,32 +49,32 @@ const Header = ({ customEndDate, setCustomToTime }) => {
               value={""}
             >
               <option
-                key="All Time"
+                key="Luc"
                 value={0}
                 className="bg-white hover:bg-blue-200"
               >
-                All time
+                Luc
               </option>
               <option
                 key="Last Seven Days"
                 value={1}
                 className="bg-white hover:bg-blue-200"
               >
-                This Week
+                John
               </option>
               <option
                 key="This Month"
                 value={2}
                 className="bg-white hover:bg-blue-200"
               >
-                Month to Date
+                Shone
               </option>
               <option
                 key="This Quarter"
                 value={3}
                 className="bg-white hover:bg-blue-200"
               >
-                Quarter to Date
+                James
               </option>
             </Select>
           </div>

@@ -1,93 +1,21 @@
 import { Spinner } from "@chakra-ui/react";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TransactionHistoryTable from "./TransactionHistoryTable";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../..";
+import NavContext from "../.././NavContext";
 
 const TransactionHistory = () => {
-  const [alertsChanging, setAlertsChanging] = useState(false);
-  const authToken = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
-  // const [dummyData, setDummyData] = useState([
-  //   {
-  //     id:1,
-  //     date: "15 Nov '23",
-  //     time: "12:30",
-  //     description: "Purchase",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:2,
-  //     date: "16 Nov '23",
-  //     time: "01:30",
-  //     description: "Transfer",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:3,
-  //     date: "15 Nov '23",
-  //     time: "12:30",
-  //     description: "AI Advisor usage",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:4,
-  //     date: "15 Nov '23",
-  //     time: "17:00",
-  //     description: "Purchase",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:5,
-  //     date: "16 Nov '23",
-  //     time: "16:30",
-  //     description: "Transfer",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:6,
-  //     date: "15 Nov '23",
-  //     time: "12:30",
-  //     description: "AI Advisor usage",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:7,
-  //     date: "16 Nov '23",
-  //     time: "01:30",
-  //     description: "Transfer",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:8,
-  //     date: "15 Nov '23",
-  //     time: "12:30",
-  //     description: "AI Advisor usage",
-  //     tokens: "20",
-  //     balance: "20",
-  //   },
-  //   {
-  //     id:9,
-  //     date: "15 Nov '23",
-  //     time: "17:00",
-  //     description: "Purchase",
-  //     tokens: "20",
-  //     balance: "20",
-  //   }
-  // ]);
+  const { auth } = useContext(NavContext);
   const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const navigate = useNavigate();
   const [currentBalance, SetCurrentBalance] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
   const [fromTime, setFromTime] = useState(
     new Date(
       new Date().getTime() - 30 * 24 * 60 * 60 * 1000 + 5.5 * 60 * 60 * 1000
@@ -102,17 +30,30 @@ const TransactionHistory = () => {
       .slice(0, 10)
   );
 
-  const [fromTimeInMs, setFromTimeInMs] = useState(Date.parse(fromTime));
-  const [toTimeInMs, setToTimeInMs] = useState(Date.parse(toTime));
+  const [fromTimeInMs, setFromTimeInMs] = useState("");
+  const [toTimeInMs, setToTimeInMs] = useState("");
 
+  const setEndOfDay = (dateString) => {
+    const parsedDate = new Date(dateString);
+    // Set time to the end of the day (23:59:59.999)
+    parsedDate.setHours(23, 59, 59, 999);
+    return parsedDate;
+  };
+  const setStartOfDay = (dateString) => {
+    const parsedDate = new Date(dateString);
+    // Set time to the start of the day (00:00:00.000)
+    parsedDate.setHours(0, 0, 0, 0);
+    return parsedDate;
+  };
+
+  useEffect(() => {
+    setFromTimeInMs(setStartOfDay(fromTime).getTime());
+    setToTimeInMs(setEndOfDay(toTime).getTime());
+  }, [fromTime, toTime]);
   const handleClick = () => {
-    setAlertsChanging(false);
-    setFromTimeInMs(Date.parse(fromTime));
-    setToTimeInMs(Date.parse(toTime));
-    console.log("fromTime", fromTime);
-    console.log("toTime", toTime);
-    console.log("fromTimeInMs", fromTimeInMs);
-    console.log("toTimeInMs", toTimeInMs);
+    setLoading(true);
+
+    fetchTransactionHistory();
   };
 
   const handleClickHistory = () => {
@@ -124,10 +65,9 @@ const TransactionHistory = () => {
   };
 
   useEffect(() => {
-    handleClick();
     fetchTransactionHistory();
     fetchCurrentBalance();
-  }, [fromTime, toTime, fromTimeInMs, toTimeInMs]);
+  }, []);
 
   const handleAdvisorHistory = () => {
     navigate("/community/advisor/history");
@@ -136,18 +76,27 @@ const TransactionHistory = () => {
   const fetchTransactionHistory = async () => {
     try {
       const response = await axios.get(
-        baseURL + "ripiktoken/transactions/100",
+        baseURL +
+          `token-wallet/v1/transaction-log?endDate=${toTimeInMs}&startDate=${fromTimeInMs}`,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
-            "X-Auth-Token": authToken,
+            "X-Auth-Token": auth,
           },
         }
       );
+      setLoading(false);
 
-      setTableData(response.data.reverse());
+      {
+        response?.data?.transactionDetail &&
+        response?.data?.transactionDetail.length > 0
+          ? setTableData(response?.data?.transactionDetail?.reverse())
+          : setTableData(response?.data?.transactionDetail);
+      }
+      console.log("res...",response)
     } catch (e) {
+      setLoading(false);
       console.error(e);
     }
   };
@@ -158,7 +107,7 @@ const TransactionHistory = () => {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
-          "X-Auth-Token": authToken,
+          "X-Auth-Token": auth,
         },
       });
 
@@ -210,7 +159,7 @@ const TransactionHistory = () => {
             className="text-center p-[8px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-lg"
             onClick={handleClick}
           >
-            {alertsChanging ? <Spinner /> : "Show"}
+            {isLoading ? <Spinner /> : "Show"}
           </button>
         </div>
         <div className="lg:pl-6 flex flex-col gap-4 pr-2">
@@ -231,25 +180,29 @@ const TransactionHistory = () => {
               </div>
               <div onClick={handleToken}>
                 <p className="text-[#3A74CA] font-bold text-[14px] cursor-pointer">
-                Buy Tokens
+                  Buy Tokens
                 </p>
               </div>
-            </div>
-            {/* Pagination */}
-            <div>
-              <Pagination
-                data={tableData}
-                limit={7}
-                setDisplayData={setDisplayData}
-              />
             </div>
           </div>
 
           {/* Transaction History Table */}
 
-          {displayData && displayData.length != 0 && (
+          {tableData && tableData.length !== 0 ? (
             <TransactionHistoryTable tableData={displayData} />
+          ) : (
+            <p className="ml-[45%]">No transaction history available.</p>
           )}
+          {/* Pagination */}
+          <div className="flex justify-end lg:w-[65vw] md:w-[70vw]">
+            {tableData && tableData.length !== 0 && (
+              <Pagination
+                data={tableData}
+                limit={7}
+                setDisplayData={setDisplayData}
+              />
+            )}
+          </div>
 
           <div className="md:pb-0 pb-10 flex items-center gap-4 mt-2">
             <div

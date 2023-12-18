@@ -32,68 +32,80 @@ const TransactionHistoryTable = ({ tableData }) => {
         <Table variant="simple">
           <Thead className="bg-[#DDEEFF] !text-[#79767D] !text-xs !top-0">
             <Tr>
-              <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] !text-left !text-sm !font-normal">
                 DATE/TIME
               </Th>
-              <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] !text-left !text-sm !font-normal">
                 DESCRIPTION
               </Th>
-              <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] !text-left !text-sm !font-normal">
                 RIPIK TOKENS
               </Th>
-              <Th className="!text-[#79767D] !text-center !text-sm !font-normal">
+              <Th className="!text-[#79767D] !text-left !text-sm !font-normal">
                 BALANCE AFTER TRANSACTION
+              </Th>
+              <Th className="!text-[#79767D] !text-left !text-sm !font-normal">
+                STATUS
               </Th>
             </Tr>
           </Thead>
           <Tbody>
             {tableData &&
               tableData.map((item) => {
-                const formattedDateTime = formatDate(item.createdAt);
+                const formattedDateTime = formatDate(item.transactionDate);
                 return (
-                  <Tr key={item.tokenTxnId}>
+                  <Tr key={item.transactionId}>
                     <Td
-                      className="!text-center !text-normal !text-[#3E3C42] !text-[14px] flex items-center justify-center gap-2"
+                      className="!text-left !text-normal !text-[#3E3C42] !text-[14px] flex items-center gap-2"
                       style={{ fontWeight: 400 }}
                     >
-                      <p className="pl-2 pr-2">{formattedDateTime.date}</p>
-                      <p className="px-4"> {formattedDateTime.time}</p>
+                      <p className="">{formattedDateTime.date}</p>
+                      <p className=""> {formattedDateTime.time}</p>
                     </Td>
                     <Td
-                      className="!text-center !text-normal !text-[#3E3C42] !text-[14px]"
+                      className="!text-left !text-normal !text-[#3E3C42] !text-[14px]"
                       style={{ fontWeight: 500 }}
                     >
-                      {item.service.servName}
+                      {item.description}
                     </Td>
                     <Td
-                      className="!text-center !text-normal !text-[#3E3C42] !text-[14px]"
+                      className="!text-left !text-normal !text-[#3E3C42] !text-[14px]"
                       style={{ fontWeight: 500 }}
                     >
-                      {item.tokenBalanceBefore < item.tokenBalanceAfter ? (
-                        <div className="w-full flex justify-center gap-1 text-[#7AC958] !text-[14px]">
+                      {item.token > 0 ? (
+                        <div className="w-full flex gap-1 text-[#7AC958] !text-[14px]">
                           <p>
-                            +{item.tokenBalanceAfter - item.tokenBalanceBefore}
+                            +{item.token}
                           </p>
                           <img src="/token.svg" alt="token" />
                         </div>
                       ) : (
-                        <div className="w-full flex justify-center gap-1 text-[#3E3C42] !text-[14px]">
+                        <div className="w-full flex gap-1 text-[#E46962] !text-[14px]">
                           <p>
-                            -{item.tokenBalanceBefore - item.tokenBalanceAfter}
+                            {item?.token}
                           </p>
                           <img src="/token.svg" alt="token" />
                         </div>
                       )}
                     </Td>
                     <Td
-                      className="!text-center !text-normal !text-[#3E3C42] !text-[14px]"
+                      className="!text-left !text-normal !text-[#3E3C42] !text-[14px]"
                       style={{ fontWeight: 500 }}
                     >
-                      <div className="w-full flex justify-center gap-1">
-                        <p>{item.tokenBalanceAfter}</p>
+                      <div className="w-full flex gap-1">
+                        <p>{item.afterBalance}</p>
                         <img src="/token.svg" alt="token" />
                       </div>
                     </Td>
+                    <Td>
+                    <div
+                      className={`w-full flex justify-start  ${
+                        item.status == "FAILURE" ? "text-[#E46962]" : "text-[#7AC958]"
+                      }`}
+                    >
+                      {item.status == "FAILURE" ? "Failed" : "Success"}
+                    </div>
+                  </Td>
                   </Tr>
                 );
               })}
