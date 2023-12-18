@@ -11,6 +11,7 @@ import UserMgmt from "../../Admin/Tabs/UserMgmt";
 import ActiveSubs from "../../Admin/Tabs/ActiveSubs";
 import UpdateClient from "../AddClients/UpdateClient";
 import DevelopmentInProgress from "../Deploy/DevelopmentInProgress";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 
 const UpdateTabs = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const UpdateTabs = () => {
       </div>
 
       <Tabs className="bg-white rounded-md px-6 border-2 pt-4">
-        <TabList className="!flex !border-0">
+        <TabList className="!flex !border-0 !justify-between !items-center" width={'full'}>
           <div className="flex items-center gap-4 overflow-x-auto h-14 md:h-10">
             <Tab
               className={
@@ -86,6 +87,8 @@ const UpdateTabs = () => {
               Allocate Tokens
             </Tab>
           </div>
+          <PrimaryButton text={"Deploy"} width={"fit-content"} onClick={()=>setDeployClicked(true)} />
+
         </TabList>
 
         <TabPanels className="!pt-4">

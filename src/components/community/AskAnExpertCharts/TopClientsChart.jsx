@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const TopClientsChart = ({ data,role }) => {
+const TopClientsChart = ({ data, role }) => {
   // const [names,setNames]=useState([...top3clients?.names])
   const chartOptions = {
     chart: {
       type: "bar",
       toolbar: { show: false },
-      
     },
     grid: {
       show: false,
@@ -17,32 +16,36 @@ const TopClientsChart = ({ data,role }) => {
     },
 
     xaxis: {
-      categories:
-      data?.names && data?.names.length > 0
-          ? [...data?.names]
-          : [],
-
-      showLines: false,
+      position: "top",
+      categories: data?.names && data?.names.length > 0 ? [...data?.names] : [],
       labels: {
         show: false,
         style: {
           fontSize: "14px",
           colors: ["#605D64"],
         },
+        floating: true,
+      },
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show:false
       },
       title: {
         text: "Number of questions",
-        offsetY: -30,
+        offsetY: -60,
         style: {
           fontSize: "14px",
           fontWeight: 400,
           colors: ["#605D64"],
-          textAlign:"left"
+          textAlign: "left",
         },
       },
     },
     yaxis: {
       labels: {
+        show: true,
         maxWidth: 200,
         style: {
           fontSize: "14px",
@@ -50,18 +53,20 @@ const TopClientsChart = ({ data,role }) => {
           colors: ["#605D64"],
         },
       },
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show:false
+      },
     },
     plotOptions: {
       bar: {
         borderRadius: 4,
         horizontal: true,
-        // barWidth: '1%',
-        // barHeight: '30%',
         // barHeight:data?.questions && data?.questions?.length < 3 ? "30%" : undefined,
-
       },
     },
-    // colors: ["#D9D9D9"],
     export: {
       enabled: false,
     },
@@ -80,7 +85,7 @@ const TopClientsChart = ({ data,role }) => {
       },
     ]);
   }, [data]);
-console.log("role",role)
+
   return (
     <div>
       <ReactApexChart

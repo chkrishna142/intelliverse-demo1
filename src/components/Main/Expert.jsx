@@ -18,7 +18,7 @@ import FileUploader from "../community/AnswerExpert/FileUploader";
 // import { baseURL } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 const Expert = () => {
-  const { auth } = useContext(NavContext);
+  const { auth, roleType } = useContext(NavContext);
   const [submitted, setSubmitted] = useState(false);
   const [reply, setReply] = useState("");
   const [review, setReview] = useState(false);
@@ -169,7 +169,7 @@ const Expert = () => {
       setAttachments(res);
       console.log(res);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
@@ -318,39 +318,45 @@ const Expert = () => {
               </p>
             </div>
           </div>
-          {answer == null || answer.length == 0 ? (
-            <div className="flex items-center gap-2">
-              {review === false ? (
-                <TonalButton
-                  text={"Save Draft"}
-                  width={"fit-content"}
-                  onClick={handleSave}
-                />
-              ) : (
-                <PrimaryButton
-                  text={"Back to Review"}
-                  width={"fit-content"}
-                  onClick={() => setReview(false)}
-                />
-              )}
-              {review === false ? (
-                <PrimaryButton
-                  text={"Review"}
-                  width={"fit-content"}
-                  onClick={() => setReview(true)}
-                />
-              ) : spinner === false ? (
-                <PrimaryButton
-                  text={"Submit"}
-                  width={"fit-content"}
-                  onClick={() => postAnswer()}
-                />
-              ) : (
-                <Spinner />
-              )}
-            </div>
-          ) : (
+          {roleType !== "EXPERT" ? (
             ""
+          ) : (
+            <>
+              {answer == null || answer.length == 0 ? (
+                <div className="flex items-center gap-2">
+                  {review === false ? (
+                    <TonalButton
+                      text={"Save Draft"}
+                      width={"fit-content"}
+                      onClick={handleSave}
+                    />
+                  ) : (
+                    <PrimaryButton
+                      text={"Back to Review"}
+                      width={"fit-content"}
+                      onClick={() => setReview(false)}
+                    />
+                  )}
+                  {review === false ? (
+                    <PrimaryButton
+                      text={"Review"}
+                      width={"fit-content"}
+                      onClick={() => setReview(true)}
+                    />
+                  ) : spinner === false ? (
+                    <PrimaryButton
+                      text={"Submit"}
+                      width={"fit-content"}
+                      onClick={() => postAnswer()}
+                    />
+                  ) : (
+                    <Spinner />
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+            </>
           )}
         </div>
         {submitted === false ? (
@@ -670,46 +676,52 @@ const Expert = () => {
             </div>
             <div className="w-full p-6 border bg-white rounded-md mb-5">
               <p className="text-[14px] font-semibold">Answer Details</p>
-              <div className="flex items-center gap-3">
-                {send.length < 1 && (
-                  <FileUploader setSend={setSend} send={send} />
-                )}
-                {send.length < 2 && (
-                  <FileUploader setSend={setSend} send={send} />
-                )}
-                <div className="mt-3 flex gap-3 items-center">
-                  {send?.map((item, index) => {
-                    return (
-                      <div
-                        key={index}
-                        className="flex items-center gap-2 cursor-pointer"
-                      >
-                        {/* <img src="/pdf.svg" alt="pdf" /> */}
-                        <p className="font-light text-[#AEA9B1] mb-3">
-                          {item.name}
-                        </p>
-                        <p className="mb-3">
-                          <CloseIcon onClick={() => removeFile(index)} />
-                        </p>
-                      </div>
-                    );
-                  })}
+              {roleType !== "EXPERT" ? (
+                ""
+              ) : (
+                <div className="flex items-center gap-3">
+                  {send.length < 1 && (
+                    <FileUploader setSend={setSend} send={send} />
+                  )}
+                  {send.length < 2 && (
+                    <FileUploader setSend={setSend} send={send} />
+                  )}
+                  <div className="mt-3 flex gap-3 items-center">
+                    {send?.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 cursor-pointer"
+                        >
+                          {/* <img src="/pdf.svg" alt="pdf" /> */}
+                          <p className="font-light text-[#AEA9B1] mb-3">
+                            {item.name}
+                          </p>
+                          <p className="mb-3">
+                            <CloseIcon onClick={() => removeFile(index)} />
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {review === false ? (
                 <div>
                   {answer == null || answer.length == 0 ? (
-                    <textarea
-                      // ref={""}
-                      value={reply || savedAnswer}
-                      onChange={(e) => {
-                        setReply(e.target.value);
-                        // handleKeyDown();
-                      }}
-                      placeholder="Your answer here"
-                      className="w-[60%] border rounded-md px-2 py-2 h-32"
-                    />
+                    roleType === "EXPERT" && (
+                      <textarea
+                        // ref={""}
+                        value={reply || savedAnswer}
+                        onChange={(e) => {
+                          setReply(e.target.value);
+                          // handleKeyDown();
+                        }}
+                        placeholder="Your answer here"
+                        className={`w-[60%] border rounded-md px-2 py-2 h-32`}
+                      />
+                    )
                   ) : (
                     <div>
                       <div className="w-full h-20 rounded-md px-0 py-2 overflow-y-auto mb-3">

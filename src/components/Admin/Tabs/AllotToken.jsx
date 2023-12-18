@@ -22,7 +22,8 @@ const AllotToken = () => {
   const { auth } = useContext(NavContext);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [isFetchBalance, setFetchBalance] = useState(false);
+ 
   const [addTokens, setAddTokens] = useState(20);
   
   const [tableData, setTableData] = useState([]);
@@ -97,6 +98,7 @@ const AllotToken = () => {
         position: "top",
       });
       setAddTokens(20);
+      setFetchBalance(!isFetchBalance);
       fetchTableData();
       console.log("res", response);
     } catch (error) {
@@ -126,7 +128,6 @@ const AllotToken = () => {
       return newTokens;
     });
   };
-console.log("add",addTokens)
   return (
     <div className={`w-full flex flex-col gap-4 ${clientOrg && "mt-[4vh]"}`}>
       <div>
@@ -135,7 +136,7 @@ console.log("add",addTokens)
         </p>
       </div>
 
-      <TokenData />
+      <TokenData isFetchBalance={isFetchBalance} />
 
       {/* pagination */}
       {isLoading ? (

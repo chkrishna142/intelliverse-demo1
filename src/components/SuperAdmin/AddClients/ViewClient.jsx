@@ -133,7 +133,7 @@ const ViewClient = ({setDeployClicked}) => {
             <p className="text-[#3E3C42] text-lg font-medium ">
               Company information
             </p>
-            <PrimaryButton text={"Deploy"} width={"fit-content"} onClick={()=>setDeployClicked(true)} />
+            {/* <PrimaryButton text={"Deploy"} width={"fit-content"} onClick={()=>setDeployClicked(true)} /> */}
           </div>
 
           <div className="flex items-center gap-10">
