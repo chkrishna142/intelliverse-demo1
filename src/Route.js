@@ -4,13 +4,10 @@
 
 
 
-const Route = ()=>{
-    return (
-        <>
-         
-        </>
-    )
-}
+// export const routes = [{
+//     path:"",
+//     element:,
+//     role:"",
+// }]
 
 
-export default Route;

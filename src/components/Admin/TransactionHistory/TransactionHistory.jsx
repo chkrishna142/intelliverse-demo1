@@ -1,15 +1,17 @@
 import { Spinner } from "@chakra-ui/react";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TransactionHistoryTable from "./TransactionHistoryTable";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../..";
+import NavContext from "../.././NavContext";
 
 const TransactionHistory = () => {
   const [alertsChanging, setAlertsChanging] = useState(false);
-  const authToken = "03ad51d2-2154-41a2-a673-bd2ae52509d9";
+  const { auth } = useContext(NavContext);
+
   // const [dummyData, setDummyData] = useState([
   //   {
   //     id:1,
@@ -104,15 +106,39 @@ const TransactionHistory = () => {
 
   const [fromTimeInMs, setFromTimeInMs] = useState(Date.parse(fromTime));
   const [toTimeInMs, setToTimeInMs] = useState(Date.parse(toTime));
-
-  const handleClick = () => {
-    setAlertsChanging(false);
+ 
+  const postFromTimeToTime = async(fromTimeInMs,toTimeInMs)=>{
+    console.log("auth",auth)
+    try {
+      const response = await axios.post(
+        baseURL + `token-wallet/v1/transaction-log?endDate=${fromTimeInMs/1000}&startDate=${toTimeInMs/1000}`,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+     
+      // setTableData(response?.data?.transaction-log?.reverse());
+      console.log("post..", response);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  useEffect(()=>{
     setFromTimeInMs(Date.parse(fromTime));
     setToTimeInMs(Date.parse(toTime));
+  },[fromTime,toTime])
+  const handleClick = () => {
+    setAlertsChanging(false);
+    postFromTimeToTime(fromTimeInMs,toTimeInMs)
     console.log("fromTime", fromTime);
     console.log("toTime", toTime);
     console.log("fromTimeInMs", fromTimeInMs);
     console.log("toTimeInMs", toTimeInMs);
+    
   };
 
   const handleClickHistory = () => {
@@ -136,17 +162,18 @@ const TransactionHistory = () => {
   const fetchTransactionHistory = async () => {
     try {
       const response = await axios.get(
-        baseURL + "ripiktoken/transactions/100",
+        baseURL + `token-wallet/v1/transaction-log?endDate=&startDate=`,
         {
           credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
-            "X-Auth-Token": authToken,
+            "X-Auth-Token": auth,
           },
         }
       );
 
-      setTableData(response.data.reverse());
+      setTableData(response?.data?.transactionDetail?.reverse());
+      console.log("res..", response?.data?.transactionDetail);
     } catch (e) {
       console.error(e);
     }
@@ -158,7 +185,7 @@ const TransactionHistory = () => {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
-          "X-Auth-Token": authToken,
+          "X-Auth-Token": auth,
         },
       });
 
@@ -231,7 +258,7 @@ const TransactionHistory = () => {
               </div>
               <div onClick={handleToken}>
                 <p className="text-[#3A74CA] font-bold text-[14px] cursor-pointer">
-                Buy Tokens
+                  Buy Tokens
                 </p>
               </div>
             </div>

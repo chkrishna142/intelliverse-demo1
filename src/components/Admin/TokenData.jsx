@@ -11,6 +11,7 @@ const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
   const [totalTokens, setTotalTokens] = useState(0);
   const [allocated, setAllocated] = useState(0);
   const [unAllocated, setUnallocated] = useState(0);
+  const [clientName, setClientName] = useState("");
 
   const fetchTokenBalance = async () => {
     const param = {
@@ -30,7 +31,7 @@ const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
       setTotalTokens(response?.data.total)
       setAllocated(response?.data.allocated)
       setUnallocated(response?.data.unAllocated)
-      
+      setClientName(response?.data?.clientName)
     } catch (error) {
       
       console.log(error);
@@ -42,9 +43,15 @@ const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
   }, [isFetchBalance,isFetchTranChanged]);
 
   const handleToken = () => {
-    navigate("/community/advisor/buycredits");
+    // if(clientOrg){
+    //   navigate(`/community/advisor/buycredits/${clientOrg}`);
+    // }else{
+      navigate(`/community/advisor/buycredits/${clientOrg || clientName}`);
+    // }
+    
   };
-  
+
+  console.log("clientName",clientName)
   return (
     <div className="w-full lg:flex lg:flex-row lg:justify-between flex-col items-center mx-auto">
       {/* Total coins */}

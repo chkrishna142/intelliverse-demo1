@@ -18,7 +18,7 @@ import FileUploader from "../community/AnswerExpert/FileUploader";
 // import { baseURL } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 const Expert = () => {
-  const { auth, roleType } = useContext(NavContext);
+  const { auth, userType } = useContext(NavContext);
   const [submitted, setSubmitted] = useState(false);
   const [reply, setReply] = useState("");
   const [review, setReview] = useState(false);
@@ -295,7 +295,7 @@ const Expert = () => {
     updatedSend.splice(index, 1); // Remove the file at the specified index
     setSend(updatedSend);
   };
-  console.log("comments", retrievedComments);
+  console.log("roleType", auth);
   return (
     <>
       <Navbar />
@@ -318,7 +318,7 @@ const Expert = () => {
               </p>
             </div>
           </div>
-          {roleType !== "EXPERT" ? (
+          {userType !== "EXPERT" ? (
             ""
           ) : (
             <>
@@ -676,7 +676,7 @@ const Expert = () => {
             </div>
             <div className="w-full p-6 border bg-white rounded-md mb-5">
               <p className="text-[14px] font-semibold">Answer Details</p>
-              {roleType !== "EXPERT" ? (
+              {userType !== "EXPERT" ? (
                 ""
               ) : (
                 <div className="flex items-center gap-3">
@@ -710,7 +710,7 @@ const Expert = () => {
               {review === false ? (
                 <div>
                   {answer == null || answer.length == 0 ? (
-                    roleType === "EXPERT" && (
+                    userType === "EXPERT" && (
                       <textarea
                         // ref={""}
                         value={reply || savedAnswer}
@@ -725,27 +725,8 @@ const Expert = () => {
                   ) : (
                     <div>
                       <div className="w-full h-20 rounded-md px-0 py-2 overflow-y-auto mb-3">
-                        <p className="ml-2">{answer}</p>
+                        <p className="">{answer}</p>
                       </div>
-                      <p>Comments</p>
-                      <div className="relative">
-                        <textarea
-                          type="text"
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                          placeholder="Add your comment"
-                          className="w-full border h-20 rounded-md px-2 py-2 mt-2"
-                        />
-                        <button
-                          className="text-[#6CA6FC] text-sm rounded bg-[#DEF] absolute bottom-0 right-0 mb-2 mr-2 p-3"
-                          onClick={() => postComments()}
-                        >
-                          Post comment
-                        </button>
-                      </div>
-                      {retrievedComments && retrievedComments.length != 0 && (
-                        <ExpertComments retrievedComments={retrievedComments} />
-                      )}
                     </div>
                   )}
                 </div>
@@ -760,30 +741,70 @@ const Expert = () => {
                   </div>
                 </div>
               ) : null}
+              {userType !== "EXPERT" &&
+                (answer == null ||
+                  answer.length == 0 ||
+                  answer == "" ||
+                  savedAnswer.length == 0) && (
+                  <p className="mt-2">
+                    The expert has received your question, please watch this
+                    page for the response.
+                  </p>
+                )}
             </div>
+            {(userType === "EXPERT" && answer === "") ||
+            answer == null ||
+            answer.length === 0 ? (
+              ""
+            ) : (
+              <div className="w-full p-6 border bg-white rounded-md">
+                <p>Comments</p>
+                {retrievedComments && retrievedComments.length !== 0 && (
+                  <ExpertComments retrievedComments={retrievedComments} />
+                )}
+
+                <div className="relative">
+                  <textarea
+                    type="text"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Add your comment"
+                    className="w-[60%] border h-20 rounded-md px-2 py-2 mt-2"
+                  />
+                  <button
+                    className="text-[#FFF] text-sm rounded bg-[#6CA6FC] absolute bottom-0 right-0 mb-3 mr-2 p-3"
+                    onClick={() => postComments()}
+                  >
+                    Post comment
+                  </button>
+                </div>
+              </div>
+            )}
+            
           </>
         ) : (
-          <div className="mt-40">
-            <div className="w-full flex justify-center mt-10">
-              <img src="/query.svg" />
-            </div>
-            <div className="w-full flex justify-center">
-              <p className="font-semibold text-2xl mt-4">
-                Thank You for Your Query!
-              </p>
-            </div>
-            <div className="mt-5 w-full flex justify-center">
-              <p className="px-10 font-light">
-                Your insights and expertise are greatly appreciated.
-              </p>
-            </div>
-            <div className="mt-5 w-full flex justify-center">
-              <p className="px-10 font-light">
-                If any further updates or clarifications are required, you will
-                be contacted directly. You can close this tab now.
-              </p>
-            </div>
-          </div>
+          // <div className="mt-40">
+          //   <div className="w-full flex justify-center mt-10">
+          //     <img src="/query.svg" />
+          //   </div>
+          //   <div className="w-full flex justify-center">
+          //     <p className="font-semibold text-2xl mt-4">
+          //       Thank You for Your Query!
+          //     </p>
+          //   </div>
+          //   <div className="mt-5 w-full flex justify-center">
+          //     <p className="px-10 font-light">
+          //       Your insights and expertise are greatly appreciated.
+          //     </p>
+          //   </div>
+          //   <div className="mt-5 w-full flex justify-center">
+          //     <p className="px-10 font-light">
+          //       If any further updates or clarifications are required, you will
+          //       be contacted directly. You can close this tab now.
+          //     </p>
+          //   </div>
+          // </div>
+          ""
         )}
       </div>
     </>

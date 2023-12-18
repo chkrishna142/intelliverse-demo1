@@ -5,7 +5,7 @@ import React, {
   useContext,
   useLayoutEffect,
 } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ExpertReadMore from "./ExpertReadMore";
 import NavContext from "../NavContext";
 import { baseURL } from "../..";
@@ -14,10 +14,12 @@ import axios from "axios";
 import { useWindowSize } from "@uidotdev/usehooks";
 import { getQuestionsCredit } from "../../util/utilFunctions";
 import AskYourQuestion from "../community/AskYourQuestion/AskYourQuestion";
+import PrimaryButton from "../../util/Buttons/PrimaryButton";
 
 const AskAnExpert = () => {
   const { auth } = useContext(NavContext);
   const size = useWindowSize();
+  const navigate = useNavigate();
 
   const [submitted, setSubmitted] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -25,6 +27,7 @@ const AskAnExpert = () => {
   const [expert, setExpert] = useState(0);
   const [credits, setCredits] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [showQuetionPage, setShowQuestion] = useState(false);
 
   const [expertDetails, setExpertDetails] = useState([]);
   const [question, setQuestion] = useState("");
@@ -153,23 +156,41 @@ const AskAnExpert = () => {
       setSelected(false);
     }
   }, [val1, val2, val3, val4]);
+  const handleShowPage = () => {
+    navigate("/community/askanexpert/askquestion/:expertId")
+  };
 
+  const handleBackButton = () => {
+    setShowQuestion(true);
+    setSelected(false)
+  };
+  
   return (
     <div className="mt-6">
+      
       <div className="w-full border shadow-md bg-white rounded-md mb-5 ">
-        <p className="mt-6 ml-5 text-black text-xl font-semibold">
-          Ask An Expert
-        </p>
-        {submitted === false ? (
-          <div>
-            <p className="mt-3 ml-5 font-light">
-              Have your most pressing questions answered by world renown
-              experts.
-            </p>
-            <p className="font-semibold mt-5 ml-5 text-sm">Choose An Expert</p>
-          </div>
-        ) : (
-          <div>
+       
+            <div className="mt-6 ml-5 flex justify-between items-center mr-5">
+              <p className=" text-black text-xl font-semibold">Ask An Expert</p>
+              <PrimaryButton
+                text={"Ask a question"}
+                width={"fit-content"}
+                onClick={handleShowPage}
+                disable={!selected}
+              />
+            </div>
+
+            <div>
+              <p className="mt-3 ml-5 font-light">
+                Have your most pressing questions answered by world renown
+                experts.
+              </p>
+              <p className="font-semibold mt-5 ml-5 text-sm">
+                Choose An Expert
+              </p>
+            </div>
+         
+          {/* <div>
             <div className="w-full flex justify-center mt-10">
               <img src="/query.svg" />
             </div>
@@ -213,9 +234,9 @@ const AskAnExpert = () => {
                 manufacturing processes.
               </p>
             </div>
-          </div>
-        )}
-        {submitted === false ? (
+          </div> */}
+        
+        
           <div className="mx-5 mb-[5vh]">
             <div className="w-full grid md:grid-cols-2 flex items-center gap-6 mt-2">
               <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
@@ -385,90 +406,91 @@ const AskAnExpert = () => {
               </div>
             </div>
 
-            {selected ? (
-              <AskYourQuestion
-                question={question}
-                setQuestion={setQuestion}
-                postQuestion={postQuestion}
-                summary={summary}
-                setSummary={setSummary}
-              />
-            ) : // <div>
-            // {/* <AskYourQuestion /> */}
+            {showQuetionPage
+              ? // <AskYourQuestion
+                //   question={question}
+                //   setQuestion={setQuestion}
+                //   postQuestion={postQuestion}
+                //   summary={summary}
+                //   setSummary={setSummary}
+                // />
+                ""
+              : // <div>
+                // {/* <AskYourQuestion /> */}
 
-            //   <div className='mt-6 font-bold'>Subject</div>
-            //   <input type="text" placeholder='Be concise and describe the query' className='w-[44vw] mt-1 h-10 px-4 rounded-md border'/>
-            //   <div className='mt-4 font-bold'>Detailed Description</div>
-            //   <div className="w-full font-light mt-1 text-sm" >
-            //     Please provide a detailed description of your question or
-            //     issue. Include relevant background information, any steps
-            //     you've already taken to address the problem, and any specific
-            //     challenges you're facing. If your question involves
-            //     measurements, specifications, or technical details please
-            //     include them in your description. This will help our experts
-            //     provide you with a more accurate response. Feel free to attach
-            //     relevant files, images or diagrams that can provide additional
-            //     context to your question.
-            //   </div>
-            //   <div className="w-full mt-4 w-full border rounded-md px-2 py-2">
-            //     {/* <p>{file ? `File name: ${file[0].name}` : null}</p> */}
-            //     <textarea
-            //       value={question}
-            //       onChange={(e) => {
-            //         setQuestion(e.target.value);
-            //       }}
-            //       placeholder="Type your query here..."
-            //       className="w-full px-2 py-2"
-            //     />
-            //     <div className="flex items-center gap-2">
-            //       <label for="image">
-            //         <input
-            //           onChange={(e) => selectPicture(e)}
-            //           type="file"
-            //           name="image"
-            //           id="image"
-            //           style={{ display: 'none' }}
-            //         />
-            //         <img
-            //           className="cursor-pointer"
-            //           src="/attachment.svg"
-            //           alt="attach"
-            //         />
-            //       </label>
-            //       {send?.map((item, index) => {
-            //         return (
-            //           <div
-            //             key={index}
-            //             className="flex items-center gap-2 cursor-pointer"
-            //           >
-            //             <p className="font-light text-[#AEA9B1]">
-            //               {item.name}
-            //             </p>
-            //           </div>
-            //         );
-            //       })}
-            //     </div>
-            //   </div>
-            //   <div className="w-full flex justify-end mt-5">
-            //     <button
-            //       onClick={() => {
-            //         postQuestion();
-            //         setLoader(true);
-            //       }}
-            //       disabled={question === ''}
-            //       className={
-            //         question === ''
-            //           ? 'text-white px-6 py-3 bg-gray-400 rounded-md'
-            //           : 'text-white px-6 py-3 bg-[#084298] rounded-md'
-            //       }
-            //     >
-            //       {loader === false ? <span>Submit</span> : <Spinner />}
-            //     </button>
-            //   </div>
-            // </div>
-            null}
+                //   <div className='mt-6 font-bold'>Subject</div>
+                //   <input type="text" placeholder='Be concise and describe the query' className='w-[44vw] mt-1 h-10 px-4 rounded-md border'/>
+                //   <div className='mt-4 font-bold'>Detailed Description</div>
+                //   <div className="w-full font-light mt-1 text-sm" >
+                //     Please provide a detailed description of your question or
+                //     issue. Include relevant background information, any steps
+                //     you've already taken to address the problem, and any specific
+                //     challenges you're facing. If your question involves
+                //     measurements, specifications, or technical details please
+                //     include them in your description. This will help our experts
+                //     provide you with a more accurate response. Feel free to attach
+                //     relevant files, images or diagrams that can provide additional
+                //     context to your question.
+                //   </div>
+                //   <div className="w-full mt-4 w-full border rounded-md px-2 py-2">
+                //     {/* <p>{file ? `File name: ${file[0].name}` : null}</p> */}
+                //     <textarea
+                //       value={question}
+                //       onChange={(e) => {
+                //         setQuestion(e.target.value);
+                //       }}
+                //       placeholder="Type your query here..."
+                //       className="w-full px-2 py-2"
+                //     />
+                //     <div className="flex items-center gap-2">
+                //       <label for="image">
+                //         <input
+                //           onChange={(e) => selectPicture(e)}
+                //           type="file"
+                //           name="image"
+                //           id="image"
+                //           style={{ display: 'none' }}
+                //         />
+                //         <img
+                //           className="cursor-pointer"
+                //           src="/attachment.svg"
+                //           alt="attach"
+                //         />
+                //       </label>
+                //       {send?.map((item, index) => {
+                //         return (
+                //           <div
+                //             key={index}
+                //             className="flex items-center gap-2 cursor-pointer"
+                //           >
+                //             <p className="font-light text-[#AEA9B1]">
+                //               {item.name}
+                //             </p>
+                //           </div>
+                //         );
+                //       })}
+                //     </div>
+                //   </div>
+                //   <div className="w-full flex justify-end mt-5">
+                //     <button
+                //       onClick={() => {
+                //         postQuestion();
+                //         setLoader(true);
+                //       }}
+                //       disabled={question === ''}
+                //       className={
+                //         question === ''
+                //           ? 'text-white px-6 py-3 bg-gray-400 rounded-md'
+                //           : 'text-white px-6 py-3 bg-[#084298] rounded-md'
+                //       }
+                //     >
+                //       {loader === false ? <span>Submit</span> : <Spinner />}
+                //     </button>
+                //   </div>
+                // </div>
+                null}
           </div>
-        ) : null}
+        
       </div>
       <ExpertReadMore
         isOpen={isOpen}

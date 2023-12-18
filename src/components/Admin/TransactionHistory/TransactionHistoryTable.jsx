@@ -49,9 +49,9 @@ const TransactionHistoryTable = ({ tableData }) => {
           <Tbody>
             {tableData &&
               tableData.map((item) => {
-                const formattedDateTime = formatDate(item.createdAt);
+                const formattedDateTime = formatDate(item.transactionDate);
                 return (
-                  <Tr key={item.tokenTxnId}>
+                  <Tr key={item.transactionId}>
                     <Td
                       className="!text-center !text-normal !text-[#3E3C42] !text-[14px] flex items-center justify-center gap-2"
                       style={{ fontWeight: 400 }}
@@ -63,23 +63,23 @@ const TransactionHistoryTable = ({ tableData }) => {
                       className="!text-center !text-normal !text-[#3E3C42] !text-[14px]"
                       style={{ fontWeight: 500 }}
                     >
-                      {item.service.servName}
+                      {item.description}
                     </Td>
                     <Td
                       className="!text-center !text-normal !text-[#3E3C42] !text-[14px]"
                       style={{ fontWeight: 500 }}
                     >
-                      {item.tokenBalanceBefore < item.tokenBalanceAfter ? (
+                      {item.afterBalance > 0 ? (
                         <div className="w-full flex justify-center gap-1 text-[#7AC958] !text-[14px]">
                           <p>
-                            +{item.tokenBalanceAfter - item.tokenBalanceBefore}
+                            +{item.afterBalance}
                           </p>
                           <img src="/token.svg" alt="token" />
                         </div>
                       ) : (
                         <div className="w-full flex justify-center gap-1 text-[#3E3C42] !text-[14px]">
                           <p>
-                            -{item.tokenBalanceBefore - item.tokenBalanceAfter}
+                            -{item?.afterBalance}
                           </p>
                           <img src="/token.svg" alt="token" />
                         </div>
@@ -90,7 +90,7 @@ const TransactionHistoryTable = ({ tableData }) => {
                       style={{ fontWeight: 500 }}
                     >
                       <div className="w-full flex justify-center gap-1">
-                        <p>{item.tokenBalanceAfter}</p>
+                        <p>{item.afterBalance}</p>
                         <img src="/token.svg" alt="token" />
                       </div>
                     </Td>
