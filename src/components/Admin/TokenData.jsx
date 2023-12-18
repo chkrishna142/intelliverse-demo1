@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { baseURL } from "../..";
 import NavContext from ".././NavContext";
 
-const TokenData = ({isFetchBalance}) => {
+const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
   const { clientOrg } = useParams();
   const { auth } = useContext(NavContext);
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const TokenData = ({isFetchBalance}) => {
 
   useEffect(() => {
     fetchTokenBalance();
-  }, [isFetchBalance]);
+  }, [isFetchBalance,isFetchTranChanged]);
 
   const handleToken = () => {
     navigate("/community/advisor/buycredits");

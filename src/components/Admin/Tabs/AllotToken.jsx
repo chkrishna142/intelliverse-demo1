@@ -17,7 +17,7 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const AllotToken = () => {
+const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
   const { clientOrg, mode } = useParams();
   const { auth } = useContext(NavContext);
   const toast = useToast();
@@ -89,7 +89,7 @@ const AllotToken = () => {
           },
         }
       );
-
+      setTranTableChange(!isFetchTranChanged)
       toast({
         title: `Added ${addTokens} tokens for ${user}`,
         status: "success",
@@ -102,6 +102,7 @@ const AllotToken = () => {
       fetchTableData();
       console.log("res", response);
     } catch (error) {
+      setTranTableChange(!isFetchTranChanged)
       setAddTokens(20)
       toast({
         title: `Invalid token`,

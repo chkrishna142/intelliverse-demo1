@@ -9,7 +9,7 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const TokenTransaction = () => {
+const TokenTransaction = ({isFetchTranChanged}) => {
   const { clientOrg } = useParams();
   const [selectPlant, setSelectPlant] = useState("All Plants");
   const { auth } = useContext(NavContext);
@@ -143,7 +143,7 @@ const TokenTransaction = () => {
   };
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [isFetchTranChanged]);
 
   return (
     <div
@@ -155,7 +155,7 @@ const TokenTransaction = () => {
           Transaction History
         </p>
       </div>
-      <TokenData />
+      <TokenData isFetchTranChanged={isFetchTranChanged}/>
       {/* token details */}
       {isLoading ? (
         // Render spinner or loading indicator while data is being fetched
