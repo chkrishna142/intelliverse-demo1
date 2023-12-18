@@ -149,41 +149,51 @@ const DetailOutputCard = ({ data }) => {
   );
 };
 
-const OutputDetail = () => {
+const OutputDetail = ({ userState }) => {
   const bg = ["#FFC107", "#6CA6FC", "#CAC5CD"];
-  const data = [
-    {
-      val: 80,
-      title: "Model assigned",
-    },
-    {
-      val: 20,
-      title: "You assigned",
-    },
-    {
-      val: 100,
-      title: "Total assigned",
-    },
-  ];
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setData((prev) => {
+      let newData = [];
+      newData.push({
+        val:
+          Object.entries(userState?.uploadedFiles || {}).length -
+          (userState?.annotatedData?.length || 0),
+        title: "Model assigned",
+      });
+      newData.push({
+        val: userState?.annotatedData?.length || 0,
+        title: "You assigned",
+      });
+      newData.push({
+        val: Object.entries(userState?.uploadedFiles || {}).length,
+        title: "Total assigned",
+      });
+      return newData;
+    });
+  }, [userState]);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-[80px] items-center">
-        {bg.map((x, idx) => {
-          return (
-            <div className="flex gap-2 items-center">
-              <div
-                className="w-1 h-[74px] rounded-r"
-                style={{ backgroundColor: x }}
-              />
-              <div className="flex flex-col gap-[2px]">
-                <p className="text-[#3E3C42] text-[32px] font-medium">
-                  {data[idx].val}
-                </p>
-                <p className="text-[#605D64] text-base">{data[idx].title}</p>
+        {data.length >= bg.length &&
+          bg.map((x, idx) => {
+            return (
+              <div className="flex gap-2 items-center">
+                <div
+                  className="w-1 h-[74px] rounded-r"
+                  style={{ backgroundColor: x }}
+                />
+                <div className="flex flex-col gap-[2px]">
+                  <p className="text-[#3E3C42] text-[32px] font-medium">
+                    {data[idx].val}
+                  </p>
+                  <p className="text-[#605D64] text-base">{data[idx].title}</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
       <div className="flex flex-col gap-4">
         {[...Array(5)].map((x) => {
