@@ -21,13 +21,13 @@ const Capitalize = (str) => {
   return str2;
 };
 
-const QualitySingleCam = () => {
+const FabricSingleCam = () => {
   const size = useWindowSize();
   const param = useParams();
   const [page, setPage] = useState("feed");
   const [callApi, setCallApi] = useState(false);
   const [initialRender, setInitialRender] = useState(true);
-  let material = param.material.toLowerCase();
+  let material = 'fabric';
   let cameraId = param.cameraId;
   let clientId = param.clientId;
   let plantId = param.plantId;
@@ -154,4 +154,4 @@ const QualitySingleCam = () => {
   );
 };
 
-export default QualitySingleCam;
+export default FabricSingleCam;
