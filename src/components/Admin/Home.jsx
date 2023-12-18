@@ -22,6 +22,8 @@ const AdminHome = () => {
   let param = useParams();
   const [plantCamMap, setPlantCamMap] = useState({});
   const [page, setPage] = useState("activesubs");
+  const [isFetchTranChanged, setTranTableChange] = useState(false);
+
   return (
     <div
       className="pl-0 pr-5  font-roboto flex flex-col rounded-lg"
@@ -100,10 +102,10 @@ const AdminHome = () => {
             <SessionLogs />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <TokenTransaction />
+            <TokenTransaction isFetchTranChanged={isFetchTranChanged}/>
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <AllotToken />
+            <AllotToken setTranTableChange={setTranTableChange} isFetchTranChanged={isFetchTranChanged}/>
           </TabPanel>
         </TabPanels>
       </Tabs>

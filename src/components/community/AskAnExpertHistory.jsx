@@ -17,6 +17,8 @@ import TopClientsChart from "./AskAnExpertCharts/TopClientsChart";
 import PrimaryButton from "../../util/Buttons/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { Link } from "react-router-dom";
+
 const AskAnExpertHistory = () => {
   const { auth } = useContext(NavContext);
   const navigate = useNavigate();
@@ -583,8 +585,8 @@ const AskAnExpertHistory = () => {
           </div>
 
           <div className="flex flex-1 bg-white justify-center rounded-r-lg h-[200px]">
-            <div className=" flex flex-col mt-5 ">
-              <div className="text-[14px] font-semibold">
+            <div className="flex flex-col mt-2">
+              <div className={`text-[14px] font-semibold`}>
                 {role === "EXPERT" ? "Top 3 Clients" : "Top 3 Experts"}
               </div>
               <div className="text-[#fff]">
@@ -595,9 +597,12 @@ const AskAnExpertHistory = () => {
                   <TopClientsChart data={top3Experts} role={role} />
                 )}
               </div>
+             <Link to="/community/askanexpert/question"> <div className={`text-[14px] text-[#447ED4] font-semibold`}>
+                {role !== "EXPERT" ? "View all experts" : ""}
+              </div></Link>
             </div>
-            <div className=" flex flex-col mt-5">
-              <div className="text-[14px] font-semibold">
+            <div className=" flex flex-col mt-2">
+              <div className={`text-[14px] font-semibold ${role !== "EXPERT" ? 'mb-5' : ""}`}>
                 {role === "EXPERT" ? "Top 3 Enquirers" : "Token summary"}
               </div>
               <div className="text-[#fff]">

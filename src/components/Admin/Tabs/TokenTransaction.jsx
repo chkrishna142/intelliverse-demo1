@@ -9,7 +9,7 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const TokenTransaction = () => {
+const TokenTransaction = ({isFetchTranChanged}) => {
   const { clientOrg } = useParams();
   const [selectPlant, setSelectPlant] = useState("All Plants");
   const { auth } = useContext(NavContext);
@@ -96,7 +96,7 @@ const TokenTransaction = () => {
   //     status: true,
   //   },
   // ]);
-
+  const [allocationtableData, setAllocationtableData] = useState([]);
   const [displayData1, setDisplayData1] = useState([]);
   const [displayData2, setDisplayData2] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -121,11 +121,21 @@ const TokenTransaction = () => {
         }
       );
       setIsLoading(false);
-      {
-        clientOrg
-          ? setTransactiontableData(response?.data?.org)
-          : setTransactiontableData(response?.data?.user);
-      }
+      // Sort the data based on transactionDate in descending order
+      const sortedOrgData = response?.data?.org.sort(
+        (a, b) =>
+          new Date(b.transactionDate).getTime() -
+          new Date(a.transactionDate).getTime()
+      );
+
+      const sortedUserData = response?.data?.user.sort(
+        (a, b) =>
+          new Date(b.transactionDate).getTime() -
+          new Date(a.transactionDate).getTime()
+      );
+
+      setTransactiontableData(sortedOrgData);
+      setAllocationtableData(sortedUserData);
     } catch (error) {
       setIsLoading(false);
       console.log(error);
@@ -133,7 +143,7 @@ const TokenTransaction = () => {
   };
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [isFetchTranChanged]);
 
   return (
     <div
@@ -145,25 +155,24 @@ const TokenTransaction = () => {
           Transaction History
         </p>
       </div>
-      <TokenData />
+      <TokenData isFetchTranChanged={isFetchTranChanged}/>
       {/* token details */}
       {isLoading ? (
         // Render spinner or loading indicator while data is being fetched
         <p>Loading...</p>
       ) : (
         <>
-          {displayData1 && displayData1.length !==0  && 
-            
-              <TokenTransactionTable tableData={displayData1} />}
-              {transactiontableData && transactiontableData.length > 0 && (
-              <div className="w-full flex justify-end">
-                <Paginator
-                  data={transactiontableData}
-                  limit={4}
-                  setDisplayData={setDisplayData1}
-                />
-              </div>
-            
+          {displayData1 && displayData1.length !== 0 && (
+            <TokenTransactionTable tableData={displayData1} />
+          )}
+          {transactiontableData && transactiontableData.length > 0 && (
+            <div className="w-full flex justify-end">
+              <Paginator
+                data={transactiontableData}
+                limit={4}
+                setDisplayData={setDisplayData1}
+              />
+            </div>
           )}
 
           <div className="w-full p-2">
@@ -175,10 +184,10 @@ const TokenTransaction = () => {
                 <TokenAllocationTable tableData={displayData2} />
               )}
             </div>
-            {transactiontableData && transactiontableData.length > 0 && (
+            {allocationtableData && allocationtableData.length > 0 && (
               <div className="flex justify-end">
                 <Paginator
-                  data={transactiontableData}
+                  data={allocationtableData}
                   limit={4}
                   setDisplayData={setDisplayData2}
                 />
