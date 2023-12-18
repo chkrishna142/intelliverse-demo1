@@ -101,7 +101,7 @@ const TokenTransactionTable = ({ tableData }) => {
                   <Td>
                     <div
                       className={`w-full flex justify-start  ${
-                        item.status == "FAILURE" ? "text-[#E46962]" : ""
+                        item.status == "FAILURE" ? "text-[#E46962]" : "text-[#7AC958]"
                       }`}
                     >
                       {item.status == "FAILURE" ? "Failed" : "Success"}

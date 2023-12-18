@@ -43,11 +43,9 @@ const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
   }, [isFetchBalance,isFetchTranChanged]);
 
   const handleToken = () => {
-    // if(clientOrg){
-    //   navigate(`/community/advisor/buycredits/${clientOrg}`);
-    // }else{
-      navigate(`/community/advisor/buycredits/${clientOrg || clientName}`);
-    // }
+   
+      navigate(`/community/advisor/buycredits`);
+    
     
   };
 
