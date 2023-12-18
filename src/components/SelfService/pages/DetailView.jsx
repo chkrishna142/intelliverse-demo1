@@ -20,6 +20,9 @@ const Capitalize = (str) => {
 const DetailView = () => {
   const [page, setPage] = useState("Project details");
   const { projectId } = useParams();
+  const param = {
+    projectId: projectId,
+  };
   const initState = {
     name: "",
     dataType: "",
@@ -33,12 +36,14 @@ const DetailView = () => {
   };
   const { auth } = useContext(NavContext);
   const [userState, setUserState] = useState(initState);
+  const [modelInfo, setModelInfo] = useState({
+    status: "",
+    performance: null,
+  });
+  let pollTimer;
 
   const getSingle = async () => {
     try {
-      const param = {
-        projectId: projectId,
-      };
       const resposne = await axios.get(
         baseURL + "selfserve/v1/project/v1/getSingle/",
         {
@@ -71,8 +76,39 @@ const DetailView = () => {
     }
   };
 
+  const getStatus = async () => {
+    try {
+      const response = await axios.get(
+        baseURL + "selfserve/v1/project/v1/training/status/",
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      if (response.status == 200 && response.data) {
+        let { status, performance = null } = response.data[0];
+        console.log(status,'status received')
+        setModelInfo((prev) => ({
+          ...prev,
+          status: status,
+          performance: performance,
+        }));
+        if (status == "COMPLETE" || status == 'FAILED') {
+          clearInterval(pollTimer);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getSingle();
+    pollTimer = setInterval(getStatus, 2000);
+    return () => clearInterval(pollTimer);
   }, []);
 
   const tabs = [
@@ -96,9 +132,9 @@ const DetailView = () => {
           {userState?.name}
         </p>
       </div>
-      <div className="rounded-lg bg-white p-4 flex flex-col gap-4 w-full h-full">
+      <div className="rounded-lg bg-white p-4 flex flex-col gap-4 w-full h-full relative">
         <Tabs>
-          <TabList className="!flex !justify-between !border-0">
+          <TabList className="!flex !justify-between !border-0 items-center">
             <div className="flex items-center gap-4">
               {tabs.map((x) => {
                 return (
@@ -129,11 +165,27 @@ const DetailView = () => {
                   {new Date(userState?.lastUpdatedAt).toLocaleString()}
                 </p>
               </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <p className="text-[#938F96] text-sm">Model accuracy</p>
-                <p className="text-[#69B04B] text-sm font-medium">76%</p>
+            ) : modelInfo?.status == "COMPLETED" ? (
+              <div className="flex flex-col gap-0 absolute top-2 right-2 whitespace-nowrap">
+                <div className="flex items-center gap-3">
+                  <p className="text-[#938F96] text-sm w-[100px]">Model accuracy</p>
+                  <p className="text-[#69B04B] text-sm font-medium">
+                    {Math.round(
+                      modelInfo?.performance?.average_precision * 100
+                    )}%
+                  </p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <p className="text-[#938F96] text-sm w-[100px]">Model recall</p>
+                  <p className="text-[#69B04B] text-sm font-medium">
+                    {Math.round(modelInfo?.performance?.recall * 100)}%
+                  </p>
+                </div>
               </div>
+            ) : (
+              <p className="text-[#938F96] text-sm">
+                STATUS: {modelInfo?.status}
+              </p>
             )}
           </TabList>
 
@@ -149,7 +201,7 @@ const DetailView = () => {
               </div>
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0">
-              <OutputDetail />
+              <OutputDetail userState={userState} />
             </TabPanel>
           </TabPanels>
         </Tabs>

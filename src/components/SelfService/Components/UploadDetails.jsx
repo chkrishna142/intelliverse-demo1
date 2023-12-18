@@ -35,38 +35,48 @@ const UploadDetails = ({
   };
 
   const UploadFiles = async (data) => {
-    let requestData = new FormData();
     const param = {
       projectId: userData.projectId,
     };
-    data.map((x) => {
-      requestData.append("files", x);
-    });
 
     const promise = new Promise((resolve, reject) => {
-      axios
-        .post(
-          baseURL + "selfserve/v1/project/v1/file/batchUpload/",
-          requestData,
-          {
-            params: param,
-            headers: {
-              "Content-Type": "multipart/form-data",
-              "X-Auth-Token": auth,
-            },
-          }
-        )
-        .then((response) => {
-          console.log("Response: ", response.data);
-          handleChange("uploadedFiles", response.data?.dataset);
-          resolve(200);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          reject();
-          setLoading(false);
+      let chunkSize = 25;
+      const totalChunks = Math.ceil(data.length / chunkSize);
+      let completedChunks = 0;
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * chunkSize;
+        const end = (i + 1) * chunkSize;
+        const filesChunk = data.slice(start, end);
+        let requestData = new FormData();
+        filesChunk.map((x) => {
+          requestData.append("files", x);
         });
+        axios
+          .post(
+            baseURL + "selfserve/v1/project/v1/file/batchUpload/",
+            requestData,
+            {
+              params: param,
+              headers: {
+                "Content-Type": "multipart/form-data",
+                "X-Auth-Token": auth,
+              },
+            }
+          )
+          .then((response) => {
+            completedChunks++;
+            if (completedChunks == totalChunks) {
+              resolve(200);
+              setLoading(false);
+              handleChange("uploadedFiles", response.data?.dataset);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error);
+            setLoading(false);
+          });
+      }
     });
 
     toast.promise(promise, {
