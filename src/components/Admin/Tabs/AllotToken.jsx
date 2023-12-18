@@ -17,14 +17,15 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const AllotToken = () => {
+const AllotToken = ({ setTranTableChange, isFetchTranChanged }) => {
   const { clientOrg, mode } = useParams();
   const { auth } = useContext(NavContext);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetchBalance, setFetchBalance] = useState(false);
 
   const [addTokens, setAddTokens] = useState(20);
-  
+
   const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [addTokensArray, setAddTokensArray] = useState([]);
@@ -57,19 +58,17 @@ const AllotToken = () => {
     fetchTableData();
   }, []);
 
-
   const handleAddButtonClick = async (id, user) => {
-    
     if (isNaN(addTokens)) {
       // Handle the case where addTokens is not a valid integer
       toast({
         title: `Invalid input for tokens. Please enter a valid number`,
-        status: 'error',
+        status: "error",
         duration: 4000,
         isClosable: true,
-        position: 'top',
+        position: "top",
       });
-      setAddTokens(20)
+      setAddTokens(20);
       return;
     }
     const body = {
@@ -88,7 +87,7 @@ const AllotToken = () => {
           },
         }
       );
-
+      setTranTableChange(!isFetchTranChanged);
       toast({
         title: `Added ${addTokens} tokens for ${user}`,
         status: "success",
@@ -97,10 +96,12 @@ const AllotToken = () => {
         position: "top",
       });
       setAddTokens(20);
+      setFetchBalance(!isFetchBalance);
       fetchTableData();
       console.log("res", response);
     } catch (error) {
-      setAddTokens(20)
+      setTranTableChange(!isFetchTranChanged);
+      setAddTokens(20);
       toast({
         title: `Invalid token`,
         status: "error",
@@ -116,17 +117,16 @@ const AllotToken = () => {
     // Initialize addTokensArray with default values (20 for each row)
     setAddTokensArray(Array(tableData.length).fill(20));
   }, [tableData]);
-  
+
   const handleAddToken = (index, newValue) => {
     // Update addTokensArray with the new value for the specific index
     setAddTokensArray((prevTokens) => {
       const newTokens = [...prevTokens];
       newTokens[index] = newValue;
-      setAddTokens(newValue)
+      setAddTokens(newValue);
       return newTokens;
     });
   };
-console.log("add",addTokens)
   return (
     <div className={`w-full flex flex-col gap-4 ${clientOrg && "mt-[4vh]"}`}>
       <div>
@@ -135,7 +135,7 @@ console.log("add",addTokens)
         </p>
       </div>
 
-      <TokenData />
+      <TokenData isFetchBalance={isFetchBalance} />
 
       {/* pagination */}
       {isLoading ? (
@@ -182,7 +182,7 @@ console.log("add",addTokens)
               <Tbody textAlign={"left"}>
                 {displayData &&
                   displayData.length > 0 &&
-                  displayData.map((item,index) => {
+                  displayData.map((item, index) => {
                     return (
                       <Tr key={item.userId}>
                         <Td
@@ -223,7 +223,9 @@ console.log("add",addTokens)
                                 type="text"
                                 className="border w-12 h-8 text-[#605D64] pl-2 pr-5 rounded-sm"
                                 value={addTokensArray[index]}
-                                onChange={(e) => handleAddToken(index,e.target.value)}
+                                onChange={(e) =>
+                                  handleAddToken(index, e.target.value)
+                                }
                               />
                               <button
                                 className="!text-[#3A74CA] !font-semibold text-[14px]"

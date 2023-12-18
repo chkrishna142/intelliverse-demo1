@@ -16,6 +16,7 @@ const TopEnquirerChart = ({ data,role }) => {
     },
 
     xaxis: {
+      position: "top",
       categories:
       data?.names && data?.names?.length > 0
           ? [...data?.names]
@@ -29,9 +30,15 @@ const TopEnquirerChart = ({ data,role }) => {
         },
         show: false,
       },
+      axisTicks: {
+        show: false,
+      },
+      axisBorder: {
+        show:false
+      },
       title: {
         text: role === "EXPERT" ? "Number of questions" : "",
-        offsetY: -30,
+        offsetY: -60,
         style: {
           fontSize: "14px",
           fontWeight: 400,

@@ -1,26 +1,26 @@
-import { useState, useEffect, useContext } from 'react';
-import { useToast } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
-import NavContext from '../../NavContext';
-import { baseURL } from '../../../index';
-import FeedCard from '../Components/FeedCard';
-import axios from 'axios';
-import FloatingInput from '../../../util/VisionUtils/FloatingInput';
-import WeighmentCard from '../Components/WeighmentCard';
-import mixpanel from 'mixpanel-browser';
+import { useState, useEffect, useContext } from "react";
+import { useToast } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
+import NavContext from "../../NavContext";
+import { baseURL } from "../../../index";
+import FeedCard from "../Components/FeedCard";
+import axios from "axios";
+import FloatingInput from "../../../util/VisionUtils/FloatingInput";
+import WeighmentCard from "../Components/WeighmentCard";
+import mixpanel from "mixpanel-browser";
 
 const Capitalize = (str) => {
-  const arr = str.split(' ');
+  const arr = str.split(" ");
   for (var i = 0; i < arr.length; i++) {
     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
   }
-  const str2 = arr.join(' ');
+  const str2 = arr.join(" ");
   return str2;
 };
 
 const playNotificationSound = (toast, check, title) => {
   const audio = new Audio(
-    'https://drive.google.com/uc?id=1q5E3cd0B8L1z89ojBex3ZzNxDakk1ilG&export=download'
+    "https://drive.google.com/uc?id=1q5E3cd0B8L1z89ojBex3ZzNxDakk1ilG&export=download"
   );
 
   const playPromise = audio.play();
@@ -30,15 +30,15 @@ const playNotificationSound = (toast, check, title) => {
       .then(() => {
         toast({
           title: Capitalize(title),
-          description: Capitalize(check) + ' not detected',
-          status: 'error',
+          description: Capitalize(check) + " not detected",
+          status: "error",
           duration: 4000,
           isClosable: true,
-          position: 'top-right',
+          position: "top-right",
         });
       })
       .catch((error) => {
-        console.error('Error starting audio playback:', error);
+        console.error("Error starting audio playback:", error);
       });
   }
 };
@@ -49,47 +49,57 @@ const RtspToHslConverter = async (url, camId) => {
     alias: camId,
   });
   const response = await axios.post(
-    'https://rtsp.backend-ripik.com/start',
+    "https://rtsp.backend-ripik.com/start",
     request,
     {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     }
   );
   const data = await response.data;
-  return data.running ? 'https://rtsp.backend-ripik.com' + data.uri : '';
+  return data.running ? "https://rtsp.backend-ripik.com" + data.uri : "";
 };
 
 const Feed = () => {
   const [selectedBay, setSelectedBay] = useState();
   const param = useParams();
   const [bays, setBays] = useState([]);
-  const [truckNo, setTruckNo] = useState('');
+  const [truckNo, setTruckNo] = useState("");
   const [editing, setEditing] = useState(false);
   const [currentCams, setCurrentCams] = useState({});
   const [trucInfo, setTruckInfo] = useState({});
   const [feedMap, setFeedMap] = useState({});
+  const [weightBridgeData, setWeightBridgeData] = useState({
+    "weightBridge1-right": {
+      reason: -1,
+      truckNo: "",
+    },
+    "weightBridge1-left": {
+      reason: -1,
+      truckNo: "",
+    },
+  });
   const { auth } = useContext(NavContext);
   const toast = useToast();
 
   const LiveAlertsApi = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: 'WORKFORCESAFETY',
-      plantName: 'khandala',
+      useCase: "WORKFORCESAFETY",
+      plantName: "khandala",
       cameraGpId: selectedBay,
       endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
     });
     const response = await axios
       .post(
-        baseURL + 'vision/v1/workforceMonitoring/alerts/live/',
+        baseURL + "vision/v1/workforceMonitoring/alerts/live/",
         requestData,
         {
-          credentials: 'same-origin',
+          credentials: "same-origin",
           headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': auth,
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
         }
       )
@@ -111,19 +121,20 @@ const Feed = () => {
   const BaysApiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: 'WORKFORCESAFETY',
-      plantName: 'khandala',
-      cameraGpId: 'all',
+      useCase: "WORKFORCESAFETY",
+      plantName: "khandala",
+      cameraGpId: "all",
+      excludeCameraGpId: "weightBridge1",
     });
     const response = await axios
       .post(
-        baseURL + 'vision/v1/workforceMonitoring/info/initialize/',
+        baseURL + "vision/v1/workforceMonitoring/info/initialize/",
         requestData,
         {
-          credentials: 'same-origin',
+          credentials: "same-origin",
           headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': auth,
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
         }
       )
@@ -167,20 +178,20 @@ const Feed = () => {
   const LiveSummaryApi = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: 'WORKFORCESAFETY',
-      plantName: 'khandala',
+      useCase: "WORKFORCESAFETY",
+      plantName: "khandala",
       cameraGpId: selectedBay,
       endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
     });
     const response = await axios
       .post(
-        baseURL + 'vision/v1/workforceMonitoring/summary/live/',
+        baseURL + "vision/v1/workforceMonitoring/summary/live/",
         requestData,
         {
-          credentials: 'same-origin',
+          credentials: "same-origin",
           headers: {
-            'Content-Type': 'application/json',
-            'X-Auth-Token': auth,
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
           },
         }
       )
@@ -201,8 +212,13 @@ const Feed = () => {
               for (const key in data) {
                 for (const subKey in data[key]) {
                   const { passed, total } = data[key][subKey];
-                  updatedMap[selectedBay][key][subKey] =
-                    passed === total ? 0 : 1;
+                  if (
+                    updatedMap[selectedBay].hasOwnProperty(key) &&
+                    updatedMap[selectedBay][key].hasOwnProperty(subKey) //handling inconsistency b/w init and live data
+                  ) {
+                    updatedMap[selectedBay][key][subKey] =
+                      passed === total ? 0 : 1;
+                  }
                 }
               }
               return updatedMap;
@@ -229,23 +245,82 @@ const Feed = () => {
       });
   };
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      LiveAlertsApi();
-    }, 6 * 1000);
-    return () => clearInterval(intervalId);
-  }, [selectedBay]);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     LiveAlertsApi();
+  //   }, 7 * 1000);
+  //   return () => clearInterval(intervalId);
+  // }, [selectedBay]);
+
+  const weightBridge1Api = async () => {
+    const requestData = JSON.stringify({
+      clientId: param.clientId.toLowerCase(),
+      useCase: "WORKFORCESAFETY",
+      plantName: "khandala",
+      cameraGpId: selectedBay,
+      endDate: new Date().getTime() + 5.5 * 60 * 60 * 1000,
+    });
+    const response = await axios
+      .post(
+        baseURL + "vision/v1/workforceMonitoring/summary/live/multiple/",
+        requestData,
+        {
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      )
+      .then((response) => {
+        let data = response.data;
+        setWeightBridgeData((prev) => {
+          let newData = { ...prev };
+          for (let key in data) {
+            if (Object.entries(data[key]?.summary || {}).length) {
+              let { passed, total } = data[key]?.summary?.weighment?.clearance;
+              newData[key] = {
+                reason: passed === total ? 0 : 1, // Use === for strict equality check
+                truckNo: data[key]?.vehicleNo || "",
+              };
+            }
+          }
+          return newData;
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     setTruckInfo({});
-    const intervalId = setInterval(() => {
-      LiveSummaryApi();
-      mixpanel.track(`Workforce view`, {
-        bay: selectedBay,
-        client: param.clientId,
-      });
-    }, 7 * 1000);
-    return () => clearInterval(intervalId);
+    console.log("tabs", selectedBay);
+    if (selectedBay === "weightBridge1") {
+      const intervalId1 = setInterval(() => {
+        weightBridge1Api();
+      }, 10 * 1000);
+      return () => {
+        clearInterval(intervalId1);
+      };
+    } else {
+      const intervalId1 = setInterval(() => {
+        LiveAlertsApi();
+      }, 7 * 1000);
+
+      const intervalId2 = setInterval(() => {
+        LiveSummaryApi();
+        mixpanel.track(`Workforce view`, {
+          bay: selectedBay,
+          client: param.clientId,
+        });
+      }, 10 * 1000);
+
+      return () => {
+        clearInterval(intervalId2);
+        clearInterval(intervalId1);
+      };
+    }
   }, [selectedBay]);
 
   useEffect(() => {
@@ -260,11 +335,13 @@ const Feed = () => {
 
   useEffect(() => {
     if (trucInfo && Object.keys(trucInfo).length > 0) {
-      setTruckNo(trucInfo.truckNumber ? trucInfo.truckNumber : 'UNKNOWN');
+      setTruckNo(trucInfo.truckNumber ? trucInfo.truckNumber : "UNKNOWN");
     }
   }, [trucInfo]);
 
-  const imgs = ['3.png', '2.png', '1.png', '3.png', '2.png', '1.png'];
+  const imgs = ["3.png", "2.png", "1.png", "3.png", "2.png", "1.png"];
+
+  console.log("weightBridgeData", weightBridgeData);
 
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
@@ -276,30 +353,30 @@ const Feed = () => {
               <div
                 className={`rounded-[32px] px-4 py-[6px] text-[#605D64] text-base cursor-pointer whitespace-nowrap ${
                   selectedBay != val
-                    ? 'bg-white border border-gray-300'
-                    : 'bg-[#e2edfe] border border-[#6CA6FC]'
+                    ? "bg-white border border-gray-300"
+                    : "bg-[#e2edfe] border border-[#6CA6FC]"
                 }`}
                 onClick={() => setSelectedBay(val)}
               >
-                {'Bay ' + val[val.length - 1]}
+                {"Bay " + val[val.length - 1]}
               </div>
             );
           })}
           <div
             className={`rounded-[32px] px-4 py-[6px] text-[#605D64] text-base cursor-pointer ${
-              selectedBay != 'Weighment'
-                ? 'bg-white border border-gray-300'
-                : 'bg-[#e2edfe] border border-[#6CA6FC]'
+              selectedBay != "weightBridge1"
+                ? "bg-white border border-gray-300"
+                : "bg-[#e2edfe] border border-[#6CA6FC]"
             }`}
-            onClick={() => setSelectedBay('Weighment')}
+            onClick={() => setSelectedBay("weightBridge1")}
           >
-            {'Weighment'}
+            {"WeightBridge1"}
           </div>
         </div>
       </div>
-      {selectedBay != 'Weighment' ? (
+      {selectedBay != "weightBridge1" ? (
         <>
-          {' '}
+          {" "}
           <div className="self-start px-6 py-3 flex gap-7 items-center bg-[#FAFAFA] rounded-[6px] max-w-[80vw] border border-[#EBEBEB] overflow-x-auto">
             <div className="flex gap-2 items-center min-w-[160px]">
               <p className="text-sm text-[#605D64]">Truck no.</p>
@@ -336,7 +413,7 @@ const Feed = () => {
               <p className="text-base font-medium text-[#3E3C42]">
                 {trucInfo?.timestamp
                   ? new Date(trucInfo?.timestamp * 1000).toLocaleTimeString()
-                  : ''}
+                  : ""}
               </p>
             </div>
             <div className="flex gap-2 items-center min-w-[160px]">
@@ -344,7 +421,7 @@ const Feed = () => {
               <p className="text-base font-medium text-[#3E3C42]">
                 {trucInfo?.timestamp
                   ? new Date(trucInfo?.timestamp * 1000).toLocaleDateString()
-                  : ''}
+                  : ""}
               </p>
             </div>
           </div>
@@ -412,25 +489,33 @@ const Feed = () => {
         <div className="flex flex-col gap-6">
           <div className="flex flex-col min-[815px]:flex-row items-start min-[815px]:items-center gap-4">
             <p className="text-[#605D64] text-lg font-medium">
-              Weighment Inspection Protocol
+              WeightBridge1 Inspection Protocol
             </p>
             <div className="px-4 py-1 rounded-md bg-[#FAFAFA] border border-[#EBEBEB] flex gap-7 items-center whitespace-nowrap">
               <p className="text-[#605D64] text-sm flex gap-2 items-center">
-                Date{' '}
+                Date{" "}
                 <p className="text-[#3E3C42] text-base font-medium">
                   10 May 2023
                 </p>
               </p>
               <p className="text-[#605D64] text-sm flex gap-2 items-center">
-                Time{' '}
+                Time{" "}
                 <p className="text-[#3E3C42] text-base font-medium">11:12:34</p>
               </p>
             </div>
           </div>
           <div className="flex flex-col-reverse lg:flex-row gap-8 items-start h-auto">
             <div className="flex flex-col sm:flex-row lg:flex-col justify-between h-full gap-4">
-              <WeighmentCard reason={0} num={'Left Bridge'} />
-              <WeighmentCard reason={1} num={'Right Bridge'} />
+              <WeighmentCard
+                reason={weightBridgeData?.["weightBridge1-left"]?.reason}
+                num={"Left Bridge"}
+                truckNo={weightBridgeData?.["weightBridge1-left"]?.truckNo}
+              />
+              <WeighmentCard
+                reason={weightBridgeData?.["weightBridge1-right"]?.reason}
+                num={"Right Bridge"}
+                truckNo={weightBridgeData?.["weightBridge1-right"]?.truckNo}
+              />
             </div>
             <div className="p-4 rounded-lg flex flex-col gap-2 bg-[#F5F5F5]">
               <p className="text-[#605D64] font-medium text-sm">
@@ -446,7 +531,7 @@ const Feed = () => {
                 >
                   <source
                     src={
-                      'https://intelliverse-public-videos.s3.ap-south-1.amazonaws.com/flushing_sampling_hatches_closed.mov'
+                      "https://intelliverse-public-videos.s3.ap-south-1.amazonaws.com/flushing_sampling_hatches_closed.mov"
                     }
                     type="video/mp4"
                   />

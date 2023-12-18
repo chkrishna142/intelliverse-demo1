@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, useRoutes } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import Home from './components/Main/Home';
 import Sizing from './components/Sizing/Sizing';
@@ -66,6 +66,7 @@ function App() {
   const [organisation, setOrganisation] = useState(
     localStorage.getItem('organization')
   );
+  // const elements = useRoutes(routes.filter())
   const [location, setLocation] = useState(localStorage.getItem('location'));
   const [fullName, setFullName] = useState(localStorage.getItem('fullname'));
   const [phoneNumber, setPhoneNumber] = useState(localStorage.getItem('phone'));
@@ -133,7 +134,7 @@ function App() {
   return (
     <>
       <NavContext.Provider
-        value={{ setLogin, login, setAuth, auth, setEmail, email }}
+        value={{ setLogin, login, setAuth, auth, setEmail, email, userType }}
       >
         <div>
           {login ? (

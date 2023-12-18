@@ -10,6 +10,7 @@ import SessionLogs from "../../Admin/Tabs/SessionLogs";
 import UserMgmt from "../../Admin/Tabs/UserMgmt";
 import ActiveSubs from "../../Admin/Tabs/ActiveSubs";
 import DevelopmentInProgress from "../Deploy/DevelopmentInProgress";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -50,9 +51,9 @@ const ViewTabs = () => {
               View Details
             </p>
           </div>
-
-          <Tabs className="bg-white rounded-md px-6 border-2 pt-4">
-            <TabList className="!flex !border-0">
+          {/* <div className="flex border"> */}
+          <Tabs className="bg-white rounded-md px-6 border-2 pt-4" width={'full'}>
+            <TabList className="!flex !border-0 !justify-between !items-center" width={'full'}>
               <div className="flex items-center gap-4 overflow-x-auto h-14 md:h-10">
                 <Tab
                   className={
@@ -115,28 +116,34 @@ const ViewTabs = () => {
                   Allocate Tokens
                 </Tab>
               </div>
+              <PrimaryButton text={"Deploy"} width={"fit-content"} onClick={()=>setDeployClicked(true)} />
             </TabList>
-
-            <TabPanels className="!pt-4">
-              <TabPanel className="!pl-0 !pr-0">
-                {clientId && <ViewClient setDeployClicked={setDeployClicked} />}
-              </TabPanel>
-              <TabPanel className="!pl-0 !pr-0">
-                {clientId && <ActiveSubs clientId={clientId} mode="view" />}
-              </TabPanel>
-              <TabPanel className="!pl-0 !pr-0">
-                {clientId && <UserMgmt clientId={clientId} />}
-              </TabPanel>
-              <TabPanel className="!pl-0 !pr-0">
-                {clientId && <SessionLogs clientId={clientId} />}
-              </TabPanel>
-              <TabPanel className="!pl-0 !pr-0">
-                {clientId && <TokenTransaction clientId={clientId} />}
-              </TabPanel>
-              <TabPanel className="!pl-0 !pr-0">
-                {clientId && <AllotToken clientId={clientId} />}
-              </TabPanel>
-            </TabPanels>
+            <div className="flex">
+              <TabPanels className="!pt-4">
+                <TabPanel className="!pl-0 !pr-0">
+                  {clientId && (
+                    <ViewClient setDeployClicked={setDeployClicked} />
+                  )}
+                </TabPanel>
+                <TabPanel className="!pl-0 !pr-0">
+                  {clientId && <ActiveSubs clientId={clientId} mode="view" />}
+                </TabPanel>
+                <TabPanel className="!pl-0 !pr-0">
+                  {clientId && <UserMgmt clientId={clientId} />}
+                </TabPanel>
+                <TabPanel className="!pl-0 !pr-0">
+                  {clientId && <SessionLogs clientId={clientId} />}
+                </TabPanel>
+                <TabPanel className="!pl-0 !pr-0">
+                  {clientId && <TokenTransaction clientId={clientId} />}
+                </TabPanel>
+                <TabPanel className="!pl-0 !pr-0">
+                  {clientId && <AllotToken clientId={clientId} />}
+                </TabPanel>
+              </TabPanels>
+             
+          
+            </div>
           </Tabs>
         </div>
       ) : (
