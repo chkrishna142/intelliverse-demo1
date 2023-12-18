@@ -13,6 +13,15 @@ const getColor = (val, total) => {
   else return "#EC928E";
 };
 
+const Capitalize = (str) => {
+  const arr = str.split("");
+  let str2 = "";
+  for (var i = 0; i < arr.length; i++) {
+    str2 += arr[i] == arr[i].toUpperCase() ? " " + arr[i] : arr[i];
+  }
+  return str2;
+};
+
 const AlertCard = ({ parameter, count, total, setFilterData }) => {
   const handleClick = () => {
     setFilterData((prev) => {
@@ -46,8 +55,8 @@ const AlertCard = ({ parameter, count, total, setFilterData }) => {
           className="h-[40px] w-[40px]"
           src={`/WorkforceSafetyIcons/${iconMap[parameter]}`}
         />
-        <p className="text-base text-[#605D64] whitespace-nowrap">
-          {parameter}
+        <p className="text-base text-[#605D64] whitespace-nowrap capitalize">
+          {Capitalize(parameter)}
         </p>
       </div>
       <div
