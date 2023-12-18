@@ -3,7 +3,7 @@ import SpiderChart from "../../Charts/QualityCharts/SpiderChart";
 
 const CamCard = ({ plantId, cameraName, data, alert }) => {
   let param = useParams();
-  let material = param.material.toLowerCase();
+  let material = 'fabric';
   return (
     <div className="relative flex flex-col gap-4 pt-1 pb-4 p-6">
       {alert !== 0 && (

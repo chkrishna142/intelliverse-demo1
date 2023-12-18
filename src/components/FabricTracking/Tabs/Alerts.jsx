@@ -115,7 +115,7 @@ const getReason = (reason) => {
 const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const param = useParams();
   const { auth } = useContext(NavContext);
-  let material = param.material.toLowerCase();
+  let material = 'FABRIC';
   let clientId = param.clientId.toLowerCase();
   const indexRef = useRef();
   const [openModal, setOpenModal] = useState(false);

@@ -31,7 +31,7 @@ const PhotoGallery = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
+      useCase: 'FABRIC',
       plantName: selectedPlant,
       cameraId: selectedCam,
       startDate: new Date(date).getTime(),

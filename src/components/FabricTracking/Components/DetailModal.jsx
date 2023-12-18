@@ -25,7 +25,7 @@ const DetailModal = ({ openModal, closeModal, data, index }) => {
   let param = useParams();
   const size = useWindowSize();
   const { auth } = useContext(NavContext);
-  let material = param.material.toUpperCase();
+  let material = 'fabric';
   let clientId = param.clientId.toLowerCase();
   const indexRef = useRef();
   const idRef = useRef();

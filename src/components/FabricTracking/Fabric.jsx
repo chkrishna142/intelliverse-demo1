@@ -17,7 +17,7 @@ const Capitalize = (str) => {
   return str2;
 };
 
-const Quality = () => {
+const Fabric = () => {
   const size = useWindowSize();
   const location = useLocation();
   const [plantCamMap, setPlantCamMap] = useState({});
@@ -30,7 +30,7 @@ const Quality = () => {
     >
       <div className="flex justify-start items-center gap-2 mb-3 mt-6">
         <Link
-          to={`/vision/qualityTracking/${param.material}`}
+          to={`/vision/qualityTracking/fabric`}
           style={{
             textDecoration: "none",
           }}
@@ -38,7 +38,7 @@ const Quality = () => {
           <img src="/backtick.svg" />
         </Link>
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87]">
-          {Capitalize(param.material.toLowerCase() + " Tracking")}
+          {Capitalize("fabric Tracking")}
         </p>
       </div>
 
@@ -101,7 +101,7 @@ const Quality = () => {
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
             <Feed
-              material={param.material.toLowerCase()}
+              material={'fabric'}
               clientId={param.clientId.toLowerCase()}
               setPlantCamMap={setPlantCamMap}
             />
@@ -146,4 +146,4 @@ const Quality = () => {
   );
 };
 
-export default Quality;
+export default Fabric;

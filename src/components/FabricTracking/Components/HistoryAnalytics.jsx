@@ -44,7 +44,7 @@ const HistoryAnalytics = ({ plantId, cameraId, disable, plantCamMap }) => {
   const apiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: param.material.toUpperCase(),
+      useCase: 'FABRIC',
       cameraId: selectedCam,
       plantName: selectedPlant,
       startDate: new Date(date).getTime(),
