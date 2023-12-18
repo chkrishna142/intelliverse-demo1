@@ -17,15 +17,15 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
+const AllotToken = ({ setTranTableChange, isFetchTranChanged }) => {
   const { clientOrg, mode } = useParams();
   const { auth } = useContext(NavContext);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [isFetchBalance, setFetchBalance] = useState(false);
- 
+
   const [addTokens, setAddTokens] = useState(20);
-  
+
   const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [addTokensArray, setAddTokensArray] = useState([]);
@@ -58,19 +58,17 @@ const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
     fetchTableData();
   }, []);
 
-
   const handleAddButtonClick = async (id, user) => {
-    
     if (isNaN(addTokens)) {
       // Handle the case where addTokens is not a valid integer
       toast({
         title: `Invalid input for tokens. Please enter a valid number`,
-        status: 'error',
+        status: "error",
         duration: 4000,
         isClosable: true,
-        position: 'top',
+        position: "top",
       });
-      setAddTokens(20)
+      setAddTokens(20);
       return;
     }
     const body = {
@@ -89,7 +87,7 @@ const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
           },
         }
       );
-      setTranTableChange(!isFetchTranChanged)
+      setTranTableChange(!isFetchTranChanged);
       toast({
         title: `Added ${addTokens} tokens for ${user}`,
         status: "success",
@@ -102,8 +100,8 @@ const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
       fetchTableData();
       console.log("res", response);
     } catch (error) {
-      setTranTableChange(!isFetchTranChanged)
-      setAddTokens(20)
+      setTranTableChange(!isFetchTranChanged);
+      setAddTokens(20);
       toast({
         title: `Invalid token`,
         status: "error",
@@ -119,13 +117,13 @@ const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
     // Initialize addTokensArray with default values (20 for each row)
     setAddTokensArray(Array(tableData.length).fill(20));
   }, [tableData]);
-  
+
   const handleAddToken = (index, newValue) => {
     // Update addTokensArray with the new value for the specific index
     setAddTokensArray((prevTokens) => {
       const newTokens = [...prevTokens];
       newTokens[index] = newValue;
-      setAddTokens(newValue)
+      setAddTokens(newValue);
       return newTokens;
     });
   };
@@ -184,7 +182,7 @@ const AllotToken = ({setTranTableChange,isFetchTranChanged}) => {
               <Tbody textAlign={"left"}>
                 {displayData &&
                   displayData.length > 0 &&
-                  displayData.map((item,index) => {
+                  displayData.map((item, index) => {
                     return (
                       <Tr key={item.userId}>
                         <Td

@@ -41,6 +41,10 @@ const ImageSelector = ({
     });
   };
 
+  const handleClick = (x) => {
+    if (!x.hasOwnProperty("label")) handleChange(x);
+  };
+
   useEffect(() => {
     if (page == "Unannotated") setDisplayData(images);
     else setDisplayData(annotatedImages);
@@ -76,7 +80,13 @@ const ImageSelector = ({
               <img
                 src={item.img}
                 alt="image"
-                className="w-full rounded"
+                className="w-full rounded hover:scale-105"
+                style={{
+                  pointerEvents: item.hasOwnProperty("label")
+                    ? "none"
+                    : "pointer",
+                }}
+                onClick={() => handleClick(item)}
               />
               {!item.hasOwnProperty("label") && (
                 <Checkbox
@@ -90,6 +100,9 @@ const ImageSelector = ({
                       borderColor: "#FFC107",
                     },
                   }}
+                  isChecked={selectedImages.some(
+                    (selectedItem) => selectedItem.id === item.id
+                  )}
                   onChange={() => handleChange(item)}
                   position={"absolute"}
                   top={"8px"}
