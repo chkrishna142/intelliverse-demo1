@@ -66,9 +66,11 @@ const CreditBuy = () => {
   };
 
   const getPaymentStatus = async (id) => {
-  
+    const param = {
+      paymentId: id
+    }
     try {
-      const data = await fetch(baseURL + `payment/getpayment?paymentId=${id}`, {
+      const data = await fetch(baseURL + `payment/getpayment?${new URLSearchParams(param)}`, {
         method: 'GET',
         
         headers: {
@@ -77,17 +79,15 @@ const CreditBuy = () => {
         },
       });
       const res = await data.json();
-      const status = res?.filter((item) => {
-        return item.paymentId === id;
-      });
+      const status = res;
       if (
-        status[0].paymentInitiated === true &&
-        status[0].paymentCaptured === false
+        status.paymentInitiated === true &&
+        status.paymentCaptured === false
       ) {
         setSubmitted(0);
       } else if (
-        status[0].paymentInitiated === true &&
-        status[0].paymentCaptured === true
+        status.paymentInitiated === true &&
+        status.paymentCaptured === true
       ) {
         setSubmitted(2);
       }
