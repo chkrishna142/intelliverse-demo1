@@ -263,7 +263,7 @@ const DetailView = () => {
               )}
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0">
-              {false ? (
+              {predictionData ? (
                 <OutputDetail
                   userState={userState}
                   predictionData={predictionData}
