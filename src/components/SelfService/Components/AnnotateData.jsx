@@ -71,7 +71,46 @@ const AnnotateData = ({
     setPage("Annotated");
   };
 
-  const handleSubmit = async () => {
+  const startTrainApi = async () => {
+    try {
+      const param = {
+        projectId: userData.projectId,
+      };
+      const response = await axios.post(
+        baseURL + "selfserve/v1/project/v1/training/start/",null,
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      if (response.status == 200) {
+        toast({
+          title: "Success",
+          description: "Traning started",
+          status: "success",
+          position: "top-right",
+          duration: 2000,
+          isClosable: true,
+        });
+        setActiveStep((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Start train api failed",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const AnnotateApi = async () => {
     try {
       const param = {
         projectId: userData.projectId,
@@ -110,7 +149,7 @@ const AnnotateData = ({
           duration: 2000,
           isClosable: true,
         });
-        setActiveStep((prev) => prev + 1);
+        startTrainApi();
       }
     } catch (error) {
       console.log(error);
@@ -123,6 +162,33 @@ const AnnotateData = ({
         isClosable: true,
       });
     }
+  };
+
+  const checkAnnotation = () => {
+    for (let l in labels) {
+      let count = annotatedImages.filter((item) => item.label == labels[l]);
+      if (count.length < 15) {
+        toast({
+          title: "Less images annotated",
+          description:
+            "label : " +
+            labels[l] +
+            " & annotations: " +
+            count.length +
+            `, Provide min ${15 - count.length} more to submit`,
+          status: "error",
+          position: "top-right",
+          duration: 5000,
+          isClosable: true,
+        });
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (checkAnnotation()) AnnotateApi();
   };
 
   useEffect(() => {
@@ -162,7 +228,7 @@ const AnnotateData = ({
             <TextButton
               text={"Add labels"}
               width={"fit-content"}
-              disable={add || confirm}
+              disable={add || confirm || labels.length == 5}
               onClick={() => setAdd(true)}
             />
           </div>

@@ -7,6 +7,8 @@ import ViewForm from "./ViewForm";
 import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
+import SecondaryButton from "../../../util/Buttons/SecondaryButton";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -90,13 +92,13 @@ const DetailView = () => {
       );
       if (response.status == 200 && response.data) {
         let { status, performance = null } = response.data[0];
-        console.log(status,'status received')
+        console.log(status, "status received");
         setModelInfo((prev) => ({
           ...prev,
           status: status,
           performance: performance,
         }));
-        if (status == "COMPLETE" || status == 'FAILED') {
+        if (status == "COMPLETED" || status == "FAILED") {
           clearInterval(pollTimer);
         }
       }
@@ -107,7 +109,7 @@ const DetailView = () => {
 
   useEffect(() => {
     getSingle();
-    pollTimer = setInterval(getStatus, 2000);
+    pollTimer = setInterval(getStatus, 10000);
     return () => clearInterval(pollTimer);
   }, []);
 
@@ -164,19 +166,29 @@ const DetailView = () => {
                 <p className="text-[#938F96] text-sm">
                   {new Date(userState?.lastUpdatedAt).toLocaleString()}
                 </p>
+                <SecondaryButton
+                  text={"Train"}
+                  Icon={<AutorenewIcon />}
+                  width={"fit-content"}
+                />
               </div>
             ) : modelInfo?.status == "COMPLETED" ? (
               <div className="flex flex-col gap-0 absolute top-2 right-2 whitespace-nowrap">
                 <div className="flex items-center gap-3">
-                  <p className="text-[#938F96] text-sm w-[100px]">Model accuracy</p>
+                  <p className="text-[#938F96] text-sm w-[100px]">
+                    Model accuracy
+                  </p>
                   <p className="text-[#69B04B] text-sm font-medium">
                     {Math.round(
                       modelInfo?.performance?.average_precision * 100
-                    )}%
+                    )}
+                    %
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <p className="text-[#938F96] text-sm w-[100px]">Model recall</p>
+                  <p className="text-[#938F96] text-sm w-[100px]">
+                    Model recall
+                  </p>
                   <p className="text-[#69B04B] text-sm font-medium">
                     {Math.round(modelInfo?.performance?.recall * 100)}%
                   </p>
