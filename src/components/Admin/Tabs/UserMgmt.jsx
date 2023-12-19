@@ -512,7 +512,7 @@ const UserMgmt = () => {
                 >
                   <option value={"ADMIN"}>Admin</option>
                   <option value={"USER"}>Regular</option>
-                  <option value={"Super Admin"}>CXO</option>
+                  {/* <option value={"Super Admin"}>CXO</option> */}
                 </select>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
