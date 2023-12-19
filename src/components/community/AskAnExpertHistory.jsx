@@ -235,6 +235,7 @@ const AskAnExpertHistory = () => {
       setFullName(response?.data.data.fullname);
       setRole(response?.data.data.role);
       setImageUrl(response?.data?.data?.imageurl);
+      
       // console.log("reee", response);
       if (response?.data.data.role === "EXPERT") {
         fetchQueries();
