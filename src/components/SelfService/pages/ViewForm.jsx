@@ -10,7 +10,7 @@ const ViewForm = ({ userState }) => {
       <UploadDetails userData={userState} viewMode={true} show={true} />
       <div className="flex flex-col gap-3 p-6">
         <p className="text-[#3E3C42] text-xl font-medium">Annotated data</p>
-        <div className="w-full h-fit max-h-full overflow-y-auto grid-cols-1 grid min-[430px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-5">
+        <div className="w-full h-fit max-h-[50vh] overflow-y-auto grid-cols-1 grid min-[430px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-5">
           {userState.annotatedData != null &&
             userState?.annotatedData.map((item, idx) => {
               return (

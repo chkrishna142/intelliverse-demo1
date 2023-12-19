@@ -115,7 +115,7 @@ const UseCaseDetail = ({
           onClick={handleSave}
           disable={disable}
         />
-        {activeStep > 1 && (
+        {/* {activeStep > 1 && (
           <TonalButton
             width={"fit-content"}
             text={"Edit"}
@@ -124,7 +124,7 @@ const UseCaseDetail = ({
             }}
             disable={!disable}
           />
-        )}
+        )} */}
       </div>
     </div>
   );

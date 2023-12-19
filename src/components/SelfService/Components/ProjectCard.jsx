@@ -8,12 +8,17 @@ import {
   MenuOptionGroup,
   MenuDivider,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import TonalButton from "../../../util/Buttons/TonalButton";
 import { useNavigate } from "react-router-dom";
+import { baseURL } from "../../..";
+import NavContext from "../../NavContext";
+import { useContext } from "react";
+import axios from "axios";
 
-const ProjectCard = ({ data }) => {
+const ProjectCard = ({ data, fetchData }) => {
   const info = [
     {
       type: "Model",
@@ -35,11 +40,67 @@ const ProjectCard = ({ data }) => {
       type: "Share access",
       icon: "/selfServiceIcons/share.svg",
     },
+    {
+      type: "Delete",
+      icon: "/delete.svg",
+    },
   ];
+  const { auth } = useContext(NavContext);
+  const toast = useToast();
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/Sandbox/View/${data?.projectId}`);
+  };
+
+  const deleteApi = async () => {
+    try {
+      const param = {
+        projectId: data?.projectId,
+      };
+      const response = await axios.post(
+        baseURL + "selfserve/v1/project/v1/delete/",
+        null,
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      if (response.status == 200) {
+        toast({
+          title: "Successfully deleted",
+          description: `Project ${data?.name} deleted`,
+          status: "success",
+          position: "top-right",
+          duration: 2000,
+          isClosable: true,
+        });
+        fetchData();
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: `Delete api error`,
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleMenuClick = (val) => {
+    switch (val) {
+      case "Delete":
+        deleteApi();
+        break;
+      default:
+        console.log("error");
+    }
   };
 
   return (
@@ -105,13 +166,21 @@ const ProjectCard = ({ data }) => {
           {options.map((item) => {
             return (
               <MenuItem
-                icon={<img src={item.icon} alt={item.type} />}
+                icon={
+                  <img
+                    src={item.icon}
+                    alt={item.type}
+                    height={"15px"}
+                    width={"15px"}
+                  />
+                }
                 textColor={"#605D64"}
                 fontSize={"14px"}
                 fontWeight={500}
-                p={"8px"}
+                p={"2px"}
                 _hover={{ bg: "#DDEEFF80", borderRadius: "4px" }}
                 _focus={{ bg: "#DDEEFF80", borderRadius: "4px" }}
+                onClick={() => handleMenuClick(item.type)}
               >
                 {item.type}
               </MenuItem>

@@ -120,7 +120,7 @@ const Dashboard = () => {
               Create new project
             </div>
             {projects.map((x) => {
-              return <ProjectCard data={x} />;
+              return <ProjectCard data={x} fetchData={getAll} />;
             })}
           </div>
         </div>
