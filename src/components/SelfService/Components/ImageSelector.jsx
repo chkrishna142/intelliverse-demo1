@@ -8,6 +8,7 @@ const ImageSelector = ({
   setAnnotatedImages,
   images,
   setImages,
+  labels,
   page,
   setPage,
 }) => {
@@ -54,7 +55,8 @@ const ImageSelector = ({
     <div className="w-full flex flex-col gap-4">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
         <p className="text-[#3E3C42] text-sm font-medium">
-          Select min 10, Selected: {annotatedImages.length}
+          Annotate min {labels.length * 15 || 10}, Annotated:{" "}
+          {annotatedImages.length}
         </p>
         <div className="flex gap-2 items-center">
           {["Unannotated", "Annotated"].map((x) => {
