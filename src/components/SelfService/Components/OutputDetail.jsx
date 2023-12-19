@@ -86,9 +86,9 @@ const OutputDetail = ({ userState, predictionData }) => {
     setData((prev) => {
       let newData = [];
       newData.push({
-        val:
-          Object.entries(userState?.uploadedFiles || {}).length -
-          (userState?.annotatedData?.length || 0),
+        val: Object.values(predictionData).reduce((acc, obj) => {
+          return acc + obj.img.length;
+        }, 0),
         title: "Model predicted",
       });
       newData.push({
