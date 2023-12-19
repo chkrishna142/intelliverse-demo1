@@ -35,7 +35,13 @@ const SessionLogs = () => {
       setLoading(true);
       apiCall();
       fetchDownloadApi();
+      const intervalId = setInterval(() => {
+        apiCall();
+      },15 * 60 * 1000 ); // 15 minutes interval
+ 
+      return () => clearInterval(intervalId);
     }
+    
   }, [auth]);
 
   const apiCall = async () => {

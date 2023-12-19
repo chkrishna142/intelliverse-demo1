@@ -103,7 +103,7 @@ const TransactionHistory = () => {
 
   const fetchCurrentBalance = async () => {
     try {
-      const response = await axios.get(baseURL + "ripiktoken/balance", {
+      const response = await axios.get(baseURL + "token-wallet/v1/balance", {
         credentials: "same-origin",
         headers: {
           "Content-Type": "application/json",
@@ -111,7 +111,8 @@ const TransactionHistory = () => {
         },
       });
 
-      SetCurrentBalance(response.data.tokenBalance);
+      SetCurrentBalance(response?.data.User.balance);
+      console.log("balance",response.data)
     } catch (e) {
       console.error(e);
     }

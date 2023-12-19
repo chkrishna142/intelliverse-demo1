@@ -99,17 +99,20 @@ const DeleteUserModal = ({ isOpen, onClose, userID, fetchUsers }) => {
   );
 };
 
-const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
+const AddNewModal = ({ isOpen, onClose, fetchUsers, clientOrg }) => {
   const [fullName, setFullName] = useState("");
   const [emailID, setEmailID] = useState("");
   const [contact, setContact] = useState("");
   const [whatsapp, setWhatsapp] = useState(false);
   const [emailInvitation, setEmailInvitation] = useState(false);
   const { auth } = useContext(NavContext);
-  const [role, setRole] = useState("USER");
+  const [role, setRole] = useState("ADMIN");
+  const [designation, setDesignation] = useState("CXO");
+  const [baseLocation, setBaseLocation] = useState("");
+
   const [disabled, setDisabled] = useState(true);
   const [error, setError] = useState("");
-  const toast = useToast()
+  const toast = useToast();
 
   useEffect(() => {
     // Enable the button if email and name are not empty
@@ -132,7 +135,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
 
     // Clear any previous error
     setError("");
-    
+
     try {
       let data = JSON.stringify({
         username: fullName,
@@ -144,7 +147,9 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
         phoneNumber: contact,
         services: [],
         organisation: clientOrg || "",
-        role:role
+        role: role,
+        designation:designation,
+        baseLocation:baseLocation
       });
 
       let config = {
@@ -164,10 +169,10 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
 
       if (response.status === 200) {
         fetchUsers();
-        setEmailID("")
-        setFullName("")
-        setContact("")
-        onClose()
+        setEmailID("");
+        setFullName("");
+        setContact("");
+        onClose();
         toast({
           title: `New User has been added successfully`,
           status: "success",
@@ -187,6 +192,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
       });
     }
   };
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={"sm"} width={740}>
@@ -237,11 +243,62 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
                 onChange={(e) => setRole(e.target.value)}
                 className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
               >
-                <option value={"USER"}>Regular</option>
                 <option value={"ADMIN"}>Admin</option>
-                <option value={"CXO"}>CXO</option>
+                <option value={"USER"}>Regular</option>
+                {/* <option value={"CXO"}>CXO</option> */}
               </select>
               {/* <Input placeholder="Enter Your Name" /> */}
+            </FormControl>
+            <FormControl className="!h-12 mb-2 font-semibold">
+              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                Designation
+              </div>
+              <select
+                onChange={(e)=>setDesignation(e.target.value)}
+                className="w-full overflow-auto border rounded text-sm border-[#938F96] py-2 px-5"
+                // style={{ height: '150px', overflowY: 'auto' }}
+              >
+                <option value={"CXO"}>CXO</option>
+                <option value={"SENIOR DIRECTOR"}>Senior Director</option>
+                <option value={"ASSOCIATE DIRECTOR"}>Associate Director</option>
+                <option value={"DIRECTOR"}>Director</option>
+                <option value={"SENIOR VICE PRESIDENT"}>
+                  Senior Vice President
+                </option>
+                <option value={"VICE PRESIDENT"}>Vice President</option>
+                <option value={"ASSOCIATE VICE PRESIDENT"}>
+                  Associate Vice President
+                </option>
+                <option value={"MANAGER"}>Manager</option>
+                <option value={"SENIOR MANAGER"}>Senior manager</option>
+                <option value={"PLANT HEAD"}>Plant head</option>
+                <option value={"SHIFT MANAGER"}>Shift manager</option>
+                <option value={"PLANT OPERATOR"}>Plant operator</option>
+                <option value={"BUSINESS ANALYST"}>Business analyst</option>
+                <option value={"CONSULTANT"}>Consultant</option>
+                <option value={"CORPORATE STAFF"}>Corporate staff</option>
+                <option value={"IT ANALYST"}>IT analyst</option>
+                <option value={"IT DEVELOPER"}>IT developer</option>
+                <option value={"IT MANAGER"}>IT manager</option>
+                <option value={"PLANT MANAGER"}>Plant manager</option>
+                <option value={"MILL OPERATOR"}>Mill operator</option>
+                <option value={"AUTOMATION TEAM"}>Automation team</option>
+                <option value={"AUTOMATION STAFF"}>Automation staff</option>
+                <option value={"EQUIPMENT OPERATOR"}>Equipment operator</option>
+                <option value={"DEVICE OPERATOR"}>Device operator</option>
+                <option value={"OTHER"}>Other</option>
+              </select>
+              {/* <Input placeholder="Enter Your Name" /> */}
+            </FormControl>
+            <FormControl className="!h-12">
+              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                Base location
+              </div>
+              <input
+                className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                placeholder="Enter city/town/village name"
+                onChange={(e) => setBaseLocation(e.target.value)}
+              />
             </FormControl>
             <div className="flex flex-col items-start gap-2 text-xs font-light">
               <div className="flex items-center gap-2">
@@ -280,7 +337,7 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers,clientOrg }) => {
             rounded="md"
             mb="5"
             mr="3"
-            _hover={{bg:"#084298",color:"white"}}
+            _hover={{ bg: "#084298", color: "white" }}
           >
             Save
           </Button>
