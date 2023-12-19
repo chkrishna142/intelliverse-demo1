@@ -443,12 +443,12 @@ const Sidebar = ({ userRole,homeRef }) => {
                               : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
                           }
                         >
-                          <div className="w-full flex">
+                          <div className="w-full flex justify-center">
                             <img
                               className={
                                 location.pathname.includes("/superadmin")
-                                  ? "w-9 pb-2 ml-2"
-                                  : "w-9 pb-2 ml-1"
+                                  ? "w-9 pb-2 -ml-4"
+                                  : "w-9 pb-2 -ml-3"
                               }
                               src={
                                 location.pathname.includes("/superadmin")
