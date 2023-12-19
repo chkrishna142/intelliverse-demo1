@@ -34,7 +34,33 @@ const Expert = () => {
   const [comment, setComment] = useState("");
   const [savedAnswer, setSavedAnswer] = useState("");
   const [subject, setSubject] = useState("");
-  const [retrievedComments, setRetrievedComments] = useState([]);
+  const [retrievedComments, setRetrievedComments] = useState([
+    
+    {
+      commentId: "2f1c16e5-683a-4d26-bb94-861326389c30",
+      questionId: "67f4fc41-06af-4f93-94c4-5c9f893ad812",
+      userId: "730beb2d-f793-446e-9607-9c6e4411fce0",
+      expertId: 3,
+      comment: "I agree with you Abhinav but did you consider the possible solutions etc, etc.",
+      createdAt: "2023-12-13T10:28:10.530063",
+      updatedAt: "2023-12-13T10:29:33.00228",
+      role: "EXPERT",
+      name:"Luc",
+      imgurl:"/expert/exp.png"
+    },
+    {
+      commentId: "dd9a8d14-b06c-4e15-90b3-b4ffe5e2b782",
+      questionId: "67f4fc41-06af-4f93-94c4-5c9f893ad812",
+      userId: "730beb2d-f793-446e-9607-9c6e4411fce0",
+      expertId: 3,
+      comment: "I agree with you Abhinav but did you consider the possible solutions etc, etc.",
+      createdAt: "2023-12-18T12:12:07.338945",
+      updatedAt: "2023-12-18T12:12:07.338946",
+      role: "ENQUIRER",
+      name:"Abhinav Saluja",
+      imgurl:"/expert/expert.png"
+    },
+  ]);
   const [enquirer, setEnquirer] = useState("");
 
   const { login } = useContext(NavContext);
@@ -141,7 +167,7 @@ const Expert = () => {
           },
         }
       );
-      setRetrievedComments(response?.data);
+      // setRetrievedComments(response?.data);
     } catch (e) {
       console.error(e);
     }
@@ -751,36 +777,64 @@ const Expert = () => {
                     page for the response.
                   </p>
                 )}
-            </div>
-            {(userType === "EXPERT" && answer === "") ||
-            answer == null ||
-            answer.length === 0 ? (
-              ""
-            ) : (
-              <div className="w-full p-6 border bg-white rounded-md">
-                <p>Comments</p>
-                {retrievedComments && retrievedComments.length !== 0 && (
-                  <ExpertComments retrievedComments={retrievedComments} />
-                )}
+              {userType === "EXPERT" &&
+              (answer === "" || answer == null || answer.length === 0)
+                ? ""
+                : userType === "EXPERT" && (
+                    <div className="">
+                      <p className="text-[#605D64] text-[14px]">Comments</p>
+                      {retrievedComments && retrievedComments.length !== 0 && (
+                        <ExpertComments
+                          retrievedComments={retrievedComments}
+                          userType={userType}
+                        />
+                      )}
 
-                <div className="relative">
-                  <textarea
-                    type="text"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    placeholder="Add your comment"
-                    className="w-[60%] border h-20 rounded-md px-2 py-2 mt-2"
-                  />
-                  <button
-                    className="text-[#FFF] text-sm rounded bg-[#6CA6FC] absolute bottom-0 right-0 mb-3 mr-2 p-3"
-                    onClick={() => postComments()}
-                  >
-                    Post comment
-                  </button>
+                      <div className="relative w-[60%]">
+                        <textarea
+                          type="text"
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                          placeholder="Add your comment"
+                          className="w-full border h-20 rounded-md px-2 py-2 mt-2"
+                        />
+                        <button
+                          className="text-[#FFF] text-sm rounded bg-[#6CA6FC] absolute bottom-0 right-0 mb-3 mr-2 p-3"
+                          onClick={() => postComments()}
+                        >
+                          Post comment
+                        </button>
+                      </div>
+                    </div>
+                  )}
+              {userType !== "EXPERT" && (
+                <div className="">
+                  <p className="text-[#605D64] text-[14px] mb-3">Comments</p>
+                  {retrievedComments && retrievedComments.length !== 0 && (
+                    <ExpertComments
+                      retrievedComments={retrievedComments}
+                      userType={userType}
+                    />
+                  )}
+
+                  <div className="relative w-[60%]">
+                    <textarea
+                      type="text"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="Add your comment"
+                      className="w-full h-20 rounded-md px-2 py-2 mt-2"
+                    />
+                    <button
+                      className="text-[#FFF] text-sm rounded bg-[#6CA6FC] absolute bottom-0 right-0 mb-3 mr-2 p-3"
+                      onClick={() => postComments()}
+                    >
+                      Post comment
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
-            
+              )}
+            </div>
           </>
         ) : (
           // <div className="mt-40">
