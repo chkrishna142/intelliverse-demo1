@@ -68,7 +68,7 @@ const AskAnExpert = () => {
 
   const getBalance = async () => {
     try {
-      const data = await fetch(baseURL + "user/balance/expert", {
+      const data = await fetch(baseURL + "token-wallet/v1/balance", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,9 @@ const AskAnExpert = () => {
       });
       const res = await data.json();
       if (data.status !== 400) {
-        setCredits(getQuestionsCredit(res, setDisabled));
+        // setCredits(getQuestionsCredit(res, setDisabled));
+        setCredits(res.User.balance)
+        setDisabled(false);
       } else if (data.status === 400) {
         setCredits(0);
         setDisabled(true);
