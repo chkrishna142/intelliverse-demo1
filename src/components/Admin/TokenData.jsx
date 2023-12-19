@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { baseURL } from "../..";
 import NavContext from ".././NavContext";
 
-const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
+const TokenData = ({ isFetchBalance, isFetchTranChanged }) => {
   const { clientOrg } = useParams();
   const { auth } = useContext(NavContext);
   const navigate = useNavigate();
@@ -28,28 +28,24 @@ const TokenData = ({isFetchBalance,isFetchTranChanged}) => {
           },
         }
       );
-      setTotalTokens(response?.data.total)
-      setAllocated(response?.data.allocated)
-      setUnallocated(response?.data.unAllocated)
-      setClientName(response?.data?.clientName)
+      setTotalTokens(response?.data.total);
+      setAllocated(response?.data.allocated);
+      setUnallocated(response?.data.unAllocated);
+      setClientName(response?.data?.clientName);
     } catch (error) {
-      
       console.log(error);
     }
   };
 
   useEffect(() => {
     fetchTokenBalance();
-  }, [isFetchBalance,isFetchTranChanged]);
+  }, [isFetchBalance, isFetchTranChanged]);
 
   const handleToken = () => {
-   
-      navigate(`/community/advisor/buycredits`);
-    
-    
+    navigate(`/community/advisor/buycredits`);
   };
 
-  console.log("clientName",clientName)
+  
   return (
     <div className="w-full lg:flex lg:flex-row lg:justify-between flex-col items-center mx-auto">
       {/* Total coins */}
