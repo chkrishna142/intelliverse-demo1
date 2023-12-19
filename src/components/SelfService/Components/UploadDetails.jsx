@@ -188,8 +188,8 @@ const UploadDetails = ({
       id="step2"
     >
       <div className="flex flex-col gap-8">
-        <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4">
+          <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
           {/*Pointers */}
           <div className="text-[#AEA9B1] text-sm flex gap-3 items-center whitespace-normal">
             <ul style={{ listStyleType: "disc", marginLeft: "1.5em" }}>
@@ -201,6 +201,8 @@ const UploadDetails = ({
               <li>Ensures non-upload of duplicate images</li>
             </ul>
           </div>
+        </div>
+        <div className="flex flex-col gap-6">
           {/*Is annotated*/}
           <div className="flex flex-col gap-3">
             <p className="text-[#3E3C42] text-sm font-medium">
@@ -380,7 +382,7 @@ const UploadDetails = ({
                 );
               })}
             <div className="text-[#3E3C42] text-lg font-medium flex justify-center items-center text-center">
-              Images Uploaded...
+              {Object.entries(userData.uploadedFiles).length} Images uploaded
             </div>
           </div>
         )}
