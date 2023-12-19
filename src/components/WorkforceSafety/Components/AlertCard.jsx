@@ -1,5 +1,6 @@
 const iconMap = {
-  chock: "clamp.svg",
+  clamp: "clamp.svg",
+  chock: "chock.svg",
   safety: "helmet.svg",
   dipRod: "rod.svg",
   flushing: "flushing.svg",

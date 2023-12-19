@@ -42,8 +42,8 @@ const Expert = () => {
       userId: "730beb2d-f793-446e-9607-9c6e4411fce0",
       expertId: 3,
       comment: "I agree with you Abhinav but did you consider the possible solutions etc, etc.",
-      createdAt: "2023-12-13T10:28:10.530063",
-      updatedAt: "2023-12-13T10:29:33.00228",
+      createdAt: "2023-12-19T08:11:33.425Z",
+      updatedAt: "2023-12-19T08:11:33.425Z",
       role: "EXPERT",
       name:"Luc",
       imgurl:"/expert/exp.png"
@@ -54,7 +54,7 @@ const Expert = () => {
       userId: "730beb2d-f793-446e-9607-9c6e4411fce0",
       expertId: 3,
       comment: "I agree with you Abhinav but did you consider the possible solutions etc, etc.",
-      createdAt: "2023-12-18T12:12:07.338945",
+      createdAt: "2023-12-19T08:11:33.425Z",
       updatedAt: "2023-12-18T12:12:07.338946",
       role: "ENQUIRER",
       name:"Abhinav Saluja",
@@ -782,7 +782,7 @@ const Expert = () => {
                 ? ""
                 : userType === "EXPERT" && (
                     <div className="">
-                      <p className="text-[#605D64] text-[14px]">Comments</p>
+                      <p className="text-[#605D64] text-[14px] mt-2 mb-3">Comments</p>
                       {retrievedComments && retrievedComments.length !== 0 && (
                         <ExpertComments
                           retrievedComments={retrievedComments}
@@ -809,7 +809,7 @@ const Expert = () => {
                   )}
               {userType !== "EXPERT" && (
                 <div className="">
-                  <p className="text-[#605D64] text-[14px] mb-3">Comments</p>
+                  <p className="text-[#605D64] text-[14px] mt-2 mb-3">Comments</p>
                   {retrievedComments && retrievedComments.length !== 0 && (
                     <ExpertComments
                       retrievedComments={retrievedComments}
