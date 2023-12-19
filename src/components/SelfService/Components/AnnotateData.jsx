@@ -77,7 +77,8 @@ const AnnotateData = ({
         projectId: userData.projectId,
       };
       const response = await axios.post(
-        baseURL + "selfserve/v1/project/v1/training/start/",null,
+        baseURL + "selfserve/v1/project/v1/training/start/",
+        null,
         {
           params: param,
           headers: {
@@ -99,14 +100,15 @@ const AnnotateData = ({
       }
     } catch (error) {
       console.log(error);
-      toast({
-        title: "Error",
-        description: "Start train api failed",
-        status: "error",
-        position: "top-right",
-        duration: 2000,
-        isClosable: true,
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Start train api failed",
+      //   status: "error",
+      //   position: "top-right",
+      //   duration: 2000,
+      //   isClosable: true,
+      // });
+      setActiveStep((prev) => prev + 1);
     }
   };
 
@@ -121,6 +123,12 @@ const AnnotateData = ({
           label: item.label,
         };
       });
+      const predictionData = allImages.map((item) => {
+        return {
+          fileId: item.id,
+          fileUrl: item.img,
+        };
+      });
       setUSerData((prev) => {
         let newData = { ...prev };
         newData["annotatedData"] = annotations;
@@ -128,6 +136,7 @@ const AnnotateData = ({
       });
       const requestBody = JSON.stringify({
         annotations: annotations,
+        predictionDataset: predictionData,
       });
       const response = await axios.post(
         baseURL + "selfserve/v1/project/v1/annotations/set/",
@@ -290,6 +299,7 @@ const AnnotateData = ({
             setSelectedImages={setSelectedImages}
             annotatedImages={annotatedImages}
             setAnnotatedImages={setAnnotatedImages}
+            labels={labels}
             images={allImages}
             setImages={setAllImages}
             page={page}
