@@ -73,9 +73,9 @@ const TransactionHistoryTable = ({ tableData }) => {
                       style={{ fontWeight: 500 }}
                     >
                       {item.token > 0 ? (
-                        <div className="w-full flex gap-1 text-[#7AC958] !text-[14px]">
+                        <div className="w-full flex gap-1 !text-[14px]">
                           <p>
-                            +{item.token}
+                            {item.token}
                           </p>
                           <img src="/token.svg" alt="token" />
                         </div>

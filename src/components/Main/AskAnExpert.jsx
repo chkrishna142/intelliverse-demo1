@@ -25,7 +25,7 @@ const AskAnExpert = () => {
   const [selected, setSelected] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [expert, setExpert] = useState(0);
-  const [credits, setCredits] = useState();
+  const [credits, setCredits] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [showQuetionPage, setShowQuestion] = useState(false);
 
