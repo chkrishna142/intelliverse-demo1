@@ -76,18 +76,15 @@ const ImageSelector = ({
       <div className="w-full h-fit max-h-screen overflow-y-auto grid-cols-1 grid min-[430px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 gap-5">
         {displayData.map((item, idx) => {
           return (
-            <div className="w-full h-auto bg-black relative rounded flex items-center justify-center">
-              <img
-                src={item.img}
-                alt="image"
-                className="w-full rounded hover:scale-105"
-                style={{
-                  pointerEvents: item.hasOwnProperty("label")
-                    ? "none"
-                    : "pointer",
-                }}
-                onClick={() => handleClick(item)}
-              />
+            <div
+              className={`w-full h-auto bg-black relative rounded flex items-center justify-center ${
+                item.hasOwnProperty("label")
+                  ? "cursor-default"
+                  : "cursor-pointer"
+              }`}
+              onClick={() => handleClick(item)}
+            >
+              <img src={item.img} alt="image" className="w-full rounded" />
               {!item.hasOwnProperty("label") && (
                 <Checkbox
                   p={0}
