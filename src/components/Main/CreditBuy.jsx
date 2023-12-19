@@ -67,7 +67,7 @@ const CreditBuy = () => {
 
   const getPaymentStatus = async (id) => {
     try {
-      const data = await fetch(baseURL + 'payment/getpayments', {
+      const data = await fetch(baseURL + 'payment/getpayment', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -104,6 +104,8 @@ const CreditBuy = () => {
         },
         body: JSON.stringify({
           amount: amount,
+          organisation:"",
+          paymentBy:"ORG"
         }),
       });
       const res = await data.text();
