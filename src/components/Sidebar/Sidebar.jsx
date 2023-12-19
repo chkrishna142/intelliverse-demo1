@@ -14,7 +14,7 @@ import {
 import "./Sidebar.css";
 import RequestUseCaseModal from "../RequestUseCase/RequestUseCase";
 
-const Sidebar = ({ userRole,homeRef }) => {
+const Sidebar = ({ userRole, homeRef }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
   const size = useWindowSize();
@@ -757,6 +757,51 @@ const Sidebar = ({ userRole,homeRef }) => {
                   </Link>
                 </h2>
               </AccordionItem>
+              {(userRole === "ADMIN" || userRole === "SUPERADMIN") && (
+                <AccordionItem className="border-none">
+                  <h2>
+                    <Link to="/admin/usermanagement">
+                      <AccordionButton
+                        _hover={false}
+                        className="flex justify-center items-center "
+                      >
+                        <div
+                          className={
+                            location.pathname.includes("/admin")
+                              ? "w-full mt-6 cursor-pointer rounded-md p-1 bg-[#F7F7F7]"
+                              : "w-full mt-6 cursor-pointer hover:scale-110 hover:transition duration-200 rounded-md p-2"
+                          }
+                        >
+                          <div className="w-full flex justify-center">
+                            <img
+                              className={
+                                location.pathname.includes("/admin")
+                                  ? "w-7 pb-2"
+                                  : "w-7 pb-2"
+                              }
+                              src={
+                                location.pathname.includes("/admin")
+                                  ? "/admin_selected.svg"
+                                  : "/admin.svg"
+                              }
+                              alt="home logo"
+                            />
+                          </div>
+                          <p
+                            className={
+                              location.pathname.includes("/admin")
+                                ? "font-bold text-xs text-[#024D87] -mt-1"
+                                : "font-light text-xs -mt-1"
+                            }
+                          >
+                            Admin
+                          </p>
+                        </div>
+                      </AccordionButton>
+                    </Link>
+                  </h2>
+                </AccordionItem>
+              )}
               {/* <AccordionItem className="border-none -mt-4">
             <h2>
               <AccordionButton _hover={false} className="flex justify-center items-center ">
@@ -780,11 +825,17 @@ const Sidebar = ({ userRole,homeRef }) => {
           <div className="w-full flex justify-center"><img  src="/impact.svg" alt="home logo" /></div>
           <div className="w-full flex justify-center"><p className="font-light w-24">Impact Tracker</p></div>
         </div> */}
-          </div>    
+          </div>
         </div>
       )}
-                {isModalOpen && <RequestUseCaseModal isOpen={isModalOpen} onOpen={() => setIsModalOpen(true)} onClose={() => setIsModalOpen(false)} size="3xl"/>}
-              
+      {isModalOpen && (
+        <RequestUseCaseModal
+          isOpen={isModalOpen}
+          onOpen={() => setIsModalOpen(true)}
+          onClose={() => setIsModalOpen(false)}
+          size="3xl"
+        />
+      )}
     </>
   );
 };

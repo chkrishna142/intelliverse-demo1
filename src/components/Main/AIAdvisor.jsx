@@ -15,7 +15,7 @@ const AiAdvisor = () => {
   const [response, setResponse] = useState([]);
   const [typing, setTyping] = useState(false);
   const [text, setText] = useState('');
-  const [credits, setCredits] = useState();
+  const [credits, setCredits] = useState(0);
 
   const sampleQuestions = [
     {
@@ -36,7 +36,7 @@ const AiAdvisor = () => {
 
   const getBalance = async () => {
     try {
-      const data = await fetch(baseURL + 'user/balance/gpt', {
+      const data = await fetch(baseURL + 'token-wallet/v1/balance', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,9 @@ const AiAdvisor = () => {
         },
       });
       const res = await data.json();
-      setCredits(getCreditsRemaining(res));
+      // setCredits(getCreditsRemaining(res));
+      setCredits(res.User.balance)
+      console.log("ai adv res",res)
     } catch (error) {
       console.log(error);
     }
