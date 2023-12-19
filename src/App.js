@@ -63,6 +63,7 @@ import UpdateTabs from "./components/SuperAdmin/Tabs/UpdateTabs";
 import Fabric from "./components/FabricTracking/Fabric";
 import FabricSingleCam from "./components/FabricTracking/FabricSingleCam";
 import AskYourQuestion from "./components/community/AskYourQuestion/AskYourQuestion";
+import SlabSizing from "./components/SlabSizing/SlabSizing";
 
 function App() {
   const homeRef = useRef();
