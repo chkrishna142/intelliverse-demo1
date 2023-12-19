@@ -52,17 +52,13 @@ const UploadDetails = ({
           requestData.append("files", x);
         });
         axios
-          .post(
-            baseURL + "selfserve/v1/project/v1/file/batchUpload/",
-            requestData,
-            {
-              params: param,
-              headers: {
-                "Content-Type": "multipart/form-data",
-                "X-Auth-Token": auth,
-              },
-            }
-          )
+          .post(baseURL + "selfserve/v1/project/v1/file/upload/", requestData, {
+            params: param,
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "X-Auth-Token": auth,
+            },
+          })
           .then((response) => {
             completedChunks++;
             if (completedChunks == totalChunks) {
@@ -194,6 +190,17 @@ const UploadDetails = ({
       <div className="flex flex-col gap-8">
         <p className="text-[#3E3C42] text-xl font-medium">Upload details</p>
         <div className="flex flex-col gap-6">
+          {/*Pointers */}
+          <div className="text-[#AEA9B1] text-sm flex gap-3 items-center whitespace-normal">
+            <ul style={{ listStyleType: "disc", marginLeft: "1.5em" }}>
+              <li>Requires a minimum of 30 images per label</li>
+              <li>Supports up to 1000 images</li>
+            </ul>
+            <ul style={{ listStyleType: "disc", marginLeft: "1.5em" }}>
+              <li>Ensure a minimum of 15 annotations per label</li>
+              <li>Ensures non-upload of duplicate images</li>
+            </ul>
+          </div>
           {/*Is annotated*/}
           <div className="flex flex-col gap-3">
             <p className="text-[#3E3C42] text-sm font-medium">
