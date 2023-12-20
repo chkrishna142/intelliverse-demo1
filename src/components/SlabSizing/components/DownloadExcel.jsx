@@ -26,7 +26,7 @@ class DownloadExcel extends React.Component {
       console.log(newItem);
 
       const sequenceItem = {
-        Date: editDates(newItem._id.timestamp),
+        Date: editDates(newItem.timestamp),
         Slab: newItem.slab_id,
         Shift: newItem.shift,
         Actual_Length: newItem.length.actual,
