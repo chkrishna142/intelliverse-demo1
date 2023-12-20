@@ -6,6 +6,8 @@ const iconMap = {
   flushing: "flushing.svg",
   sampling: "sampling.svg",
   lidInspection: "compartment.svg",
+  sideSampling: 'samplerContainer.svg',
+  weighment: 'Weighment.svg'
 };
 
 const getColor = (val, total) => {

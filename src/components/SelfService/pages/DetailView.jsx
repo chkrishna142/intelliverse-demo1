@@ -178,8 +178,13 @@ const DetailView = () => {
       </div>
       <div className="rounded-lg bg-white p-4 flex flex-col gap-4 w-full h-full relative">
         <Tabs>
-          <TabList className="!flex !justify-between !border-0 items-center">
-            <div className="flex items-center gap-4">
+          <TabList
+            display={"flex"}
+            justifyContent={"space-between"}
+            border={0}
+            alignItems={"center"}
+          >
+            <div className="flex items-center gap-4 overflow-x-auto max-w-[45vw] h-fit lg:max-w-max p-1">
               {tabs.map((x) => {
                 return (
                   <Tab
@@ -195,6 +200,7 @@ const DetailView = () => {
                       cursor: x != page ? "pointer" : "default",
                       backgroundColor: x == page ? "#F1F7FF" : "#fff",
                     }}
+                    whiteSpace={"nowrap"}
                     onClick={() => setPage(x)}
                   >
                     {x}
@@ -203,7 +209,7 @@ const DetailView = () => {
               })}
             </div>
             {page == "Project details" ? (
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 whitespace-nowrap">
                 <p className="text-[#938F96] text-sm">Last updated</p>
                 <p className="text-[#938F96] text-sm">
                   {new Date(userState?.lastUpdatedAt).toLocaleString()}
@@ -232,7 +238,7 @@ const DetailView = () => {
                 </div>
               </div>
             ) : (
-              <p className="text-[#938F96] text-sm">
+              <p className="text-[#938F96] text-sm whitespace-nowrap">
                 STATUS: {modelInfo?.status}
               </p>
             )}
@@ -243,8 +249,8 @@ const DetailView = () => {
               <ViewForm userState={userState} />
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0">
-              {predictionData ? (
-                <div className="grid grid-cols-4 gap-4 w-full h-fit">
+              {modelInfo?.status == "COMPLETED" && predictionData ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-4 w-full h-fit">
                   {predictionData &&
                     Object.keys(predictionData)?.map((label) => {
                       return predictionData[label].img.map((item) => {
@@ -263,7 +269,7 @@ const DetailView = () => {
               )}
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0">
-              {predictionData ? (
+              {modelInfo?.status == "COMPLETED" && predictionData ? (
                 <OutputDetail
                   userState={userState}
                   predictionData={predictionData}

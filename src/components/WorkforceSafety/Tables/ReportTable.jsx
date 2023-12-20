@@ -53,7 +53,7 @@ const columns = [
     type: "time",
     flex: 1,
     valueGetter: ({ value }) => {
-      return new Date(value * 1000).toLocaleTimeString();
+      return new Date(value * 1000).toLocaleTimeString('en-US',{ timeZone: 'UTC' });
     },
   },
   {
@@ -62,7 +62,7 @@ const columns = [
     type: "time",
     flex: 1,
     valueGetter: ({ value }) => {
-      return new Date(value * 1000).toLocaleTimeString();
+      return new Date(value * 1000).toLocaleTimeString('en-US',{ timeZone: 'UTC' });
     },
   },
   {
