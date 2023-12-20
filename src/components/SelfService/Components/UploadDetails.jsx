@@ -39,7 +39,7 @@ const UploadDetails = ({
       projectId: userData.projectId,
     };
 
-    const promise = new Promise((resolve, reject) => {
+    const promise = new Promise(async (resolve, reject) => {
       let chunkSize = 25;
       const totalChunks = Math.ceil(data.length / chunkSize);
       let completedChunks = 0;
@@ -51,7 +51,7 @@ const UploadDetails = ({
         filesChunk.map((x) => {
           requestData.append("files", x);
         });
-        axios
+        await axios
           .post(baseURL + "selfserve/v1/project/v1/file/upload/", requestData, {
             params: param,
             headers: {
