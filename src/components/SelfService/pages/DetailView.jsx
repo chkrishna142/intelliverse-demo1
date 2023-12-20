@@ -42,50 +42,7 @@ const DetailView = () => {
     status: "",
     performance: null,
   });
-  const [predictionData, setPredictionData] = useState({
-    label1: {
-      precision: 1.0,
-      img: [
-        {
-          img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
-          tag_name: "label1",
-          precision: Math.random(), // Random precision between 0 and 1
-        },
-        {
-          img: "https://source.unsplash.com/random/1",
-          tag_name: "label1",
-          precision: Math.random(),
-        },
-        {
-          img: "https://source.unsplash.com/random/2",
-          tag_name: "label1",
-          precision: Math.random(),
-        },
-        // ... (other images)
-      ],
-    },
-    label2: {
-      precision: 0.94,
-      img: [
-        {
-          img: "https://cdn3.vectorstock.com/i/1000x1000/17/92/group-cute-cats-with-dog-vector-29601792.jpg",
-          tag_name: "label2",
-          precision: Math.random(),
-        },
-        {
-          img: "https://source.unsplash.com/random/1",
-          tag_name: "label2",
-          precision: Math.random(),
-        },
-        {
-          img: "https://source.unsplash.com/random/2",
-          tag_name: "label2",
-          precision: Math.random(),
-        },
-        // ... (other images)
-      ],
-    },
-  });
+  const [predictionData, setPredictionData] = useState({});
   let pollTimer;
 
   const getSingle = async () => {
@@ -153,17 +110,18 @@ const DetailView = () => {
     }
   };
 
-  const updateData = ({ performance, predictions }) => {
+  const updateData = (performance, predictions) => {
     let output = {};
 
     if (
-      Object.keys(performance || {}).length > 0 &&
+      performance &&
+      Object.keys(performance).length > 0 &&
       predictions &&
       predictions.length > 0
     ) {
       performance.per_tag_performance.map((item) => {
         let imgSet = [];
-        const labelPredictions = predictions.map((val) => {
+        predictions.map((val) => {
           const maxProbabilityObject = val.result.reduce(
             (maxObject, currentObject) => {
               return currentObject.probability > maxObject.probability
@@ -285,20 +243,40 @@ const DetailView = () => {
               <ViewForm userState={userState} />
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0">
-              <div className="grid grid-cols-4 gap-4 w-full h-fit">
-                {predictionData &&
-                  Object.keys(predictionData)?.map((label) => {
-                    return predictionData[label].img.map((item) => {
-                      return <PredictionCard data={item} />;
-                    });
-                  })}
-              </div>
+              {predictionData ? (
+                <div className="grid grid-cols-4 gap-4 w-full h-fit">
+                  {predictionData &&
+                    Object.keys(predictionData)?.map((label) => {
+                      return predictionData[label].img.map((item) => {
+                        return <PredictionCard data={item} />;
+                      });
+                    })}
+                </div>
+              ) : (
+                <div className="flex justify-center items-center w-full h-[80vh]">
+                  <img
+                    src="https://cdni.iconscout.com/illustration/premium/thumb/website-under-development-6299829-5295151.png"
+                    alt="No support"
+                    className="w-[300px] h-[300px]"
+                  />
+                </div>
+              )}
             </TabPanel>
             <TabPanel className="!pl-0 !pr-0">
-              <OutputDetail
-                userState={userState}
-                predictionData={predictionData}
-              />
+              {predictionData ? (
+                <OutputDetail
+                  userState={userState}
+                  predictionData={predictionData}
+                />
+              ) : (
+                <div className="flex justify-center items-center w-full h-[80vh]">
+                  <img
+                    src="https://cdni.iconscout.com/illustration/premium/thumb/website-under-development-6299829-5295151.png"
+                    alt="No support"
+                    className="w-[300px] h-[300px]"
+                  />
+                </div>
+              )}
             </TabPanel>
           </TabPanels>
         </Tabs>
