@@ -428,7 +428,7 @@ const AskAnExpert = () => {
             <img src="/token.svg" className="h-[12px] inline-block -mt-[2px]" />{" "}
             Remaining
           </p>
-          <Link to="/community/advisor/buycredits">
+          <Link to="/community/advisor/buycredits/user/foruser">
             <div className="text-[#124CA2] font-bold cursor-pointer">
               Buy tokens
             </div>

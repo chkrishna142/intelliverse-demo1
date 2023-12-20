@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { baseURL } from '../..';
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { baseURL } from "../..";
 import {
   Spinner,
   Modal,
@@ -10,36 +10,45 @@ import {
   ModalOverlay,
   ModalCloseButton,
   ModalContent,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
+import axios from "axios";
+import NavContext from ".././NavContext";
 
 const CreditBuy = () => {
   const selected =
-    'w-1/2 py-4 border-b-2 border-[#084298] text-[#084298] font-bold md:text-base text-xs';
+    "w-1/2 py-4 border-b-2 border-[#084298] text-[#084298] font-bold md:text-base text-xs";
   const non_selected =
-    'w-1/2 py-4 border-b border-gray-600 text-gray-600 md:text-base text-xs';
+    "w-1/2 py-4 border-b border-gray-600 text-gray-600 md:text-base text-xs";
 
   const [selector, setSelector] = useState(1);
   const [submitted, setSubmitted] = useState(0);
   const [loader, setLoader] = useState(false);
   const [amount, setAmount] = useState(10);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
 
   const [tokenBalance, setTokenBalance] = useState();
   const [fullName, setFullName] = useState();
   const [submission, setSubmission] = useState(false);
+  const { org, name } = useParams();
+  const [unAllocated, setUnallocated] = useState(0);
+  const { auth } = useContext(NavContext);
 
   useEffect(() => {
-    getTokenDetails();
+    if (name === "foruser") {
+      getTokenDetails();
+    } else {
+      getTokenBalForOrg();
+    }
     getDetails();
-  }, []);
+  }, [org, name, auth]);
 
   const getDetails = async () => {
     try {
-      const data = await fetch(baseURL + 'user', {
-        method: 'GET',
+      const data = await fetch(baseURL + "user", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': localStorage.getItem('auth_token'),
+          "Content-Type": "application/json",
+          "X-Auth-Token": localStorage.getItem("auth_token"),
         },
       });
       const res = await data.json();
@@ -51,33 +60,58 @@ const CreditBuy = () => {
 
   const getTokenDetails = async () => {
     try {
-      const data = await fetch(baseURL + 'ripiktoken/balance', {
-        method: 'GET',
+      const data = await fetch(baseURL + "token-wallet/v1/balance", {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': localStorage.getItem('auth_token'),
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
         },
       });
       const res = await data.json();
-      setTokenBalance(res?.tokenBalance);
+      setTokenBalance(res?.User.balance);
     } catch (e) {
       console.log(e);
     }
   };
 
+  const getTokenBalForOrg = async () => {
+    const param = {
+      organisation: org || "",
+    };
+    try {
+      const response = await axios.get(
+        baseURL + `token-wallet/v1/org-balance`,
+        {
+          params: param,
+          headers: {
+            "Content-Type": "application/json",
+            "X-auth-Token": auth,
+          },
+        }
+      );
+      setTokenBalance(response?.data.unAllocated);
+      // setClientName(response?.data?.clientName);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getPaymentStatus = async (id) => {
     const param = {
-      paymentId: id
-    }
+      paymentId: id,
+    };
     try {
-      const data = await fetch(baseURL + `payment/getpayment?${new URLSearchParams(param)}`, {
-        method: 'GET',
-        
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': localStorage.getItem('auth_token'),
-        },
-      });
+      const data = await fetch(
+        baseURL + `payment/getpayment?${new URLSearchParams(param)}`,
+        {
+          method: "GET",
+
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
       const res = await data.json();
       const status = res;
       if (
@@ -98,23 +132,23 @@ const CreditBuy = () => {
 
   const generatePayment = async () => {
     try {
-      const data = await fetch(baseURL + 'payment/generatepayment', {
-        method: 'POST',
+      const data = await fetch(baseURL + "payment/generatepayment", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'X-Auth-Token': localStorage.getItem('auth_token'),
+          "Content-Type": "application/json",
+          "X-Auth-Token": localStorage.getItem("auth_token"),
         },
         body: JSON.stringify({
           amount: amount,
-          organisation:"",
-          paymentBy:"ORG"
+          organisation: name === "fororganisation" ? org : "",
+          paymentBy: name === "foruser" ? "USER" : "ORG",
         }),
       });
       const res = await data.text();
       setUrl(res);
-      window.open(`https://payment.ripikintelliverse.com/pay/${res}`, '_blank');
+      window.open(`https://payment.ripikintelliverse.com/pay/${res}`, "_blank");
       const converted = atob(res);
-      const txn_id = converted.split(',')[0];
+      const txn_id = converted.split(",")[0];
       setLoader(true);
 
       const intervalDuration = 2000; // Interval duration in milliseconds
@@ -124,7 +158,7 @@ const CreditBuy = () => {
         // Your code to execute on each interval
         getPaymentStatus(txn_id);
         // Update elapsed time
-        elapsedTime += intervalDuration; 
+        elapsedTime += intervalDuration;
         // Check if 2 minutes have passed
         if (elapsedTime >= duration) {
           // Stop the interval
@@ -157,20 +191,19 @@ const CreditBuy = () => {
               <div className="flex justify-center mt-10 ">
                 <div className="md:w-[60%] w-[92%]">
                   <div
-                    style={{ zIndex: '100px' }}
+                    style={{ zIndex: "100px" }}
                     className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
                   >
-                    Name
-                 
+                    {name === "foruser" ? "Name" : "Client Name"}
                   </div>
                   <div
-                    style={{ zIndex: '10px' }}
+                    style={{ zIndex: "10px" }}
                     className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
                   >
                     <input
                       className="w-full focus:outline-none pl-2"
                       placeholder="Name"
-                      value={fullName}
+                      value={name === "foruser" ? fullName : org}
                     />
                   </div>
                 </div>
@@ -178,13 +211,13 @@ const CreditBuy = () => {
               <div className="flex justify-center mt-10">
                 <div className="md:w-[60%] w-[92%]">
                   <div
-                    style={{ zIndex: '100px' }}
+                    style={{ zIndex: "100px" }}
                     className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
                   >
                     Ripik Token Balance
                   </div>
                   <div
-                    style={{ zIndex: '10px' }}
+                    style={{ zIndex: "10px" }}
                     className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
                   >
                     <div className="w-full focus:outline-none pl-2">
@@ -196,13 +229,13 @@ const CreditBuy = () => {
               <div className="flex justify-center mt-10">
                 <div className="md:w-[60%] w-[92%]">
                   <div
-                    style={{ zIndex: '100px' }}
+                    style={{ zIndex: "100px" }}
                     className="text-[#084298] text-xs ml-2 absolute -mt-2 bg-white px-1 flex justify-center"
                   >
                     Add Credits
                   </div>
                   <div
-                    style={{ zIndex: '10px' }}
+                    style={{ zIndex: "10px" }}
                     className="px-2 py-2 w-full rounded-md border border-[#084298] h-14 flex items-center"
                   >
                     <select
@@ -348,7 +381,7 @@ const CreditBuy = () => {
         isOpen={isOpen}
         onClose={onClose}
         isCentered
-        size={'sm'}
+        size={"sm"}
         width={740}
       >
         <ModalOverlay />
@@ -356,7 +389,7 @@ const CreditBuy = () => {
           <div className="text-white w-full h-16 flex bg-[#034D86] font-semibold justify-center items-center rounded-t-md">
             Payment Information
           </div>
-          <ModalCloseButton className="mt-2" color={'white'} />
+          <ModalCloseButton className="mt-2" color={"white"} />
           <ModalBody>
             <div className="mt-5 w-full gap-4 flex flex-col">
               <div className="w-full items-center flex justify-center">

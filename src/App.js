@@ -174,7 +174,7 @@ function App() {
                     />
                     <Route path="/community/advisor" element={<AiAdvisor />} />
                     <Route
-                      path="/community/advisor/buycredits"
+                      path="/community/advisor/buycredits/:org/:name"
                       element={<CreditBuy />}
                     />
                     <Route

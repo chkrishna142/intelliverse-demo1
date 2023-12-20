@@ -238,7 +238,7 @@ const AiAdvisor = () => {
                 />{' '}
                 Remaining
               </p>
-              <Link to="/community/advisor/buycredits">
+              <Link to="/community/advisor/buycredits/user/foruser">
                 <div className="text-[#124CA2] font-bold cursor-pointer">
                   Buy tokens
                 </div>
