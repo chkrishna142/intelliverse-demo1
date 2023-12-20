@@ -410,7 +410,8 @@ const Feed = () => {
               className="cursor-pointer"
               onClick={() => setEditing(false)}
             />
-          )} */}
+          )} 
+          */}
             </div>
             <div className="flex gap-2 items-center min-w-[160px]">
               <p className="text-sm text-[#605D64]">In Time</p>
