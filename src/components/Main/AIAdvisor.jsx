@@ -70,6 +70,7 @@ const AiAdvisor = () => {
     setSend(true);
     setTyping(false);
     setResponse((current) => [...current, addBreak(res?.data?.reply)]);
+    getBalance();
   };
 
   function addBreak(str) {
