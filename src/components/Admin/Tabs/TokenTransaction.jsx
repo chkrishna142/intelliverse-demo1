@@ -9,7 +9,7 @@ import axios from "axios";
 import { baseURL } from "../../..";
 import NavContext from "../../NavContext";
 
-const TokenTransaction = ({isFetchTranChanged}) => {
+const TokenTransaction = ({ isFetchTranChanged }) => {
   const { clientOrg } = useParams();
   const [selectPlant, setSelectPlant] = useState("All Plants");
   const { auth } = useContext(NavContext);
@@ -155,26 +155,13 @@ const TokenTransaction = ({isFetchTranChanged}) => {
           Transaction History
         </p>
       </div>
-      <TokenData isFetchTranChanged={isFetchTranChanged}/>
+      <TokenData isFetchTranChanged={isFetchTranChanged} />
       {/* token details */}
       {isLoading ? (
         // Render spinner or loading indicator while data is being fetched
         <p>Loading...</p>
       ) : (
         <>
-          {displayData1 && displayData1.length !== 0 && (
-            <TokenTransactionTable tableData={displayData1} />
-          )}
-          {transactiontableData && transactiontableData.length > 0 && (
-            <div className="w-full flex justify-end">
-              <Paginator
-                data={transactiontableData}
-                limit={4}
-                setDisplayData={setDisplayData1}
-              />
-            </div>
-          )}
-
           <div className="w-full p-2">
             <p className="text-[#605D64] text-[16px] font-medium mt-3">
               Allocation History
@@ -194,6 +181,18 @@ const TokenTransaction = ({isFetchTranChanged}) => {
               </div>
             )}
           </div>
+          {displayData1 && displayData1.length !== 0 && (
+            <TokenTransactionTable tableData={displayData1} />
+          )}
+          {transactiontableData && transactiontableData.length > 0 && (
+            <div className="w-full flex justify-end">
+              <Paginator
+                data={transactiontableData}
+                limit={4}
+                setDisplayData={setDisplayData1}
+              />
+            </div>
+          )}
         </>
       )}
     </div>
