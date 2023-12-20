@@ -51,7 +51,6 @@ const AiAdvisor = () => {
       console.log(error);
     }
   };
-
   const callChatGpt = async (ask) => {
     setTyping(true);
     setText('');
