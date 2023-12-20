@@ -20,6 +20,9 @@ import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useWindowSize } from "@uidotdev/usehooks";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import Paginator from "../../../util/VisionUtils/Paginator";
+import { ThemeProvider, createTheme } from "@mui/material";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
+const MuiTheme = createTheme();
 
 const Alert = () => {
   const size = useWindowSize();
@@ -462,12 +465,24 @@ const Alert = () => {
               value={toTime}
             />
           </div>
-          <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-md"
-            onClick={handleClick}
-          >
-            {serverd ? alertsChanging ? <Spinner /> : "Apply" : "Apply"}
-          </button>
+
+          {serverd ? (
+            alertsChanging ? (
+              <Spinner />
+            ) : (
+              <PrimaryButton
+                text={"Apply"}
+                width={"fit-content"}
+                onClick={handleClick}
+              />
+            )
+          ) : (
+            <PrimaryButton
+              text={"Apply"}
+              width={"fit-content"}
+              onClick={handleClick}
+            />
+          )}
         </div>
       </div>
       {serverd ? (
@@ -479,44 +494,53 @@ const Alert = () => {
           <div className="flex flex-col gap-4 mt-[160px] md:mt-8 pt-[57px] bg-white rounded-xl justify-start  ">
             {alerts.hasOwnProperty("data") && (
               <div className="w-full flex justify-between">
-                <Autocomplete
-                  disablePortal
-                  //   value={selectedValue}
-                  id="combo-box-demo"
-                  options={uniqueSearchData}
-                  onChange={handleAutocompleteChange}
-                  sx={{
-                    width: 200,
-                    "& .MuiInputBase-root": {
-                      height: "50px", // Adjust the height here
-                    },
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Slab ID"
-                      InputLabelProps={{
-                        style: { lineHeight: "40px" }, // Adjust the line height to center the label
-                      }}
-                    />
-                  )}
-                />
+                <ThemeProvider theme={MuiTheme}>
+                  <Autocomplete
+                    disablePortal
+                    //   value={selectedValue}
+                    id="combo-box-demo"
+                    options={uniqueSearchData}
+                    onChange={handleAutocompleteChange}
+                    sx={{
+                      width: "200px",
+                      "& .MuiInputBase-root": {
+                        height: "40px", // Adjust the height here
+                      },
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Slab ID"
+                        sx={{
+                          width: "100%",
+                          height: "100%",
 
-                <div className="p-1">
-                  <Paginator
-                    data={filetAlers.length != 0 ? filetAlers : alerts.data}
-                    limit={9}
-                    setDisplayData={setDisplayData}
+                          "& .MuiInputLabel-root": {
+                            transform: "translate(14px, 10px) scale(1)", // Adjust the label position
+                            fontSize: "14px", // Adjust the label font size
+                          },
+                          "& .MuiInputLabel-shrink": {
+                            transform: "translate(14px, -6px) scale(0.75)", // Adjust the shrunk label position
+                          },
+                        }}
+                      />
+                    )}
                   />
-                </div>
+                </ThemeProvider>
+
+                <Paginator
+                  data={filetAlers.length != 0 ? filetAlers : alerts.data}
+                  limit={5}
+                  setDisplayData={setDisplayData}
+                />
               </div>
             )}
 
             {filetAlers.length != 0 ? (
               <TableContainer
                 className={` ${
-                  size.width < 768 ? "h-[33vh] mb-[50px]" : "h-[45vh]"
-                }  w-[91vw] !overflow-y-auto `}
+                  size.width < 768 ? "h-[50vh] mb-[50px]" : "h-[44vh]"
+                }  w-[91vw]  `}
               >
                 <Table variant="simple">
                   <Thead className="bg-[#DDEEFF] !text-xs !h-[30px] !sticky !top-0">
@@ -665,8 +689,8 @@ const Alert = () => {
               alerts.data.length != 0 && (
                 <TableContainer
                   className={` ${
-                    size.width < 768 ? "h-[33vh] mb-[50px]" : "h-[45vh]"
-                  }  w-[91vw] !overflow-y-auto `}
+                    size.width < 768 ? "h-[50vh] mb-[50px]" : "h-[44vh]"
+                  }  w-[91vw] `}
                 >
                   <Table variant="simple">
                     <Thead className="bg-[#DDEEFF] !text-xs !h-[30px] !sticky !top-0">

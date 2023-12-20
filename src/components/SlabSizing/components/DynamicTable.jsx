@@ -17,6 +17,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { ArrowDownIcon, ArrowUpIcon, CloseIcon } from "@chakra-ui/icons";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 
 function DynamicTable() {
   const size = useWindowSize();
@@ -169,19 +170,23 @@ function DynamicTable() {
     <div className="w-full h-full flex flex-col gap-3">
       <div className="flex justify-start">
         {modifyTableData ? (
-          <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#024D87] hover:bg-[#356ec3] rounded-md"
+          <PrimaryButton
+            text={"Save"}
+            width={"fit-content"}
             onClick={() => enableEditing(false)}
-          >
-            Save
-          </button>
+          />
         ) : (
-          <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#024D87] hover:bg-[#356ec3] rounded-md"
+          // <button
+          //   className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#024D87] hover:bg-[#356ec3] rounded-md"
+          //   onClick={() => enableEditing(true)}
+          // >
+          //   Enable Editing
+          // </button>
+          <PrimaryButton
+            text={"Enable Editing"}
+            width={"fit-content"}
             onClick={() => enableEditing(true)}
-          >
-            Enable Editing
-          </button>
+          />
         )}
       </div>
 
