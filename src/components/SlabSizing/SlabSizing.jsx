@@ -6,8 +6,6 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Feed from "./tabs/Feed";
 import Alert from "./tabs/Alert";
 import Report from "./tabs/Report";
-import { ThemeProvider, createTheme } from "@mui/material";
-const MuiTheme = createTheme();
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -103,29 +101,13 @@ const SlabSizing = () => {
 
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
-            <Feed
-            //   material={'workforcesafety'}
-            //   clientId={param.clientId.toLowerCase()}
-            //   setPlantCamMap={setPlantCamMap}
-            />
+            <Feed />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <ThemeProvider theme={MuiTheme}>
-              <Alert
-              //   plantId="All Plants"
-              //   cameraId=""
-              //   disable={false}
-              //   plantCamMap={plantCamMap}
-              />
-            </ThemeProvider>
+            <Alert />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Report
-            //   plantId="All Plants"
-            //   cameraId=""
-            //   disable={false}
-            //   plantCamMap={plantCamMap}
-            />
+            <Report />
           </TabPanel>
         </TabPanels>
       </Tabs>
