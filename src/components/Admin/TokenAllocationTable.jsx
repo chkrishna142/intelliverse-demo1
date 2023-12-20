@@ -36,7 +36,7 @@ const TokenAllocationTable = ({ tableData }) => {
     <div>
       <div>
         <TableContainer
-          className={` !overflow-y-auto ${
+          className={` ${
             size.width < 768 ? "!mb-[50px] !max-h-[45vh]" : "!max-h-[31vh]"
           }`}
         >
@@ -54,10 +54,10 @@ const TokenAllocationTable = ({ tableData }) => {
                   </div>
                 </Th>
 
-                <Th color="#79767D" fontWeight={400} width="250px">
+                <Th color="#79767D" fontWeight={400} width="200px">
                   <div className="w-full h-full flex justify-center">EMAIL</div>
                 </Th>
-                <Th color="#79767D" fontWeight={400} width="150px">
+                <Th color="#79767D" fontWeight={400} width="140px">
                   <div className=" w-full h-full flex justify-center">
                     TOKEN
                   </div>

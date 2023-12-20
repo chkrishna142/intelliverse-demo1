@@ -181,7 +181,7 @@ const TokenTransaction = ({ isFetchTranChanged }) => {
               </div>
             )}
           </div>
-          {displayData1 && displayData1.length !== 0 && (
+          {/* {displayData1 && displayData1.length !== 0 && (
             <TokenTransactionTable tableData={displayData1} />
           )}
           {transactiontableData && transactiontableData.length > 0 && (
@@ -192,7 +192,7 @@ const TokenTransaction = ({ isFetchTranChanged }) => {
                 setDisplayData={setDisplayData1}
               />
             </div>
-          )}
+          )} */}
         </>
       )}
     </div>
