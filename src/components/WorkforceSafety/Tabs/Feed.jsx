@@ -531,7 +531,7 @@ const Feed = () => {
                 >
                   <source
                     src={
-                      "https://intelliverse-public-videos.s3.ap-south-1.amazonaws.com/flushing_sampling_hatches_closed.mov"
+                      "https://asianpaintsvideos1.s3.ap-south-1.amazonaws.com/weighment_light+(1).mp4"
                     }
                     type="video/mp4"
                   />
