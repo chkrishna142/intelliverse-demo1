@@ -1,6 +1,6 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, Link } from "react-router-dom";
 import Feed from "./Tabs/Feed";
 import Alerts from "./Tabs/Alerts";
 import Status from "./Tabs/Status";
@@ -25,7 +25,15 @@ const BlendComplianceTracking = () => {
           src="https://upload.wikimedia.org/wikipedia/en/thumb/2/22/Hindalco_Logo.svg/640px-Hindalco_Logo.svg.png"
         />
       </div>
-      <div className="flex justify-between mb-3 mt-6">
+      <div className="flex justify-start items-center gap-2 mb-3 mt-6">
+        <Link
+          to={`/vision/workforceMonitoring/blendcompliance`}
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <img src="/backtick.svg" />
+        </Link>
         <p className="text-lg sm:text-2xl font-semibold text-[#024D87] capitalize">
           {"Blend Compliance Tracking"}
         </p>
