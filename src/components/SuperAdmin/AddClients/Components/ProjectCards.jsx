@@ -75,7 +75,7 @@ const ProjectCard = ({ data, fetchClientsFun }) => {
     }
   };
 
-  const switchLabelText = isSwitchOn ? "Disable" : "Enable";
+  const switchLabelText = isSwitchOn ? "Enable" : "Disable";
   const info = [
     {
       type: "Model",

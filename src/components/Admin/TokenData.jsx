@@ -5,7 +5,7 @@ import { baseURL } from "../..";
 import NavContext from ".././NavContext";
 
 const TokenData = ({ isFetchBalance, isFetchTranChanged }) => {
-  const { clientOrg } = useParams();
+  const { clientOrg, clientId, mode } = useParams();
   const { auth } = useContext(NavContext);
   const navigate = useNavigate();
   const [totalTokens, setTotalTokens] = useState(0);
@@ -42,10 +42,11 @@ const TokenData = ({ isFetchBalance, isFetchTranChanged }) => {
   }, [isFetchBalance, isFetchTranChanged]);
 
   const handleToken = () => {
-    navigate(`/community/advisor/buycredits/${clientOrg || clientName}/fororganisation`);
+    navigate(
+      `/community/advisor/buycredits/${clientOrg || clientName}/fororganisation`
+    );
   };
 
-  
   return (
     <div className="w-full lg:flex lg:flex-row lg:justify-between flex-col items-center mx-auto">
       {/* Total coins */}
@@ -61,12 +62,16 @@ const TokenData = ({ isFetchBalance, isFetchTranChanged }) => {
               <img src="/token.svg" alt="coins" />
             </div>
 
-            <div
-              className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer"
-              onClick={handleToken}
-            >
-              Buy Tokens
-            </div>
+            {clientOrg && mode === "view" ? (
+              ""
+            ) : (
+              <div
+                className="w-full text-end text-[14px] text-[#3A74CA] font-medium cursor-pointer"
+                onClick={handleToken}
+              >
+                Buy Tokens
+              </div>
+            )}
           </div>
           <p className="text-[#605D64] text-[14px] ">Total Enterprise Tokens</p>
         </div>

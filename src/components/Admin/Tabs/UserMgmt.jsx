@@ -155,6 +155,8 @@ const UserMgmt = () => {
   const [whatsapp, setWhatsapp] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [userRole, setUserRole] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [baseLocation, setBaseLocation] = useState("");
   const [emailInvitation, setEmailInvitation] = useState(false);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedOption, setSelectedOption] = useState(0);
@@ -246,6 +248,8 @@ const UserMgmt = () => {
       phoneNumber: contact,
       role: userRole,
       userid: selectedUser.userid,
+      baseLocation:baseLocation,
+      designation:designation
     });
     const response = await axios
       .patch(baseURL + "iam/users", requestData, {
@@ -420,6 +424,8 @@ const UserMgmt = () => {
                 setSelectedUser={setSelectedUser}
                 setFullName={setFullName}
                 setUserEmail={setUserEmail}
+                setDesignation={setDesignation}
+                setBaseLocation={setBaseLocation}
                 setUserRole={setUserRole}
                 setContact={setContact}
                 clientOrg={clientOrg}
@@ -516,6 +522,59 @@ const UserMgmt = () => {
                 </select>
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
+              <FormControl className="!h-12 mb-2 font-semibold">
+              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                Designation
+              </div>
+              <select
+              value={designation}
+                onChange={(e)=>setDesignation(e.target.value)}
+                className="w-full overflow-auto border rounded text-sm border-[#938F96] py-2 px-5"
+                // style={{ height: '150px', overflowY: 'auto' }}
+              >
+                <option value={"CXO"}>CXO</option>
+                <option value={"SENIOR DIRECTOR"}>Senior Director</option>
+                <option value={"ASSOCIATE DIRECTOR"}>Associate Director</option>
+                <option value={"DIRECTOR"}>Director</option>
+                <option value={"SENIOR VICE PRESIDENT"}>
+                  Senior Vice President
+                </option>
+                <option value={"VICE PRESIDENT"}>Vice President</option>
+                <option value={"ASSOCIATE VICE PRESIDENT"}>
+                  Associate Vice President
+                </option>
+                <option value={"MANAGER"}>Manager</option>
+                <option value={"SENIOR MANAGER"}>Senior manager</option>
+                <option value={"PLANT HEAD"}>Plant head</option>
+                <option value={"SHIFT MANAGER"}>Shift manager</option>
+                <option value={"PLANT OPERATOR"}>Plant operator</option>
+                <option value={"BUSINESS ANALYST"}>Business analyst</option>
+                <option value={"CONSULTANT"}>Consultant</option>
+                <option value={"CORPORATE STAFF"}>Corporate staff</option>
+                <option value={"IT ANALYST"}>IT analyst</option>
+                <option value={"IT DEVELOPER"}>IT developer</option>
+                <option value={"IT MANAGER"}>IT manager</option>
+                <option value={"PLANT MANAGER"}>Plant manager</option>
+                <option value={"MILL OPERATOR"}>Mill operator</option>
+                <option value={"AUTOMATION TEAM"}>Automation team</option>
+                <option value={"AUTOMATION STAFF"}>Automation staff</option>
+                <option value={"EQUIPMENT OPERATOR"}>Equipment operator</option>
+                <option value={"DEVICE OPERATOR"}>Device operator</option>
+                <option value={"OTHER"}>Other</option>
+              </select>
+              {/* <Input placeholder="Enter Your Name" /> */}
+            </FormControl>
+            <FormControl className="!h-12">
+              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                Base location
+              </div>
+              <input
+              value={baseLocation}
+                className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                placeholder="Enter city/town/village name"
+                onChange={(e) => setBaseLocation(e.target.value)}
+              />
+            </FormControl>
               <div className="flex flex-col items-start gap-2 text-xs font-light">
                 <div className="flex items-center gap-2">
                   <input

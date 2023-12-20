@@ -121,11 +121,14 @@ const Feed = () => {
   const BaysApiCall = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
+
       useCase: "WORKFORCESAFETY",
       plantName: "khandala",
       cameraGpId: "all",
-      excludeCameraGpId: "weightBridge1",
+      excludeCameraGpIds: ["weightBridge1-left", "weightBridge1-right"],
+      excludeEvents: ["weighment"],
     });
+
     const response = await axios
       .post(
         baseURL + "vision/v1/workforceMonitoring/info/initialize/",
@@ -341,8 +344,6 @@ const Feed = () => {
 
   const imgs = ["3.png", "2.png", "1.png", "3.png", "2.png", "1.png"];
 
-  console.log("weightBridgeData", weightBridgeData);
-
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
       <div className="flex flex-col gap-3">
@@ -370,7 +371,7 @@ const Feed = () => {
             }`}
             onClick={() => setSelectedBay("weightBridge1")}
           >
-            {"WeightBridge1"}
+            {"Weight Bridge1"}
           </div>
         </div>
       </div>
@@ -487,9 +488,9 @@ const Feed = () => {
         </>
       ) : (
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col min-[815px]:flex-row items-start min-[815px]:items-center gap-4">
+          <div className="flex flex-col min-[815px]:flex-row items-start min-[815px]:items-center gap-[40px]">
             <p className="text-[#605D64] text-lg font-medium">
-              WeightBridge1 Inspection Protocol
+              Weight Bridge1 Inspection Protocol
             </p>
             <div className="px-4 py-1 rounded-md bg-[#FAFAFA] border border-[#EBEBEB] flex gap-7 items-center whitespace-nowrap">
               <p className="text-[#605D64] text-sm flex gap-2 items-center">
@@ -531,7 +532,7 @@ const Feed = () => {
                 >
                   <source
                     src={
-                      "https://intelliverse-public-videos.s3.ap-south-1.amazonaws.com/flushing_sampling_hatches_closed.mov"
+                      "https://asianpaintsvideos1.s3.ap-south-1.amazonaws.com/weighment_light+(1).mp4"
                     }
                     type="video/mp4"
                   />

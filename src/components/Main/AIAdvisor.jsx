@@ -51,7 +51,6 @@ const AiAdvisor = () => {
       console.log(error);
     }
   };
-
   const callChatGpt = async (ask) => {
     setTyping(true);
     setText('');
@@ -70,6 +69,7 @@ const AiAdvisor = () => {
     setSend(true);
     setTyping(false);
     setResponse((current) => [...current, addBreak(res?.data?.reply)]);
+    getBalance();
   };
 
   function addBreak(str) {
