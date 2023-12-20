@@ -101,27 +101,13 @@ const SlabSizing = () => {
 
         <TabPanels>
           <TabPanel className="!pl-0 !pr-0">
-            <Feed
-            //   material={'workforcesafety'}
-            //   clientId={param.clientId.toLowerCase()}
-            //   setPlantCamMap={setPlantCamMap}
-            />
+            <Feed />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Alert
-            //   plantId="All Plants"
-            //   cameraId=""
-            //   disable={false}
-            //   plantCamMap={plantCamMap}
-            />
+            <Alert />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <Report
-            //   plantId="All Plants"
-            //   cameraId=""
-            //   disable={false}
-            //   plantCamMap={plantCamMap}
-            />
+            <Report />
           </TabPanel>
         </TabPanels>
       </Tabs>

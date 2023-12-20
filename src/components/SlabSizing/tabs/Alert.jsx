@@ -21,6 +21,7 @@ import { useWindowSize } from "@uidotdev/usehooks";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 import Paginator from "../../../util/VisionUtils/Paginator";
 import { ThemeProvider, createTheme } from "@mui/material";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 const MuiTheme = createTheme();
 
 const Alert = () => {
@@ -464,12 +465,24 @@ const Alert = () => {
               value={toTime}
             />
           </div>
-          <button
-            className="text-center p-[10px] pl-4 pr-4 text-white text-xs md:text-base font-medium bg-[#084298] rounded-md"
-            onClick={handleClick}
-          >
-            {serverd ? alertsChanging ? <Spinner /> : "Apply" : "Apply"}
-          </button>
+
+          {serverd ? (
+            alertsChanging ? (
+              <Spinner />
+            ) : (
+              <PrimaryButton
+                text={"Apply"}
+                width={"fit-content"}
+                onClick={handleClick}
+              />
+            )
+          ) : (
+            <PrimaryButton
+              text={"Apply"}
+              width={"fit-content"}
+              onClick={handleClick}
+            />
+          )}
         </div>
       </div>
       {serverd ? (
@@ -526,7 +539,7 @@ const Alert = () => {
             {filetAlers.length != 0 ? (
               <TableContainer
                 className={` ${
-                  size.width < 768 ? "h-[33vh] mb-[50px]" : "h-[44vh]"
+                  size.width < 768 ? "h-[50vh] mb-[50px]" : "h-[44vh]"
                 }  w-[91vw]  `}
               >
                 <Table variant="simple">
@@ -676,7 +689,7 @@ const Alert = () => {
               alerts.data.length != 0 && (
                 <TableContainer
                   className={` ${
-                    size.width < 768 ? "h-[33vh] mb-[50px]" : "h-[44vh]"
+                    size.width < 768 ? "h-[50vh] mb-[50px]" : "h-[44vh]"
                   }  w-[91vw] `}
                 >
                   <Table variant="simple">
