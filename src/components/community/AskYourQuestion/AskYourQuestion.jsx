@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Header from "./Header";
 import TonalButton from "../../../util/Buttons/TonalButton";
 import PrimaryButton from "../../../util/Buttons/PrimaryButton";
@@ -7,28 +7,139 @@ import FileUploader from "../AnswerExpert/FileUploader";
 import { Input } from "@chakra-ui/react";
 import { SpinnerIcon } from "@chakra-ui/icons";
 import QuestionInstructions from "./QuestionInstructions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import NavContext from "../../NavContext";
+import { baseURL } from "../../..";
+import axios from "axios";
 
-const AskYourQuestion = ({
-  postQuestion,
-  summary,
-  setSummary,
-}) => {
+const AskYourQuestion = () => {
+  const { expertId } = useParams();
+  const { auth } = useContext(NavContext);
+  const [loader, setLoader] = useState(false);
   const [spinner, setSpinner] = useState(false);
-  const [customEndDate, setCustomToTime] = useState("");
+  const [customEndDate, setCustomToTime] = useState();
   const [submitted, setSubmitted] = useState(false);
   const [review, setReview] = useState(false);
   const [reply, setReply] = useState("");
-  const [send, setSend] = useState([]);
+  const [summary, setSummary] = useState("");
   const [question, setQuestion] = useState("");
-
+  const [expertList, setExpertList] = useState([]);
+  const [selectedExpert, setSelectedExpert] = useState(null);
+  const [selectedExpertId, setSelectedExpertId] = useState(expertId);
   const navigate = useNavigate();
+  const [send, setSend] = useState([]);
+
+  const selectPicture = (event) => {
+    setSend([...send, event.target.files[0]]);
+    console.log("send", send);
+  };
+  const postQuestion = async () => {
+    // const send = JSON.stringify({
+    //     question: question,
+    //     expertId: expertId
+    // })
+    // var formdata = new FormData()
+    // formdata.append("json", send)
+    // const data = await fetch(baseURL + 'questions', {
+    //     method: "POST",
+    //     headers: {
+
+    //         "X-Auth-Token": auth
+    //     },
+    //     body: formdata
+    // })
+    setLoader(true);
+    const cap = {
+      expertId: selectedExpertId,
+      question: question,
+      summary: summary,
+    };
+    const json = JSON.stringify(cap);
+    const blob = new Blob([json], {
+      type: "application/json",
+    });
+    const FormData = require("form-data");
+    let data = new FormData();
+    data.append("json", blob);
+    data.append("files", send[0]);
+    data.append("files", send[1]);
+    data.append("files", send[2]);
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: baseURL + "questions",
+      headers: {
+        "X-Auth-Token": auth,
+      },
+      data: data,
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        setSubmitted(true);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log("file data", data, question, expertId);
+  };
+  useEffect(() => {
+    const fetchExperts = async () => {
+      try {
+        const response = await axios.get(baseURL + "experts", {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        });
+        setExpertList(response?.data);
+        const selectedExpert = response?.data.find(
+          (expert) => expert.expertId === expertId
+        );
+        setSelectedExpert(selectedExpert);
+      } catch (error) {
+        console.error("Error fetching experts:", error);
+      }
+    };
+
+    fetchExperts();
+  }, [expertId, auth]);
+
+  useEffect(() => {
+    const getCustomEndDate = () => {
+      const currentDate = new Date();
+
+      // Calculate the number of days to add to reach the next 4th working day
+      let daysToAdd = 0;
+      while (daysToAdd < 3) {
+        currentDate.setDate(currentDate.getDate() + 1);
+        // Skip weekends (Saturday and Sunday)
+        if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+          daysToAdd += 1;
+        }
+      }
+
+      // Set the time to EOD IST (17:30:00)
+      currentDate.setHours(17, 30, 0, 0);
+
+      // Format the date as "yyyy-MM-dd"
+      const formattedDate = currentDate.toISOString().slice(0, 10);
+
+      return formattedDate;
+    };
+    // Set the initial custom end date when the component mounts
+    setCustomToTime(getCustomEndDate());
+  }, []);
   const handleBackButton = () => {
     navigate("/community/askanexpert/question");
   };
   const handleSubmit = () => {
-    setSubmitted(true)
+    postQuestion();
   };
+
+  console.log(customEndDate);
   return submitted === false ? (
     <>
       <div className="mt-[3vh]">
@@ -81,6 +192,11 @@ const AskYourQuestion = ({
         <Header
           customEndDate={customEndDate}
           setCustomToTime={setCustomToTime}
+          selectedExpert={selectedExpert}
+          selectedExpertId={selectedExpertId}
+          setSelectedExpert={setSelectedExpert}
+          setSelectedExpertId={setSelectedExpertId}
+          expertList={expertList}
         />
         <div className="py-6">
           <p className="text-[14px] font-semibold">Question summary</p>

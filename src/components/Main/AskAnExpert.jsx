@@ -24,7 +24,7 @@ const AskAnExpert = () => {
   const [submitted, setSubmitted] = useState(false);
   const [selected, setSelected] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [expert, setExpert] = useState(0);
+  const [expert, setExpert] = useState(null);
   const [credits, setCredits] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [showQuetionPage, setShowQuestion] = useState(false);
@@ -50,19 +50,21 @@ const AskAnExpert = () => {
   };
 
   const getData = async () => {
-    const data = await fetch(baseURL + "experts", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Auth-Token": auth,
-      },
-    });
-    const res = await data.json();
-    if (res.status === 200) {
-      setExpertDetails(res);
+    try {
+      const response = await axios.get(baseURL + "experts", {
+        headers: {
+          "Content-Type": "application/json",
+          "X-auth-Token": auth,
+        },
+      });
+
+      //setting order for downloading data
+      setExpertDetails(response?.data);
+
       setLoader(false);
-    } else {
+    } catch (error) {
       setLoader(false);
+      console.log(error);
     }
   };
 
@@ -78,7 +80,7 @@ const AskAnExpert = () => {
       const res = await data.json();
       if (data.status !== 400) {
         // setCredits(getQuestionsCredit(res, setDisabled));
-        setCredits(res.User.balance)
+        setCredits(res.User.balance);
         setDisabled(false);
       } else if (data.status === 400) {
         setCredits(0);
@@ -159,40 +161,35 @@ const AskAnExpert = () => {
     }
   }, [val1, val2, val3, val4]);
   const handleShowPage = () => {
-    navigate("/community/askanexpert/askquestion/:expertId")
+    navigate(`/community/askanexpert/askquestion/${expertId}`);
   };
 
   const handleBackButton = () => {
     setShowQuestion(true);
-    setSelected(false)
+    setSelected(false);
   };
-  
+
   return (
     <div className="mt-6">
-      
       <div className="w-full border shadow-md bg-white rounded-md mb-5 ">
-       
-            <div className="mt-6 ml-5 flex justify-between items-center mr-5">
-              <p className=" text-black text-xl font-semibold">Ask An Expert</p>
-              <PrimaryButton
-                text={"Ask a question"}
-                width={"fit-content"}
-                onClick={handleShowPage}
-                disable={!selected}
-              />
-            </div>
+        <div className="mt-6 ml-5 flex justify-between items-center mr-5">
+          <p className=" text-black text-xl font-semibold">Ask An Expert</p>
+          <PrimaryButton
+            text={"Ask a question"}
+            width={"fit-content"}
+            onClick={handleShowPage}
+            disable={!selected}
+          />
+        </div>
 
-            <div>
-              <p className="mt-3 ml-5 font-light">
-                Have your most pressing questions answered by world renown
-                experts.
-              </p>
-              <p className="font-semibold mt-5 ml-5 text-sm">
-                Choose An Expert
-              </p>
-            </div>
-         
-          {/* <div>
+        <div>
+          <p className="mt-3 ml-5 font-light">
+            Have your most pressing questions answered by world renown experts.
+          </p>
+          <p className="font-semibold mt-5 ml-5 text-sm">Choose An Expert</p>
+        </div>
+
+        {/* <div>
             <div className="w-full flex justify-center mt-10">
               <img src="/query.svg" />
             </div>
@@ -237,185 +234,233 @@ const AskAnExpert = () => {
               </p>
             </div>
           </div> */}
-        
-        
-          <div className="mx-5 mb-[5vh]">
-            <div className="w-full grid md:grid-cols-2 flex items-center gap-6 mt-2">
-              <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
-                <div className="col-span-1 flex items-center w-full justify-center">
-                  <img
-                    className="border rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
-                    src="/advisor1.png"
-                  />
-                </div>
-                <div className="col-span-2 md:ml-0 mr-0 ">
-                  <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
-                    Florian Budde
-                  </p>
-                  <p className="w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700">
-                    Senior Partner Emeritus, McKinsey & Company
-                  </p>
-                  <p className="w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700 w-5/6 mb-7">
-                    Speciality: Chemistry, Data, Al, Technology
-                  </p>
-                  <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
-                    <p
-                      onClick={() => {
-                        setIsOpen(true);
-                        setExpert(0);
-                      }}
-                      className="cursor-pointer text-sm md:ml-0 ml-3"
-                    >
-                      Read More
-                    </p>
-                    <input
-                      disabled={disabled}
-                      name="firstchoice"
-                      value={val1}
-                      onChange={() => {
-                        setVal1(!val1);
-                        setExpertId(1);
-                      }}
-                      className="mr-5"
-                      type="radio"
-                    />
-                  </div>
-                </div>
+
+        {/* <div className="mx-5 mb-[5vh]">
+          <div className="w-full grid md:grid-cols-2 flex items-center gap-6 mt-2">
+            <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
+              <div className="col-span-1 flex items-center w-full justify-center">
+                <img
+                  className="border rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
+                  src="/advisor1.png"
+                />
               </div>
-              <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
-                <div className="col-span-1 flex items-center w-full justify-center">
-                  <img
-                    className="border rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
-                    src="/advisor2.png"
+              <div className="col-span-2 md:ml-0 mr-0 ">
+                <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
+                  Florian Budde
+                </p>
+                <p className="w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700">
+                  Senior Partner Emeritus, McKinsey & Company
+                </p>
+                <p className="w-full mt-2 md:ml-0 ml-3 text-sm text-gray-700 w-5/6 mb-7">
+                  Speciality: Chemistry, Data, Al, Technology
+                </p>
+                <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
+                  <p
+                    onClick={() => {
+                      setIsOpen(true);
+                      setExpert(0);
+                    }}
+                    className="cursor-pointer text-sm md:ml-0 ml-3"
+                  >
+                    Read More
+                  </p>
+                  <input
+                    disabled={disabled}
+                    name="firstchoice"
+                    value={val1}
+                    onChange={() => {
+                      setVal1(!val1);
+                      setExpertId(1);
+                    }}
+                    className="mr-5"
+                    type="radio"
                   />
-                </div>
-                <div className="col-span-2 md:ml-0 mr-0 ">
-                  <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
-                    Shripad Nadkarni
-                  </p>
-                  <p className="w-full mt-2 text-sm text-gray-700 md:ml-0 ml-3">
-                    Ex-VP Johnson & Johnson
-                  </p>
-                  <p className="w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3">
-                    Speciality: Automobile, Food & Beverage, Apparel
-                  </p>
-                  <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
-                    <p
-                      onClick={() => {
-                        setIsOpen(true);
-                        setExpert(1);
-                      }}
-                      className="cursor-pointer text-sm md:ml-0 ml-3"
-                    >
-                      Read More
-                    </p>
-                    <input
-                      disabled={disabled}
-                      name="firstchoice"
-                      value={val2}
-                      onChange={() => {
-                        setVal2(!val2);
-                        setExpertId(3);
-                      }}
-                      className="mr-5"
-                      type="radio"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
-                <div className="col-span-1 flex items-center w-full justify-center">
-                  <img
-                    className="border rounded-md shadow-xl md:mt-0 mt-2 md:ml-0 ml-2"
-                    src="/advisor3.png"
-                  />
-                </div>
-                <div className="col-span-2 md:ml-0 mr-0 ">
-                  <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
-                    Luc Bonte
-                  </p>
-                  <p className="w-full text-sm mt-2 text-gray-700 md:ml-0 ml-3">
-                    Ex-Country President, Arcelor Belgium
-                  </p>
-                  <p className="w-full text-sm mt-2 text-gray-700 w-5/6 md:ml-0 ml-3">
-                    Speciality: Maintenance methodology, Ironmaking & Steel,
-                    Cape & Opex modeling
-                  </p>
-                  <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
-                    <p
-                      onClick={() => {
-                        setIsOpen(true);
-                        setExpert(2);
-                      }}
-                      className="cursor-pointer text-sm md:ml-0 ml-3"
-                    >
-                      Read More
-                    </p>
-                    <input
-                      disabled={disabled}
-                      name="firstchoice"
-                      value={val3}
-                      onChange={() => {
-                        setVal3(!val3);
-                        setExpertId(2);
-                      }}
-                      className="mr-5"
-                      type="radio"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
-                <div className="col-span-1 flex items-center w-full justify-center">
-                  <img
-                    className="border rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
-                    src="/advisor4.png"
-                  />
-                </div>
-                <div className="col-span-2 md:ml-0 mr-0 ">
-                  <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
-                    Sujesh Vasudevan
-                  </p>
-                  <p className="w-full mt-2 text-sm text-gray-700 md:ml-0 ml-3">
-                    Ex-President Glen Pharma - India, ME and Africa
-                  </p>
-                  <p className="w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3">
-                    Speciality: Pharma, Lifescience
-                  </p>
-                  <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
-                    <p
-                      onClick={() => {
-                        setIsOpen(true);
-                        setExpert(3);
-                      }}
-                      className="cursor-pointer text-sm md:ml-0 ml-3"
-                    >
-                      Read More
-                    </p>
-                    <input
-                      disabled={disabled}
-                      name="firstchoice"
-                      value={val4}
-                      onChange={() => {
-                        setVal4(!val4);
-                        setExpertId(4);
-                      }}
-                      className="mr-5"
-                      type="radio"
-                    />
-                  </div>
                 </div>
               </div>
             </div>
-
+            <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
+              <div className="col-span-1 flex items-center w-full justify-center">
+                <img
+                  className="border rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
+                  src="/advisor2.png"
+                />
+              </div>
+              <div className="col-span-2 md:ml-0 mr-0 ">
+                <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
+                  Shripad Nadkarni
+                </p>
+                <p className="w-full mt-2 text-sm text-gray-700 md:ml-0 ml-3">
+                  Ex-VP Johnson & Johnson
+                </p>
+                <p className="w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3">
+                  Speciality: Automobile, Food & Beverage, Apparel
+                </p>
+                <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
+                  <p
+                    onClick={() => {
+                      setIsOpen(true);
+                      setExpert(1);
+                    }}
+                    className="cursor-pointer text-sm md:ml-0 ml-3"
+                  >
+                    Read More
+                  </p>
+                  <input
+                    disabled={disabled}
+                    name="firstchoice"
+                    value={val2}
+                    onChange={() => {
+                      setVal2(!val2);
+                      setExpertId(3);
+                    }}
+                    className="mr-5"
+                    type="radio"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
+              <div className="col-span-1 flex items-center w-full justify-center">
+                <img
+                  className="border rounded-md shadow-xl md:mt-0 mt-2 md:ml-0 ml-2"
+                  src="/advisor3.png"
+                />
+              </div>
+              <div className="col-span-2 md:ml-0 mr-0 ">
+                <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
+                  Luc Bonte
+                </p>
+                <p className="w-full text-sm mt-2 text-gray-700 md:ml-0 ml-3">
+                  Ex-Country President, Arcelor Belgium
+                </p>
+                <p className="w-full text-sm mt-2 text-gray-700 w-5/6 md:ml-0 ml-3">
+                  Speciality: Maintenance methodology, Ironmaking & Steel, Cape
+                  & Opex modeling
+                </p>
+                <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
+                  <p
+                    onClick={() => {
+                      setIsOpen(true);
+                      setExpert(2);
+                    }}
+                    className="cursor-pointer text-sm md:ml-0 ml-3"
+                  >
+                    Read More
+                  </p>
+                  <input
+                    disabled={disabled}
+                    name="firstchoice"
+                    value={val3}
+                    onChange={() => {
+                      setVal3(!val3);
+                      setExpertId(2);
+                    }}
+                    className="mr-5"
+                    type="radio"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-dashed rounded-md border-gray-700 border w-full h-max grid md:grid-cols-3">
+              <div className="col-span-1 flex items-center w-full justify-center">
+                <img
+                  className="border rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
+                  src="/advisor4.png"
+                />
+              </div>
+              <div className="col-span-2 md:ml-0 mr-0 ">
+                <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
+                  Sujesh Vasudevan
+                </p>
+                <p className="w-full mt-2 text-sm text-gray-700 md:ml-0 ml-3">
+                  Ex-President Glen Pharma - India, ME and Africa
+                </p>
+                <p className="w-full mt-2 text-sm text-gray-700 w-5/6 mb-7 md:ml-0 ml-3">
+                  Speciality: Pharma, Lifescience
+                </p>
+                <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
+                  <p
+                    onClick={() => {
+                      setIsOpen(true);
+                      setExpert(3);
+                    }}
+                    className="cursor-pointer text-sm md:ml-0 ml-3"
+                  >
+                    Read More
+                  </p>
+                  <input
+                    disabled={disabled}
+                    name="firstchoice"
+                    value={val4}
+                    onChange={() => {
+                      setVal4(!val4);
+                      setExpertId(4);
+                    }}
+                    className="mr-5"
+                    type="radio"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        
+        </div> */}
+        <div className="mt-6">
+          <div className="w-full rounded-md mb-5 ">
+            <div className="mx-5 mb-[5vh]">
+              <div className="w-full grid md:grid-cols-2 gap-6 mt-2">
+                {expertDetails.map((expert, index) => (
+                  <div
+                    key={index}
+                    className="border-dashed rounded-md border-gray-700 border w-full grid md:grid-cols-3 h-[180px]"
+                  >
+                    <div className="col-span-1 flex items-center justify-center w-36 h-40 m-auto">
+                      <img
+                        className="border w-full rounded-md shadow-xl md:ml-0 ml-2 md:mt-0 mt-2"
+                        src="https://st4.depositphotos.com/9998432/22597/v/450/depositphotos_225976914-stock-illustration-person-gray-photo-placeholder-man.jpg"
+                      />
+                    </div>
+                    <div className="col-span-2 md:ml-0 mr-0 ">
+                      <p className="font-semibold text-lg mt-3 md:ml-0 ml-3">
+                        {expert.expertName}
+                      </p>
+                      <p className="w-full mt-2 text-sm text-gray-700 md:ml-0 ml-3">
+                        {expert.designation}
+                      </p>
+                      <p className="w-full mt-2 text-sm text-gray-700 mb-4 md:ml-0 ml-3">
+                        Speciality: {expert.speciality}
+                      </p>
+                      <div className="w-full mt-2 text-[#034D86] font-bold mb-5 flex justify-between">
+                        <p
+                          onClick={() => {
+                            setExpert((prev) => expert);
+                            setIsOpen(true);
+                          }}
+                          className="cursor-pointer text-sm md:ml-0 ml-3"
+                        >
+                          Read More
+                        </p>
+                        <input
+                          disabled={disabled}
+                          name="firstchoice"
+                          value={val1}
+                          onChange={() => {
+                            setVal1(!val1);
+                            setExpertId(expert.expertId);
+                          }}
+                          className="mr-5"
+                          type="radio"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* ... (remaining code) */}
+        </div>
       </div>
-      <ExpertReadMore
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        expert={expert}
-      />
+
       <div className="flex justify-between items-center md:mb-0 mb-20">
         <div></div>
         <div className="flex items-start gap-4 text-[14px] mt-0 mr-2 whitespace-nowrap">
@@ -440,6 +485,13 @@ const AskAnExpert = () => {
           </Link>
         </div>
       </div>
+      {expert && (
+        <ExpertReadMore
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          expertDetails={expert}
+        />
+      )}
     </div>
   );
 };
