@@ -1,25 +1,38 @@
 import { useState } from "react";
 import StatusTable from "../Tables/StatusTable";
+import PrimaryButton from "../../../util/Buttons/PrimaryButton";
+import RecipeDrawer from "../Components/RecipeDrawer";
 
 const mach = {
   1: {
     loader: [4],
-    hopper: [2,3]
+    hopper: [2, 3],
   },
   3: {
     loader: [5],
-    hopper: [1]
-  }
-}
+    hopper: [1],
+  },
+};
 
 const img = {
-  hopper: '/BlendComplianceIcons/images/hopper.jpg',
-  loader: 'https://media.istockphoto.com/id/1283895179/photo/jcb-crane-working-near-sand-quarry.jpg?s=612x612&w=0&k=20&c=DAESMJ9vd1vzUW1JznFoWBSkdZkBUSTM5zyTZPCzLHs='
-}
+  hopper: "/BlendComplianceIcons/images/hopper.jpg",
+  loader:
+    "https://media.istockphoto.com/id/1283895179/photo/jcb-crane-working-near-sand-quarry.jpg?s=612x612&w=0&k=20&c=DAESMJ9vd1vzUW1JznFoWBSkdZkBUSTM5zyTZPCzLHs=",
+};
 
 const Status = () => {
   const [sm, setSm] = useState(1);
   const [type, setType] = useState("hopper");
+  const [openRecipeDrawer, setOpenRecipeDrawer] = useState(false);
+  const [existing, setExisting] = useState(false);
+
+  const handleDrawer = (val) => {
+    setExisting((prev) => {
+      return val == 1 ? true : false;
+    });
+    setOpenRecipeDrawer(true);
+  };
+
   const batches = [1, 3];
   const types = ["hopper", "loader"];
   let active = Math.floor(Math.random() * mach[sm][type]?.length);
@@ -60,31 +73,47 @@ const Status = () => {
               <p className="text-[#AEA9B1] text-sm">Batch</p>
             </div>
             <div className="flex flex-col gap-1 min-w-[140px]">
-              <p className="text-[#938F96] text-sm font-medium flex gap-3">12 May ‘23 <span>12:45 pm</span></p>
+              <p className="text-[#938F96] text-sm font-medium flex gap-3">
+                12 May ‘23 <span>12:45 pm</span>
+              </p>
               <p className="text-[#AEA9B1] text-sm">Time</p>
             </div>
           </div>
         </div>
-        <div className="flex gap-0">
-          {types.map((i, idx) => {
-            return (
-              <div
-                className={`py-[6px] px-3 capitalize border text-sm ${
-                  idx == 0 ? "rounded-l" : "rounded-r"
-                }`}
-                style={{
-                  backgroundColor: type == i ? "#FFFFED" : "white",
-                  borderColor: type == i ? "#FFC107" : "#EBEBEB",
-                  color: type == i ? "#3E3C42" : "#605D64",
-                  fontWeight: type == i ? 500 : 400,
-                  cursor: type == i ? "" : "pointer",
-                }}
-                onClick={() => setType(i)}
-              >
-                {i}
-              </div>
-            );
-          })}
+        <div className="flex flex-col gap-8 items-end">
+          <div className="flex gap-4 items-center">
+            <PrimaryButton
+              width={"fit-content"}
+              text={"Upload blend recipe"}
+              onClick={() => handleDrawer(0)}
+            />
+            <PrimaryButton
+              width={"fit-content"}
+              text={"Use existing recipe"}
+              onClick={() => handleDrawer(1)}
+            />
+          </div>
+          <div className="flex gap-0">
+            {types.map((i, idx) => {
+              return (
+                <div
+                  className={`py-[6px] px-3 capitalize border text-sm ${
+                    idx == 0 ? "rounded-l" : "rounded-r"
+                  }`}
+                  style={{
+                    backgroundColor: type == i ? "#FFFFED" : "white",
+                    borderColor: type == i ? "#FFC107" : "#EBEBEB",
+                    color: type == i ? "#3E3C42" : "#605D64",
+                    fontWeight: type == i ? 500 : 400,
+                    cursor: type == i ? "" : "pointer",
+                  }}
+                  onClick={() => setType(i)}
+                >
+                  {i}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="flex flex-col-reverse md:flex-row gap-3">
@@ -93,7 +122,7 @@ const Status = () => {
           {mach[sm][type].map((i, idx) => {
             return (
               <div className="flex flex-col gap-2 capitalize">
-                <p>{type + " " + (i)}</p>
+                <p>{type + " " + i}</p>
                 <div className="w-full h-full bg-black rounded flex justify-center items-center relative">
                   <img
                     src={img[type]}
@@ -121,6 +150,13 @@ const Status = () => {
           })}
         </div>
       </div>
+      {openRecipeDrawer && (
+        <RecipeDrawer
+          closeModal={() => setOpenRecipeDrawer(false)}
+          openModal={openRecipeDrawer}
+          existing={existing}
+        />
+      )}
     </div>
   );
 };

@@ -19,7 +19,7 @@ const TableCell = ({ data, val, item, index, percentage }) => {
               <img src="/BlendComplianceIcons/info.svg" alt="no support" />
             </div>
           ) : (
-            "+ " + item[val]
+            "+ " + (parseFloat(item[val]) - 100).toFixed(2)
           )}
         </CircularProgressLabel>
       </CircularProgress>
