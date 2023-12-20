@@ -346,8 +346,11 @@ const Feed = () => {
 
   return (
     <div className="px-6 py-4 rounded-xl bg-white flex flex-col gap-5">
-      <div className="flex flex-col gap-3">
-        <p className="text-xl font-medium text-[#3E3C42]">Khandala</p>
+      <div className="flex  gap-3">
+        <div className="flex items-center">
+          <p className="text-xl font-medium text-[#3E3C42]">Khandala</p>
+        </div>
+
         <div className="flex gap-4 items-center">
           {bays.map((val) => {
             return (
@@ -407,7 +410,8 @@ const Feed = () => {
               className="cursor-pointer"
               onClick={() => setEditing(false)}
             />
-          )} */}
+          )} 
+          */}
             </div>
             <div className="flex gap-2 items-center min-w-[160px]">
               <p className="text-sm text-[#605D64]">In Time</p>
