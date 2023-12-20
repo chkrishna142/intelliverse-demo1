@@ -17,6 +17,7 @@ const iconMap = {
   inspected: "executive.svg",
   drained: "drained.svg",
   collected: "samplerContainer.svg",
+  clearance: "weighment.svg",
 };
 
 const Capitalize = (str) => {
