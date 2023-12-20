@@ -5,9 +5,14 @@ import ReadMore from "./ReadMore";
 import { useWindowSize } from "@uidotdev/usehooks";
 import FloatingInput from "../../util/VisionUtils/FloatingInput";
 import Paginator from "../../util/VisionUtils/Paginator";
+import { useNavigate } from "react-router-dom";
+import AiAvisorHistoryTable from "./AiAdvisorHistoryTable";
+import { SpinnerIcon } from "@chakra-ui/icons";
 
 const AiAdvisorHistory = () => {
   const size = useWindowSize();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [tableData, setTAbleData] = useState([
     {
       date: "15 Nov 2023",
@@ -208,11 +213,19 @@ const AiAdvisorHistory = () => {
     (total, item) => total + item.tokenUsed,
     0
   );
+  const handleBackButton = () => {
+    navigate("/user/transactionhistory");
+  };
 
   return (
     <div className="mt-[3vh] w-full flex flex-col gap-1 ">
       <div className="w-full flex gap-[8px]">
-        <img src="/backtick.svg" alt="" />
+        <div
+          className="flex items-center cursor-pointer"
+          onClick={handleBackButton}
+        >
+          <img src="/backtick.svg" alt="" />
+        </div>
         <p className="text-[20px] sm:text-[20px] font-semibold text-[#024D87]">
           Question history
         </p>
@@ -376,6 +389,22 @@ const AiAdvisorHistory = () => {
 
         <div className="w-full">
           <TransactionTable tableData={displayData} />
+        </div>
+
+        <div>
+          {loading ? (
+            <div className="ml-[50%]">
+              <SpinnerIcon speed="0.65s" />
+            </div>
+          ) : (
+            <React.Fragment>
+              {displayData && displayData.length !== 0 ? (
+                <AiAvisorHistoryTable />
+              ) : (
+                <p className="ml-[45%]">No data available!</p>
+              )}
+            </React.Fragment>
+          )}
         </div>
       </div>
     </div>

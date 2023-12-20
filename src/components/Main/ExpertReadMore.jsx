@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-    Button
-} from '@chakra-ui/react'
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+} from "@chakra-ui/react";
 
+const ExpertReadMore = ({ isOpen, onOpen, onClose, expertDetails }) => {
+  //   const [submitted, setSubmitted] = useState(false);
 
-const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
+  //   console.log(expertDetails);
+  //   useEffect(() => {
+  //     setSubmitted(false);
+  //   }, [onClose]);
 
-    const [submitted, setSubmitted] = useState(false)
-
-    useEffect(() => {
-        setSubmitted(false)
-    }, [onClose])
-
-    return (
-        <>
-            <Modal isOpen={isOpen} onClose={onClose} isCentered size={"3xl"}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalCloseButton className='mt-2' />
-                    <ModalBody>
+  return (
+    <>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size={"3xl"}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton className="mt-2" />
+          {/* <ModalBody>
                         {expert === 2 ? <div className='mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0'>
                             <div className='col-span-1 flex justify-center items-center'>
                                 <img className='rounded-md shadow-md h-40' src="/advisor3.png" />
@@ -76,11 +75,42 @@ const ExpertReadMore = ({ isOpen, onOpen, onClose, expert }) => {
                                     <p className='text-xs w-full mt-3'><span className='font-bold'>Education:</span>  Advanced Management Program, Harvard Business School</p>
                                 </div>
                             </div>}
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
-        </>
-    );
+                    </ModalBody> */}
+          <ModalBody>
+            {/* {expertDetails.map((expert, index) => ( */}
+            <div className="mt-5 pb-10 pt-2 w-full grid grid-cols-3 gap-0 ">
+              <div className="col-span-1 flex justify-center items-center">
+                <img
+                  className="rounded-md shadow-md h-40"
+                  src="https://st4.depositphotos.com/9998432/22597/v/450/depositphotos_225976914-stock-illustration-person-gray-photo-placeholder-man.jpg"
+                />
+              </div>
+              <div className="col-span-2 w-full pr-8">
+                <p className="text-[#034D86] font-semibold">
+                  {expertDetails.expertName}
+                </p>
+                <p className="text-xs w-full mt-2">
+                  <span className="font-bold">
+                    Industry or Functional Focus:
+                  </span>{" "}
+                  {expertDetails.industry}
+                </p>
+                <p className="text-xs w-full mt-3">
+                  <span className="font-bold">Experience:</span>{" "}
+                  {expertDetails.experience}
+                </p>
+                <p className="text-xs w-full mt-3">
+                  <span className="font-bold">Education:</span>{" "}
+                  {expertDetails.education}
+                </p>
+              </div>
+            </div>
+            {/* ))} */}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
+  );
 };
 
 export default ExpertReadMore;

@@ -1,7 +1,15 @@
 import { Select } from "@chakra-ui/react";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
 
-const Header = ({ customEndDate, setCustomToTime }) => {
+const Header = ({
+  customEndDate,
+  setCustomToTime,
+  selectedExpert,
+  selectedExpertId,
+  setSelectedExpert,
+  setSelectedExpertId,
+  expertList,
+}) => {
   return (
     <>
       <div className="flex justify-between">
@@ -45,37 +53,21 @@ const Header = ({ customEndDate, setCustomToTime }) => {
               variant="outline"
               className="!text-sm !font-medium text-[#605D64]"
               _focus={{ borderColor: "blue.500" }}
-            //   onChange={(e) => handleRangeSelect(e)}
-              value={""}
+              value={selectedExpertId || ""}
+              onChange={(e) => {
+                const newSelectedId = parseInt(e.target.value, 10);
+                const newSelectedExpert = expertList.find(
+                  (expert) => expert.expertId === selectedExpertId
+                );
+                setSelectedExpert(newSelectedExpert);
+                setSelectedExpertId(newSelectedId);
+              }}
             >
-              <option
-                key="Luc"
-                value={0}
-                className="bg-white hover:bg-blue-200"
-              >
-                Luc
-              </option>
-              <option
-                key="Last Seven Days"
-                value={1}
-                className="bg-white hover:bg-blue-200"
-              >
-                John
-              </option>
-              <option
-                key="This Month"
-                value={2}
-                className="bg-white hover:bg-blue-200"
-              >
-                Shone
-              </option>
-              <option
-                key="This Quarter"
-                value={3}
-                className="bg-white hover:bg-blue-200"
-              >
-                James
-              </option>
+              {expertList.map((expert) => (
+                <option key={expert.expertId} value={expert.expertId}>
+                  {expert.expertName}
+                </option>
+              ))}
             </Select>
           </div>
         </div>
