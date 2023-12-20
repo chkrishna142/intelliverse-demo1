@@ -17,7 +17,7 @@ const UpdateTabs = () => {
   const navigate = useNavigate();
   const { clientId } = useParams();
   const [isDeployClicked, setDeployClicked] = useState(false);
-
+  const [isFetchTranChanged, setTranTableChange] = useState(false);
   const size = useWindowSize();
   let param = useParams();
   const [plantCamMap, setPlantCamMap] = useState({});
@@ -102,7 +102,7 @@ const UpdateTabs = () => {
             {clientId && <UserMgmt clientId={clientId} />}
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            {clientId && <AllotToken clientId={clientId} />}
+            {clientId && <AllotToken clientId={clientId} setTranTableChange={setTranTableChange} isFetchTranChanged={isFetchTranChanged} />}
           </TabPanel>
         </TabPanels>
       </Tabs>

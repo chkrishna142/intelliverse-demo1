@@ -29,6 +29,7 @@ const AllotToken = ({ setTranTableChange, isFetchTranChanged }) => {
   const [tableData, setTableData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   const [addTokensArray, setAddTokensArray] = useState([]);
+
   const fetchTableData = async () => {
     setIsLoading(true);
     const param = {
@@ -56,7 +57,7 @@ const AllotToken = ({ setTranTableChange, isFetchTranChanged }) => {
 
   useEffect(() => {
     fetchTableData();
-  }, []);
+  }, [isFetchBalance]);
 
   const handleAddButtonClick = async (id, user) => {
     if (isNaN(addTokens)) {

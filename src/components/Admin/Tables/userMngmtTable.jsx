@@ -12,6 +12,8 @@ const UserMngmtTable = ({
   setSelectedUser,
   setFullName,
   setUserEmail,
+  setDesignation,
+  setBaseLocation,
   setUserRole,
   setContact,
   clientOrg,
@@ -79,7 +81,7 @@ const UserMngmtTable = ({
       : "",
 },
 {
-  field: "baselocation",
+  field: "baseLocation",
   headerName: "BASE LOCATION",
 },
     {
@@ -120,6 +122,8 @@ const UserMngmtTable = ({
                 setUserEmail(row?.email);
                 setUserRole(row?.role);
                 setContact(row?.phoneNumber);
+                setDesignation(row?.designation)
+                setBaseLocation(row?.baseLocation)
               }}
             >
               <EditNoteIcon />

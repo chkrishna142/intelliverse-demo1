@@ -23,10 +23,10 @@ const CreditBuy = () => {
   const [selector, setSelector] = useState(1);
   const [submitted, setSubmitted] = useState(0);
   const [loader, setLoader] = useState(false);
-  const [amount, setAmount] = useState(10);
+  const [amount, setAmount] = useState(10000);
   const [url, setUrl] = useState("");
 
-  const [tokenBalance, setTokenBalance] = useState();
+  const [tokenBalance, setTokenBalance] = useState(0);
   const [fullName, setFullName] = useState();
   const [submission, setSubmission] = useState(false);
   const { org, name } = useParams();
@@ -96,7 +96,7 @@ const CreditBuy = () => {
     }
   };
 
-  const getPaymentStatus = async (id) => {
+  const getPaymentStatus = async (id,intervalId) => {
     const param = {
       paymentId: id,
     };
@@ -114,6 +114,7 @@ const CreditBuy = () => {
       );
       const res = await data.json();
       const status = res;
+      
       if (
         status.paymentInitiated === true &&
         status.paymentCaptured === false
@@ -125,7 +126,13 @@ const CreditBuy = () => {
       ) {
         setSubmitted(2);
       }
+
+      if(status.status === "Failure"){
+        clearInterval(intervalId)
+        setLoader(false);
+      }
     } catch (e) {
+      
       console.log(e);
     }
   };
@@ -156,7 +163,7 @@ const CreditBuy = () => {
       let elapsedTime = 0;
       const intervalId = setInterval(() => {
         // Your code to execute on each interval
-        getPaymentStatus(txn_id);
+        getPaymentStatus(txn_id,intervalId);
         // Update elapsed time
         elapsedTime += intervalDuration;
         // Check if 2 minutes have passed
@@ -242,29 +249,29 @@ const CreditBuy = () => {
                       onChange={(e) => setAmount(e.target.value)}
                       className="w-full focus:outline-none pl-2 font-semibold"
                     >
-                      <option className="font-bold" value={10}>
-                        ₹ 1 (10 Ripik Tokens)
+                      <option className="font-bold" value={10000}>
+                        ₹ 10000 (100000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={20}>
-                        ₹ 2 (20 Ripik Tokens)
+                      <option className="font-bold" value={20000}>
+                        ₹ 20000 (200000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={30}>
-                        ₹ 3 (30 Ripik Tokens)
+                      <option className="font-bold" value={30000}>
+                        ₹ 30000 (300000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={40}>
-                        ₹ 4 (40 Ripik Tokens)
+                      <option className="font-bold" value={40000}>
+                        ₹ 40000 (400000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={50}>
-                        ₹ 5 (50 Ripik Tokens)
+                      <option className="font-bold" value={50000}>
+                        ₹ 50000 (500000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={100}>
-                        ₹ 10 (100 Ripik Tokens)
+                      <option className="font-bold" value={100000}>
+                        ₹ 100000 (1000000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={500}>
-                        ₹ 50 (500 Ripik Tokens)
+                      <option className="font-bold" value={5000000}>
+                        ₹ 5000000 (5000000 Ripik Tokens)
                       </option>
-                      <option className="font-bold" value={1000}>
-                        ₹ 100 (1000 Ripik Tokens)
+                      <option className="font-bold" value={10000000}>
+                        ₹ 10000000 (10000000 Ripik Tokens)
                       </option>
                     </select>
                   </div>
