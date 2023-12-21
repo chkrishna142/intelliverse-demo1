@@ -195,9 +195,15 @@ const UploadDetails = ({
             <ul style={{ listStyleType: "disc", marginLeft: "1.5em" }}>
               <li>Requires a minimum of 30 images per label</li>
               <li>Supports up to 1000 images</li>
+              <li>Provides 5 free labels</li>
             </ul>
             <ul style={{ listStyleType: "disc", marginLeft: "1.5em" }}>
-              <li>Ensure a minimum of 15 annotations per label</li>
+              <li>
+                Ensure a minimum of 15 annotations per label for Classification
+              </li>
+              <li>
+                Ensure a minimum of 10 annotations per label for Segment/Detect
+              </li>
               <li>Ensures non-upload of duplicate images</li>
             </ul>
           </div>
