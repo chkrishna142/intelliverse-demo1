@@ -38,7 +38,7 @@ const Status = () => {
   let active = Math.floor(Math.random() * mach[sm][type]?.length);
   return (
     <div className="flex flex-col gap-3 pb-6 pt-3 px-3 rounded-xl bg-white">
-      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:items-end">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 sm:items-start">
         <div className="flex flex-col gap-3">
           <div className="flex gap-4">
             {batches.map((i, idx) => {
@@ -80,8 +80,8 @@ const Status = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-8 items-end">
-          <div className="flex gap-4 items-center">
+        <div className="flex flex-row sm:flex-col gap-1 sm:gap-8 items-end">
+          <div className="flex flex-col lg:flex-row gap-4 items-center">
             <PrimaryButton
               width={"fit-content"}
               text={"Upload blend recipe"}

@@ -304,6 +304,7 @@ const RecipeDrawer = ({ closeModal, openModal, existing = false }) => {
               <PrimaryButton
                 text={"Save Recipe"}
                 width={"fit-content"}
+                disable={!existing && !file}
                 onClick={closeModal}
               />
             </div>
