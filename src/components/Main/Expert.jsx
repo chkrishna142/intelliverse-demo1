@@ -18,7 +18,7 @@ import FileUploader from "../community/AnswerExpert/FileUploader";
 // import { baseURL } from "../../index";
 import CloseIcon from "@mui/icons-material/Close";
 const Expert = () => {
-  const { auth, userType } = useContext(NavContext);
+  const { auth, userType, organisation } = useContext(NavContext);
   const [submitted, setSubmitted] = useState(false);
   const [reply, setReply] = useState("");
   const [review, setReview] = useState(false);
@@ -34,34 +34,9 @@ const Expert = () => {
   const [comment, setComment] = useState("");
   const [savedAnswer, setSavedAnswer] = useState("");
   const [subject, setSubject] = useState("");
-  const [retrievedComments, setRetrievedComments] = useState([
-    
-    {
-      commentId: "2f1c16e5-683a-4d26-bb94-861326389c30",
-      questionId: "67f4fc41-06af-4f93-94c4-5c9f893ad812",
-      userId: "730beb2d-f793-446e-9607-9c6e4411fce0",
-      expertId: 3,
-      comment: "I agree with you Abhinav but did you consider the possible solutions etc, etc.",
-      createdAt: "2023-12-19T08:11:33.425Z",
-      updatedAt: "2023-12-19T08:11:33.425Z",
-      role: "EXPERT",
-      name:"Luc",
-      imgurl:"/expert/exp.png"
-    },
-    {
-      commentId: "dd9a8d14-b06c-4e15-90b3-b4ffe5e2b782",
-      questionId: "67f4fc41-06af-4f93-94c4-5c9f893ad812",
-      userId: "730beb2d-f793-446e-9607-9c6e4411fce0",
-      expertId: 3,
-      comment: "I agree with you Abhinav but did you consider the possible solutions etc, etc.",
-      createdAt: "2023-12-19T08:11:33.425Z",
-      updatedAt: "2023-12-18T12:12:07.338946",
-      role: "ENQUIRER",
-      name:"Abhinav Saluja",
-      imgurl:"/expert/expert.png"
-    },
-  ]);
+  const [retrievedComments, setRetrievedComments] = useState([]);
   const [enquirer, setEnquirer] = useState("");
+  const [deadline, setDeadLine] = useState();
 
   const { login } = useContext(NavContext);
 
@@ -101,7 +76,7 @@ const Expert = () => {
           },
         }
       );
-      setSavedAnswer(response?.data);
+      setSavedAnswer(response?.data.answer);
       // console.log("saved", response?.data);
     } catch (e) {
       console.error(e);
@@ -167,7 +142,8 @@ const Expert = () => {
           },
         }
       );
-      // setRetrievedComments(response?.data);
+      // console.log("comments", response.data);
+      setRetrievedComments(response?.data);
     } catch (e) {
       console.error(e);
     }
@@ -192,8 +168,8 @@ const Expert = () => {
         }
       );
       // const res = await data?.json();
-      setAttachments(res);
-      console.log(res);
+      setAttachments(res.data);
+      console.log("attt", res);
     } catch (error) {
       console.log(error);
     }
@@ -212,10 +188,12 @@ const Expert = () => {
     //     return item.questionId.toLowerCase().includes(param.questionId);
     //   })
     // );
+    console.log("ques deta", res);
     setQuestion(res?.question);
     setAnswer(res?.answer);
     setEnquirer(res?.username);
     setSubject(res?.subject);
+    setDeadLine(res?.timeLimit);
   };
 
   const postAnswer = async () => {
@@ -321,7 +299,7 @@ const Expert = () => {
     updatedSend.splice(index, 1); // Remove the file at the specified index
     setSend(updatedSend);
   };
-  console.log("roleType", auth);
+  console.log("reply", reply, savedAnswer);
   return (
     <>
       <Navbar />
@@ -636,7 +614,7 @@ const Expert = () => {
                     </div>
                     <div>
                       <p>{fullName}</p>
-                      <p className="text-[#AEA9B1]">Asainpaints</p>
+                      <p className="text-[#AEA9B1]">{organisation}</p>
                     </div>
                   </div>
                 </div>
@@ -647,7 +625,7 @@ const Expert = () => {
                       <img src="/expert/date.svg" alt="" />
                     </div>
                     <div className="flex justify-center">
-                      <p>12th May 23</p>
+                      <p>{deadline}</p>
                     </div>
                   </div>
                 </div>
@@ -676,29 +654,22 @@ const Expert = () => {
               <p className="text-[14px] font-semibold">Question details</p>
               <div className="flex my-2">
                 <p>
-                  {attachments?.map((item, index) => {
-                    return (
-                      <p
-                        onClick={() => downloadAsset(item)}
-                        className="font-light text-[#034C85] underline cursor-pointer text-sm"
-                        key={index}
-                      >
-                        {removeExtension(item)}
-                      </p>
-                    );
-                  })}
+                  {attachments &&
+                    attachments.length > 0 &&
+                    attachments?.map((item, index) => {
+                      return (
+                        <p
+                          onClick={() => downloadAsset(item)}
+                          className="font-light text-[#034C85] underline cursor-pointer text-sm"
+                          key={index}
+                        >
+                          {removeExtension(item)}
+                        </p>
+                      );
+                    })}
                 </p>
               </div>
-              <p className="text-[16px] mt-3 w-[70%]">
-                {/* How can I reduce the occurrence of refractory failure in blast
-                furnace. How can I reduce the occurrence of refractory failure
-                in blast furnace. How can I reduce the occurrence of refractory
-                failure in blast furnace How can I reduce the occurrence of
-                refractory failure in blast furnace How can I reduce the
-                occurrence of refractory failure in blast furnace How can I
-                reduce the occurrence of refractory failure in blast furnace */}
-                {question}
-              </p>
+              <p className="text-[16px] mt-3 w-[70%]">{question}</p>
             </div>
             <div className="w-full p-6 border bg-white rounded-md mb-5">
               <p className="text-[14px] font-semibold">Answer Details</p>
@@ -713,22 +684,24 @@ const Expert = () => {
                     <FileUploader setSend={setSend} send={send} />
                   )}
                   <div className="mt-3 flex gap-3 items-center">
-                    {send?.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center gap-2 cursor-pointer"
-                        >
-                          {/* <img src="/pdf.svg" alt="pdf" /> */}
-                          <p className="font-light text-[#AEA9B1] mb-3">
-                            {item.name}
-                          </p>
-                          <p className="mb-3">
-                            <CloseIcon onClick={() => removeFile(index)} />
-                          </p>
-                        </div>
-                      );
-                    })}
+                    {send &&
+                      send.length > 0 &&
+                      send.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center gap-2 cursor-pointer"
+                          >
+                            <img src="/pdf.svg" alt="pdf" />
+                            <p className="font-light text-[#AEA9B1] mb-3">
+                              {item.name}
+                            </p>
+                            <p className="mb-3">
+                              <CloseIcon onClick={() => removeFile(index)} />
+                            </p>
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
               )}
@@ -739,7 +712,7 @@ const Expert = () => {
                     userType === "EXPERT" && (
                       <textarea
                         // ref={""}
-                        value={reply || savedAnswer}
+                        value={reply || savedAnswer || ""}
                         onChange={(e) => {
                           setReply(e.target.value);
                           // handleKeyDown();
@@ -763,7 +736,7 @@ const Expert = () => {
                 <div className="w-full mt-4">
                   <p className="text-[#034C85]">Your Reply</p>
                   <div className="w-full h-20  rounded-md px-0 py-2">
-                    {reply || savedAnswer}
+                    {reply || savedAnswer || ""}
                   </div>
                 </div>
               ) : null}
@@ -782,7 +755,9 @@ const Expert = () => {
                 ? ""
                 : userType === "EXPERT" && (
                     <div className="">
-                      <p className="text-[#605D64] text-[14px] mt-2 mb-3">Comments</p>
+                      <p className="text-[#605D64] text-[14px] mt-2 mb-3">
+                        Comments
+                      </p>
                       {retrievedComments && retrievedComments.length !== 0 && (
                         <ExpertComments
                           retrievedComments={retrievedComments}
@@ -809,7 +784,9 @@ const Expert = () => {
                   )}
               {userType !== "EXPERT" && (
                 <div className="">
-                  <p className="text-[#605D64] text-[14px] mt-2 mb-3">Comments</p>
+                  <p className="text-[#605D64] text-[14px] mt-2 mb-3">
+                    Comments
+                  </p>
                   {retrievedComments && retrievedComments.length !== 0 && (
                     <ExpertComments
                       retrievedComments={retrievedComments}

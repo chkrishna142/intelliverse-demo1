@@ -190,50 +190,50 @@ const AskAnExpert = () => {
         </div>
 
         {/* <div>
-            <div className="w-full flex justify-center mt-10">
-              <img src="/query.svg" />
+          <div className="w-full flex justify-center mt-10">
+            <img src="/query.svg" />
+          </div>
+          <div className="w-full flex justify-center">
+            <p className="font-semibold text-2xl mt-4">
+              Thank You for Your Query!
+            </p>
+          </div>
+          <div className="mt-5 w-full">
+            <p className="px-10 font-light">
+              Your question has been successfully submitted to our team of
+              manufacturing experts. Please allow up to 24 hours for one of our
+              experts to review and respond to your query. Keep an eye out for
+              the response in your notification. Meanwhile, you can ask the
+              query to our Al advisor{" "}
+              <Link to="/community/advisor">
+                <span className="font-bold text-[#034C85] cursor-pointer">
+                  here.
+                </span>
+              </Link>
+            </p>
+          </div>
+          <div className="mt-5 w-full">
+            <p className="px-10 font-light">
+              Here's a summary of the information you provided:
+            </p>
+          </div>
+          <div className="mt-5 w-full">
+            <p className="px-10 font-light text-[#034C85]">Question:</p>
+          </div>
+          <div className="ml-10 mr-10">
+            <div className="mt-2 w-full rounded-md ">
+              <p className="text-gray-600 px-2 py-2">{question}</p>
             </div>
-            <div className="w-full flex justify-center">
-              <p className="font-semibold text-2xl mt-4">
-                Thank You for Your Query!
-              </p>
-            </div>
-            <div className="mt-5 w-full">
-              <p className="px-10 font-light">
-                Your question has been successfully submitted to our team of
-                manufacturing experts. Please allow up to 24 hours for one of
-                our experts to review and respond to your query. Keep an eye out
-                for the response in your notification. Meanwhile, you can ask
-                the query to our Al advisor{" "}
-                <Link to="/community/advisor">
-                  <span className="font-bold text-[#034C85] cursor-pointer">
-                    here.
-                  </span>
-                </Link>
-              </p>
-            </div>
-            <div className="mt-5 w-full">
-              <p className="px-10 font-light">
-                Here's a summary of the information you provided:
-              </p>
-            </div>
-            <div className="mt-5 w-full">
-              <p className="px-10 font-light text-[#034C85]">Question:</p>
-            </div>
-            <div className="ml-10 mr-10">
-              <div className="mt-2 w-full rounded-md ">
-                <p className="text-gray-600 px-2 py-2">{question}</p>
-              </div>
-            </div>
-            <div className="mt-5 w-full mb-4">
-              <p className="px-10 font-light">
-                Thank you for using our{" "}
-                <span className="font-bold">"Ask an Expert"</span> module. We're
-                here to help you optimize efficiency and reduce waste in your
-                manufacturing processes.
-              </p>
-            </div>
-          </div> */}
+          </div>
+          <div className="mt-5 w-full mb-4">
+            <p className="px-10 font-light">
+              Thank you for using our{" "}
+              <span className="font-bold">"Ask an Expert"</span> module. We're
+              here to help you optimize efficiency and reduce waste in your
+              manufacturing processes.
+            </p>
+          </div>
+        </div> */}
 
         {/* <div className="mx-5 mb-[5vh]">
           <div className="w-full grid md:grid-cols-2 flex items-center gap-6 mt-2">

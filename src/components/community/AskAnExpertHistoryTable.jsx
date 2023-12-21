@@ -103,7 +103,7 @@ const AskAnExpertHistoryTable = ({ rowData, fetchQueries, role }) => {
       renderCell: (params) => <div>{formatTime(params.row.dateTime)}</div>,
     },
     {
-      field: "deadLine",
+      field: "deadline",
       headerName: "DEADLINE IN",
       renderCell: (params) => <div>{formatDeadline(params.row.deadLine)}</div>,
     },
