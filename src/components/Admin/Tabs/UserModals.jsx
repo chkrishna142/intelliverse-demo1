@@ -148,8 +148,8 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers, clientOrg }) => {
         services: [],
         organisation: clientOrg || "",
         role: role,
-        designation:designation,
-        baseLocation:baseLocation
+        designation: designation,
+        baseLocation: baseLocation,
       });
 
       let config = {
@@ -192,7 +192,6 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers, clientOrg }) => {
       });
     }
   };
-
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size={"sm"} width={740}>
@@ -254,39 +253,40 @@ const AddNewModal = ({ isOpen, onClose, fetchUsers, clientOrg }) => {
                 Designation
               </div>
               <select
-                onChange={(e)=>setDesignation(e.target.value)}
+                onChange={(e) => setDesignation(e.target.value)}
                 className="w-full overflow-auto border rounded text-sm border-[#938F96] py-2 px-5"
                 // style={{ height: '150px', overflowY: 'auto' }}
               >
                 <option value={"CXO"}>CXO</option>
-                <option value={"SENIOR DIRECTOR"}>Senior Director</option>
-                <option value={"ASSOCIATE DIRECTOR"}>Associate Director</option>
-                <option value={"DIRECTOR"}>Director</option>
-                <option value={"SENIOR VICE PRESIDENT"}>
+
+                <option value={"Senior Director"}>Senior Director</option>
+                <option value={"Associate Director"}>Associate Director</option>
+                <option value={"Director"}>Director</option>
+                <option value={"Senior Vice President"}>
                   Senior Vice President
                 </option>
-                <option value={"VICE PRESIDENT"}>Vice President</option>
-                <option value={"ASSOCIATE VICE PRESIDENT"}>
+                <option value={"Vice President"}>Vice President</option>
+                <option value={"Associate Vice President"}>
                   Associate Vice President
                 </option>
-                <option value={"MANAGER"}>Manager</option>
-                <option value={"SENIOR MANAGER"}>Senior manager</option>
-                <option value={"PLANT HEAD"}>Plant head</option>
-                <option value={"SHIFT MANAGER"}>Shift manager</option>
-                <option value={"PLANT OPERATOR"}>Plant operator</option>
-                <option value={"BUSINESS ANALYST"}>Business analyst</option>
-                <option value={"CONSULTANT"}>Consultant</option>
-                <option value={"CORPORATE STAFF"}>Corporate staff</option>
-                <option value={"IT ANALYST"}>IT analyst</option>
-                <option value={"IT DEVELOPER"}>IT developer</option>
-                <option value={"IT MANAGER"}>IT manager</option>
-                <option value={"PLANT MANAGER"}>Plant manager</option>
-                <option value={"MILL OPERATOR"}>Mill operator</option>
-                <option value={"AUTOMATION TEAM"}>Automation team</option>
-                <option value={"AUTOMATION STAFF"}>Automation staff</option>
-                <option value={"EQUIPMENT OPERATOR"}>Equipment operator</option>
-                <option value={"DEVICE OPERATOR"}>Device operator</option>
-                <option value={"OTHER"}>Other</option>
+                <option value={"Manager"}>Manager</option>
+                <option value={"Senior Manager"}>Senior Manager</option>
+                <option value={"Plant Head"}>Plant Head</option>
+                <option value={"Shift Manager"}>Shift Manager</option>
+                <option value={"Plant Operator"}>Plant Operator</option>
+                <option value={"Business Analyst"}>Business Analyst</option>
+                <option value={"Consultant"}>Consultant</option>
+                <option value={"Corporate Staff"}>Corporate Staff</option>
+                <option value={"IT Analyst"}>IT Analyst</option>
+                <option value={"IT Developer"}>IT Developer</option>
+                <option value={"IT Manager"}>IT Manager</option>
+                <option value={"Plant Manager"}>Plant Manager</option>
+                <option value={"Mill Operator"}>Mill Operator</option>
+                <option value={"Automation Team"}>Automation Team</option>
+                <option value={"Automation Staff"}>Automation Staff</option>
+                <option value={"Equipment Operator"}>Equipment Operator</option>
+                <option value={"Device Operator"}>Device Operator</option>
+                <option value={"Other"}>Other</option>
               </select>
               {/* <Input placeholder="Enter Your Name" /> */}
             </FormControl>
