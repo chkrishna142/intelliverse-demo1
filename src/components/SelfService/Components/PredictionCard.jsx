@@ -6,17 +6,17 @@ const PredictionCard = ({ data }) => {
   return (
     <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
       <div
-        className="w-full h-full flex justify-center items-center bg-black rounded relative cursor-pointer"
+        className="w-full h-[250px] flex justify-center items-center bg-black rounded relative cursor-pointer"
         onClick={() => setFlip((prev) => !prev)}
       >
         <img
           src={data.img}
           alt="inputImage"
-          className="w-full h-auto rounded"
+          className="w-auto max-h-full rounded"
         />
       </div>
       <div
-        className="w-full h-full flex justify-center items-center bg-black rounded relative cursor-pointer"
+        className="w-full h-[250px] flex justify-center items-center bg-black rounded relative cursor-pointer"
         onClick={() => setFlip((prev) => !prev)}
       >
         {data.hasOwnProperty("resultImage") ? (
