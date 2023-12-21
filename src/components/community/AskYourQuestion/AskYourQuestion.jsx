@@ -5,7 +5,7 @@ import PrimaryButton from "../../../util/Buttons/PrimaryButton";
 import { Spinner } from "@chakra-ui/react";
 import FileUploader from "../AnswerExpert/FileUploader";
 import { Input } from "@chakra-ui/react";
-import { SpinnerIcon } from "@chakra-ui/icons";
+import { CloseIcon, SpinnerIcon } from "@chakra-ui/icons";
 import QuestionInstructions from "./QuestionInstructions";
 import { useNavigate, useParams } from "react-router-dom";
 import NavContext from "../../NavContext";
@@ -14,7 +14,7 @@ import axios from "axios";
 
 const AskYourQuestion = () => {
   const { expertId } = useParams();
-  const { auth } = useContext(NavContext);
+  const { auth, organisation, fullName } = useContext(NavContext);
   const [loader, setLoader] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [customEndDate, setCustomToTime] = useState();
@@ -26,6 +26,8 @@ const AskYourQuestion = () => {
   const [expertList, setExpertList] = useState([]);
   const [selectedExpert, setSelectedExpert] = useState(null);
   const [selectedExpertId, setSelectedExpertId] = useState(expertId);
+  const [isSaved, setSaved] = useState(false);
+
   const navigate = useNavigate();
   const [send, setSend] = useState([]);
 
@@ -52,7 +54,7 @@ const AskYourQuestion = () => {
     const cap = {
       expertId: selectedExpertId,
       question: question,
-      summary: summary,
+      subject: summary,
     };
     const json = JSON.stringify(cap);
     const blob = new Blob([json], {
@@ -136,10 +138,23 @@ const AskYourQuestion = () => {
     navigate("/community/askanexpert/question");
   };
   const handleSubmit = () => {
+    setLoader(true);
     postQuestion();
   };
+  const handleSave = () => {
+    setSaved(true);
+  };
 
-  console.log(customEndDate);
+  const handleBackEditing = () => {
+    setReview(false);
+    setSaved(false);
+  };
+  const removeFile = (index) => {
+    const updatedSend = [...send];
+    updatedSend.splice(index, 1); // Remove the file at the specified index
+    setSend(updatedSend);
+  };
+  console.log(summary);
   return submitted === false ? (
     <>
       <div className="mt-[3vh]">
@@ -161,13 +176,14 @@ const AskYourQuestion = () => {
               <TonalButton
                 text={"Save Draft"}
                 width={"fit-content"}
-                //   onClick={handleSave}
+                onClick={handleSave}
+                disable={isSaved}
               />
             ) : (
               <PrimaryButton
                 text={"Back to Editing"}
                 width={"fit-content"}
-                onClick={() => setReview(false)}
+                onClick={handleBackEditing}
               />
             )}
             {review === false ? (
@@ -183,7 +199,7 @@ const AskYourQuestion = () => {
                 onClick={handleSubmit}
               />
             ) : (
-              <SpinnerIcon />
+              <Spinner />
             )}
           </div>
         </div>
@@ -197,13 +213,20 @@ const AskYourQuestion = () => {
           setSelectedExpert={setSelectedExpert}
           setSelectedExpertId={setSelectedExpertId}
           expertList={expertList}
+          organisation={organisation}
+          fullName={fullName}
+          auth={auth}
         />
         <div className="py-6">
           <p className="text-[14px] font-semibold">Question summary</p>
           <input
             type="text"
             placeholder="Be concise and summarize your question"
-            className="w-[60%] mt-1 h-10 px-4 rounded-md border"
+            className={`w-[60%] mt-1 h-10 px-4 rounded-md border ${
+              isSaved
+                ? "border-none cursor-not-allowed pointer-events-none"
+                : ""
+            }`}
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
           />
@@ -226,7 +249,7 @@ const AskYourQuestion = () => {
                       {item.name}
                     </p>
                     <p className="mb-3">
-                      {/* <CloseIcon onClick={() => removeFile(index)} /> */}
+                      <CloseIcon onClick={() => removeFile(index)} />
                     </p>
                   </div>
                 );
@@ -243,7 +266,11 @@ const AskYourQuestion = () => {
                   setQuestion(e.target.value);
                 }}
                 placeholder="Your answer here"
-                className="w-[60%] border rounded-md px-2 py-2 h-32"
+                className={`w-[60%] border rounded-md px-2 py-2 h-32 ${
+                  isSaved
+                    ? "border-none cursor-not-allowed pointer-events-none"
+                    : ""
+                }`}
               />
             </div>
           ) : (

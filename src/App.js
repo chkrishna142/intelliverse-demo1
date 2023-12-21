@@ -142,7 +142,7 @@ function App() {
   return (
     <>
       <NavContext.Provider
-        value={{ setLogin, login, setAuth, auth, setEmail, email, userType }}
+        value={{ setLogin, login, setAuth, auth, setEmail, email, userType, organisation,fullName }}
       >
         <div>
           {login ? (

@@ -1,5 +1,7 @@
 import { Select } from "@chakra-ui/react";
 import FloatingInput from "../../../util/VisionUtils/FloatingInput";
+import { useEffect, useState } from "react";
+import { baseURL } from "../../..";
 
 const Header = ({
   customEndDate,
@@ -9,13 +11,40 @@ const Header = ({
   setSelectedExpert,
   setSelectedExpertId,
   expertList,
+  organisation,
+  fullName,
+  auth,
 }) => {
+  const [tokenBalance, setTokenBalance] = useState(0);
+
+  const getBalance = async () => {
+    try {
+      const data = await fetch(baseURL + "token-wallet/v1/balance", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": auth,
+        },
+      });
+      const res = await data.json();
+      if (data.status !== 400) {
+        // setCredits(getQuestionsCredit(res, setDisabled));
+        setTokenBalance(res.User.balance);
+        // setDisabled(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getBalance();
+  }, []);
   return (
     <>
       <div className="flex justify-between">
         <div>
           <p className="text-[20px]" style={{ fontWeight: 500 }}>
-            Dear, {"Luc"}
+            Hello, {fullName}
           </p>
         </div>
         <div className="flex items-center lg:gap-4 sm:gap-2 px-3 py-1 rounded-sm bg-[#FFFFD8]">
@@ -38,7 +67,9 @@ const Header = ({
             </p>
           </div>
           <div className="flex items-center gap-1">
-            <p className="text-[#3E3C42] font-semibold text-[16px]">{2000}</p>
+            <p className="text-[#3E3C42] font-semibold text-[16px]">
+              {tokenBalance}
+            </p>
             <img src="/token.svg" className="w-full h-full" alt="token" />
           </div>
         </div>
@@ -96,8 +127,8 @@ const Header = ({
               <img src="/expert/expert.png" alt="" />
             </div>
             <div>
-              <p>{"enquirer"}</p>
-              <p className="text-[#AEA9B1]">Asainpaints</p>
+              <p>{fullName}</p>
+              <p className="text-[#AEA9B1]">{organisation}</p>
             </div>
           </div>
         </div>
