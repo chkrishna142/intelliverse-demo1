@@ -40,6 +40,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
+import { AddBulkUsersModal } from "../Modals/AddBulkUsersModal";
 
 const UserMgmt = () => {
   const { clientOrg, clientId, mode } = useParams();
@@ -56,6 +57,7 @@ const UserMgmt = () => {
   const { auth } = useContext(NavContext);
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
+  const [send, setSend] = useState([]);
   const [clientUpdate, setClientUpdate] = useState(false);
   const [displayData, setDisplayData] = useState([]);
   const [displayUsers, setDisplayUsers] = useState([]);
@@ -149,7 +151,10 @@ const UserMgmt = () => {
   const onCloseE = () => {
     setIsOpenE(false);
   };
-
+  const [isOpenB, setIsOpenB] = useState(false);
+  const onCloseB = () => {
+    setIsOpenB(false);
+  };
   const [contact, setContact] = useState();
   const [fullName, setFullName] = useState("");
   const [whatsapp, setWhatsapp] = useState(false);
@@ -248,8 +253,8 @@ const UserMgmt = () => {
       phoneNumber: contact,
       role: userRole,
       userid: selectedUser.userid,
-      baseLocation:baseLocation,
-      designation:designation
+      baseLocation: baseLocation,
+      designation: designation,
     });
     const response = await axios
       .patch(baseURL + "iam/users", requestData, {
@@ -330,7 +335,7 @@ const UserMgmt = () => {
     <>
       <div className={`w-full px-2 !font-roboto`}>
         <div className="flex flex-col 2xl:flex-row justify-between">
-          <div className="flex flex-row justify-start gap-6">
+          <div className="flex flex-row justify-start gap-6 items-center">
             <div className="flex flex-col">
               <p className="text-lg font-semibold text-[#605D64]">
                 {/* {users?.length} */}
@@ -359,9 +364,7 @@ const UserMgmt = () => {
               </p>
               <p className="text-[#938F96]">Deleted</p>
             </div>
-          </div>
-          <div className="flex flex-col xl:flex-row justify-end 2xl:justify-start items-end gap-6">
-            <div className="w-full xl:w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
+            <div className="w-full h-10 xl:w-[320px] flex flex-row items-center border-2 py-2 rounded px-4 justify-between">
               <input
                 className="w-full focus:outline-none text-sm"
                 placeholder="Search email ID/name"
@@ -369,17 +372,36 @@ const UserMgmt = () => {
               />
               <img className="h-5 text-black" src="/search.svg" />
             </div>
+          </div>
+          <div className="flex flex-col xl:flex-row justify-end 2xl:justify-start items-end gap-6">
+            {/* <div className="w-full xl:w-[320px] flex flex-row border-2 py-2 rounded px-4 justify-between">
+              <input
+                className="w-full focus:outline-none text-sm"
+                placeholder="Search email ID/name"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <img className="h-5 text-black" src="/search.svg" />
+            </div> */}
             <div className="flex gap-1 flex-col sm:flex-row lg:gap-6 items-end">
               {clientOrg && mode === "view" ? (
                 ""
               ) : (
-                <Button
-                  onClick={() => setIsOpenA(true)}
-                  className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
-                >
-                  <AddIcon />
-                  <span>Add New User</span>
-                </Button>
+                <>
+                  <Button
+                    onClick={() => setIsOpenA(true)}
+                    className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
+                  >
+                    <AddIcon />
+                    <span>Add New User</span>
+                  </Button>
+                  <Button
+                    onClick={() => setIsOpenB(true)}
+                    className="!border-0 !text-[#1C56AC] !text-sm gap-1 !bg-white"
+                  >
+                    <AddIcon />
+                    <span>Bulk add users</span>
+                  </Button>
+                </>
               )}
               {displayUsers.length > 0 && (
                 <ExlCsvDownload
@@ -458,6 +480,13 @@ const UserMgmt = () => {
         fetchUsers={fetchUsers}
         clientOrg={clientOrg}
       />
+      <AddBulkUsersModal
+        isOpen={isOpenB}
+        onClose={onCloseB}
+        size={"3xl"}
+        setSend={setSend}
+        send={send}
+      />
       <Modal
         isOpen={isOpenE}
         onClose={onCloseE}
@@ -523,58 +552,62 @@ const UserMgmt = () => {
                 {/* <Input placeholder="Enter Your Name" /> */}
               </FormControl>
               <FormControl className="!h-12 mb-2 font-semibold">
-              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                Designation
-              </div>
-              <select
-              value={designation}
-                onChange={(e)=>setDesignation(e.target.value)}
-                className="w-full overflow-auto border rounded text-sm border-[#938F96] py-2 px-5"
-                // style={{ height: '150px', overflowY: 'auto' }}
-              >
-                <option value={"CXO"}>CXO</option>
-                <option value={"SENIOR DIRECTOR"}>Senior Director</option>
-                <option value={"ASSOCIATE DIRECTOR"}>Associate Director</option>
-                <option value={"DIRECTOR"}>Director</option>
-                <option value={"SENIOR VICE PRESIDENT"}>
-                  Senior Vice President
-                </option>
-                <option value={"VICE PRESIDENT"}>Vice President</option>
-                <option value={"ASSOCIATE VICE PRESIDENT"}>
-                  Associate Vice President
-                </option>
-                <option value={"MANAGER"}>Manager</option>
-                <option value={"SENIOR MANAGER"}>Senior manager</option>
-                <option value={"PLANT HEAD"}>Plant head</option>
-                <option value={"SHIFT MANAGER"}>Shift manager</option>
-                <option value={"PLANT OPERATOR"}>Plant operator</option>
-                <option value={"BUSINESS ANALYST"}>Business analyst</option>
-                <option value={"CONSULTANT"}>Consultant</option>
-                <option value={"CORPORATE STAFF"}>Corporate staff</option>
-                <option value={"IT ANALYST"}>IT analyst</option>
-                <option value={"IT DEVELOPER"}>IT developer</option>
-                <option value={"IT MANAGER"}>IT manager</option>
-                <option value={"PLANT MANAGER"}>Plant manager</option>
-                <option value={"MILL OPERATOR"}>Mill operator</option>
-                <option value={"AUTOMATION TEAM"}>Automation team</option>
-                <option value={"AUTOMATION STAFF"}>Automation staff</option>
-                <option value={"EQUIPMENT OPERATOR"}>Equipment operator</option>
-                <option value={"DEVICE OPERATOR"}>Device operator</option>
-                <option value={"OTHER"}>Other</option>
-              </select>
-              {/* <Input placeholder="Enter Your Name" /> */}
-            </FormControl>
-            <FormControl className="!h-12">
-              <div className="text-xs text-[#2660B6] mb-2 font-semibold">
-                Base location
-              </div>
-              <input
-              value={baseLocation}
-                className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
-                placeholder="Enter city/town/village name"
-                onChange={(e) => setBaseLocation(e.target.value)}
-              />
-            </FormControl>
+                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                  Designation
+                </div>
+                <select
+                  value={designation}
+                  onChange={(e) => setDesignation(e.target.value)}
+                  className="w-full overflow-auto border rounded text-sm border-[#938F96] py-2 px-5"
+                  // style={{ height: '150px', overflowY: 'auto' }}
+                >
+                  <option value={"CXO"}>CXO</option>
+                  <option value={"SENIOR DIRECTOR"}>Senior Director</option>
+                  <option value={"ASSOCIATE DIRECTOR"}>
+                    Associate Director
+                  </option>
+                  <option value={"DIRECTOR"}>Director</option>
+                  <option value={"SENIOR VICE PRESIDENT"}>
+                    Senior Vice President
+                  </option>
+                  <option value={"VICE PRESIDENT"}>Vice President</option>
+                  <option value={"ASSOCIATE VICE PRESIDENT"}>
+                    Associate Vice President
+                  </option>
+                  <option value={"MANAGER"}>Manager</option>
+                  <option value={"SENIOR MANAGER"}>Senior manager</option>
+                  <option value={"PLANT HEAD"}>Plant head</option>
+                  <option value={"SHIFT MANAGER"}>Shift manager</option>
+                  <option value={"PLANT OPERATOR"}>Plant operator</option>
+                  <option value={"BUSINESS ANALYST"}>Business analyst</option>
+                  <option value={"CONSULTANT"}>Consultant</option>
+                  <option value={"CORPORATE STAFF"}>Corporate staff</option>
+                  <option value={"IT ANALYST"}>IT analyst</option>
+                  <option value={"IT DEVELOPER"}>IT developer</option>
+                  <option value={"IT MANAGER"}>IT manager</option>
+                  <option value={"PLANT MANAGER"}>Plant manager</option>
+                  <option value={"MILL OPERATOR"}>Mill operator</option>
+                  <option value={"AUTOMATION TEAM"}>Automation team</option>
+                  <option value={"AUTOMATION STAFF"}>Automation staff</option>
+                  <option value={"EQUIPMENT OPERATOR"}>
+                    Equipment operator
+                  </option>
+                  <option value={"DEVICE OPERATOR"}>Device operator</option>
+                  <option value={"OTHER"}>Other</option>
+                </select>
+                {/* <Input placeholder="Enter Your Name" /> */}
+              </FormControl>
+              <FormControl className="!h-12">
+                <div className="text-xs text-[#2660B6] mb-2 font-semibold">
+                  Base location
+                </div>
+                <input
+                  value={baseLocation}
+                  className="w-full border rounded text-sm border-[#938F96] py-2 px-5"
+                  placeholder="Enter city/town/village name"
+                  onChange={(e) => setBaseLocation(e.target.value)}
+                />
+              </FormControl>
               <div className="flex flex-col items-start gap-2 text-xs font-light">
                 <div className="flex items-center gap-2">
                   <input

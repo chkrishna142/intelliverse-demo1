@@ -76,7 +76,7 @@ const AdminHome = () => {
               }
               onClick={() => setPage("token_transactions")}
             >
-              Token Transactions
+              Allocation History
             </Tab>
             <Tab
               className={
@@ -102,10 +102,13 @@ const AdminHome = () => {
             <SessionLogs />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <TokenTransaction isFetchTranChanged={isFetchTranChanged}/>
+            <TokenTransaction isFetchTranChanged={isFetchTranChanged} />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
-            <AllotToken setTranTableChange={setTranTableChange} isFetchTranChanged={isFetchTranChanged}/>
+            <AllotToken
+              setTranTableChange={setTranTableChange}
+              isFetchTranChanged={isFetchTranChanged}
+            />
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -18,7 +18,7 @@ const UserMngmtTable = ({
   setContact,
   clientOrg,
   clientUpdate,
-  mode
+  mode,
 }) => {
   const columns = [
     {
@@ -48,42 +48,42 @@ const UserMngmtTable = ({
     {
       field: "createdat",
       headerName: "LOGIN TIME",
-    //   valueGetter: (params) =>
-    //     params.row.createdat
-    //       ? new Date(params.row.createdat).toLocaleDateString("en-US", {
-    //           year: "2-digit",
-    //           month: "short",
-    //           day: "numeric",
-    //         }) +
-    //         " " +
-    //         new Date(params.row.createdat).toLocaleTimeString([], {
-    //           hour: '2-digit',
-    //           minute: '2-digit'
-    //         })
-    //       : "",
-    // },
-    valueGetter: (params) =>
-    params.row.createdat
-      ? new Date(params.row.createdat).toDateString().split(" ")[2] +
-        " " +
-        new Date(params.row.createdat).toDateString().split(" ")[1] +
-        " '" +
-        new Date(params.row.createdat)
-          .toDateString()
-          .split(" ")[3]
-          .slice(2, 4) +
-        " " +
-        new Date(params.row.createdat).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12:false
-        })
-      : "",
-},
-{
-  field: "baseLocation",
-  headerName: "BASE LOCATION",
-},
+      //   valueGetter: (params) =>
+      //     params.row.createdat
+      //       ? new Date(params.row.createdat).toLocaleDateString("en-US", {
+      //           year: "2-digit",
+      //           month: "short",
+      //           day: "numeric",
+      //         }) +
+      //         " " +
+      //         new Date(params.row.createdat).toLocaleTimeString([], {
+      //           hour: '2-digit',
+      //           minute: '2-digit'
+      //         })
+      //       : "",
+      // },
+      valueGetter: (params) =>
+        params.row.createdat
+          ? new Date(params.row.createdat).toDateString().split(" ")[2] +
+            " " +
+            new Date(params.row.createdat).toDateString().split(" ")[1] +
+            " '" +
+            new Date(params.row.createdat)
+              .toDateString()
+              .split(" ")[3]
+              .slice(2, 4) +
+            " " +
+            new Date(params.row.createdat).toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })
+          : "",
+    },
+    {
+      field: "baseLocation",
+      headerName: "BASE LOCATION",
+    },
     {
       field: "isactive",
       headerName: "STATUS",
@@ -122,8 +122,8 @@ const UserMngmtTable = ({
                 setUserEmail(row?.email);
                 setUserRole(row?.role);
                 setContact(row?.phoneNumber);
-                setDesignation(row?.designation)
-                setBaseLocation(row?.baseLocation)
+                setDesignation(row?.designation);
+                setBaseLocation(row?.baseLocation);
               }}
             >
               <EditNoteIcon />
@@ -136,13 +136,13 @@ const UserMngmtTable = ({
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-nowrap";
-  const flexMap = [0, 2, 2, 3,1, 1, 1.5,1, 1, 1];
+  const flexMap = [0, 2, 2, 3, 1, 1, 1.5, 1, 1, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;
     val["flex"] = flexMap[idx];
   });
- 
+
   return (
     <div className="overflow-x-auto mt-2">
       <ThemeProvider theme={MuiTheme}>
@@ -153,7 +153,7 @@ const UserMngmtTable = ({
           columnVisibilityModel={{
             userid: false,
             username: false,
-            action : clientOrg && mode !=="update" ? false : true
+            action: clientOrg && mode !== "update" ? false : true,
           }}
           hideFooter={true}
           sx={{ minWidth: "1000px" }}

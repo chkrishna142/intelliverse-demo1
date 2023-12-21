@@ -152,7 +152,7 @@ const TokenTransaction = ({ isFetchTranChanged }) => {
       {/* top head */}
       <div className="w-full flex justify-between items-center">
         <p className=" text-[18px] font-medium w-[200px] text-[#605D64]">
-          Transaction History
+          Allocation History
         </p>
       </div>
       <TokenData isFetchTranChanged={isFetchTranChanged} />
@@ -163,9 +163,9 @@ const TokenTransaction = ({ isFetchTranChanged }) => {
       ) : (
         <>
           <div className="w-full p-2">
-            <p className="text-[#605D64] text-[16px] font-medium mt-3">
+            {/* <p className="text-[#605D64] text-[16px] font-medium mt-3">
               Allocation History
-            </p>
+            </p> */}
             <div className="mt-3">
               {displayData2 && displayData2.length !== 0 && (
                 <TokenAllocationTable tableData={displayData2} />
