@@ -692,7 +692,7 @@ const Expert = () => {
                             key={index}
                             className="flex items-center gap-2 cursor-pointer"
                           >
-                            <img src="/pdf.svg" alt="pdf" />
+                            {/* <img src="/pdf.svg" alt="pdf" /> */}
                             <p className="font-light text-[#AEA9B1] mb-3">
                               {item.name}
                             </p>
