@@ -81,7 +81,8 @@ const DetectSegment = ({
   ) : (
     <div className="w-full flex flex-col gap-2">
       <p className="text-[#3E3C42] text-base font-medium">
-        Please add labels and click on confirm to proceed to annotation
+        Please add labels and click on confirm to proceed to annotation,
+        Provide min {labels.length * 10} annotations
       </p>
       <Skeleton fitContent>
         <ReactImageAnnotate

@@ -174,17 +174,30 @@ const AnnotateData = ({
   };
 
   const checkAnnotation = () => {
+    let type = userData.annotationType;
+    let limit = type == "Classify" ? 15 : 10;
     for (let l in labels) {
-      let count = annotatedImages.filter((item) => item.label == labels[l]);
-      if (count.length < 15) {
+      let count = 0;
+      if (userData.annotationType == "Classify") {
+        count = annotatedImages.filter(
+          (item) => item.label == labels[l]
+        ).length;
+      } else {
+        annotatedImages.map((item) => {
+          item.regions.map((r) => {
+            count += r.cls == labels[l] ? 1 : 0;
+          });
+        });
+      }
+      if (count < limit) {
         toast({
           title: "Less images annotated",
           description:
             "label : " +
             labels[l] +
             " & annotations: " +
-            count.length +
-            `, Provide min ${15 - count.length} more to submit`,
+            count +
+            `, Provide min ${limit - count} more to submit`,
           status: "error",
           position: "top-right",
           duration: 5000,
