@@ -24,7 +24,7 @@ const DetailOutputCard = ({ data, label }) => {
     else if (w > 1024) setImageNum(4);
     else if (w > 768) setImageNum(3);
     else if (w > 500) setImageNum(2);
-    else if(w > 300) setImageNum(1);
+    else if (w > 300) setImageNum(1);
   }, [size.width]);
 
   return (
@@ -42,20 +42,22 @@ const DetailOutputCard = ({ data, label }) => {
       </div>
       <div className="flex flex-col gap-2 items-end">
         <div
-          className="grid gap-3 items-center"
+          className="grid gap-3 items-center w-full"
           style={{ gridTemplateColumns: `repeat(${imageNum},1fr)` }}
         >
           {imgdata.map((x) => {
             return (
-              <img
-                src={x.img}
-                alt="model image"
-                className="h-full w-full rounded"
-              />
+              <div className="w-full h-[250px] flex justify-center items-center bg-black rounded">
+                <img
+                  src={x.img}
+                  alt="model image"
+                  className="max-h-full w-auto rounded"
+                />
+              </div>
             );
           })}
         </div>
-        {imgdata.length == imageNum && (
+        {imgdata.length != data.img.length && data.img.length > imageNum && (
           <TextButton
             text={"View all"}
             width={"fit-content"}

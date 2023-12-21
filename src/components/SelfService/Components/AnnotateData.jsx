@@ -100,15 +100,14 @@ const AnnotateData = ({
       }
     } catch (error) {
       console.log(error);
-      // toast({
-      //   title: "Error",
-      //   description: "Start train api failed",
-      //   status: "error",
-      //   position: "top-right",
-      //   duration: 2000,
-      //   isClosable: true,
-      // });
-      setActiveStep((prev) => prev + 1);
+      toast({
+        title: "Error",
+        description: "Start train api failed",
+        status: "error",
+        position: "top-right",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
@@ -120,7 +119,8 @@ const AnnotateData = ({
       const annotations = annotatedImages.map((item) => {
         return {
           fileId: item.id,
-          label: item.label,
+          label:
+            userData.annotationType == "Classify" ? item.label : item.regions,
         };
       });
       const predictionData = allImages.map((item) => {
@@ -219,7 +219,7 @@ const AnnotateData = ({
       setLabels([]);
     }
   }, [userData.uploadedFiles]);
-
+  console.log(annotatedImages, "annotated Data");
   return (
     <div
       className={`p-6 flex flex-col gap-6 bg-white transition-all duration-700 ease-in ${
