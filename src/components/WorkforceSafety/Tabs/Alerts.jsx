@@ -29,7 +29,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
   const AlertApi = async () => {
     const requestData = JSON.stringify({
       clientId: param.clientId.toLowerCase(),
-      useCase: 'WORKFORCESAFETY',
+      useCase: "WORKFORCESAFETY",
       plantName: "khandala",
       cameraGpId: "all",
       startDate: new Date(fromTime).getTime() + 5.5 * 60 * 60 * 1000,
@@ -66,6 +66,7 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
     handleClick();
   }, []);
 
+  console.log("alertcards", Object.keys(alertCards).length);
 
   return (
     <div className="relative flex flex-col">
@@ -95,30 +96,38 @@ const Alerts = ({ plantId, cameraId, disable, plantCamMap }) => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col gap-8 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start">
-        <div className="flex flex-col gap-4">
-          <p className="pl-6 text-xl font-medium text-[#3E3C42]">
-            How you are doing
-          </p>
-          <div className="px-4 flex gap-4 justify-between flex-wrap">
-            {Object.keys(alertCards).map((val, idx) => {
-              return (
-                <AlertCard
-                  parameter={val}
-                  count={alertCards[val]["passed"]}
-                  total={alertCards[val]["total"]}
-                  setFilterData={setFilterData}
-                />
-              );
-            })}
+      <div className="flex flex-col gap-8 mt-[160px] md:mt-11 pt-[57px] bg-white rounded-xl justify-start ">
+        {Object.keys(alertCards).length === 0 ? (
+          <div className="pl-6 text-xl font-medium text-[#3E3C42]">
+            The violations will be shown here
           </div>
-        </div>
-        {alerts.length > 0 && (
-          <AlertTable
-            rowData={alerts}
-            filterData={filterData}
-            setFilterModel={setFilterData}
-          />
+        ) : (
+          <>
+            <div className="flex flex-col gap-4">
+              <p className="pl-6 text-xl font-medium text-[#3E3C42]">
+                How you are doing
+              </p>
+              <div className="px-4 flex gap-4 justify-between flex-wrap">
+                {Object.keys(alertCards).map((val, idx) => {
+                  return (
+                    <AlertCard
+                      parameter={val}
+                      count={alertCards[val]["passed"]}
+                      total={alertCards[val]["total"]}
+                      setFilterData={setFilterData}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            {alerts.length > 0 && (
+              <AlertTable
+                rowData={alerts}
+                filterData={filterData}
+                setFilterModel={setFilterData}
+              />
+            )}
+          </>
         )}
       </div>
     </div>

@@ -6,6 +6,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import Feed from "./tabs/Feed";
 import Alert from "./tabs/Alert";
 import Report from "./tabs/Report";
+import FeedLib from "./tabs/FeedLib.jsx";
 
 const Capitalize = (str) => {
   const arr = str.split(" ");
@@ -88,6 +89,16 @@ const SlabSizing = () => {
             </Tab>
             <Tab
               className={
+                page === "feed library"
+                  ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
+                  : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
+              }
+              onClick={() => setPage("feed library")}
+            >
+              Feed Library
+            </Tab>
+            <Tab
+              className={
                 page === "report"
                   ? "!text-black !text-xs sm:!text-sm !bg-white rounded-full pl-4 pr-4 pt-1 pb-1 !border !border-[#79767D]"
                   : "!text-xs sm:!text-sm !text-[#938F96] !border-0"
@@ -105,6 +116,9 @@ const SlabSizing = () => {
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Alert />
+          </TabPanel>
+          <TabPanel className="!pl-0 !pr-0">
+            <FeedLib />
           </TabPanel>
           <TabPanel className="!pl-0 !pr-0">
             <Report />

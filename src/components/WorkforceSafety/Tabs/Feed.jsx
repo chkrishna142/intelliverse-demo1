@@ -430,8 +430,9 @@ const Feed = () => {
               </p>
             </div>
           </div>
-          <div className="flex flex-col-reverse items-center min-[900px]:items-start min-[900px]:flex-row gap-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-4 gap-4 h-[250px] sm:h-[60%] max-h-[100vh] overflow-y-auto w-full">
+          <div className="flex flex-col-reverse items-center min-[900px]:items-start min-[900px]:flex-row gap-8 ">
+            {/* <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-4 gap-4 h-[250px] sm:h-[60%] max-h-[100vh]  w-full"> */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 min-[1800px]:grid-cols-4 gap-4 h-full  w-full">
               {feedMap.hasOwnProperty(selectedBay) &&
                 Object.keys(feedMap[selectedBay]).map((val, idx) => {
                   return (
@@ -442,7 +443,8 @@ const Feed = () => {
                   );
                 })}
             </div>
-            <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[250px] sm:h-[100vh] w-[85vw] sm:w-[70vw] min-[900px]:w-[100vw] lg:w-[45vw] overflow-y-auto">
+            {/* <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-[250px] sm:h-[100vh] w-[85vw] sm:w-[70vw] min-[900px]:w-[100vw] lg:w-[45vw]  border-2 border-red-500"> */}
+            <div className="flex flex-col gap-4 py-4 pr-6 pl-4 rounded-lg bg-[#F5F5F5] h-full w-[85vw] sm:w-[70vw] min-[900px]:w-[100vw] lg:w-[45vw]  ">
               {currentCams.hasOwnProperty(selectedBay) &&
                 currentCams[selectedBay].map((val, idx) => {
                   return (
@@ -487,6 +489,39 @@ const Feed = () => {
                     </div>
                   );
                 })}
+              {/* <div className="flex-1 flex flex-col gap-2 w-full ">
+                <p className="text-[#605D64] text-sm font-medium whitespace-nowrap">
+                  Camera 3
+                </p>
+                <div className="relative bg-black h-full w-full flex justify-center items-center rounded-xl">
+                 
+                  <video
+                    muted
+                    autoPlay
+                    loop
+                    crossOrigin="anonymous"
+                    className="w-[60vw] lg:w-[40vw] rounded-xl"
+                  >
+                    <source
+                      src={
+                        "https://intelliverse-public-videos.s3.ap-south-1.amazonaws.com/frontview_small+(1).mp4"
+                      }
+                      type="video/mp4"
+                    />
+                  </video>
+                 
+                  <div className="absolute bottom-2 right-2 bg-black rounded-md opacity-70 p-[2px]">
+                    <p className="text-white text-xs font-semibold bg-black rounded-lg">
+                      {new Date().toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="absolute bottom-2 left-2 bg-black rounded-md opacity-70 p-[2px]">
+                    <p className="text-white text-xs font-semibold bg-black rounded-lg">
+                      {new Date().toLocaleTimeString()}
+                    </p>
+                  </div>
+                </div>
+              </div> */}
             </div>
           </div>
         </>
