@@ -27,6 +27,7 @@ const AskYourQuestion = () => {
   const [selectedExpert, setSelectedExpert] = useState(null);
   const [selectedExpertId, setSelectedExpertId] = useState(expertId);
   const [isSaved, setSaved] = useState(false);
+  const [savedQuestion, setSaveQuestion] = useState("");
 
   const navigate = useNavigate();
   const [send, setSend] = useState([]);
@@ -87,6 +88,29 @@ const AskYourQuestion = () => {
       });
     console.log("file data", data, question, expertId);
   };
+
+  const handleSave = async () => {
+    const data = {
+      subject: summary,
+      question: question,
+    };
+    try {
+      const response = await axios.post(
+        baseURL + `questions/saveQuestion/${""}`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": auth,
+          },
+        }
+      );
+      setSaved(true);
+      console.log("saved", response?.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
   useEffect(() => {
     const fetchExperts = async () => {
       try {
@@ -140,9 +164,6 @@ const AskYourQuestion = () => {
   const handleSubmit = () => {
     setLoader(true);
     postQuestion();
-  };
-  const handleSave = () => {
-    setSaved(true);
   };
 
   const handleBackEditing = () => {

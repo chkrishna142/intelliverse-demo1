@@ -46,7 +46,34 @@ const AddBulkUsersModal = ({ isOpen, onClose, size, setSend, send }) => {
           <ModalBody>
             {submitted === false ? (
               <div className="p-6">
-                <div className="mt-2 border-4 border-[#FFC107] border-dotted flex bg-[#FFFFED] px-6 py-3">
+                <div className="">
+                  <div className="flex justify-between items-center ">
+                    <div className="">
+                      <p className="text-14px] font-medium">Step 1:</p>
+                      <p className="text-14px] font-normal text-[#605D64]">
+                        Please download the following excel and fill out the
+                        user details.
+                      </p>
+                    </div>
+                    <div>
+                      <ExlCsvDownload
+                        data={[""]}
+                        order={[""]}
+                        orderDetail={[""]}
+                        enable={true}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center mt-6">
+                    <div className="">
+                      <p className="text-14px] font-medium">Step 2:</p>
+                      <p className="text-14px] font-normal text-[#605D64]">
+                        Please upload the file with user details
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6 border-4 border-[#FFC107] border-dotted flex bg-[#FFFFED] px-6 py-3">
                   {send && send.length > 0 ? (
                     send.map((item, index) => {
                       return (
@@ -69,6 +96,7 @@ const AddBulkUsersModal = ({ isOpen, onClose, size, setSend, send }) => {
                       <img src="/usermanagement/upload_file.png" alt="upload" />
                     </div>
                   )}
+
                   <div className="">
                     <div className="flex">
                       <label htmlFor="image" className="cursor-pointer">
@@ -110,25 +138,7 @@ const AddBulkUsersModal = ({ isOpen, onClose, size, setSend, send }) => {
                   </div>
                 </div>
 
-                <div className="mt-6">
-                  <div className="flex justify-between items-center ">
-                    <div className="">
-                      <p className="text-14px] font-medium">Sample format</p>
-                      <p className="text-14px] font-medium text-[#AEA9B1]">
-                        Upload file that follows this format , please.
-                      </p>
-                    </div>
-                    <div>
-                      <ExlCsvDownload
-                        data={[""]}
-                        order={[""]}
-                        orderDetail={[""]}
-                        enable={true}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="border border-gray-100 rounded-xl mt-3">
+                {/* <div className="border border-gray-100 rounded-xl mt-3">
                   <TableContainer className="!text-left  border rounded-md bg-white">
                     <Table variant="simple">
                       <Thead className="bg-[#EBEBEB]">
@@ -183,7 +193,7 @@ const AddBulkUsersModal = ({ isOpen, onClose, size, setSend, send }) => {
                       </Tbody>
                     </Table>
                   </TableContainer>
-                </div>
+                </div> */}
               </div>
             ) : (
               <div>
