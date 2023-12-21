@@ -136,7 +136,7 @@ const UserMngmtTable = ({
   const headerClass =
     "text-sm font-normal text-[#79767D] bg-[#DDEEFF] uppercase";
   const cellClass = "text-sm font-normal text-[#3E3C42] whitespace-nowrap";
-  const flexMap = [0, 2, 2, 3, 1, 1, 1.5, 1, 1, 1];
+  const flexMap = [0, 2, 2, 2.5, 1.5, 1, 1.5, 1, 1, 1];
   columns.map((val, idx) => {
     val["headerClassName"] = headerClass;
     val["cellClassName"] = cellClass;

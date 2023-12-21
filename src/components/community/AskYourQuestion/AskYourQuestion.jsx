@@ -28,7 +28,18 @@ const AskYourQuestion = () => {
   const [selectedExpertId, setSelectedExpertId] = useState(expertId);
   const [isSaved, setSaved] = useState(false);
   const [savedQuestion, setSaveQuestion] = useState("");
+  const [toTimeInMs, setToTimeInMs] = useState("");
 
+  const setEndOfDay = (dateString) => {
+    const parsedDate = new Date(dateString);
+    // Set time to the end of the day (23:59:59.999)
+    parsedDate.setHours(23, 59, 59, 999);
+    return parsedDate;
+  };
+
+  useEffect(() => {
+    setToTimeInMs(setEndOfDay(customEndDate).getTime());
+  }, [customEndDate]);
   const navigate = useNavigate();
   const [send, setSend] = useState([]);
 
@@ -56,6 +67,7 @@ const AskYourQuestion = () => {
       expertId: selectedExpertId,
       question: question,
       subject: summary,
+      timeLimit: toTimeInMs,
     };
     const json = JSON.stringify(cap);
     const blob = new Blob([json], {
@@ -175,7 +187,7 @@ const AskYourQuestion = () => {
     updatedSend.splice(index, 1); // Remove the file at the specified index
     setSend(updatedSend);
   };
-  console.log(summary);
+  console.log(toTimeInMs);
   return submitted === false ? (
     <>
       <div className="mt-[3vh]">
